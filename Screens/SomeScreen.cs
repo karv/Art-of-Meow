@@ -1,6 +1,7 @@
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Cells;
+using Moggle.IO;
 
 namespace Screens
 {
@@ -27,6 +28,27 @@ namespace Screens
 		{
 			base.Inicializar ();
 			GameGrid.Include ();
+		}
+
+		void subsKey ()
+		{
+			InputManager.AlSerActivado += KeyWatcher;
+		}
+
+		void deSubsKey ()
+		{
+			InputManager.AlSerActivado -= KeyWatcher;
+		}
+
+		void KeyWatcher (OpenTK.Input.Key obj)
+		{
+			switch (obj)
+			{
+				case OpenTK.Input.Key.Right:
+					break;
+				default:
+					break;
+			}
 		}
 	}
 }
