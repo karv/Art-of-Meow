@@ -51,7 +51,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="OpenTK.dll.config" />
-    <None Include="Content\floor.jpeg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
