@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 
 namespace Art_of_Meow
 {
@@ -7,8 +5,7 @@ namespace Art_of_Meow
 	{
 		public Juego ()
 		{
-			Debugger.Launch ();
-			Graphics.IsFullScreen = false;
+			Graphics.IsFullScreen = true;
 		}
 	}
 }

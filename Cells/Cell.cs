@@ -1,10 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using Cells.CellObjects;
 
-namespace Art_of_Meow
+namespace Cells
 {
-
 	public class Cell
 	{
 		readonly List<ICellObject> Objects;
@@ -32,13 +32,17 @@ namespace Art_of_Meow
 
 		public void Dibujar (SpriteBatch bat, Rectangle rect)
 		{
+			//var x = Objects [r.Next (Objects.Count)];
+			//var x = Objects [Objects.Count - 1];
 			foreach (var x in Objects)
-				bat.Draw (
+				//bat.Draw (x.Texture, rect, x.UseColor ?? Color.White);
+			bat.Draw (
 					x.Texture,
-					rect, null, Color.White, 
+					rect, null, x.UseColor ?? Color.White, 
 					0, Vector2.Zero,
-					SpriteEffects.None, 
+					SpriteEffects.None,
 					x.Depth);
+				
 		}
 
 		public void LoadContent ()

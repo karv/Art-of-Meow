@@ -1,7 +1,8 @@
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
+using Cells;
 
-namespace Art_of_Meow
+namespace Screens
 {
 	public class SomeScreen : Screen
 	{
@@ -19,6 +20,7 @@ namespace Art_of_Meow
 			: base (game)
 		{
 			GameGrid = new Grid (100, 100, this);
+			GameGrid.ControlTopLeft = new Point (100, 100);
 		}
 
 		public override void Inicializar ()

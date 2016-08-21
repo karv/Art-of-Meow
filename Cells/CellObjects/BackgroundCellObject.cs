@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework;
 
-namespace Art_of_Meow
+namespace Cells.CellObjects
 {
 	public class BackgroundCellObject : ICellObject
 	{
@@ -18,8 +19,10 @@ namespace Art_of_Meow
 
 		public void LoadContent ()
 		{
-			Texture = _content.Load<Texture2D> ("floor");
+			Texture = _content.Load<Texture2D> (StringTexture);
 		}
+
+		public Color? UseColor { get { return Color.White; } }
 
 		public int Depth { get { return 0; } }
 	}

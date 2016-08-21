@@ -1,21 +1,28 @@
 ﻿using Moggle.Controles;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Cells.CellObjects;
 
-namespace Art_of_Meow
+namespace Cells
 {
 	public class Grid : SBC
 	{
 		readonly Cell [,] _data;
-		public Point CellSize = new Point (16, 16);
+		public Point CellSize = new Point (24, 24);
 
 		public Grid (int xSize, int ySize, Moggle.Screens.IScreen scr)
 			: base (scr)
 		{
 			_data = new Cell[xSize, ySize];
+			for (int i = 0; i < xSize; i++)
+				for (int j = 0; j < ySize; j++)
+					_data [i, j] = new Cell ();
 
 			// Inicializar cada celda
 			foreach (var x in _data)
 				x.AddObject (new BackgroundCellObject ("floor", Screen.Content));
+
+			_data [0, 0].AddObject (new PersonCellObject ("person", Screen.Content));
 		}
 
 		/// <summary>
@@ -67,6 +74,8 @@ namespace Art_of_Meow
 
 		public override void Dibujar (GameTime gameTime)
 		{
+			var bat = Screen.GetNewBatch ();
+			bat.Begin (SpriteSortMode.BackToFront);
 			for (int i = 0; i < VisibleCells.X; i++)
 				for (int j = 0; j < VisibleCells.Y; j++)
 				{
@@ -76,6 +85,7 @@ namespace Art_of_Meow
 					var rectOutput = new Rectangle (CellSpotLocation (i, j), CellSize);
 					currCell.Dibujar (Screen.Batch, rectOutput);
 				}
+			bat.End ();
 		}
 
 		public override Moggle.Shape.IShape GetBounds ()

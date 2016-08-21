@@ -8,7 +8,7 @@
     <RootNamespace>Art_of_Meow</RootNamespace>
     <AssemblyName>Art_of_Meow</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <StartupObject>Art_of_Meow.Start</StartupObject>
+    <StartupObject>Art_of_Meow.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,15 +51,18 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="OpenTK.dll.config" />
+    <None Include="Content\floor.jpeg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
-    <Compile Include="SomeScreen.cs" />
-    <Compile Include="Start.cs" />
-    <Compile Include="Grid.cs" />
-    <Compile Include="Cell.cs" />
-    <Compile Include="ICellObject.cs" />
-    <Compile Include="BackgroundCellObject.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Screens\SomeScreen.cs" />
+    <Compile Include="Cells\Grid.cs" />
+    <Compile Include="Cells\CellObjects\ICellObject.cs" />
+    <Compile Include="Cells\CellObjects\BackgroundCellObject.cs" />
+    <Compile Include="Cells\CellObjects\PersonCellObject.cs" />
+    <Compile Include="Cells\CellObjects\CellObject.cs" />
+    <Compile Include="Cells\Cell.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -67,9 +70,14 @@
         <Policies>
           <TextStylePolicy TabsToSpaces="False" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
           <CSharpFormattingPolicy IndentSwitchBody="True" AutoPropertyFormatting="ForceOneLine" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="NewLine" ArrayInitializerBraceStyle="NextLine" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" AfterDelegateDeclarationParameterComma="True" BeforeSizeOfParentheses="True" BeforeTypeOfParentheses="True" SpacesBeforeArrayDeclarationBrackets="True" MethodCallArgumentWrapping="WrapIfTooLong" MethodDeclarationParameterWrapping="WrapIfTooLong" IndexerDeclarationParameterWrapping="WrapIfTooLong" IndexerArgumentWrapping="WrapIfTooLong" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="FileName" />
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileName" />
         </Policies>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Screens\" />
+    <Folder Include="Cells\" />
+    <Folder Include="Cells\CellObjects\" />
+  </ItemGroup>
 </Project>

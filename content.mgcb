@@ -1,10 +1,10 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin
+/outputDir:bin/$(Config)/
 /intermediateDir:obj
 /platform:Windows
-/config:
+/config:Debug
 /profile:Reach
 /compress:False
 
@@ -24,4 +24,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Content/floor.jpeg
+
+#begin Content/person.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,255,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Content/person.png
 

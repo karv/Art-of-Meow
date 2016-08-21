@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
-namespace Art_of_Meow
+namespace Cells.CellObjects
 {
 
 	public interface ICellObject
@@ -8,6 +9,8 @@ namespace Art_of_Meow
 		Texture2D Texture { get; }
 
 		int Depth { get; }
+
+		Color? UseColor { get; }
 
 		void LoadContent ();
 	}
