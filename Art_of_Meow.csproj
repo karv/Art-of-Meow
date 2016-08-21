@@ -8,6 +8,7 @@
     <RootNamespace>Art_of_Meow</RootNamespace>
     <AssemblyName>Art_of_Meow</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <StartupObject>Art_of_Meow.Start</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,6 +59,7 @@
     <Compile Include="Grid.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="ICellObject.cs" />
+    <Compile Include="BackgroundCellObject.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

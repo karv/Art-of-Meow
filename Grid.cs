@@ -1,8 +1,5 @@
-﻿using System;
-using Moggle.Controles;
+﻿using Moggle.Controles;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 namespace Art_of_Meow
 {
@@ -15,6 +12,10 @@ namespace Art_of_Meow
 			: base (scr)
 		{
 			_data = new Cell[xSize, ySize];
+
+			// Inicializar cada celda
+			foreach (var x in _data)
+				x.AddObject (new BackgroundCellObject ("floor", Screen.Content));
 		}
 
 		/// <summary>

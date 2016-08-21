@@ -7,11 +7,27 @@ namespace Art_of_Meow
 
 	public class Cell
 	{
-		readonly ICollection<ICellObject> Objects;
+		readonly List<ICellObject> Objects;
 
 		public Cell ()
 		{
 			Objects = new List<ICellObject> ();
+		}
+
+		public void AddObject (ICellObject obj)
+		{
+			Objects.Add (obj);
+		}
+
+		public void RemoveObject (ICellObject obj)
+		{
+			Objects.Remove (obj);
+		}
+
+		public void MoveObjectToCell (ICellObject obj, Cell newCell)
+		{
+			RemoveObject (obj);
+			newCell.AddObject (obj);
 		}
 
 		public void Dibujar (SpriteBatch bat, Rectangle rect)
