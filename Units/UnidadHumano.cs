@@ -8,6 +8,8 @@ namespace Units
 {
 	public class UnidadHumano : IUnidad
 	{
+		public Grid MapGrid { get; set; }
+
 		public const string TextureType = "person";
 
 		public string TextureStr { get; protected set; }
@@ -45,5 +47,10 @@ namespace Units
 		}
 
 		public Point Location { get; set; }
+
+		public void MeleeDamage (IUnidad target)
+		{
+			target.Die ();
+		}
 	}
 }

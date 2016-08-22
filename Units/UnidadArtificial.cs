@@ -10,13 +10,12 @@ namespace Units
 
 	public class ChaseIntelligence  : IIntelligence
 	{
-		public ChaseIntelligence (Grid mapGrid, UnidadArtificial yo)
+		public ChaseIntelligence (UnidadArtificial yo)
 		{
-			MapGrid = mapGrid;
 			Yo = yo;
 		}
 
-		public Grid MapGrid { get; }
+		public Grid MapGrid { get { return Yo.MapGrid; } }
 
 		public readonly UnidadArtificial Yo;
 

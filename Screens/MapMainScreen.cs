@@ -27,11 +27,13 @@ namespace Screens
 			for (int i = 0; i < NumChasers; i++)
 			{
 				var chaser = new UnidadArtificial ();
-				chaser.IA = new ChaseIntelligence (GameGrid, chaser);
+				chaser.MapGrid = GameGrid;
+				chaser.IA = new ChaseIntelligence (chaser);
 				chaser.Location = GameGrid.RandomPoint ();
 				UnidadesArtificial.Add (chaser);
 			}
 			Jugador = new UnidadHumano ();
+			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 		}
 
