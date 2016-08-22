@@ -2,7 +2,7 @@
 
 namespace Units
 {
-	public interface IUnidad : ICellLocalizable
+	public interface IUnidad : ICellObject
 	{
 	}
 }

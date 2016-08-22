@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Cells;
 using Units;
 using System.Collections.Generic;
+using OpenTK.Platform.X11;
 
 namespace Screens
 {
@@ -31,24 +32,28 @@ namespace Screens
 			GameGrid.ControlTopLeft = new Point (100, 100);
 
 			for (int i = 0; i < NumChasers; i++)
-				UnidadesArtificial.Add (new UnidadArtificial (Content));
-
+			{
+				var chaser = new UnidadArtificial (Content);
+				chaser.IA = new ChaseIntelligence (GameGrid);
+				UnidadesArtificial.Add (chaser);
+			}
 			Jugador = new UnidadHumano (Content);
+			Jugador.Location = StartingPoint;
 		}
 
 		public override void Inicializar ()
 		{
 			base.Inicializar ();
 			GameGrid.Include ();
-			GameGrid.AddCellObject (StartingPoint, Jugador);
+			GameGrid.AddCellObject (Jugador);
 			foreach (var x in UnidadesArtificial)
-				GameGrid.AddCellObject (GameGrid.RandomPoint (), x);
+				GameGrid.AddCellObject (x);
 		}
 
 		public override void LoadContent ()
 		{
 			base.LoadContent ();
-			Jugador.CellObject.LoadContent ();
+			GameGrid.LoadContent ();
 		}
 
 		protected override void TeclaPresionada (OpenTK.Input.Key key)
@@ -63,52 +68,52 @@ namespace Screens
 				case OpenTK.Input.Key.Down:
 				case OpenTK.Input.Key.Keypad2:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject, 
+						Jugador, 
 						MovementDirectionEnum.Down);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Right:
 				case OpenTK.Input.Key.Keypad6:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject, 
+						Jugador, 
 						MovementDirectionEnum.Right);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Up:
 				case OpenTK.Input.Key.Keypad8:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject, 
+						Jugador, 
 						MovementDirectionEnum.Up);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Left:
 				case OpenTK.Input.Key.Keypad4:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject, 
+						Jugador, 
 						MovementDirectionEnum.Left);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad1:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject,
+						Jugador,
 						MovementDirectionEnum.DownLeft);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad3:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject,
+						Jugador,
 						MovementDirectionEnum.DownRight);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad7:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject, 
+						Jugador, 
 						MovementDirectionEnum.UpLeft);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad9:
 					GameGrid.MoveCellObject (
-						Jugador.CellObject,
+						Jugador,
 						MovementDirectionEnum.UpRight);
 					shouldTryRecenter = true;
 					break;
@@ -116,7 +121,7 @@ namespace Screens
 
 			endTurn = shouldTryRecenter;
 			if (shouldTryRecenter)
-				GameGrid.CenterIfNeeded (Jugador.CellObject);
+				GameGrid.CenterIfNeeded (Jugador);
 
 			if (endTurn)
 				entreTurnos ();

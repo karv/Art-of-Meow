@@ -1,8 +1,6 @@
 ﻿using Cells.CellObjects;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Cells;
-using System;
 
 namespace Units
 {
@@ -22,34 +20,20 @@ namespace Units
 
 		public void DoAction ()
 		{
-			var goCell = MapGrid.FindCellAddr (z => z.ExistsReturn (w => w is UnidadHumano) != null);
-			if (goCell.HasValue)
-			{
-				// TODO: Que avance hacia goCell.
-			}
-			throw new System.NotImplementedException ();
+			var target = MapGrid.Objects.Find (z => z is UnidadHumano);
+			// TODO: que se mueva.
+
 		}
 	}
 
-	public class UnidadArtificial : IUnidad
+	public class UnidadArtificial : UnidadHumano
 	{
-		public const string TextureType = "person";
-
 		public UnidadArtificial (ContentManager content,
 		                         string texture = TextureType)
+			: base (content, texture)
 		{
-			CellObject = new PersonCellObject (texture, content);
-		}
-
-		public UnidadArtificial (Texture2D texture)
-		{
-			CellObject = new PersonCellObject (texture);
 		}
 
 		public IIntelligence IA { get; set; }
-
-		public PersonCellObject CellObject { get; }
-
-		ICellObject ICellLocalizable.CellObject { get { return CellObject; } }
 	}
 }
