@@ -2,6 +2,7 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Cells;
 using Units;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Screens
 {
@@ -18,7 +19,7 @@ namespace Screens
 
 		public Grid GameGrid;
 		public UnidadHumano Jugador;
-		public readonly Point StartingPoint = new Point (0, 0);
+		public readonly Point StartingPoint = new Point (1, 1);
 
 		public MapMainScreen (Moggle.Game game)
 			: base (game)

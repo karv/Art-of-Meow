@@ -4,9 +4,18 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units;
 using System;
+using System.Collections.Generic;
 
 namespace Cells
 {
+	public static class Depths
+	{
+		public const float Background = 1f;
+		public const float Adorno = 0.9f;
+		public const float Foreground = 0.1f;
+		public const float Player = 0;
+	}
+
 	public class Grid : SBC
 	{
 		readonly Cell [,] _data;
@@ -21,8 +30,36 @@ namespace Cells
 					_data [i, j] = new Cell ();
 
 			// Inicializar cada celda
+			foreach (var x in contorno ())
+			{
+				var newObj = new CellObject ("brick-wall", Screen.Content);
+				newObj.Depth = Depths.Foreground;
+				newObj.CollidePlayer = true;
+				x.AddObject (newObj);
+			}
+
 			foreach (var x in _data)
 				x.AddObject (new BackgroundCellObject ("floor", Screen.Content));
+
+		}
+
+		/// <summary>
+		/// enumera las celdas de contorno.
+		/// </summary>
+		IEnumerable<Cell> contorno ()
+		{
+			int maxX = _data.GetLength (0);
+			int maxY = _data.GetLength (1);
+			for (int i = 0; i < maxX; i++)
+			{
+				yield return (_data [i, 0]);
+				yield return (_data [i, maxY - 1]);
+			}
+			for (int i = 1; i < maxY - 1; i++)
+			{
+				yield return (_data [0, i]);
+				yield return (_data [maxX - 1, i]);
+			}
 		}
 
 		/// <summary>
@@ -103,7 +140,7 @@ namespace Cells
 					var currCell = _data [CurrentVisibleTopLeft.X + i, 
 						               CurrentVisibleTopLeft.Y + j];
 					var rectOutput = new Rectangle (CellSpotLocation (i, j), CellSize);
-					currCell.Dibujar (Screen.Batch, rectOutput);
+					currCell.Dibujar (bat, rectOutput);
 				}
 			bat.End ();
 		}
