@@ -12,7 +12,7 @@ namespace Screens
 		{
 			get
 			{
-				return Color.Blue;
+				return Color.DarkBlue;
 			}
 		}
 
@@ -44,14 +44,21 @@ namespace Screens
 
 		protected override void TeclaPresionada (OpenTK.Input.Key key)
 		{
+			bool shouldTryRecenter = false;
 			switch (key)
 			{
-				case OpenTK.Input.Key.Down:
-					GameGrid.MoveCellObject (Jugador.CellObject, MovementDirectionEnum.Down);
+				case OpenTK.Input.Key.Escape:
+					Juego.Exit ();
 					break;
-				default:
+				case OpenTK.Input.Key.Down:
+				case OpenTK.Input.Key.Keypad2:
+					GameGrid.MoveCellObject (Jugador.CellObject, MovementDirectionEnum.Down);
+					shouldTryRecenter = true;
 					break;
 			}
+
+			if (shouldTryRecenter)
+				GameGrid.CenterIfNeeded (Jugador.CellObject);
 		}
 	}
 }

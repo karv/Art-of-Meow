@@ -143,6 +143,45 @@ namespace Cells
 			return FindCellAddrWithObject (obj, out addr) ? _data [addr.X, addr.Y] : null;
 		}
 
+		#region Cámara
+
+		/// <summary>
+		/// Centra el campo visible en la dirección de una celda.
+		/// </summary>
+		/// <param name="p">P.</param>
+		public void TryCenterOn (Point p)
+		{
+			var left = Math.Max (0, p.X - VisibleCells.X / 2);
+			var top = Math.Max (0, p.Y - VisibleCells.Y / 2);
+			CurrentVisibleTopLeft = new Point (left, top);
+		}
+
+		/// <summary>
+		/// Determina si una dirección de celda es visible actualmente.
+		/// </summary>
+		/// <param name="p">Dirección de celda.</param>
+		public bool IsVisible (Point p)
+		{
+			return CurrentVisibleTopLeft.X <= p.X &&
+			p.X < CurrentVisibleTopLeft.X + VisibleCells.X &&
+			CurrentVisibleTopLeft.Y <= p.Y &&
+			p.Y < CurrentVisibleTopLeft.Y + VisibleCells.Y;
+		}
+
+		public void CenterIfNeeded (ICellObject obj)
+		{
+			Point p;
+			if (FindCellAddrWithObject (obj, out p))
+			{
+				if (!IsVisible (p))
+					TryCenterOn (p);
+			}
+			else
+				throw new Exception ("Cell object not found");
+		}
+
+		#endregion
+
 		#region Movimiento
 
 		public bool MoveCellObject (ICellObject objeto, MovementDirectionEnum dir)
