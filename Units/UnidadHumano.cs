@@ -24,7 +24,7 @@ namespace Units
 
 		public void LoadContent ()
 		{
-			_content.Load<Texture2D> (TextureStr);
+			Texture = _content.Load<Texture2D> (TextureStr);
 		}
 
 		public bool Collision (ICellObject collObj)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Units;
 
 namespace Cells.CellObjects
 {
@@ -26,7 +27,7 @@ namespace Cells.CellObjects
 
 		public bool Collision (ICellObject collObj)
 		{
-			return false; // TODO
+			return CollidePlayer && collObj is IUnidad;
 		}
 
 		public void LoadContent ()
@@ -38,10 +39,10 @@ namespace Cells.CellObjects
 		{
 			bat.Draw (
 				Texture,
-				area, null, Color.White,
+				area, null, UseColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
-				Depths.Background);
+				Depth);
 		}
 
 		public void Dispose ()

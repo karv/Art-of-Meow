@@ -5,8 +5,6 @@ using Moggle.Controles;
 using Units;
 using System;
 using System.Collections.Generic;
-using MonoGame.Extended.Collections;
-using OpenTK.Platform.MacOS;
 
 namespace Cells
 {
@@ -30,6 +28,7 @@ namespace Cells
 				var newObj = new CellObject ("brick-wall", Screen.Content);
 				newObj.Depth = Depths.Foreground;
 				newObj.CollidePlayer = true;
+				newObj.UseColor = Color.DarkGray;
 				newObj.Location = x;
 				Objects.Add (newObj);
 			}

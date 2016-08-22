@@ -27,7 +27,7 @@ namespace Cells
 		/// </summary>
 		public bool Collision (ICellObject collObj)
 		{
-			return Objects.Any (z => z.Collision (collObj));
+			return Objects.Any (z => z.Collision (collObj) || collObj.Collision (z));
 		}
 
 		public Cell (Grid grid, Point location)
