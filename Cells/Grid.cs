@@ -54,7 +54,7 @@ namespace Cells
 		/// Posición top left del control.
 		/// </summary>
 		public Point ControlTopLeft = Point.Zero;
-		public Point VisibleCells = new Point (10, 5);
+		public Point VisibleCells = new Point (50, 20);
 
 		public Point ControlSize
 		{
