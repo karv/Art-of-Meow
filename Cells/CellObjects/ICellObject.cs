@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 
 namespace Cells.CellObjects
 {
-
 	public interface ICellObject
 	{
 		Texture2D Texture { get; }

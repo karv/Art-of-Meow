@@ -2,12 +2,7 @@
 
 namespace Units
 {
-	public interface IUnidad
+	public interface IUnidad : ICellLocalizable
 	{
-		/// <summary>
-		/// Devuelve el objeto de celda asociado a esta unidad.
-		/// </summary>
-		/// <value>The cell object.</value>
-		ICellObject CellObject { get; }
 	}
 }

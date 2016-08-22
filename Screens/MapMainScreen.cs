@@ -1,7 +1,7 @@
 using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Cells;
-using Moggle.IO;
+using Units;
 
 namespace Screens
 {
@@ -17,35 +17,37 @@ namespace Screens
 		}
 
 		public Grid GameGrid;
+		public UnidadHumano Jugador;
+		public readonly Point StartingPoint = new Point (0, 0);
 
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
 			GameGrid = new Grid (100, 100, this);
 			GameGrid.ControlTopLeft = new Point (100, 100);
+
+			Jugador = new UnidadHumano (Content);
 		}
 
 		public override void Inicializar ()
 		{
 			base.Inicializar ();
 			GameGrid.Include ();
+			GameGrid.AddCellObject (StartingPoint, Jugador);
 		}
 
-		void subsKey ()
+		public override void LoadContent ()
 		{
-			InputManager.AlSerActivado += KeyWatcher;
+			base.LoadContent ();
+			Jugador.CellObject.LoadContent ();
 		}
 
-		void deSubsKey ()
+		protected override void TeclaPresionada (OpenTK.Input.Key key)
 		{
-			InputManager.AlSerActivado -= KeyWatcher;
-		}
-
-		void KeyWatcher (OpenTK.Input.Key obj)
-		{
-			switch (obj)
+			switch (key)
 			{
-				case OpenTK.Input.Key.Right:
+				case OpenTK.Input.Key.Down:
+					GameGrid.MoveCellObject (Jugador.CellObject, MovementDirectionEnum.Down);
 					break;
 				default:
 					break;

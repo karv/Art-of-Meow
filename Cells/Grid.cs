@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Cells.CellObjects;
+﻿using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
@@ -24,8 +23,26 @@ namespace Cells
 			// Inicializar cada celda
 			foreach (var x in _data)
 				x.AddObject (new BackgroundCellObject ("floor", Screen.Content));
+		}
 
-			_data [0, 0].AddObject (new PersonCellObject ("person", Screen.Content));
+		/// <summary>
+		/// Agrega un objeto a una celda en las coordenadas dadas.
+		/// </summary>
+		/// <param name="loc">Coordenadas</param>
+		/// <param name="obj">Object.</param>
+		public void AddCellObject (Point loc, ICellObject obj)
+		{
+			_data [loc.X, loc.Y].AddObject (obj);
+		}
+
+		/// <summary>
+		/// Agrega un objeto a una celda en las coordenadas dadas.
+		/// </summary>
+		/// <param name="loc">Coordenadas</param>
+		/// <param name="obj">Objeto localizado</param>
+		public void AddCellObject (Point loc, ICellLocalizable obj)
+		{
+			AddCellObject (loc, obj.CellObject);
 		}
 
 		/// <summary>

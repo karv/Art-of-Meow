@@ -8,9 +8,9 @@ namespace Units
 	{
 		public const string TextureType = "person";
 
-		public UnidadHumano (ContentManager content)
+		public UnidadHumano (ContentManager content, string texture = TextureType)
 		{
-			CellObject = new PersonCellObject (TextureType, content);
+			CellObject = new PersonCellObject (texture, content);
 		}
 
 		public UnidadHumano (Texture2D texture)
@@ -20,6 +20,6 @@ namespace Units
 
 		public PersonCellObject CellObject { get; }
 
-		ICellObject IUnidad.CellObject { get; }
+		ICellObject ICellLocalizable.CellObject { get { return CellObject; } }
 	}
 }

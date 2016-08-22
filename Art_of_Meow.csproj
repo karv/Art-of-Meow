@@ -65,6 +65,7 @@
     <Compile Include="Units\IUnidad.cs" />
     <Compile Include="Units\MovementDirectionEnum.cs" />
     <Compile Include="Units\UnidadHumano.cs" />
+    <Compile Include="Cells\CellObjects\ICellLocalizable.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
