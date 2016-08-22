@@ -13,7 +13,7 @@ namespace Cells
 		public const float Background = 1f;
 		public const float GroundDecoration = 0.9f;
 		public const float Foreground = 0.1f;
-		public const float Player = 0;
+		public const float Unidad = 0;
 	}
 	
 }

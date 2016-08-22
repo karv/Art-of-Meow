@@ -1,8 +1,8 @@
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+using System;
 
 namespace Cells.CellObjects
 {
+	[ObsoleteAttribute]
 	public interface ICellLocalizable
 	{
 		/// <summary>
