@@ -196,7 +196,26 @@ namespace Cells
 				case MovementDirectionEnum.Down:
 					addrTo = new Point (addrFrom.X, addrFrom.Y + 1);
 					break;
-				default:
+				case MovementDirectionEnum.DownLeft:
+					addrTo = new Point (addrFrom.X - 1, addrFrom.Y + 1);
+					break;
+				case MovementDirectionEnum.DownRight:
+					addrTo = new Point (addrFrom.X + 1, addrFrom.Y + 1);
+					break;
+				case MovementDirectionEnum.Left:
+					addrTo = new Point (addrFrom.X - 1, addrFrom.Y);
+					break;
+				case MovementDirectionEnum.Right:
+					addrTo = new Point (addrFrom.X + 1, addrFrom.Y);
+					break;
+				case MovementDirectionEnum.Up:
+					addrTo = new Point (addrFrom.X, addrFrom.Y - 1);
+					break;
+				case MovementDirectionEnum.UpLeft:
+					addrTo = new Point (addrFrom.X - 1, addrFrom.Y - 1);
+					break;
+				case MovementDirectionEnum.UpRight:
+					addrTo = new Point (addrFrom.X + 1, addrFrom.Y - 1);
 					break;
 			}
 
