@@ -104,7 +104,7 @@ namespace Cells
 		/// <param name="p">coordenadas del spot</param>
 		public Point CellSpotLocation (Point p)
 		{
-			return ControlTopLeft + CellSize * p;
+			return ControlTopLeft + CellSize * (p - CurrentVisibleTopLeft);
 		}
 
 		public Rectangle Bounds
