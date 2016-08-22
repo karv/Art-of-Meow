@@ -3,22 +3,15 @@ using Microsoft.Xna.Framework;
 using Cells;
 using Units;
 using System.Collections.Generic;
-using OpenTK.Platform.X11;
 
 namespace Screens
 {
 	public class MapMainScreen : Screen
 	{
 		
-		public override Color BgColor
-		{
-			get
-			{
-				return Color.DarkBlue;
-			}
-		}
+		public override Color BgColor { get { return Color.DarkBlue; } }
 
-		public const int NumChasers = 30;
+		public const int NumChasers = 5;
 
 		public Grid GameGrid;
 		public UnidadHumano Jugador;
