@@ -8,14 +8,6 @@ using System.Collections.Generic;
 
 namespace Cells
 {
-	public static class Depths
-	{
-		public const float Background = 1f;
-		public const float GroundDecoration = 0.9f;
-		public const float Foreground = 0.1f;
-		public const float Player = 0;
-	}
-
 	public class Grid : SBC
 	{
 		readonly Cell [,] _data;
