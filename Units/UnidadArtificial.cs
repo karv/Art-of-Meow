@@ -11,18 +11,23 @@ namespace Units
 
 	public class ChaseIntelligence  : IIntelligence
 	{
-		public ChaseIntelligence (Grid mapGrid)
+		public ChaseIntelligence (Grid mapGrid, UnidadArtificial yo)
 		{
 			MapGrid = mapGrid;
+			Yo = yo;
 		}
 
 		public Grid MapGrid { get; }
 
+		public readonly UnidadArtificial Yo;
+
 		public void DoAction ()
 		{
 			var target = MapGrid.Objects.Find (z => z is UnidadHumano);
-			// TODO: que se mueva.
-
+			var dir = Yo.Location.GetDirectionTo (target.Location);
+			if (dir == MovementDirectionEnum.NoMov)
+				return;
+			MapGrid.MoveCellObject (Yo, dir);
 		}
 	}
 

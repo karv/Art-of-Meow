@@ -34,7 +34,7 @@ namespace Screens
 			for (int i = 0; i < NumChasers; i++)
 			{
 				var chaser = new UnidadArtificial (Content);
-				chaser.IA = new ChaseIntelligence (GameGrid);
+				chaser.IA = new ChaseIntelligence (GameGrid, chaser);
 				chaser.Location = GameGrid.RandomPoint ();
 				UnidadesArtificial.Add (chaser);
 			}
