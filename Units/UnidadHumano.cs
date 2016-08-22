@@ -29,7 +29,7 @@ namespace Units
 
 		public bool Collision (ICellObject collObj)
 		{
-			return false; // TODO
+			return collObj is UnidadHumano; 
 		}
 
 		public void Draw (Rectangle area, SpriteBatch bat)

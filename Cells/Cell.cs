@@ -22,6 +22,15 @@ namespace Cells
 			return false;
 		}
 
+		public ICellObject ExistsReturn (Predicate<ICellObject> pred)
+		{
+			foreach (var x in Objects)
+				if (pred (x))
+					return x;
+
+			return null;
+		}
+
 		/// <summary>
 		/// Determina si esta celda evita que un objeto pueda entrar.
 		/// </summary>

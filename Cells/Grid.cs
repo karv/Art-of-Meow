@@ -69,6 +69,12 @@ namespace Cells
 			}
 		}
 
+		public Point RandomPoint ()
+		{
+			var size = GridSize;
+			return new Point (1 + _r.Next (size.X - 2), 1 + _r.Next (size.Y - 2));
+		}
+
 		/// <summary>
 		/// Agrega un objeto al grid.
 		/// </summary>

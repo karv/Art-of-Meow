@@ -6,19 +6,60 @@ namespace Units
 {
 	public enum MovementDirectionEnum
 	{
-		NoMove,
-		Up,
-		Down,
-		Left,
 		Right,
-		UpLeft,
 		UpRight,
+		Up,
+		UpLeft,
+		Left,
 		DownLeft,
-		DownRight
+		Down,
+		DownRight,
+		__total_dirs,
+		NoMov
 	}
 
 	public static class Movement
 	{
+		public static MovementDirectionEnum GetDirectionTo (this Point @from,
+		                                                    Point to)
+		{
+			var pdir = to - from;
+			return pdir.GetDirection ();
+		}
+
+		static MovementDirectionEnum GetDirection (this Point point)
+		{
+			if (point.X > 0)
+				return point.Y > 0 ?
+					MovementDirectionEnum.DownRight :
+					point.Y == 0 ? 
+					MovementDirectionEnum.Right :
+					MovementDirectionEnum.UpRight;
+
+			if (point.X == 0)
+				return point.Y > 0 ?
+					MovementDirectionEnum.Down :
+					point.Y == 0 ? 
+					MovementDirectionEnum.NoMov :
+					MovementDirectionEnum.Up;
+
+			return point.Y > 0 ?
+					MovementDirectionEnum.DownLeft :
+					point.Y == 0 ? 
+					MovementDirectionEnum.Left :
+					MovementDirectionEnum.UpLeft;
+		}
+
+		/// <summary>
+		/// Rota la dirección rotation*45° hacia la izquierda.
+		/// </summary>
+		public static MovementDirectionEnum Rotate (this MovementDirectionEnum dir,
+		                                            int rotation)
+		{
+			var int_dir = ((int)dir + rotation) % (int)MovementDirectionEnum.__total_dirs;
+			return (MovementDirectionEnum)int_dir;
+		}
+
 		public static Point AsDirectionalPoint (this MovementDirectionEnum dir)
 		{
 			switch (dir)
@@ -31,8 +72,6 @@ namespace Units
 					return new Point (1, 1);
 				case MovementDirectionEnum.Left:
 					return new Point (-1, 0);
-				case MovementDirectionEnum.NoMove:
-					return new Point (0, 0);
 				case MovementDirectionEnum.Right:
 					return new Point (1, 0);
 				case MovementDirectionEnum.Up:
