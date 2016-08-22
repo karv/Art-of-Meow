@@ -11,7 +11,7 @@ namespace Cells
 	public static class Depths
 	{
 		public const float Background = 1f;
-		public const float Adorno = 0.9f;
+		public const float GroundDecoration = 0.9f;
 		public const float Foreground = 0.1f;
 		public const float Player = 0;
 	}
@@ -19,6 +19,9 @@ namespace Cells
 	public class Grid : SBC
 	{
 		readonly Cell [,] _data;
+		const double probZacate = 0.1;
+		readonly Random _r = new Random ();
+
 		public Point CellSize = new Point (24, 24);
 
 		public Grid (int xSize, int ySize, Moggle.Screens.IScreen scr)
@@ -39,8 +42,17 @@ namespace Cells
 			}
 
 			foreach (var x in _data)
+			{
 				x.AddObject (new BackgroundCellObject ("floor", Screen.Content));
-
+				if (_r.NextDouble () < probZacate)
+				{
+					var newObj = new CellObject ("vanilla-flower", Screen.Content);
+					newObj.Depth = Depths.GroundDecoration;
+					newObj.CollidePlayer = false;
+					newObj.UseColor = Color.Green;
+					x.AddObject (newObj);
+				}
+			}
 		}
 
 		/// <summary>
