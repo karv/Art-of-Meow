@@ -67,6 +67,7 @@
     <Compile Include="Units\UnidadHumano.cs" />
     <Compile Include="Cells\CellObjects\ICellLocalizable.cs" />
     <Compile Include="Cells\Depths.cs" />
+    <Compile Include="Units\UnidadArtificial.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

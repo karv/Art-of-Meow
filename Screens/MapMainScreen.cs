@@ -2,7 +2,7 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Cells;
 using Units;
-using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Screens
 {
@@ -17,8 +17,11 @@ namespace Screens
 			}
 		}
 
+		public const int NumChasers = 30;
+
 		public Grid GameGrid;
 		public UnidadHumano Jugador;
+		public List<UnidadArtificial> UnidadesArtificial = new List<UnidadArtificial> ();
 		public readonly Point StartingPoint = new Point (1, 1);
 
 		public MapMainScreen (Moggle.Game game)
@@ -26,6 +29,9 @@ namespace Screens
 		{
 			GameGrid = new Grid (100, 100, this);
 			GameGrid.ControlTopLeft = new Point (100, 100);
+
+			for (int i = 0; i < NumChasers; i++)
+				UnidadesArtificial.Add (new UnidadArtificial (Content));
 
 			Jugador = new UnidadHumano (Content);
 		}
@@ -35,6 +41,8 @@ namespace Screens
 			base.Inicializar ();
 			GameGrid.Include ();
 			GameGrid.AddCellObject (StartingPoint, Jugador);
+			foreach (var x in UnidadesArtificial)
+				GameGrid.AddCellObject (GameGrid.RandomPoint (), x);
 		}
 
 		public override void LoadContent ()
@@ -46,6 +54,7 @@ namespace Screens
 		protected override void TeclaPresionada (OpenTK.Input.Key key)
 		{
 			bool shouldTryRecenter = false;
+			bool endTurn = false;
 			switch (key)
 			{
 				case OpenTK.Input.Key.Escape:
@@ -105,9 +114,18 @@ namespace Screens
 					break;
 			}
 
+			endTurn = shouldTryRecenter;
 			if (shouldTryRecenter)
 				GameGrid.CenterIfNeeded (Jugador.CellObject);
+
+			if (endTurn)
+				entreTurnos ();
 		}
 
+		void entreTurnos ()
+		{
+			foreach (var x in UnidadesArtificial)
+				x.IA.DoAction ();
+		}
 	}
 }

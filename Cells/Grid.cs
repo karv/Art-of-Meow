@@ -67,6 +67,20 @@ namespace Cells
 		}
 
 		/// <summary>
+		/// Devuelve el tamaño del arreglo del grid.
+		/// </summary>
+		public Point GridSize ()
+		{
+			return new Point (_data.GetLength (0), _data.GetLength (1));
+		}
+
+		public Point RandomPoint ()
+		{
+			var size = GridSize ();
+			return new Point (1 + _r.Next (size.X - 2), 1 + _r.Next (size.Y - 2));
+		}
+
+		/// <summary>
 		/// Agrega un objeto a una celda en las coordenadas dadas.
 		/// </summary>
 		/// <param name="loc">Coordenadas</param>
@@ -84,6 +98,23 @@ namespace Cells
 		public void AddCellObject (Point loc, ICellLocalizable obj)
 		{
 			AddCellObject (loc, obj.CellObject);
+		}
+
+		public Cell FindCell (Predicate<Cell> pred)
+		{
+			foreach (var x in _data)
+				if (pred (x))
+					return x;
+			return null;
+		}
+
+		public Point? FindCellAddr (Predicate<Cell> pred)
+		{
+			for (int i = 0; i < GridSize ().X; i++)
+				for (int j = 0; j < GridSize ().Y; j++)
+					if (pred (_data [i, j]))
+						return new Point (i, j);
+			return null;
 		}
 
 		/// <summary>
