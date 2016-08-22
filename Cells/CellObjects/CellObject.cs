@@ -11,7 +11,7 @@ namespace Cells.CellObjects
 
 		public Color? UseColor { get; set; }
 
-		public int Depth { get; set; }
+		public float Depth { get; set; }
 
 		public Texture2D Texture { get; private set; }
 
@@ -19,6 +19,14 @@ namespace Cells.CellObjects
 		{
 			StringTexture = texture;
 			Content = content;
+			CollidePlayer = false;
+		}
+
+		public bool CollidePlayer { get; set; }
+
+		public bool Collision (ICellObject collObj)
+		{
+			return CollidePlayer && collObj is PersonCellObject;
 		}
 
 		public void LoadContent ()

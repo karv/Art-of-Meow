@@ -17,6 +17,11 @@ namespace Cells.CellObjects
 			_content = content;
 		}
 
+		bool ICellObject.Collision (ICellObject collObj)
+		{
+			return false;
+		}
+
 		public void LoadContent ()
 		{
 			Texture = _content.Load<Texture2D> (StringTexture);
@@ -24,6 +29,6 @@ namespace Cells.CellObjects
 
 		public Color? UseColor { get { return Color.White; } }
 
-		public int Depth { get { return 0; } }
+		public float Depth { get { return Depths.Background; } }
 	}
 }

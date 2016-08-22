@@ -55,13 +55,18 @@
   <ItemGroup>
     <Compile Include="Juego.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Screens\SomeScreen.cs" />
     <Compile Include="Cells\Grid.cs" />
     <Compile Include="Cells\CellObjects\ICellObject.cs" />
     <Compile Include="Cells\CellObjects\BackgroundCellObject.cs" />
     <Compile Include="Cells\CellObjects\PersonCellObject.cs" />
     <Compile Include="Cells\CellObjects\CellObject.cs" />
     <Compile Include="Cells\Cell.cs" />
+    <Compile Include="Screens\MapMainScreen.cs" />
+    <Compile Include="Units\IUnidad.cs" />
+    <Compile Include="Units\MovementDirectionEnum.cs" />
+    <Compile Include="Units\UnidadHumano.cs" />
+    <Compile Include="Cells\CellObjects\ICellLocalizable.cs" />
+    <Compile Include="Cells\Depths.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -78,5 +83,6 @@
     <Folder Include="Screens\" />
     <Folder Include="Cells\" />
     <Folder Include="Cells\CellObjects\" />
+    <Folder Include="Units\" />
   </ItemGroup>
 </Project>
