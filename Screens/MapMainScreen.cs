@@ -68,59 +68,58 @@ namespace Screens
 					break;
 				case OpenTK.Input.Key.Down:
 				case OpenTK.Input.Key.Keypad2:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador, 
 						MovementDirectionEnum.Down);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Right:
 				case OpenTK.Input.Key.Keypad6:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador, 
 						MovementDirectionEnum.Right);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Up:
 				case OpenTK.Input.Key.Keypad8:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador, 
 						MovementDirectionEnum.Up);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Left:
 				case OpenTK.Input.Key.Keypad4:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador, 
 						MovementDirectionEnum.Left);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad1:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador,
 						MovementDirectionEnum.DownLeft);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad3:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador,
 						MovementDirectionEnum.DownRight);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad7:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador, 
 						MovementDirectionEnum.UpLeft);
 					shouldTryRecenter = true;
 					break;
 				case OpenTK.Input.Key.Keypad9:
-					GameGrid.MoveCellObject (
+					endTurn = GameGrid.MoveCellObject (
 						Jugador,
 						MovementDirectionEnum.UpRight);
 					shouldTryRecenter = true;
 					break;
 			}
 
-			endTurn = shouldTryRecenter;
 			if (shouldTryRecenter)
 				GameGrid.CenterIfNeeded (Jugador);
 
