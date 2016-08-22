@@ -1,7 +1,10 @@
-﻿using Moggle.Controles;
+﻿using System.Linq;
+using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Cells.CellObjects;
+using Moggle.Controles;
+using Units;
+using System;
 
 namespace Cells
 {
@@ -98,5 +101,56 @@ namespace Cells
 			foreach (var x in _data)
 				x.LoadContent ();
 		}
+
+		/// <summary>
+		/// Busca la dirección absoluta de la celda que contiene un objeto dado.
+		/// </summary>
+		/// <returns>Si no existe, devuelve (-1, -1)</returns>
+		/// <param name="obj">Object.</param>
+		public bool FindCellAddrWithObject (ICellObject obj, out Point addr)
+		{
+			for (int i = 0; i < _data.GetLength (0); i++)
+				for (int j = 0; j < _data.GetLength (1); j++)
+					if (_data [i, j].Contains (obj))
+					{
+						addr = new Point (i, j);
+						return true;
+					}
+			addr = Point.Zero;
+			return false;
+		}
+
+		public Cell FindCellWithObject (ICellObject obj)
+		{
+			Point addr;
+			return FindCellAddrWithObject (obj, out addr) ? _data [addr.X, addr.Y] : null;
+		}
+
+		#region Movimiento
+
+		public bool MoveCellObject (ICellObject objeto, MovementDirectionEnum dir)
+		{
+			Point addrFrom;
+			if (!FindCellAddrWithObject (objeto, out addrFrom))
+				throw new Exception ("No existe objeto que se requiere mover.");
+			Point addrTo = Point.Zero;
+
+			switch (dir)
+			{
+				case MovementDirectionEnum.Down:
+					addrTo = new Point (addrFrom.X, addrFrom.Y + 1);
+					break;
+				default:
+					break;
+			}
+
+			_data [addrFrom.X, addrFrom.Y].MoveObjectToCell (
+				objeto,
+				_data [addrTo.X, addrTo.Y]);
+
+			return true;
+		}
+
+		#endregion
 	}
 }

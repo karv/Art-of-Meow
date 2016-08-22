@@ -62,6 +62,9 @@
     <Compile Include="Cells\CellObjects\CellObject.cs" />
     <Compile Include="Cells\Cell.cs" />
     <Compile Include="Screens\MapMainScreen.cs" />
+    <Compile Include="Units\IUnidad.cs" />
+    <Compile Include="Units\MovementDirectionEnum.cs" />
+    <Compile Include="Units\UnidadHumano.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -78,5 +81,6 @@
     <Folder Include="Screens\" />
     <Folder Include="Cells\" />
     <Folder Include="Cells\CellObjects\" />
+    <Folder Include="Units\" />
   </ItemGroup>
 </Project>

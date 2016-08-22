@@ -17,6 +17,12 @@ namespace Cells.CellObjects
 			_content = content;
 		}
 
+		public PersonCellObject (Texture2D texture)
+		{
+			Texture = texture;
+			StringTexture = Texture.Name;
+		}
+
 		public void LoadContent ()
 		{
 			Texture = _content.Load<Texture2D> (StringTexture);

@@ -2,12 +2,25 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Cells.CellObjects;
+using System;
 
 namespace Cells
 {
 	public class Cell
 	{
 		readonly List<ICellObject> Objects;
+
+		public bool Contains (ICellObject obj)
+		{
+			if (obj == null)
+				throw new ArgumentNullException ("obj");
+			
+			foreach (var x in Objects)
+				if (obj.Equals (x))
+					return true;
+
+			return false;
+		}
 
 		public Cell ()
 		{

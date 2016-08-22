@@ -5,8 +5,9 @@ using Moggle.IO;
 
 namespace Screens
 {
-	public class SomeScreen : Screen
+	public class MapMainScreen : Screen
 	{
+		
 		public override Color BgColor
 		{
 			get
@@ -17,7 +18,7 @@ namespace Screens
 
 		public Grid GameGrid;
 
-		public SomeScreen (Moggle.Game game)
+		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
 			GameGrid = new Grid (100, 100, this);
