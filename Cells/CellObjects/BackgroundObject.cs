@@ -4,30 +4,27 @@ using Microsoft.Xna.Framework;
 
 namespace Cells.CellObjects
 {
-	public class BackgroundCellObject : ICellObject
+	public class BackgroundObject : IGridObject
 	{
 		public readonly string StringTexture;
-		ContentManager _content;
 
 		public Texture2D Texture { get; private set; }
 
-		public BackgroundCellObject (Point loc,
-		                             string texture,
-		                             ContentManager content)
+		public BackgroundObject (Point loc,
+		                         string texture)
 		{
 			StringTexture = texture;
-			_content = content;
 			Location = loc;
 		}
 
-		bool ICellObject.Collision (ICellObject collObj)
+		bool IGridObject.Collision (IGridObject collObj)
 		{
 			return false;
 		}
 
-		public void LoadContent ()
+		public void LoadContent (ContentManager content)
 		{
-			Texture = _content.Load<Texture2D> (StringTexture);
+			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
 		public Color? UseColor { get { return Color.White; } }

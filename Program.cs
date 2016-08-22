@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-
-
+﻿
 namespace Art_of_Meow
 {
 	public class Program

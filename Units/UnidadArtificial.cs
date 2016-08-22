@@ -1,5 +1,4 @@
 ﻿using Cells.CellObjects;
-using Microsoft.Xna.Framework.Content;
 using Cells;
 
 namespace Units
@@ -33,9 +32,8 @@ namespace Units
 
 	public class UnidadArtificial : UnidadHumano
 	{
-		public UnidadArtificial (ContentManager content,
-		                         string texture = TextureType)
-			: base (content, texture)
+		public UnidadArtificial (string texture = TextureType)
+			: base (texture)
 		{
 		}
 

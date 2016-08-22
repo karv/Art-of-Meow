@@ -5,10 +5,9 @@ using Units;
 
 namespace Cells.CellObjects
 {
-	public class CellObject : ICellObject
+	public class GridObject : IGridObject
 	{
 		public readonly string StringTexture;
-		protected readonly ContentManager Content;
 
 		public Color UseColor { get; set; }
 
@@ -16,23 +15,22 @@ namespace Cells.CellObjects
 
 		public Texture2D Texture { get; private set; }
 
-		public CellObject (string texture, ContentManager content)
+		public GridObject (string texture)
 		{
 			StringTexture = texture;
-			Content = content;
 			CollidePlayer = false;
 		}
 
 		public bool CollidePlayer { get; set; }
 
-		public bool Collision (ICellObject collObj)
+		public bool Collision (IGridObject collObj)
 		{
 			return CollidePlayer && collObj is IUnidad;
 		}
 
-		public void LoadContent ()
+		public void LoadContent (ContentManager content)
 		{
-			Texture = Content.Load<Texture2D> (StringTexture);
+			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
 		public void Draw (Rectangle area, SpriteBatch bat)

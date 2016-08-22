@@ -1,10 +1,3 @@
-using Cells.CellObjects;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Moggle.Controles;
-using Units;
-using System;
-using System.Collections.Generic;
 
 namespace Cells
 {

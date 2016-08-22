@@ -10,7 +10,7 @@ namespace Cells
 {
 	public class Grid : SBC
 	{
-		public List<ICellObject> Objects = new List<ICellObject> ();
+		public List<IGridObject> Objects = new List<IGridObject> ();
 		const double probZacate = 0.1;
 		readonly Random _r = new Random ();
 
@@ -25,7 +25,7 @@ namespace Cells
 			// Inicializar cada celda
 			foreach (var x in contorno ())
 			{
-				var newObj = new CellObject ("brick-wall", Screen.Content);
+				var newObj = new GridObject ("brick-wall");
 				newObj.Depth = Depths.Foreground;
 				newObj.CollidePlayer = true;
 				newObj.UseColor = Color.DarkGray;
@@ -36,13 +36,12 @@ namespace Cells
 			for (int i = 0; i < xSize; i++)
 				for (int j = 0; j < ySize; j++)
 				{
-					Objects.Add (new BackgroundCellObject (
+					Objects.Add (new BackgroundObject (
 						new Point (i, j),
-						"floor",
-						Screen.Content));
+						"floor"));
 					if (_r.NextDouble () < probZacate)
 					{
-						var newObj = new CellObject ("vanilla-flower", Screen.Content);
+						var newObj = new GridObject ("vanilla-flower");
 						newObj.Location = new Point (i, j);
 						newObj.Depth = Depths.GroundDecoration;
 						newObj.CollidePlayer = false;
@@ -79,7 +78,7 @@ namespace Cells
 		/// Agrega un objeto al grid.
 		/// </summary>
 		/// <param name="obj">Object.</param>
-		public void AddCellObject (ICellObject obj)
+		public void AddCellObject (IGridObject obj)
 		{
 			Objects.Add (obj);
 		}
@@ -154,7 +153,7 @@ namespace Cells
 		public override void LoadContent ()
 		{
 			foreach (var x in Objects)
-				x.LoadContent ();
+				x.LoadContent (Screen.Content);
 		}
 
 		#region Cámara
@@ -182,7 +181,7 @@ namespace Cells
 			p.Y < CurrentVisibleTopLeft.Y + VisibleCells.Y;
 		}
 
-		public void CenterIfNeeded (ICellObject obj)
+		public void CenterIfNeeded (IGridObject obj)
 		{
 			if (obj == null)
 				throw new ArgumentNullException ("obj");
@@ -200,7 +199,7 @@ namespace Cells
 		/// <returns><c>true</c>, if cell object was moved, <c>false</c> otherwise.</returns>
 		/// <param name="objeto">Objeto</param>
 		/// <param name="dir">Dirección</param>
-		public bool MoveCellObject (ICellObject objeto, MovementDirectionEnum dir)
+		public bool MoveCellObject (IGridObject objeto, MovementDirectionEnum dir)
 		{
 			var moveDir = dir.AsDirectionalPoint ();
 			var endLoc = objeto.Location + moveDir;

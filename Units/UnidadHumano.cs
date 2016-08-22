@@ -9,25 +9,22 @@ namespace Units
 	public class UnidadHumano : IUnidad
 	{
 		public const string TextureType = "person";
-		readonly ContentManager _content;
 
 		public string TextureStr { get; protected set; }
 
 		public Texture2D Texture { get; protected set; }
 
-
-		public UnidadHumano (ContentManager content, string texture = TextureType)
+		public UnidadHumano (string texture = TextureType)
 		{
-			_content = content;
 			TextureStr = texture;
 		}
 
-		public void LoadContent ()
+		public void LoadContent (ContentManager content)
 		{
-			Texture = _content.Load<Texture2D> (TextureStr);
+			Texture = content.Load<Texture2D> (TextureStr);
 		}
 
-		public bool Collision (ICellObject collObj)
+		public bool Collision (IGridObject collObj)
 		{
 			return collObj is UnidadHumano; 
 		}

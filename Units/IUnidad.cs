@@ -2,7 +2,7 @@
 
 namespace Units
 {
-	public interface IUnidad : ICellObject
+	public interface IUnidad : IGridObject
 	{
 	}
 }

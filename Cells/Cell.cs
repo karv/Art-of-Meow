@@ -8,9 +8,9 @@ namespace Cells
 {
 	public class Cell
 	{
-		readonly List<ICellObject> Objects;
+		readonly List<IGridObject> Objects;
 
-		public bool Contains (ICellObject obj)
+		public bool Contains (IGridObject obj)
 		{
 			if (obj == null)
 				throw new ArgumentNullException ("obj");
@@ -22,7 +22,7 @@ namespace Cells
 			return false;
 		}
 
-		public ICellObject ExistsReturn (Predicate<ICellObject> pred)
+		public IGridObject ExistsReturn (Predicate<IGridObject> pred)
 		{
 			foreach (var x in Objects)
 				if (pred (x))
@@ -34,22 +34,22 @@ namespace Cells
 		/// <summary>
 		/// Determina si esta celda evita que un objeto pueda entrar.
 		/// </summary>
-		public bool Collision (ICellObject collObj)
+		public bool Collision (IGridObject collObj)
 		{
 			return Objects.Any (z => z.Collision (collObj) || collObj.Collision (z));
 		}
 
 		public Cell (Grid grid, Point location)
 		{
-			Objects = new List<ICellObject> ();
+			Objects = new List<IGridObject> ();
 			foreach (var x in grid.Objects)
 				if (x.Location == location)
 					Objects.Add (x);
 		}
 
-		public Cell (IEnumerable<ICellObject> objs)
+		public Cell (IEnumerable<IGridObject> objs)
 		{
-			Objects = new List<ICellObject> (objs);
+			Objects = new List<IGridObject> (objs);
 		}
 	}
 }
