@@ -20,8 +20,7 @@ namespace Units
 		/// </summary>
 		public static void Die (this IUnidad u)
 		{
-			u.MapGrid.Objects.Remove (u);
-			u.Dispose ();
+			u.MapGrid.RemoveObject (u);
 		}
 	}
 }

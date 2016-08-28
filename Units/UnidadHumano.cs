@@ -52,5 +52,23 @@ namespace Units
 		{
 			target.Die ();
 		}
+
+		/// <summary>
+		/// Move or melee to a direction
+		/// </summary>
+		/// <returns><c>true</c>, if action was taken, <c>false</c> otherwise.</returns>
+		/// <param name="dir">Direction</param>
+		public bool MoveOrMelee (MovementDirectionEnum dir)
+		{
+			if (!MapGrid.MoveCellObject (this, dir))
+			{
+				var targetCell = new Cell (MapGrid, Location + dir.AsDirectionalPoint ());
+				var target = targetCell.GetUnidadHere ();
+				if (target == null)
+					return false;
+				MeleeDamage (target);
+			}
+			return true;
+		}
 	}
 }

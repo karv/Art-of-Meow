@@ -1,4 +1,4 @@
-﻿using Cells.CellObjects;
+﻿using System.Linq;
 using Cells;
 
 namespace Units
@@ -21,7 +21,7 @@ namespace Units
 
 		public void DoAction ()
 		{
-			var target = MapGrid.Objects.Find (z => z is UnidadHumano);
+			var target = MapGrid.Objects.FirstOrDefault (z => z is UnidadHumano);
 			var dir = Yo.Location.GetDirectionTo (target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
