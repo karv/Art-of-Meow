@@ -78,7 +78,7 @@ namespace Units
 
 		void IUpdate.Update (GameTime gameTime)
 		{
-			throw new System.NotImplementedException ();
+			Recursos.Update (gameTime);
 		}
 
 		public UnidadHumano (string texture = TextureType)
@@ -88,6 +88,7 @@ namespace Units
 			RecursoHP = new RecursoEstático ("hp", this);
 			RecursoHP.NombreCorto = "HP";
 			RecursoHP.NombreLargo = "Hit points";
+			RecursoHP.Valor = 5;
 			Recursos.Add (RecursoHP);
 		}
 	}

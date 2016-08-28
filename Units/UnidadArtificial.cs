@@ -34,6 +34,7 @@ namespace Units
 		public UnidadArtificial (string texture = TextureType)
 			: base (texture)
 		{
+			RecursoHP.Valor = 2;
 		}
 
 		public IIntelligence IA { get; set; }

@@ -60,15 +60,14 @@ namespace Units.Recursos
 			return _data.Remove (nombreRec);
 		}
 
-		protected void Update (GameTime gameTime)
+		/// <summary>
+		/// Runs the logic update
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		public void Update (GameTime gameTime)
 		{
 			foreach (var x in _data.Values)
 				x.Update (gameTime);
-		}
-
-		void IUpdate.Update (GameTime gameTime)
-		{
-			Update (gameTime);
 		}
 
 		/// <summary>
