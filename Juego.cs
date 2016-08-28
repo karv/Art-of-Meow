@@ -8,19 +8,24 @@ namespace Art_of_Meow
 	{
 		#region Texturas definidas
 
-		public Texture2D SolidTexture { get; private set; }
+		public static Textures Textures { get; private set; }
 
 		#endregion
 
 		public Juego ()
 		{
-			buildTextures ();
 			Graphics.IsFullScreen = true;
+			Textures = new Textures (GraphicsDevice);
 		}
+	}
 
-		void buildTextures ()
+	public class Textures
+	{
+		public readonly Texture2D SolidTexture;
+
+		public Textures (GraphicsDevice gd)
 		{
-			SolidTexture = new Texture2D (GraphicsDevice, 1, 1);
+			SolidTexture = new Texture2D (gd, 1, 1);
 			var data = new Color[1];
 			data [0] = Color.White;
 			SolidTexture.SetData (data);
