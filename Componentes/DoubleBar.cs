@@ -1,15 +1,60 @@
-﻿using Moggle.Controles;
-using Moggle.Screens;
-using Microsoft.Xna.Framework;
+﻿using System;
 using Art_of_Meow;
+using Microsoft.Xna.Framework;
+using Moggle.Controles;
+using Moggle.Screens;
+using Units.Recursos;
+using Units;
 
 namespace Componentes
 {
+	public class StatDoubleBar : DoubleBar
+	{
+		public IRecurso Recurso { get; }
+
+		public IUnidad Unidad { get; }
+
+		public string NombreRecurso { get; }
+
+		public override float CurrValue
+		{
+			get
+			{
+				return Recurso.Valor;
+			}
+			set
+			{
+				Recurso.Valor = value;
+			}
+		}
+
+		public override float MaxValue
+		{
+			get
+			{
+				return 10;
+			}
+			set
+			{
+				throw new Exception ();
+			}
+		}
+
+		public StatDoubleBar (IScreen scr, IUnidad unidad, string nomRec)
+			: base (scr)
+		{
+			Unidad = unidad;
+			NombreRecurso = nomRec;
+
+			Recurso = unidad.Recursos.GetRecurso (NombreRecurso);
+		}
+	}
+
 	public class DoubleBar : SBC
 	{
-		public float MaxValue { get; set; }
+		public virtual float MaxValue { get; set; }
 
-		public float CurrValue { get; set; }
+		public virtual float CurrValue { get; set; }
 
 		public float RelativeValue
 		{

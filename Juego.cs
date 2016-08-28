@@ -12,10 +12,15 @@ namespace Art_of_Meow
 
 		#endregion
 
+		protected override void LoadContent ()
+		{
+			base.LoadContent ();
+			Textures = new Textures (GraphicsDevice);
+		}
+
 		public Juego ()
 		{
 			Graphics.IsFullScreen = true;
-			Textures = new Textures (GraphicsDevice);
 		}
 	}
 
