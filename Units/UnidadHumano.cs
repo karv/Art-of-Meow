@@ -72,6 +72,7 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
+			Recursos.Add (new Recursos.RecursoEstático ("hp", this));
 		}
 	}
 }
