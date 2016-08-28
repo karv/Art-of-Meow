@@ -8,6 +8,7 @@ using Units;
 
 namespace Componentes
 {
+	[Obsolete]
 	public class StatDoubleBar : DoubleBar
 	{
 		public IRecurso Recurso { get; }
@@ -50,6 +51,7 @@ namespace Componentes
 		}
 	}
 
+	[Obsolete]
 	public class DoubleBar : SBC
 	{
 		public virtual float MaxValue { get; set; }
