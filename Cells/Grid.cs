@@ -1,10 +1,11 @@
-﻿using Cells.CellObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units;
-using System;
-using System.Collections.Generic;
 
 namespace Cells
 {
@@ -210,6 +211,13 @@ namespace Cells
 		{
 			base.Update (gameTime);
 			applyDelta ();
+		}
+
+		void updateUnits (GameTime gameTime)
+		{
+			foreach (var x in Objects.OfType<IUnidad> ())
+				if (x.Habilitado)
+					x.Update (gameTime);
 		}
 
 		#region Cámara

@@ -26,7 +26,7 @@ namespace Units.Recursos
 		/// <summary>
 		/// Valor actual del recurso.
 		/// </summary>
-		float Valor { get; }
+		float Valor { get; set; }
 
 		/// <summary>
 		/// Unidad que posee este recurso.

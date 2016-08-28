@@ -55,7 +55,7 @@ namespace Screens
 		public override void Update (GameTime gameTime)
 		{
 			base.Update (gameTime);
-			var state = OpenTK.Input.Keyboard.GetState ();
+			var state = Keyboard.GetState ();
 			if (!state.IsAnyKeyDown)
 				return;
 			foreach (var k in typeof (Key).GetEnumValues ())

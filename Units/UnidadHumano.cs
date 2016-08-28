@@ -4,12 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Cells;
 using Units.Recursos;
+using MonoGame.Extended;
 
 namespace Units
 {
 	public class UnidadHumano : IUnidad
 	{
 		public ManejadorRecursos Recursos { get; }
+
+		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
 		public readonly RecursoEstático RecursoHP;
 
@@ -50,6 +53,8 @@ namespace Units
 
 		public void MeleeDamage (IUnidad target)
 		{
+			var hp = target.Recursos.GetRecurso ("hp");
+			hp.Valor -= 1;
 			target.Die ();
 		}
 
@@ -69,6 +74,11 @@ namespace Units
 				MeleeDamage (target);
 			}
 			return true;
+		}
+
+		void IUpdate.Update (GameTime gameTime)
+		{
+			throw new System.NotImplementedException ();
 		}
 
 		public UnidadHumano (string texture = TextureType)
