@@ -17,13 +17,17 @@ namespace Screens
 		public Grid GameGrid;
 		public UnidadHumano Jugador;
 		public List<UnidadArtificial> UnidadesArtificial = new List<UnidadArtificial> ();
-		public readonly Point StartingPoint = new Point (1, 1);
+		public readonly Point StartingPoint = new Point (50, 50);
 
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GameGrid = new Grid (100, 100, this);
-			GameGrid.ControlTopLeft = new Point (100, 100);
+			GameGrid = new Grid (100, 100, this)
+			{
+				// TODO: calcularlo automáticamente.
+				ControlTopLeft = new Point (20, 0),
+				VisibleCells = new Point (55, 27)
+			};
 
 			for (int i = 0; i < NumChasers; i++)
 			{
@@ -36,6 +40,7 @@ namespace Screens
 			Jugador = new UnidadHumano ();
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
+			GameGrid.TryCenterOn (Jugador.Location);
 		}
 
 		public override void Inicializar ()
