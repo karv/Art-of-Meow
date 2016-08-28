@@ -70,6 +70,7 @@
     <Compile Include="Units\Recursos\IRecurso.cs" />
     <Compile Include="Units\Recursos\ManejadorRecursos.cs" />
     <Compile Include="Units\Recursos\RecursoEstático.cs" />
+    <Compile Include="Componentes\DoubleBar.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -88,5 +89,6 @@
     <Folder Include="Cells\CellObjects\" />
     <Folder Include="Units\" />
     <Folder Include="Units\Recursos\" />
+    <Folder Include="Componentes\" />
   </ItemGroup>
 </Project>

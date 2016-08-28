@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Cells;
 using Units.Recursos;
 using MonoGame.Extended;
+using Art_of_Meow;
 
 namespace Units
 {
@@ -34,6 +35,11 @@ namespace Units
 			return collObj is UnidadHumano; 
 		}
 
+		float hpRelativeValue
+		{
+			get { return RecursoHP.Valor / 5; }
+		}
+
 		public void Draw (Rectangle area, SpriteBatch bat)
 		{
 			bat.Draw (
@@ -42,6 +48,19 @@ namespace Units
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Unidad);
+
+// Barras
+			var rec = new Rectangle (area.Left, area.Bottom, area.Width, 3);
+
+			bat.Draw (Juego.Textures.SolidTexture, rec, Color.Gray * 0.7f);
+			var fgRect = new Rectangle (
+				             rec.Location, 
+				             new Point (
+					             (int)(rec.Width * hpRelativeValue),
+					             rec.Height));
+
+			bat.Draw (Juego.Textures.SolidTexture, fgRect, Color.Red);
+
 		}
 
 		public void Dispose ()
