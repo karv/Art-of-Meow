@@ -3,12 +3,15 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Cells;
+using Units.Recursos;
 
 namespace Units
 {
 	public class UnidadHumano : IUnidad
 	{
 		public ManejadorRecursos Recursos { get; }
+
+		public readonly RecursoEstático RecursoHP;
 
 		public Grid MapGrid { get; set; }
 
@@ -72,7 +75,10 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
-			Recursos.Add (new Recursos.RecursoEstático ("hp", this));
+			RecursoHP = new RecursoEstático ("hp", this);
+			RecursoHP.NombreCorto = "HP";
+			RecursoHP.NombreLargo = "Hit points";
+			Recursos.Add (RecursoHP);
 		}
 	}
 }

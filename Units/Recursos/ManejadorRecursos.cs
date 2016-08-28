@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
-namespace Units
+namespace Units.Recursos
 {
 	/// <summary>
 	/// Clase que sirve como medio entre un <see cref="IUnidad"/> y sus <see cref="IRecurso"/>
@@ -39,7 +39,7 @@ namespace Units
 		/// <param name="rec">Nuevo recurso.</param>
 		public void Add (IRecurso rec)
 		{
-			_data.Add (rec.Nombre, rec);
+			_data.Add (rec.NombreÚnico, rec);
 		}
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace Units
 		/// <param name="rec">Recurso</param>
 		public bool Remove (IRecurso rec)
 		{
-			return _data.Remove (rec.Nombre);
+			return _data.Remove (rec.NombreÚnico);
 		}
 
 		/// <summary>

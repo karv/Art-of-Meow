@@ -1,7 +1,7 @@
 ﻿using MonoGame.Extended;
 using Units;
 
-namespace Units
+namespace Units.Recursos
 {
 	/// <summary>
 	/// Un 'stat' de una unidad.
@@ -11,7 +11,17 @@ namespace Units
 		/// <summary>
 		/// Nombre (debe ser único en el manejador de recursos) del recurso
 		/// </summary>
-		string Nombre { get; }
+		string NombreÚnico { get; }
+
+		/// <summary>
+		/// Nombre corto
+		/// </summary>
+		string NombreCorto { get; }
+
+		/// <summary>
+		/// Nombre largo
+		/// </summary>
+		string NombreLargo { get; }
 
 		/// <summary>
 		/// Valor actual del recurso.

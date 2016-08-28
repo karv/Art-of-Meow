@@ -8,28 +8,19 @@ namespace Units.Recursos
 		{
 		}
 
-		public string Nombre { get; }
+		public string NombreCorto { get; set; }
 
-		float _valor;
+		public string NombreLargo { get; set; }
 
-		public float Valor
-		{
-			get{ return _valor; }
-			set
-			{
-				_valor = value;
-				if (_valor <= 0)
-					AlLlegarCero?.Invoke (this, EventArgs.Empty);
-			}
-		}
+		public string NombreÚnico { get; }
+
+		public float Valor { get; set; }
 
 		public IUnidad Unidad { get; }
 
-		public event EventHandler AlLlegarCero;
-
 		public RecursoEstático (string nombre, IUnidad unidad)
 		{
-			Nombre = nombre;
+			NombreÚnico = nombre;
 			Unidad = unidad;
 		}
 
