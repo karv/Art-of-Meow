@@ -3,6 +3,7 @@ using Cells.CellObjects;
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Units;
 
 namespace Cells
 {
@@ -29,6 +30,11 @@ namespace Cells
 					return x;
 
 			return null;
+		}
+
+		public IUnidad GetUnidadHere ()
+		{
+			return ExistsReturn (z => z is IUnidad) as IUnidad;
 		}
 
 		/// <summary>

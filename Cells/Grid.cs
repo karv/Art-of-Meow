@@ -1,16 +1,33 @@
-﻿using Cells.CellObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units;
-using System;
-using System.Collections.Generic;
 
 namespace Cells
 {
+	enum addRemoveEnum
+	{
+		Add,
+		Remove
+	}
+
 	public class Grid : SBC
 	{
-		public List<IGridObject> Objects = new List<IGridObject> ();
+		public ICollection<IGridObject> Objects
+		{
+			get
+			{
+				return _objects;
+			}
+		}
+
+		HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		List<Tuple<IGridObject, addRemoveEnum>> _deltaObjects = new List<Tuple<IGridObject, addRemoveEnum>> ();
+
 		const double probZacate = 0.1;
 		readonly Random _r = new Random ();
 
@@ -30,13 +47,13 @@ namespace Cells
 				newObj.CollidePlayer = true;
 				newObj.UseColor = Color.DarkGray;
 				newObj.Location = x;
-				Objects.Add (newObj);
+				_objects.Add (newObj);
 			}
 
 			for (int i = 0; i < xSize; i++)
 				for (int j = 0; j < ySize; j++)
 				{
-					Objects.Add (new BackgroundObject (
+					_objects.Add (new BackgroundObject (
 						new Point (i, j),
 						"floor"));
 					if (_r.NextDouble () < probZacate)
@@ -46,9 +63,9 @@ namespace Cells
 						newObj.Depth = Depths.GroundDecoration;
 						newObj.CollidePlayer = false;
 						newObj.UseColor = Color.Green;
-						Objects.Add (newObj);
+						_objects.Add (newObj);
 					}
-				}				
+				}
 		}
 
 		/// <summary>
@@ -80,7 +97,16 @@ namespace Cells
 		/// <param name="obj">Object.</param>
 		public void AddCellObject (IGridObject obj)
 		{
-			Objects.Add (obj);
+			_deltaObjects.Add (new Tuple<IGridObject, addRemoveEnum> (
+				obj,
+				addRemoveEnum.Add));
+		}
+
+		public void RemoveObject (IGridObject obj)
+		{
+			_deltaObjects.Add (new Tuple<IGridObject, addRemoveEnum> (
+				obj,
+				addRemoveEnum.Remove));
 		}
 
 		/// <summary>
@@ -134,10 +160,12 @@ namespace Cells
 		{
 			var bat = Screen.GetNewBatch ();
 			bat.Begin (SpriteSortMode.BackToFront);
-			foreach (var x in Objects)
+			foreach (var x in new HashSet<IGridObject>  (_objects))
 			{
 				if (IsVisible (x.Location))
 				{
+					if (x.Texture == null)
+						Console.WriteLine ();
 					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
 					x.Draw (rectOutput, bat);
 				}
@@ -152,8 +180,44 @@ namespace Cells
 
 		public override void LoadContent ()
 		{
-			foreach (var x in Objects)
+			applyDelta ();
+			foreach (var x in _objects)
 				x.LoadContent (Screen.Content);
+		}
+
+		public override void CatchKey (OpenTK.Input.Key key)
+		{
+			base.CatchKey (key);
+		}
+
+		void applyDelta ()
+		{
+			foreach (var x in _deltaObjects)
+			{
+				if (x.Item2 == addRemoveEnum.Add)
+				{
+					_objects.Add (x.Item1);
+				}
+				else
+				{
+					x.Item1.Dispose ();
+					_objects.Remove (x.Item1);
+				}
+			}
+			_deltaObjects.Clear ();
+		}
+
+		public override void Update (GameTime gameTime)
+		{
+			base.Update (gameTime);
+			applyDelta ();
+		}
+
+		void updateUnits (GameTime gameTime)
+		{
+			foreach (var x in Objects.OfType<IUnidad> ())
+				if (x.Habilitado)
+					x.Update (gameTime);
 		}
 
 		#region Cámara

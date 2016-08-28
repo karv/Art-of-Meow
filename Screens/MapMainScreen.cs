@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Cells;
 using Units;
 using System.Collections.Generic;
+using OpenTK.Input;
 
 namespace Screens
 {
@@ -16,23 +17,30 @@ namespace Screens
 		public Grid GameGrid;
 		public UnidadHumano Jugador;
 		public List<UnidadArtificial> UnidadesArtificial = new List<UnidadArtificial> ();
-		public readonly Point StartingPoint = new Point (1, 1);
+		public readonly Point StartingPoint = new Point (50, 50);
 
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GameGrid = new Grid (100, 100, this);
-			GameGrid.ControlTopLeft = new Point (100, 100);
+			GameGrid = new Grid (100, 100, this)
+			{
+				// TODO: calcularlo automáticamente.
+				ControlTopLeft = new Point (20, 0),
+				VisibleCells = new Point (55, 27)
+			};
 
 			for (int i = 0; i < NumChasers; i++)
 			{
 				var chaser = new UnidadArtificial ();
-				chaser.IA = new ChaseIntelligence (GameGrid, chaser);
+				chaser.MapGrid = GameGrid;
+				chaser.IA = new ChaseIntelligence (chaser);
 				chaser.Location = GameGrid.RandomPoint ();
 				UnidadesArtificial.Add (chaser);
 			}
 			Jugador = new UnidadHumano ();
+			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
+			GameGrid.TryCenterOn (Jugador.Location);
 		}
 
 		public override void Inicializar ()
@@ -44,73 +52,70 @@ namespace Screens
 				GameGrid.AddCellObject (x);
 		}
 
-		public override void LoadContent ()
+		public override void Update (GameTime gameTime)
 		{
-			base.LoadContent ();
-			GameGrid.LoadContent ();
+			base.Update (gameTime);
+			var state = Keyboard.GetState ();
+			if (!state.IsAnyKeyDown)
+				return;
+			foreach (var k in typeof (Key).GetEnumValues ())
+			{
+				var key = (Key)k;
+				if (state.IsKeyDown (key))
+					TeclaPresionada (key);
+			}			
+			//foreach (var x in state.IsAnyKeyDown)
+			//	TeclaPresionada (x);
 		}
 
-		protected override void TeclaPresionada (OpenTK.Input.Key key)
+		/// <summary>
+		/// Teclas the presionada.
+		/// </summary>
+		/// <param name="key">Key.</param>
+		protected override void TeclaPresionada (Key key)
 		{
 			bool shouldTryRecenter = false;
 			bool endTurn = false;
+			var actionDir = MovementDirectionEnum.NoMov;
 			switch (key)
 			{
-				case OpenTK.Input.Key.Escape:
+				case Key.Escape:
 					Juego.Exit ();
 					break;
-				case OpenTK.Input.Key.Down:
-				case OpenTK.Input.Key.Keypad2:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador, 
-						MovementDirectionEnum.Down);
-					shouldTryRecenter = true;
+				case Key.Down:
+				case Key.Keypad2:
+					actionDir = MovementDirectionEnum.Down;
 					break;
-				case OpenTK.Input.Key.Right:
-				case OpenTK.Input.Key.Keypad6:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador, 
-						MovementDirectionEnum.Right);
-					shouldTryRecenter = true;
+				case Key.Right:
+				case Key.Keypad6:
+					actionDir = MovementDirectionEnum.Right;
 					break;
-				case OpenTK.Input.Key.Up:
-				case OpenTK.Input.Key.Keypad8:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador, 
-						MovementDirectionEnum.Up);
-					shouldTryRecenter = true;
+				case Key.Up:
+				case Key.Keypad8:
+					actionDir = MovementDirectionEnum.Up;
 					break;
-				case OpenTK.Input.Key.Left:
-				case OpenTK.Input.Key.Keypad4:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador, 
-						MovementDirectionEnum.Left);
-					shouldTryRecenter = true;
+				case Key.Left:
+				case Key.Keypad4:
+					actionDir = MovementDirectionEnum.Left;
 					break;
-				case OpenTK.Input.Key.Keypad1:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador,
-						MovementDirectionEnum.DownLeft);
-					shouldTryRecenter = true;
+				case Key.Keypad1:
+					actionDir = MovementDirectionEnum.DownLeft;
 					break;
-				case OpenTK.Input.Key.Keypad3:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador,
-						MovementDirectionEnum.DownRight);
-					shouldTryRecenter = true;
+				case Key.Keypad3:
+					actionDir = MovementDirectionEnum.DownRight;
 					break;
-				case OpenTK.Input.Key.Keypad7:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador, 
-						MovementDirectionEnum.UpLeft);
-					shouldTryRecenter = true;
+				case Key.Keypad7:
+					actionDir = MovementDirectionEnum.UpLeft;
 					break;
-				case OpenTK.Input.Key.Keypad9:
-					endTurn = GameGrid.MoveCellObject (
-						Jugador,
-						MovementDirectionEnum.UpRight);
-					shouldTryRecenter = true;
+				case Key.Keypad9:
+					actionDir = MovementDirectionEnum.UpRight;
 					break;
+			}
+
+			if (actionDir != MovementDirectionEnum.NoMov)
+			{
+				endTurn = Jugador.MoveOrMelee (actionDir);
+				shouldTryRecenter = endTurn;
 			}
 
 			if (shouldTryRecenter)
