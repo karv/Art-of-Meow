@@ -67,6 +67,8 @@
     <Compile Include="Cells\CellObjects\IGridObject.cs" />
     <Compile Include="Cells\CellObjects\BackgroundObject.cs" />
     <Compile Include="Cells\CellObjects\GridObject.cs" />
+    <Compile Include="Units\IRecurso.cs" />
+    <Compile Include="Units\ManejadorRecursos.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

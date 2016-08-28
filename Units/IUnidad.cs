@@ -11,6 +11,8 @@ namespace Units
 		/// Try to damage a target.
 		/// </summary>
 		void MeleeDamage (IUnidad target);
+
+		ManejadorRecursos Recursos { get; }
 	}
 
 	static class UnidadImplementation

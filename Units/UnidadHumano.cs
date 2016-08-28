@@ -8,6 +8,8 @@ namespace Units
 {
 	public class UnidadHumano : IUnidad
 	{
+		public ManejadorRecursos Recursos { get; }
+
 		public Grid MapGrid { get; set; }
 
 		public const string TextureType = "person";
@@ -15,11 +17,6 @@ namespace Units
 		public string TextureStr { get; protected set; }
 
 		public Texture2D Texture { get; protected set; }
-
-		public UnidadHumano (string texture = TextureType)
-		{
-			TextureStr = texture;
-		}
 
 		public void LoadContent (ContentManager content)
 		{
@@ -69,6 +66,12 @@ namespace Units
 				MeleeDamage (target);
 			}
 			return true;
+		}
+
+		public UnidadHumano (string texture = TextureType)
+		{
+			TextureStr = texture;
+			Recursos = new ManejadorRecursos ();
 		}
 	}
 }
