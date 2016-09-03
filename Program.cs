@@ -8,7 +8,6 @@ namespace Art_of_Meow
 		public static void Main ()
 		{
 			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);
-			MyGame.CurrentScreen.Initialize ();
 			MyGame.Run ();
 		}
 	}
