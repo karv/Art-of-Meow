@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Cells;
 using Units;
 using System.Collections.Generic;
-using OpenTK.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 
@@ -43,16 +42,18 @@ namespace Screens
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
+
 		}
 
 		public override void Initialize ()
 		{
-			base.Initialize ();
-			Components.Add (GameGrid);
-
 			GameGrid.AddCellObject (Jugador);
 			foreach (var x in UnidadesArtificial)
 				GameGrid.AddCellObject (x);
+
+			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
+			// los nuevos objetos.
+			base.Initialize ();
 		}
 
 		public override void Update (GameTime gameTime)
