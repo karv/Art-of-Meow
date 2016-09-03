@@ -56,25 +56,6 @@ namespace Screens
 			base.Initialize ();
 		}
 
-		public override void Update (GameTime gameTime)
-		{
-			base.Update (gameTime);
-			/*
-			var state = Keyboard.GetState ();
-			if (!state.IsAnyKeyDown)
-				return;
-			foreach (var k in typeof (Key).GetEnumValues ())
-			{
-				var key = (Key)k;
-				if (state.IsKeyDown (key))
-					TeclaPresionada (new KeyboardEventArgs (key, state));
-				//TeclaPresionada (key);
-			}			
-			//foreach (var x in state.IsAnyKeyDown)
-			//	TeclaPresionada (x);
-			*/
-		}
-
 		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			TeclaPresionada (key);
