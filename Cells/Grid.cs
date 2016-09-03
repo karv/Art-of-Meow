@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units;
+using MonoGame.Extended.Shapes;
+using MonoGame.Extended;
 
 namespace Cells
 {
@@ -15,7 +17,7 @@ namespace Cells
 		Remove
 	}
 
-	public class Grid : SBC
+	public class Grid : DSBC
 	{
 		public ICollection<IGridObject> Objects
 		{
@@ -31,7 +33,7 @@ namespace Cells
 		const double probZacate = 0.1;
 		readonly Random _r = new Random ();
 
-		public Point CellSize = new Point (24, 24);
+		public SizeF CellSize = new SizeF (24, 24);
 
 		public Point GridSize { get; }
 
@@ -117,15 +119,15 @@ namespace Cells
 		/// <summary>
 		/// Posición top left del control.
 		/// </summary>
-		public Point ControlTopLeft = Point.Zero;
-		public Point VisibleCells = new Point (50, 20);
+		public Vector2 ControlTopLeft = Vector2.Zero;
+		public Size VisibleCells = new Size (50, 20);
 
-		public Point ControlSize
+		public SizeF ControlSize
 		{
 			get
 			{
-				return new Point (VisibleCells.X * CellSize.X,
-					VisibleCells.Y * CellSize.Y);
+				return new SizeF (VisibleCells.Width * CellSize.Width,
+					VisibleCells.Height * CellSize.Height);
 			}
 		}
 
@@ -133,16 +135,18 @@ namespace Cells
 		/// Devuelve la posición de un spot de celda (por lo tanto coordenadas absolutas)
 		/// </summary>
 		/// <param name="p">coordenadas del spot</param>
-		public Point CellSpotLocation (Point p)
+		public Vector2 CellSpotLocation (Point p)
 		{
-			return ControlTopLeft + CellSize * (p - CurrentVisibleTopLeft);
+			var _x = ControlTopLeft.X + CellSize.Width * (p.X - CurrentVisibleTopLeft.X);
+			var _y = ControlTopLeft.Y + CellSize.Height * (p.Y - CurrentVisibleTopLeft.Y);
+			return new Vector2 (_x, _y);
 		}
 
-		public Rectangle Bounds
+		public RectangleF Bounds
 		{
 			get
 			{
-				return new Rectangle (ControlTopLeft, ControlSize);
+				return new RectangleF (ControlTopLeft, ControlSize);
 			}
 		}
 
@@ -151,43 +155,39 @@ namespace Cells
 		/// </summary>
 		/// <param name="x">Coordenada X</param>
 		/// <param name="y">Coordenada Y</param>
-		public Point CellSpotLocation (int x, int y)
+		public Vector2 CellSpotLocation (int x, int y)
 		{
 			return CellSpotLocation (new Point (x, y));
 		}
 
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
-			var bat = Screen.GetNewBatch ();
-			bat.Begin (SpriteSortMode.BackToFront);
+			//var bat = Screen.
+			//bat.Begin (SpriteSortMode.BackToFront);
+			var bat = Screen.Batch;
 			foreach (var x in new HashSet<IGridObject>  (_objects))
 			{
 				if (IsVisible (x.Location))
 				{
 					if (x.Texture == null)
 						Console.WriteLine ();
-					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
+					var rectOutput = new RectangleF (CellSpotLocation (x.Location), CellSize);
 					x.Draw (rectOutput, bat);
 				}
 			}
 			bat.End ();
 		}
 
-		public override Moggle.Shape.IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
-			return (Moggle.Shape.Rectangle)Bounds;
+			return Bounds;
 		}
 
-		public override void LoadContent ()
+		protected override void LoadContent ()
 		{
 			applyDelta ();
 			foreach (var x in _objects)
 				x.LoadContent (Screen.Content);
-		}
-
-		public override void CatchKey (OpenTK.Input.Key key)
-		{
-			base.CatchKey (key);
 		}
 
 		void applyDelta ()
@@ -209,7 +209,6 @@ namespace Cells
 
 		public override void Update (GameTime gameTime)
 		{
-			base.Update (gameTime);
 			applyDelta ();
 		}
 
@@ -228,8 +227,8 @@ namespace Cells
 		/// <param name="p">P.</param>
 		public void TryCenterOn (Point p)
 		{
-			var left = Math.Max (0, p.X - VisibleCells.X / 2);
-			var top = Math.Max (0, p.Y - VisibleCells.Y / 2);
+			var left = Math.Max (0, p.X - VisibleCells.Width / 2);
+			var top = Math.Max (0, p.Y - VisibleCells.Height / 2);
 			CurrentVisibleTopLeft = new Point (left, top);
 		}
 
@@ -240,9 +239,9 @@ namespace Cells
 		public bool IsVisible (Point p)
 		{
 			return CurrentVisibleTopLeft.X <= p.X &&
-			p.X < CurrentVisibleTopLeft.X + VisibleCells.X &&
+			p.X < CurrentVisibleTopLeft.X + VisibleCells.Width &&
 			CurrentVisibleTopLeft.Y <= p.Y &&
-			p.Y < CurrentVisibleTopLeft.Y + VisibleCells.Y;
+			p.Y < CurrentVisibleTopLeft.Y + VisibleCells.Height;
 		}
 
 		public void CenterIfNeeded (IGridObject obj)

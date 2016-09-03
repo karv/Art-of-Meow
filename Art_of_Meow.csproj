@@ -35,19 +35,19 @@
     <Reference Include="MonoGame.Framework">
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="NVorbis">
-      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\NVorbis.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK">
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Extended">
-      <HintPath>packages\MonoGame.Extended.0.5.149\lib\MonoGame.Extended.dll</HintPath>
-    </Reference>
-    <Reference Include="Controles_Moggle">
-      <HintPath>packages\Moggle.0.2.1\lib\Controles_Moggle.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="Controles_Moggle">
+      <HintPath>packages\Moggle.0.3\lib\Controles_Moggle.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Extended">
+      <HintPath>packages\Moggle.0.3\lib\MonoGame.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>packages\Moggle.0.3\lib\NVorbis.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

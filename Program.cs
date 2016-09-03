@@ -8,8 +8,7 @@ namespace Art_of_Meow
 		public static void Main ()
 		{
 			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);
-			MyGame.CurrentScreen.Inicializar ();
-			MyGame.CurrentScreen.Escuchando = true;
+			MyGame.CurrentScreen.Initialize ();
 			MyGame.Run ();
 		}
 	}
