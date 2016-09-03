@@ -7,7 +7,6 @@ using Units.Recursos;
 using MonoGame.Extended;
 using Art_of_Meow;
 using MonoGame.Extended.Shapes;
-using MonoGame.Extended;
 
 namespace Units
 {
