@@ -5,6 +5,7 @@ using Moggle.Controles;
 using Moggle.Screens;
 using Units.Recursos;
 using Units;
+using MonoGame.Extended.Shapes;
 
 namespace Componentes
 {
@@ -52,7 +53,7 @@ namespace Componentes
 	}
 
 	[Obsolete]
-	public class DoubleBar : SBC
+	public class DoubleBar : DSBC
 	{
 		public virtual float MaxValue { get; set; }
 
@@ -63,13 +64,13 @@ namespace Componentes
 			get { return CurrValue / MaxValue; }
 		}
 
-		public Moggle.Shape.Rectangle Bounds { get; set; }
+		public RectangleF Bounds { get; set; }
 
 		public Color BgColor { get; set; }
 
 		public Color FgColor { get; set; }
 
-		public override void Dibujar (GameTime gameTime)
+		public override void Draw (GameTime gameTime)
 		{
 			var rec = (Rectangle)Bounds;
 			var bat = Screen.Batch;
@@ -83,11 +84,11 @@ namespace Componentes
 			bat.Draw (Juego.Textures.SolidTexture, fgRect, FgColor);
 		}
 
-		public override void LoadContent ()
+		public override void Update (GameTime gameTime)
 		{
 		}
 
-		public override Moggle.Shape.IShape GetBounds ()
+		public override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}

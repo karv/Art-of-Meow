@@ -6,6 +6,7 @@ using Cells;
 using Units.Recursos;
 using MonoGame.Extended;
 using Art_of_Meow;
+using MonoGame.Extended.Shapes;
 
 namespace Units
 {
@@ -40,17 +41,19 @@ namespace Units
 			get { return RecursoHP.Valor / 5; }
 		}
 
-		public void Draw (Rectangle area, SpriteBatch bat)
+		public void Draw (RectangleF area, SpriteBatch bat)
 		{
+			// TODO: Invocar el métido extendido de MonoGame.Extended
+			var ar = area.ToRectangle ();
 			bat.Draw (
 				Texture,
-				area, null, Color.White,
+				ar, null, Color.White,
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Unidad);
 
 // Barras
-			var rec = new Rectangle (area.Left, area.Bottom, area.Width, 3);
+			var rec = new Rectangle (ar.Left, ar.Bottom, ar.Width, 3);
 
 			bat.Draw (Juego.Textures.SolidTexture, rec, Color.Gray * 0.7f);
 			var fgRect = new Rectangle (

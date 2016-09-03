@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using Microsoft.Xna.Framework.Content;
+using MonoGame.Extended.Shapes;
 
 namespace Cells.CellObjects
 {
@@ -26,6 +27,6 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <param name="area">TopLeft of the output.</param>
 		/// <param name="bat">SpriteBatch de dibujo</param>
-		void Draw (Rectangle area, SpriteBatch bat);
+		void Draw (RectangleF area, SpriteBatch bat);
 	}
 }

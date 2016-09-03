@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Units;
+using MonoGame.Extended.Shapes;
+using OpenTK.Graphics.OpenGL;
 
 namespace Cells.CellObjects
 {
@@ -33,11 +35,13 @@ namespace Cells.CellObjects
 			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
-		public void Draw (Rectangle area, SpriteBatch bat)
+		public void Draw (RectangleF area, SpriteBatch bat)
 		{
+			// TODO:
+			var ar = area.ToRectangle ();
 			bat.Draw (
 				Texture,
-				area, null, UseColor,
+				ar, null, UseColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depth);
