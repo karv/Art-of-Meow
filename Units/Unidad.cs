@@ -1,17 +1,17 @@
-﻿using Cells.CellObjects;
+﻿using System;
+using System.Diagnostics;
+using Art_of_Meow;
+using Cells;
+using Cells.CellObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Cells;
-using Units.Recursos;
-using Art_of_Meow;
 using MonoGame.Extended.Shapes;
-using System;
-using System.Diagnostics;
+using Units.Recursos;
 
 namespace Units
 {
-	public class UnidadHumano : IUnidad
+	public class Unidad : IUnidad
 	{
 		public virtual void Execute ()
 		{
@@ -154,7 +154,7 @@ namespace Units
 			Recursos.Update (gameTime);
 		}
 
-		public UnidadHumano (string texture = TextureType)
+		public Unidad (string texture = TextureType)
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();

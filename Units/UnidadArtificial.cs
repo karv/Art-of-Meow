@@ -15,7 +15,7 @@ namespace Units
 	/// </summary>
 	public class HumanIntelligence : IIntelligence, Moggle.Comm.IReceptorTeclado, IGameComponent
 	{
-		public readonly UnidadHumano Yo;
+		public readonly Unidad Yo;
 
 		public void DoAction ()
 		{
@@ -69,7 +69,7 @@ namespace Units
 			return false;
 		}
 
-		public HumanIntelligence (UnidadHumano yo)
+		public HumanIntelligence (Unidad yo)
 		{
 			Yo = yo;
 		}
@@ -77,19 +77,19 @@ namespace Units
 
 	public class ChaseIntelligence  : IIntelligence
 	{
-		public ChaseIntelligence (UnidadHumano yo)
+		public ChaseIntelligence (Unidad yo)
 		{
 			Yo = yo;
 		}
 
 		public Grid MapGrid { get { return Yo.MapGrid; } }
 
-		public readonly UnidadHumano Yo;
+		public readonly Unidad Yo;
 
 		public void DoAction ()
 		{
 			Yo.NextActionTime = TimeSpan.FromMinutes (2);
-			var target = MapGrid.Objects.FirstOrDefault (z => z is UnidadHumano);
+			var target = MapGrid.Objects.FirstOrDefault (z => z is Unidad);
 			var dir = Yo.Location.GetDirectionTo (target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
