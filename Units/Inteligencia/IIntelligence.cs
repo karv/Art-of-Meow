@@ -1,5 +1,5 @@
 
-namespace Units
+namespace Units.Inteligencia
 {
 	public interface IIntelligence
 	{

@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace Units
+namespace Units.Inteligencia
 {
 	/// <summary>
 	/// Permite al jugador interactuar con su unidad.

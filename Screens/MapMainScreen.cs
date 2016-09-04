@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Moggle.Comm;
+using Units.Inteligencia;
 
 namespace Screens
 {

@@ -2,15 +2,10 @@
 using Cells;
 using System;
 
-namespace Units
+namespace Units.Inteligencia
 {
 	public class ChaseIntelligence  : IIntelligence
 	{
-		public ChaseIntelligence (Unidad yo)
-		{
-			Yo = yo;
-		}
-
 		public Grid MapGrid { get { return Yo.MapGrid; } }
 
 		public readonly Unidad Yo;
@@ -23,6 +18,11 @@ namespace Units
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
 			MapGrid.MoveCellObject (Yo, dir);
+		}
+
+		public ChaseIntelligence (Unidad yo)
+		{
+			Yo = yo;
 		}
 	}
 }
