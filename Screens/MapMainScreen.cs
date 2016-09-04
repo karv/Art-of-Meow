@@ -39,6 +39,8 @@ namespace Screens
 				chaser.MapGrid = GameGrid;
 				chaser.Inteligencia = new ChaseIntelligence (chaser);
 				chaser.Location = GameGrid.RandomPoint ();
+				chaser.RecursoHP.Max = 3;
+				chaser.RecursoHP.Fill ();
 				UnidadesArtificial.Add (chaser);
 			}
 			Jugador = new Unidad ();
