@@ -62,7 +62,6 @@
     <Compile Include="Units\IUnidad.cs" />
     <Compile Include="Units\MovementDirectionEnum.cs" />
     <Compile Include="Cells\Depths.cs" />
-    <Compile Include="Units\UnidadArtificial.cs" />
     <Compile Include="Cells\CellObjects\IGridObject.cs" />
     <Compile Include="Cells\CellObjects\BackgroundObject.cs" />
     <Compile Include="Cells\CellObjects\GridObject.cs" />
@@ -74,6 +73,9 @@
     <Compile Include="GameTimeManager.cs" />
     <Compile Include="Cells\CellObjects\IUpdateGridObject.cs" />
     <Compile Include="Units\Unidad.cs" />
+    <Compile Include="Units\Inteligencia\ChaseIntelligence.cs" />
+    <Compile Include="Units\Inteligencia\HumanIntelligence.cs" />
+    <Compile Include="Units\Inteligencia\IIntelligence.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -93,5 +95,6 @@
     <Folder Include="Units\" />
     <Folder Include="Units\Recursos\" />
     <Folder Include="Componentes\" />
+    <Folder Include="Units\Inteligencia\" />
   </ItemGroup>
 </Project>

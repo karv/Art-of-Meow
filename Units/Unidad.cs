@@ -71,7 +71,7 @@ namespace Units
 
 		public void ForceDraw (RectangleF area, SpriteBatch bat)
 		{
-			// TODO: Invocar el métido extendido de MonoGame.Extended
+			// TODO: Invocar el método extendido de MonoGame.Extended
 			var ar = area.ToRectangle ();
 			bat.Draw (
 				Texture,
