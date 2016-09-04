@@ -14,6 +14,8 @@ namespace Units
 {
 	public class Unidad : IUnidad
 	{
+		public int Equipo { get; set; }
+
 		public virtual void Execute ()
 		{
 			Inteligencia.DoAction ();
@@ -104,6 +106,8 @@ namespace Units
 
 		public void MeleeDamage (IUnidad target)
 		{
+			if (Equipo == target.Equipo)
+				return;
 			var hp = target.Recursos.GetRecurso ("hp");
 			hp.Valor -= 1;
 		}

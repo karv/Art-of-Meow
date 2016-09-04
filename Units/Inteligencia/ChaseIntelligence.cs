@@ -15,12 +15,15 @@ namespace Units.Inteligencia
 
 		Unidad GetTarget ()
 		{
-			return MapGrid.Objects.FirstOrDefault (isSelectableAsTarget) as Unidad;
+			return MapGrid.Objects.OfType<Unidad> ().FirstOrDefault (isSelectableAsTarget);
 		}
 
-		static bool isSelectableAsTarget (IGridObject obj)
+		bool isSelectableAsTarget (IGridObject obj)
 		{
-			return (obj as Unidad)?.Inteligencia is HumanIntelligence;
+			var otro = obj as Unidad;
+			if (otro == null)
+				return false;
+			return otro.Equipo != Yo.Equipo;
 		}
 
 		void TryUpdateTarget ()
