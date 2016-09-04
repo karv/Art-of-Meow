@@ -155,6 +155,11 @@ namespace Units
 			Recursos.Update (gameTime);
 		}
 
+		public override string ToString ()
+		{
+			return string.Format ("IA: {0}", Inteligencia);
+		}
+
 		public Unidad (string texture = TextureType)
 		{
 			TextureStr = texture;

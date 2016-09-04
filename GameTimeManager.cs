@@ -34,6 +34,12 @@ namespace Art_of_Meow
 			Actual = NextObject ();
 			if (Actual == null)
 				throw new Exception ("No existe objeto Update.");
+			#if DEBUG
+			if (Actual.NextActionTime != TimeSpan.Zero)
+				Debug.WriteLine (
+					string.Format ("Ejecutando objeto {0}.", Actual),
+					"Action");
+			#endif
 			PassTime (Actual.NextActionTime);
 			if (Actual.NextActionTime != TimeSpan.Zero)
 			{
