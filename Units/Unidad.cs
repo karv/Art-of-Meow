@@ -106,6 +106,8 @@ namespace Units
 
 		public void MeleeDamage (IUnidad target)
 		{
+			if (Equipo == target.Equipo)
+				return;
 			var hp = target.Recursos.GetRecurso ("hp");
 			hp.Valor -= 1;
 		}
