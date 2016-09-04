@@ -18,7 +18,7 @@ namespace Screens
 
 		public Grid GameGrid;
 		public UnidadHumano Jugador;
-		public List<UnidadArtificial> UnidadesArtificial = new List<UnidadArtificial> ();
+		public List<IUnidad> UnidadesArtificial = new List<IUnidad> ();
 		public readonly Point StartingPoint = new Point (50, 50);
 
 		public MapMainScreen (Moggle.Game game)
@@ -33,7 +33,8 @@ namespace Screens
 
 			for (int i = 0; i < NumChasers; i++)
 			{
-				var chaser = new UnidadArtificial ();
+				var chaser = new UnidadHumano ();
+				chaser.IA = new ChaseIntelligence (chaser);
 				chaser.MapGrid = GameGrid;
 				chaser.IA = new ChaseIntelligence (chaser);
 				chaser.Location = GameGrid.RandomPoint ();

@@ -77,14 +77,14 @@ namespace Units
 
 	public class ChaseIntelligence  : IIntelligence
 	{
-		public ChaseIntelligence (UnidadArtificial yo)
+		public ChaseIntelligence (UnidadHumano yo)
 		{
 			Yo = yo;
 		}
 
 		public Grid MapGrid { get { return Yo.MapGrid; } }
 
-		public readonly UnidadArtificial Yo;
+		public readonly UnidadHumano Yo;
 
 		public void DoAction ()
 		{
@@ -94,21 +94,6 @@ namespace Units
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
 			MapGrid.MoveCellObject (Yo, dir);
-		}
-	}
-
-	public class UnidadArtificial : UnidadHumano
-	{
-		public UnidadArtificial (string texture = TextureType)
-			: base (texture)
-		{
-			RecursoHP.Max = 3;
-			RecursoHP.Fill ();
-		}
-
-		public override void Execute ()
-		{
-			IA.DoAction ();
 		}
 	}
 }
