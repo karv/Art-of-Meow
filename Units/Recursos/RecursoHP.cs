@@ -2,7 +2,7 @@
 
 namespace Units.Recursos
 {
-	public class HpRecurso : IRecurso
+	public class RecursoHP : IRecurso
 	{
 		public void Update (Microsoft.Xna.Framework.GameTime gameTime)
 		{
@@ -29,7 +29,7 @@ namespace Units.Recursos
 
 		public IUnidad Unidad { get; }
 
-		public HpRecurso (IUnidad unidad)
+		public RecursoHP (IUnidad unidad)
 		{
 			Unidad = unidad;
 		}
