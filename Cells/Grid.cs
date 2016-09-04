@@ -12,12 +12,6 @@ using Art_of_Meow;
 
 namespace Cells
 {
-	enum addRemoveEnum
-	{
-		Add,
-		Remove
-	}
-
 	public class Grid : DSBC
 	{
 		public ICollection<IGridObject> Objects
@@ -29,7 +23,6 @@ namespace Cells
 		}
 
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
-		List<Tuple<IGridObject, addRemoveEnum>> _deltaObjects = new List<Tuple<IGridObject, addRemoveEnum>> ();
 
 		const double probZacate = 0.1;
 		readonly Random _r = new Random ();
@@ -71,16 +64,12 @@ namespace Cells
 		/// <param name="obj">Object.</param>
 		public void AddCellObject (IGridObject obj)
 		{
-			_deltaObjects.Add (new Tuple<IGridObject, addRemoveEnum> (
-				obj,
-				addRemoveEnum.Add));
+			Objects.Add (obj);
 		}
 
 		public void RemoveObject (IGridObject obj)
 		{
-			_deltaObjects.Add (new Tuple<IGridObject, addRemoveEnum> (
-				obj,
-				addRemoveEnum.Remove));
+			Objects.Remove (obj);
 		}
 
 		/// <summary>
@@ -157,26 +146,8 @@ namespace Cells
 
 		protected override void LoadContent ()
 		{
-			applyDelta ();
 			foreach (var x in _objects)
 				x.LoadContent (Screen.Content);
-		}
-
-		void applyDelta ()
-		{
-			foreach (var x in _deltaObjects)
-			{
-				if (x.Item2 == addRemoveEnum.Add)
-				{
-					_objects.Add (x.Item1);
-				}
-				else
-				{
-					x.Item1.Dispose ();
-					_objects.Remove (x.Item1);
-				}
-			}
-			_deltaObjects.Clear ();
 		}
 
 		public override void Update (GameTime gameTime)
