@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Cells;
+using System;
 
 namespace Units
 {
@@ -21,6 +22,7 @@ namespace Units
 
 		public void DoAction ()
 		{
+			Yo.NextActionTime = TimeSpan.FromMinutes (2);
 			var target = MapGrid.Objects.FirstOrDefault (z => z is UnidadHumano);
 			var dir = Yo.Location.GetDirectionTo (target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
@@ -39,5 +41,10 @@ namespace Units
 		}
 
 		public IIntelligence IA { get; set; }
+
+		public override void Execute ()
+		{
+			IA.DoAction ();
+		}
 	}
 }

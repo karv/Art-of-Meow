@@ -8,10 +8,10 @@ namespace Cells.CellObjects
 	/// </summary>
 	public interface IUpdateGridObject : IGridObject
 	{
-		DateTime NextActionTime { get; }
+		TimeSpan NextActionTime { get; }
 
 		void Execute ();
 
-		void PassTime (DateTime time);
+		void PassTime (TimeSpan time);
 	}
 }

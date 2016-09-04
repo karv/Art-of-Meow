@@ -1,9 +1,9 @@
-﻿using Cells;
-using Microsoft.Xna.Framework;
+﻿using System;
 using System.Collections.Generic;
-using Cells.CellObjects;
 using System.Linq;
-using System;
+using Cells;
+using Cells.CellObjects;
+using System.Diagnostics;
 
 namespace Art_of_Meow
 {
@@ -21,18 +21,24 @@ namespace Art_of_Meow
 			}
 		}
 
-		public void PassTime (DateTime time)
+		public void PassTime (TimeSpan time)
 		{
 			foreach (var ob in UpdateGridObjects)
 				ob.PassTime (time);
 		}
 
-		public DateTime ExecuteNext ()
+		public TimeSpan ExecuteNext ()
 		{
 			var executeObj = NextObject ();
 			if (executeObj == null)
 				throw new Exception ("No existe objeto Update.");
 			PassTime (executeObj.NextActionTime);
+			if (executeObj.NextActionTime != TimeSpan.Zero)
+			{
+				Debug.WriteLine (
+					"Ejecutando objeto con tiempo de espera positivo",
+					"IUpdateGridObject");
+			}
 			executeObj.Execute ();
 			return executeObj.NextActionTime;
 		}
