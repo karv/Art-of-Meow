@@ -18,6 +18,8 @@ namespace Units
 		ManejadorRecursos Recursos { get; }
 
 		bool Habilitado { get; }
+
+		int Equipo { get; }
 	}
 
 	static class UnidadImplementation

@@ -14,6 +14,8 @@ namespace Units
 {
 	public class Unidad : IUnidad
 	{
+		public int Equipo { get; set; }
+
 		public virtual void Execute ()
 		{
 			Inteligencia.DoAction ();

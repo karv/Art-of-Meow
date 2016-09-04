@@ -18,9 +18,9 @@ namespace Units.Inteligencia
 			return MapGrid.Objects.FirstOrDefault (isSelectableAsTarget) as Unidad;
 		}
 
-		static bool isSelectableAsTarget (IGridObject obj)
+		bool isSelectableAsTarget (IGridObject obj)
 		{
-			return (obj as Unidad)?.Inteligencia is HumanIntelligence;
+			return (obj as Unidad)?.Equipo != Yo.Equipo;
 		}
 
 		void TryUpdateTarget ()
