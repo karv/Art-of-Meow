@@ -27,6 +27,18 @@ namespace Units.Recursos
 
 		public float Max { get; set; }
 
+		public float RelativeHp { get { return _valor / Max; } }
+
+		public void Fill ()
+		{
+			_valor = Max;
+		}
+
+		public void Empty ()
+		{
+			_valor = 0;
+		}
+
 		public IUnidad Unidad { get; }
 
 		public RecursoHP (IUnidad unidad)

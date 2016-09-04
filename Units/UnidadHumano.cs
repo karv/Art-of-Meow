@@ -16,7 +16,7 @@ namespace Units
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
-		public readonly HpRecurso RecursoHP;
+		public readonly RecursoHP RecursoHP;
 
 		public Grid MapGrid { get; set; }
 
@@ -38,10 +38,16 @@ namespace Units
 
 		float hpRelativeValue
 		{
-			get { return RecursoHP.Valor / 5; }
+			get { return RecursoHP.RelativeHp; }
 		}
 
 		public void Draw (RectangleF area, SpriteBatch bat)
+		{
+			if (Habilitado)
+				ForceDraw (area, bat);
+		}
+
+		public void ForceDraw (RectangleF area, SpriteBatch bat)
 		{
 			// TODO: Invocar el métido extendido de MonoGame.Extended
 			var ar = area.ToRectangle ();
@@ -77,7 +83,6 @@ namespace Units
 		{
 			var hp = target.Recursos.GetRecurso ("hp");
 			hp.Valor -= 1;
-			target.Die ();
 		}
 
 		/// <summary>
@@ -98,7 +103,13 @@ namespace Units
 			return true;
 		}
 
-		void IUpdate.Update (GameTime gameTime)
+		public void Update (GameTime gameTime)
+		{
+			if (Habilitado)
+				ForceUpdate (gameTime);
+		}
+
+		public void ForceUpdate (GameTime gameTime)
 		{
 			Recursos.Update (gameTime);
 		}
@@ -107,9 +118,11 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
-			RecursoHP = new HpRecurso (this);
-			RecursoHP.Valor = 5;
-			RecursoHP.Max = 5;
+			RecursoHP = new RecursoHP (this)
+			{
+				Max = 5,
+				Valor = 5
+			};
 			Recursos.Add (RecursoHP);
 		}
 	}

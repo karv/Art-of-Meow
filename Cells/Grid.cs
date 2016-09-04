@@ -215,8 +215,7 @@ namespace Cells
 		void updateUnits (GameTime gameTime)
 		{
 			foreach (var x in Objects.OfType<IUnidad> ())
-				if (x.Habilitado)
-					x.Update (gameTime);
+				x.Update (gameTime);
 		}
 
 		#region Cámara
