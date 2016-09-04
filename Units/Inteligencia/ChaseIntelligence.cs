@@ -36,7 +36,7 @@ namespace Units.Inteligencia
 			var dir = Yo.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
-			MapGrid.MoveCellObject (Yo, dir);
+			Yo.MoveOrMelee (dir);
 		}
 
 		public ChaseIntelligence (Unidad yo)
