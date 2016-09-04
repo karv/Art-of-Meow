@@ -8,11 +8,11 @@ namespace Units.Recursos
 		{
 		}
 
-		public string NombreÚnico { get; }
+		public string NombreÚnico { get { return "hp"; } }
 
-		public string NombreCorto { get; }
+		public string NombreCorto { get { return "HP"; } }
 
-		public string NombreLargo { get; }
+		public string NombreLargo { get { return "HP"; } }
 
 		float _valor;
 
@@ -29,9 +29,8 @@ namespace Units.Recursos
 
 		public IUnidad Unidad { get; }
 
-		public HpRecurso (string nombreÚnico, IUnidad unidad)
+		public HpRecurso (IUnidad unidad)
 		{
-			NombreÚnico = nombreÚnico;
 			Unidad = unidad;
 		}
 	}
