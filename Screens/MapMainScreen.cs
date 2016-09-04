@@ -5,6 +5,8 @@ using Units;
 using System.Collections.Generic;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
+using Moggle.Comm;
+using Units.Inteligencia;
 
 namespace Screens
 {
@@ -16,8 +18,8 @@ namespace Screens
 		public const int NumChasers = 5;
 
 		public Grid GameGrid;
-		public UnidadHumano Jugador;
-		public List<UnidadArtificial> UnidadesArtificial = new List<UnidadArtificial> ();
+		public Unidad Jugador;
+		public List<IUnidad> UnidadesArtificial = new List<IUnidad> ();
 		public readonly Point StartingPoint = new Point (50, 50);
 
 		public MapMainScreen (Moggle.Game game)
@@ -32,13 +34,19 @@ namespace Screens
 
 			for (int i = 0; i < NumChasers; i++)
 			{
-				var chaser = new UnidadArtificial ();
+				var chaser = new Unidad ();
+				chaser.Inteligencia = new ChaseIntelligence (chaser);
 				chaser.MapGrid = GameGrid;
-				chaser.IA = new ChaseIntelligence (chaser);
+				chaser.Inteligencia = new ChaseIntelligence (chaser);
 				chaser.Location = GameGrid.RandomPoint ();
+				chaser.RecursoHP.Max = 3;
+				chaser.RecursoHP.Fill ();
 				UnidadesArtificial.Add (chaser);
 			}
-			Jugador = new UnidadHumano ();
+			Jugador = new Unidad ();
+			var Humanintel = new HumanIntelligence (Jugador);
+			Jugador.Inteligencia = Humanintel;
+			//Components.Add (Humanintel);
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
@@ -59,7 +67,17 @@ namespace Screens
 		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			TeclaPresionada (key);
+			base.RecibirSeñal (key);
 			return true;
+		}
+
+		public override void MandarSeñal (KeyboardEventArgs key)
+		{
+			var pl = GameGrid.ObjectoActual as Unidad;
+			var currobj = pl?.Inteligencia as IReceptorTeclado;
+			if (currobj != null && currobj.RecibirSeñal (key))
+				return;
+			base.MandarSeñal (key);
 		}
 
 		/// <summary>
@@ -67,15 +85,15 @@ namespace Screens
 		/// </summary>
 		protected void TeclaPresionada (KeyboardEventArgs keyArg)
 		{
+			
 			var key = keyArg.Key;
-			bool shouldTryRecenter = false;
-			bool endTurn = false;
-			var actionDir = MovementDirectionEnum.NoMov;
+
 			switch (key)
 			{
 				case Microsoft.Xna.Framework.Input.Keys.Escape:
 					Juego.Exit ();
 					break;
+			/*
 				case Microsoft.Xna.Framework.Input.Keys.Down:
 				case Microsoft.Xna.Framework.Input.Keys.NumPad2:
 					actionDir = MovementDirectionEnum.Down;
@@ -104,25 +122,18 @@ namespace Screens
 				case Microsoft.Xna.Framework.Input.Keys.NumPad9:
 					actionDir = MovementDirectionEnum.UpRight;
 					break;
+*/
 			}
 
+			/*
 			if (actionDir != MovementDirectionEnum.NoMov)
 			{
 				endTurn = Jugador.MoveOrMelee (actionDir);
 				shouldTryRecenter = endTurn;
 			}
+			*/
 
-			if (shouldTryRecenter)
-				GameGrid.CenterIfNeeded (Jugador);
-
-			if (endTurn)
-				entreTurnos ();
-		}
-
-		void entreTurnos ()
-		{
-			foreach (var x in UnidadesArtificial)
-				x.IA.DoAction ();
+			GameGrid.CenterIfNeeded (Jugador);
 		}
 	}
 }

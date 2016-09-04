@@ -1,16 +1,31 @@
-﻿using Cells.CellObjects;
+﻿using System;
+using System.Diagnostics;
+using Art_of_Meow;
+using Cells;
+using Cells.CellObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Cells;
-using Units.Recursos;
-using Art_of_Meow;
 using MonoGame.Extended.Shapes;
+using Units.Recursos;
+using Units.Inteligencia;
 
 namespace Units
 {
-	public class UnidadHumano : IUnidad
+	public class Unidad : IUnidad
 	{
+		public virtual void Execute ()
+		{
+			Inteligencia.DoAction ();
+		}
+
+		public void PassTime (TimeSpan time)
+		{
+			NextActionTime -= time;
+		}
+
+		public TimeSpan NextActionTime { get; set; }
+
 		public ManejadorRecursos Recursos { get; }
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
@@ -57,7 +72,7 @@ namespace Units
 
 		public void ForceDraw (RectangleF area, SpriteBatch bat)
 		{
-			// TODO: Invocar el métido extendido de MonoGame.Extended
+			// TODO: Invocar el método extendido de MonoGame.Extended
 			var ar = area.ToRectangle ();
 			bat.Draw (
 				Texture,
@@ -66,7 +81,7 @@ namespace Units
 				SpriteEffects.None,
 				Depths.Unidad);
 
-// Barras
+			// Barras
 			var rec = new Rectangle (ar.Left, ar.Bottom, ar.Width, 3);
 
 			bat.Draw (Juego.Textures.SolidTexture, rec, Color.Gray * 0.7f);
@@ -100,16 +115,34 @@ namespace Units
 		/// <param name="dir">Direction</param>
 		public bool MoveOrMelee (MovementDirectionEnum dir)
 		{
+			TimeSpan tiempoMov = TimeSpan.FromMinutes (1);
+			TimeSpan tiempoMelee = TimeSpan.FromMinutes (2);
+			#if DEBUG
+			if (NextActionTime != TimeSpan.Zero)
+			{
+				Debug.WriteLine (
+					"Se regresó el control a una unidad con NextActionTime > 0",
+					"Unit movement");
+			}
+			#endif
+			// Intenta mover este objeto; si no puede, intenta atacar.
 			if (!MapGrid.MoveCellObject (this, dir))
 			{
 				var targetCell = new Cell (MapGrid, Location + dir.AsDirectionalPoint ());
 				var target = targetCell.GetUnidadHere ();
 				if (target == null)
 					return false;
+				NextActionTime = tiempoMelee;
 				MeleeDamage (target);
+			}
+			else
+			{
+				NextActionTime = tiempoMov;
 			}
 			return true;
 		}
+
+		public IIntelligence Inteligencia { get; set; }
 
 		public void Update (GameTime gameTime)
 		{
@@ -122,7 +155,12 @@ namespace Units
 			Recursos.Update (gameTime);
 		}
 
-		public UnidadHumano (string texture = TextureType)
+		public override string ToString ()
+		{
+			return string.Format ("IA: {0}", Inteligencia);
+		}
+
+		public Unidad (string texture = TextureType)
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();

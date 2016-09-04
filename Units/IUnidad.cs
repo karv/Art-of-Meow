@@ -6,7 +6,7 @@ using System;
 
 namespace Units
 {
-	public interface IUnidad : IGridObject, IUpdate
+	public interface IUnidad : IUpdate, IUpdateGridObject
 	{
 		Grid MapGrid { get; }
 
