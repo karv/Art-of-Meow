@@ -5,6 +5,7 @@ using Units;
 using System.Collections.Generic;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
+using Moggle.Comm;
 
 namespace Screens
 {
@@ -39,6 +40,9 @@ namespace Screens
 				UnidadesArtificial.Add (chaser);
 			}
 			Jugador = new UnidadHumano ();
+			var Humanintel = new HumanIntelligence (Jugador);
+			Jugador.IA = Humanintel;
+			//Components.Add (Humanintel);
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
@@ -59,7 +63,17 @@ namespace Screens
 		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			TeclaPresionada (key);
+			base.RecibirSeñal (key);
 			return true;
+		}
+
+		public override void MandarSeñal (KeyboardEventArgs key)
+		{
+			var pl = GameGrid.ObjectoActual as UnidadHumano;
+			var currobj = pl?.IA as IReceptorTeclado;
+			if (currobj != null && currobj.RecibirSeñal (key))
+				return;
+			base.MandarSeñal (key);
 		}
 
 		/// <summary>
@@ -67,15 +81,15 @@ namespace Screens
 		/// </summary>
 		protected void TeclaPresionada (KeyboardEventArgs keyArg)
 		{
+			
 			var key = keyArg.Key;
-			bool shouldTryRecenter = false;
-			bool endTurn = false;
-			var actionDir = MovementDirectionEnum.NoMov;
+
 			switch (key)
 			{
 				case Microsoft.Xna.Framework.Input.Keys.Escape:
 					Juego.Exit ();
 					break;
+			/*
 				case Microsoft.Xna.Framework.Input.Keys.Down:
 				case Microsoft.Xna.Framework.Input.Keys.NumPad2:
 					actionDir = MovementDirectionEnum.Down;
@@ -104,16 +118,18 @@ namespace Screens
 				case Microsoft.Xna.Framework.Input.Keys.NumPad9:
 					actionDir = MovementDirectionEnum.UpRight;
 					break;
+*/
 			}
 
+			/*
 			if (actionDir != MovementDirectionEnum.NoMov)
 			{
 				endTurn = Jugador.MoveOrMelee (actionDir);
 				shouldTryRecenter = endTurn;
 			}
+			*/
 
-			if (shouldTryRecenter)
-				GameGrid.CenterIfNeeded (Jugador);
+			GameGrid.CenterIfNeeded (Jugador);
 		}
 	}
 }

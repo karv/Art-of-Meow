@@ -7,7 +7,6 @@ using Units.Recursos;
 using Art_of_Meow;
 using MonoGame.Extended.Shapes;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Units
@@ -16,6 +15,7 @@ namespace Units
 	{
 		public virtual void Execute ()
 		{
+			IA.DoAction ();
 		}
 
 		public void PassTime (TimeSpan time)
@@ -80,7 +80,7 @@ namespace Units
 				SpriteEffects.None,
 				Depths.Unidad);
 
-// Barras
+			// Barras
 			var rec = new Rectangle (ar.Left, ar.Bottom, ar.Width, 3);
 
 			bat.Draw (Juego.Textures.SolidTexture, rec, Color.Gray * 0.7f);
@@ -140,6 +140,8 @@ namespace Units
 			}
 			return true;
 		}
+
+		public IIntelligence IA { get; set; }
 
 		public void Update (GameTime gameTime)
 		{

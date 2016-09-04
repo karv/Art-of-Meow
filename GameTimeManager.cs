@@ -13,6 +13,8 @@ namespace Art_of_Meow
 
 		ICollection<IGridObject> Objects { get { return MapGrid.Objects; } }
 
+		public IUpdateGridObject Actual { get; private set; }
+
 		IEnumerable<IUpdateGridObject> UpdateGridObjects
 		{
 			get
@@ -29,18 +31,18 @@ namespace Art_of_Meow
 
 		public TimeSpan ExecuteNext ()
 		{
-			var executeObj = NextObject ();
-			if (executeObj == null)
+			Actual = NextObject ();
+			if (Actual == null)
 				throw new Exception ("No existe objeto Update.");
-			PassTime (executeObj.NextActionTime);
-			if (executeObj.NextActionTime != TimeSpan.Zero)
+			PassTime (Actual.NextActionTime);
+			if (Actual.NextActionTime != TimeSpan.Zero)
 			{
 				Debug.WriteLine (
 					"Ejecutando objeto con tiempo de espera positivo",
 					"IUpdateGridObject");
 			}
-			executeObj.Execute ();
-			return executeObj.NextActionTime;
+			Actual.Execute ();
+			return Actual.NextActionTime;
 		}
 
 		public IUpdateGridObject NextObject ()

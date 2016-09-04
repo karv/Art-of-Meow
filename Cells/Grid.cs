@@ -40,6 +40,8 @@ namespace Cells
 
 		public Point GridSize { get; }
 
+		public IUpdateGridObject ObjectoActual { get { return TimeManager.Actual; } }
+
 		/// <summary>
 		/// enumera las celdas de contorno.
 		/// </summary>
