@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Cells;
 using Units.Recursos;
-using MonoGame.Extended;
 using Art_of_Meow;
 using MonoGame.Extended.Shapes;
 
@@ -16,7 +15,7 @@ namespace Units
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
-		public readonly RecursoEstático RecursoHP;
+		public readonly RecursoHP RecursoHP;
 
 		public Grid MapGrid { get; set; }
 
@@ -33,15 +32,30 @@ namespace Units
 
 		public bool Collision (IGridObject collObj)
 		{
-			return collObj is UnidadHumano; 
+			if (!Habilitado)
+				return false;
+			
+			var collUnid = collObj as IUnidad;
+			if (collUnid != null)
+			{
+				if (collUnid.Habilitado)
+					return true;
+			}
+			return false;
 		}
 
 		float hpRelativeValue
 		{
-			get { return RecursoHP.Valor / 5; }
+			get { return RecursoHP.RelativeHp; }
 		}
 
 		public void Draw (RectangleF area, SpriteBatch bat)
+		{
+			if (Habilitado)
+				ForceDraw (area, bat);
+		}
+
+		public void ForceDraw (RectangleF area, SpriteBatch bat)
 		{
 			// TODO: Invocar el métido extendido de MonoGame.Extended
 			var ar = area.ToRectangle ();
@@ -77,7 +91,6 @@ namespace Units
 		{
 			var hp = target.Recursos.GetRecurso ("hp");
 			hp.Valor -= 1;
-			target.Die ();
 		}
 
 		/// <summary>
@@ -98,7 +111,13 @@ namespace Units
 			return true;
 		}
 
-		void IUpdate.Update (GameTime gameTime)
+		public void Update (GameTime gameTime)
+		{
+			if (Habilitado)
+				ForceUpdate (gameTime);
+		}
+
+		public void ForceUpdate (GameTime gameTime)
 		{
 			Recursos.Update (gameTime);
 		}
@@ -107,10 +126,11 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
-			RecursoHP = new RecursoEstático ("hp", this);
-			RecursoHP.NombreCorto = "HP";
-			RecursoHP.NombreLargo = "Hit points";
-			RecursoHP.Valor = 5;
+			RecursoHP = new RecursoHP (this)
+			{
+				Max = 5,
+				Valor = 5
+			};
 			Recursos.Add (RecursoHP);
 		}
 	}

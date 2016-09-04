@@ -71,6 +71,7 @@
     <Compile Include="Units\Recursos\ManejadorRecursos.cs" />
     <Compile Include="Units\Recursos\RecursoEstático.cs" />
     <Compile Include="Componentes\DoubleBar.cs" />
+    <Compile Include="Units\Recursos\RecursoHP.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

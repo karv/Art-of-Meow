@@ -2,6 +2,7 @@
 using Cells;
 using Units.Recursos;
 using MonoGame.Extended;
+using System;
 
 namespace Units
 {
@@ -24,6 +25,7 @@ namespace Units
 		/// <summary>
 		/// Muere esta unidad.
 		/// </summary>
+		[Obsolete ("El encargado de esto es Grid.")]
 		public static void Die (this IUnidad u)
 		{
 			u.MapGrid.RemoveObject (u);
