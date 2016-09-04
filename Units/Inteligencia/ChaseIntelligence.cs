@@ -32,8 +32,8 @@ namespace Units.Inteligencia
 		void IIntelligence.DoAction ()
 		{
 			Yo.NextActionTime = TimeSpan.FromMinutes (2);
-			var target = MapGrid.Objects.FirstOrDefault (z => z is Unidad);
-			var dir = Yo.Location.GetDirectionTo (target.Location);
+			TryUpdateTarget ();
+			var dir = Yo.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
 			MapGrid.MoveCellObject (Yo, dir);
