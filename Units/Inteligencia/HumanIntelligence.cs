@@ -5,11 +5,11 @@ namespace Units.Inteligencia
 	/// <summary>
 	/// Permite al jugador interactuar con su unidad.
 	/// </summary>
-	public class HumanIntelligence : IIntelligence, Moggle.Comm.IReceptorTeclado, IGameComponent
+	public class HumanIntelligence : IIntelligence, Moggle.Comm.IReceptorTeclado
 	{
 		public readonly Unidad Yo;
 
-		public void DoAction ()
+		void IIntelligence.DoAction ()
 		{
 			if (ActionDir != MovementDirectionEnum.NoMov)
 			{
@@ -18,13 +18,9 @@ namespace Units.Inteligencia
 			}
 		}
 
-		public void Initialize ()
-		{
-		}
-
 		MovementDirectionEnum ActionDir;
 
-		public bool RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs keyArg)
+		bool Moggle.Comm.IReceptorTeclado.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs keyArg)
 		{
 			var key = keyArg.Key;
 			switch (key)

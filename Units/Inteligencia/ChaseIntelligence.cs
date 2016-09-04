@@ -29,7 +29,7 @@ namespace Units.Inteligencia
 				Target = GetTarget ();
 		}
 
-		public void DoAction ()
+		void IIntelligence.DoAction ()
 		{
 			Yo.NextActionTime = TimeSpan.FromMinutes (2);
 			var target = MapGrid.Objects.FirstOrDefault (z => z is Unidad);
