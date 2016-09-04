@@ -28,7 +28,7 @@ namespace Cells
 			}
 		}
 
-		HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
 		List<Tuple<IGridObject, addRemoveEnum>> _deltaObjects = new List<Tuple<IGridObject, addRemoveEnum>> ();
 
 		const double probZacate = 0.1;

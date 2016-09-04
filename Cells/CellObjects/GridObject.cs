@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Units;
 using MonoGame.Extended.Shapes;
-using OpenTK.Graphics.OpenGL;
 
 namespace Cells.CellObjects
 {
