@@ -15,7 +15,7 @@ namespace Units
 	{
 		public virtual void Execute ()
 		{
-			IA.DoAction ();
+			Inteligencia.DoAction ();
 		}
 
 		public void PassTime (TimeSpan time)
@@ -141,7 +141,7 @@ namespace Units
 			return true;
 		}
 
-		public IIntelligence IA { get; set; }
+		public IIntelligence Inteligencia { get; set; }
 
 		public void Update (GameTime gameTime)
 		{

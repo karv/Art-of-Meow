@@ -34,15 +34,15 @@ namespace Screens
 			for (int i = 0; i < NumChasers; i++)
 			{
 				var chaser = new Unidad ();
-				chaser.IA = new ChaseIntelligence (chaser);
+				chaser.Inteligencia = new ChaseIntelligence (chaser);
 				chaser.MapGrid = GameGrid;
-				chaser.IA = new ChaseIntelligence (chaser);
+				chaser.Inteligencia = new ChaseIntelligence (chaser);
 				chaser.Location = GameGrid.RandomPoint ();
 				UnidadesArtificial.Add (chaser);
 			}
 			Jugador = new Unidad ();
 			var Humanintel = new HumanIntelligence (Jugador);
-			Jugador.IA = Humanintel;
+			Jugador.Inteligencia = Humanintel;
 			//Components.Add (Humanintel);
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
@@ -71,7 +71,7 @@ namespace Screens
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
 			var pl = GameGrid.ObjectoActual as Unidad;
-			var currobj = pl?.IA as IReceptorTeclado;
+			var currobj = pl?.Inteligencia as IReceptorTeclado;
 			if (currobj != null && currobj.RecibirSeñal (key))
 				return;
 			base.MandarSeñal (key);
