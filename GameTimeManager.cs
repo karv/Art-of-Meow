@@ -30,6 +30,8 @@ namespace Art_of_Meow
 		public DateTime ExecuteNext ()
 		{
 			var executeObj = NextObject ();
+			if (executeObj == null)
+				throw new Exception ("No existe objeto Update.");
 			PassTime (executeObj.NextActionTime);
 			executeObj.Execute ();
 			return executeObj.NextActionTime;

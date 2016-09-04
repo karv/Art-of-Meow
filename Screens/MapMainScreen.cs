@@ -114,15 +114,6 @@ namespace Screens
 
 			if (shouldTryRecenter)
 				GameGrid.CenterIfNeeded (Jugador);
-
-			if (endTurn)
-				entreTurnos ();
-		}
-
-		void entreTurnos ()
-		{
-			foreach (var x in UnidadesArtificial)
-				x.IA.DoAction ();
 		}
 	}
 }
