@@ -33,7 +33,16 @@ namespace Units
 
 		public bool Collision (IGridObject collObj)
 		{
-			return collObj is UnidadHumano; 
+			if (!Habilitado)
+				return false;
+			
+			var collUnid = collObj as IUnidad;
+			if (collUnid != null)
+			{
+				if (collUnid.Habilitado)
+					return true;
+			}
+			return false;
 		}
 
 		float hpRelativeValue
