@@ -12,7 +12,7 @@ namespace Units.Recursos
 
 		public string NombreCorto { get { return "HP"; } }
 
-		public string NombreLargo { get { return "HP"; } }
+		public string NombreLargo { get { return "Hit points"; } }
 
 		float _valor;
 

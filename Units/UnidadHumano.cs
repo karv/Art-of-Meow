@@ -16,7 +16,7 @@ namespace Units
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
-		public readonly RecursoEstático RecursoHP;
+		public readonly HpRecurso RecursoHP;
 
 		public Grid MapGrid { get; set; }
 
@@ -107,10 +107,9 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
-			RecursoHP = new RecursoEstático ("hp", this);
-			RecursoHP.NombreCorto = "HP";
-			RecursoHP.NombreLargo = "Hit points";
+			RecursoHP = new HpRecurso (this);
 			RecursoHP.Valor = 5;
+			RecursoHP.Max = 5;
 			Recursos.Add (RecursoHP);
 		}
 	}
