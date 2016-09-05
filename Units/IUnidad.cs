@@ -34,6 +34,11 @@ namespace Units
 			u.MapGrid.RemoveObject (u);
 		}
 
+		/// <summary>
+		/// Se causa daño
+		/// </summary>
+		/// <param name="u">Unidad</param>
+		/// <param name="dmg">Cantidad de daño propuesto.</param>
 		public static void DoDamage (this IUnidad u,
 		                             float dmg)
 		{
@@ -42,12 +47,18 @@ namespace Units
 
 		}
 
+		/// <summary>
+		/// Se causa daño
+		/// </summary>
+		/// <param name="u">Unidad</param>
+		/// <param name="dmg">Cantidad de daño propuesto.</param>
+		/// <param name="scr">Screen.</param>
 		public static void DoDamage (this IUnidad u,
 		                             float dmg, IScreen scr)
 		{
-			const TimeSpan duración = TimeSpan.FromMilliseconds (300);
+			TimeSpan duración = TimeSpan.FromMilliseconds (300);
 			DoDamage (u, dmg);
-			var vs = new VanishingString (scr, dmg, duración);
+			var vs = new VanishingString (scr, dmg.ToString (), duración);
 			scr.AddComponent (vs);
 		}
 	}
