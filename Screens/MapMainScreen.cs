@@ -25,12 +25,14 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GameGrid = new Grid (100, 100, this)
-			{
-				// TODO: calcularlo automáticamente.
-				ControlTopLeft = new Vector2 (20, 0),
-				VisibleCells = new Size (55, 27)
-			};
+			GameGrid = new Grid (100, 100, this);
+
+			// Calcular tamaño
+			int visCellX = (int)(GetDisplayMode.Width / GameGrid.CellSize.Width);
+			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
+			GameGrid.VisibleCells = new Size (visCellX, visCellY);
+			int ScreenOffsX = GetDisplayMode.Width - GameGrid.VisibleCells.Width * visCellX;
+			GameGrid.ControlTopLeft = new Vector2 (ScreenOffsX / 2, 0);
 
 			for (int i = 0; i < NumChasers; i++)
 			{
