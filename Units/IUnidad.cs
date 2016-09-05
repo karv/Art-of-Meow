@@ -42,7 +42,7 @@ namespace Units
 		public static void DoDamage (this IUnidad u,
 		                             float dmg)
 		{
-			var hp = u.Recursos.GetRecurso ("hp");
+			var hp = u.Recursos.GetRecurso (ConstantesRecursos.HP);
 			hp.Valor -= dmg;
 
 		}

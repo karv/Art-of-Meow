@@ -130,6 +130,7 @@ namespace Units
 			var hp = target.Recursos.GetRecurso (ConstantesRecursos.HP);
 			var dmg = Recursos.ValorRecurso (ConstantesRecursos.DañoMelee).Value / 8;
 			hp.Valor -= dmg;
+			target.DoDamage (dmg, MapGrid.Screen);
 		}
 
 		/// <summary>
