@@ -1,12 +1,33 @@
-﻿using System;
-
+﻿
 namespace Items.Declarations.Pots
 {
-	public class HealingPotion
+	public class HealingPotion : CommonItemBase
 	{
-		public HealingPotion ()
+		protected override Microsoft.Xna.Framework.Color GetColor ()
+		{
+			return Color.Red;
+		}
+
+		public override string Nombre
+		{
+			get
+			{
+				return "Healing Potion";
+			}
+		}
+
+		public override string TextureName
+		{
+			get
+			{
+				// TODO: este contenido no existe aún.
+				return "potion";
+			}
+		}
+
+		public HealingPotion (Cells.Grid grid)
+			: base (grid)
 		{
 		}
 	}
 }
-
