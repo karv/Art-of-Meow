@@ -76,7 +76,8 @@
     <Compile Include="Units\Inteligencia\ChaseIntelligence.cs" />
     <Compile Include="Units\Inteligencia\HumanIntelligence.cs" />
     <Compile Include="Units\Inteligencia\IIntelligence.cs" />
-    <Compile Include="Componentes\VanishingString.cs" />
+    <Compile Include="Items\Inventory.cs" />
+   	<Compile Include="Componentes\VanishingString.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -97,5 +98,6 @@
     <Folder Include="Units\Recursos\" />
     <Folder Include="Componentes\" />
     <Folder Include="Units\Inteligencia\" />
+    <Folder Include="Items\" />
   </ItemGroup>
 </Project>
