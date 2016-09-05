@@ -78,6 +78,9 @@
     <Compile Include="Units\Inteligencia\IIntelligence.cs" />
     <Compile Include="Items\Inventory.cs" />
    	<Compile Include="Componentes\VanishingString.cs" />
+    <Compile Include="Items\IItem.cs" />
+    <Compile Include="Items\IInventory.cs" />
+    <Compile Include="Items\GroundItem.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
