@@ -12,8 +12,9 @@ using Art_of_Meow;
 
 namespace Cells
 {
-	public class Grid : DSBC
+	public class Grid : DSBC, IComponentContainerComponent<IGridObject>
 	{
+
 		public ICollection<IGridObject> Objects
 		{
 			get
@@ -217,6 +218,28 @@ namespace Cells
 				return true;
 			}
 			return false;
+		}
+
+		#endregion
+
+		#region Component container
+
+		void IComponentContainerComponent<IGridObject>.AddComponent (IGridObject component)
+		{
+			_objects.Add (component);
+		}
+
+		bool IComponentContainerComponent<IGridObject>.RemoveComponent (IGridObject component)
+		{
+			return _objects.Remove (component);
+		}
+
+		IEnumerable<IGridObject> IComponentContainerComponent<IGridObject>.Components
+		{
+			get
+			{
+				return _objects;
+			}
 		}
 
 		#endregion
