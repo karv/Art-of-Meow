@@ -22,18 +22,21 @@ namespace Screens
 		public List<IUnidad> UnidadesArtificial = new List<IUnidad> ();
 		public readonly Point StartingPoint = new Point (50, 50);
 
-		public MapMainScreen (Moggle.Game game)
-			: base (game)
+		public override void LoadContent ()
 		{
-			GameGrid = new Grid (100, 100, this);
-
+			base.LoadContent ();
 			// Calcular tamaño
 			int visCellX = (int)(GetDisplayMode.Width / GameGrid.CellSize.Width);
 			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
 			GameGrid.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - GameGrid.VisibleCells.Width * visCellX;
+			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
 			GameGrid.ControlTopLeft = new Vector2 (ScreenOffsX / 2, 0);
 
+			buildChasers ();
+		}
+
+		void buildChasers ()
+		{
 			for (int i = 0; i < NumChasers; i++)
 			{
 				var chaser = new Unidad
@@ -62,8 +65,8 @@ namespace Screens
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
-
 		}
+
 
 		public override void Initialize ()
 		{
@@ -146,6 +149,12 @@ namespace Screens
 			*/
 
 			GameGrid.CenterIfNeeded (Jugador);
+		}
+
+		public MapMainScreen (Moggle.Game game)
+			: base (game)
+		{
+			GameGrid = new Grid (100, 100, this);
 		}
 	}
 }
