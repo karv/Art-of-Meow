@@ -125,8 +125,6 @@ namespace Units
 		/// <param name="dir">Direction</param>
 		public bool MoveOrMelee (MovementDirectionEnum dir)
 		{
-			//float tiempoMov = 1;
-			float tiempoMelee = 2;
 			#if DEBUG
 			if (NextActionTime != 0)
 			{
@@ -142,7 +140,7 @@ namespace Units
 				var target = targetCell.GetUnidadHere ();
 				if (target == null)
 					return false;
-				NextActionTime = tiempoMelee;
+				NextActionTime = calcularTiempoMelee ();
 				MeleeDamage (target);
 			}
 			else
@@ -150,6 +148,12 @@ namespace Units
 				NextActionTime = calcularTiempoMov (dir);
 			}
 			return true;
+		}
+
+		float calcularTiempoMelee ()
+		{
+			var dex = Recursos.ValorRecurso ("dex").Value;
+			return 1 / dex;
 		}
 
 		float calcularTiempoMov (MovementDirectionEnum dir)
@@ -193,6 +197,14 @@ namespace Units
 				Base = 10,
 				Max = 10,
 				Valor = 10
+			});
+			Recursos.Add (new StatRecurso ("dex", this)
+			{
+				TasaRecuperaciónNormal = 1,
+				TasaRecuperaciónMax = 0.5f,
+				Base = 7,
+				Max = 7,
+				Valor = 7
 			});
 		}
 	}
