@@ -12,17 +12,23 @@ namespace Units.Recursos
 
 		void MonoGame.Extended.IUpdate.Update (GameTime gameTime)
 		{
-			regenMax (gameTime);
-			regenCurr (gameTime);
+			RegenMax (gameTime);
+			RegenCurr (gameTime);
 		}
 
-		void regenMax (GameTime gameTime)
+		/// <summary>
+		/// Realiza la regeneración del valor máximo
+		/// </summary>
+		protected virtual void RegenMax (GameTime gameTime)
 		{
 			var diff = Base - Max;
 			Max += diff * (float)gameTime.ElapsedGameTime.TotalSeconds;
 		}
 
-		void regenCurr (GameTime gameTime)
+		/// <summary>
+		/// Realiza la regeneración del valor actual.
+		/// </summary>
+		protected virtual void RegenCurr (GameTime gameTime)
 		{
 			var diff = Max - Valor;
 			Valor += diff * (float)gameTime.ElapsedGameTime.TotalSeconds;
