@@ -7,6 +7,8 @@ using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Moggle.Comm;
 using Units.Inteligencia;
+using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace Screens
 {
@@ -100,14 +102,18 @@ namespace Screens
 		/// </summary>
 		protected void TeclaPresionada (KeyboardEventArgs keyArg)
 		{
-			
 			var key = keyArg.Key;
 
 			switch (key)
 			{
-				case Microsoft.Xna.Framework.Input.Keys.Escape:
+				case Keys.Escape:
 					Juego.Exit ();
 					break;
+					#if DEBUG
+				case Keys.Tab:
+					Debug.WriteLine (Jugador.Recursos);
+					break;
+					#endif
 			/*
 				case Microsoft.Xna.Framework.Input.Keys.Down:
 				case Microsoft.Xna.Framework.Input.Keys.NumPad2:

@@ -116,6 +116,11 @@ namespace Units.Recursos
 
 		#endregion
 
+		public override string ToString ()
+		{
+			return string.Format ("{0}//{1}//{2}", Valor, Max, Base);
+		}
+
 		/// <param name="nombreÚnico">Nombre único.</param>
 		/// <param name="unidad">Unidad.</param>
 		public StatRecurso (string nombreÚnico, IUnidad unidad)
