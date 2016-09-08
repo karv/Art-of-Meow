@@ -124,16 +124,6 @@ namespace Units
 		/// <param name="dir">Direction</param>
 		public bool MoveOrMelee (MovementDirectionEnum dir)
 		{
-			TimeSpan tiempoMov = TimeSpan.FromMinutes (1);
-			TimeSpan tiempoMelee = TimeSpan.FromMinutes (2);
-			#if DEBUG
-			if (NextActionTime != TimeSpan.Zero)
-			{
-				Debug.WriteLine (
-					"Se regresó el control a una unidad con NextActionTime > 0",
-					"Unit movement");
-			}
-			#endif
 			// Intenta mover este objeto; si no puede, intenta atacar.
 			if (!MapGrid.MoveCellObject (this, dir))
 			{
