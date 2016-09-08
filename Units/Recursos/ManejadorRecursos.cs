@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace Units.Recursos
 {
@@ -66,6 +67,14 @@ namespace Units.Recursos
 		{
 			foreach (var x in _data.Values)
 				x.Update (gameTime);
+		}
+
+		public override string ToString ()
+		{
+			var sb = new StringBuilder ();
+			foreach (var x in _data)
+				sb.AppendFormat ("[{0}]: [{1}]\n", x.Key, x.Value);
+			return sb.ToString ();
 		}
 
 		/// <summary>

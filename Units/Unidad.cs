@@ -133,6 +133,8 @@ namespace Units
 				if (target == null)
 					return false;
 				NextActionTime = calcularTiempoMelee ();
+				var dex = Recursos.GetRecurso (ConstantesRecursos.Destreza) as StatRecurso;
+				dex.Valor *= 0.8f;
 				MeleeDamage (target);
 			}
 			else
