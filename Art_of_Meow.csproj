@@ -77,12 +77,13 @@
     <Compile Include="Units\Inteligencia\HumanIntelligence.cs" />
     <Compile Include="Units\Inteligencia\IIntelligence.cs" />
     <Compile Include="Items\Inventory.cs" />
-   	<Compile Include="Componentes\VanishingString.cs" />
+    <Compile Include="Componentes\VanishingString.cs" />
     <Compile Include="Items\IItem.cs" />
     <Compile Include="Items\IInventory.cs" />
     <Compile Include="Items\GroundItem.cs" />
     <Compile Include="Items\Declarations\Pots\HealingPotion.cs" />
     <Compile Include="Items\Declarations\CommonItemBase.cs" />
+    <Compile Include="Units\Recursos\StatRecurso.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
