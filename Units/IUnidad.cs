@@ -1,12 +1,11 @@
-﻿using Cells.CellObjects;
+﻿using System;
 using Cells;
+using Cells.CellObjects;
 using Units.Recursos;
-using MonoGame.Extended;
-using System;
 
 namespace Units
 {
-	public interface IUnidad : IUpdate, IUpdateGridObject
+	public interface IUnidad : IUpdateGridObject
 	{
 		Grid MapGrid { get; }
 

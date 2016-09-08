@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Cells;
-using System;
 using Cells.CellObjects;
 
 namespace Units.Inteligencia
@@ -34,7 +33,7 @@ namespace Units.Inteligencia
 
 		void IIntelligence.DoAction ()
 		{
-			Yo.NextActionTime = TimeSpan.FromMinutes (2);
+			Yo.NextActionTime = 2; // ¿Qué es esto?
 			TryUpdateTarget ();
 			var dir = Yo.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
-using Units;
-using MonoGame.Extended.Shapes;
 using MonoGame.Extended;
-using Art_of_Meow;
+using MonoGame.Extended.Shapes;
+using Units;
 
 namespace Cells
 {
@@ -154,13 +154,14 @@ namespace Cells
 		public override void Update (GameTime gameTime)
 		{
 			// applyDelta ();
-			TimeManager.ExecuteNext ();
+			var time = TimeManager.ExecuteNext ();
+			updateUnits (time);
 		}
 
-		void updateUnits (GameTime gameTime)
+		void updateUnits (float gameTime)
 		{
 			foreach (var x in Objects.OfType<IUnidad> ())
-				x.Update (gameTime);
+				x.PassTime (gameTime);
 		}
 
 		#region Cámara

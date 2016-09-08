@@ -1,10 +1,11 @@
-﻿using System;
-
-namespace Units.Recursos
+﻿namespace Units.Recursos
 {
+	/// <summary>
+	/// Recurso de valor 'fijo'
+	/// </summary>
 	public class RecursoEstático : IRecurso
 	{
-		public void Update (Microsoft.Xna.Framework.GameTime gameTime)
+		public void Update (float gameTime)
 		{
 		}
 

@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using MonoGame.Extended;
 
 namespace Units.Recursos
 {
 	/// <summary>
 	/// Clase que sirve como medio entre un <see cref="IUnidad"/> y sus <see cref="IRecurso"/>
 	/// </summary>
-	public class ManejadorRecursos : IUpdate
+	public class ManejadorRecursos : AoM.IInternalUpdate
 	{
 		readonly Dictionary<string, IRecurso> _data;
 
@@ -64,7 +62,7 @@ namespace Units.Recursos
 		/// Runs the logic update
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public void Update (GameTime gameTime)
+		public void Update (float gameTime)
 		{
 			foreach (var x in _data.Values)
 				x.Update (gameTime);

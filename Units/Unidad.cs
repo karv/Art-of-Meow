@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using Art_of_Meow;
 using Cells;
 using Cells.CellObjects;
@@ -7,8 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Shapes;
-using Units.Recursos;
 using Units.Inteligencia;
+using Units.Recursos;
 
 namespace Units
 {
@@ -21,9 +20,10 @@ namespace Units
 			Inteligencia.DoAction ();
 		}
 
-		public void PassTime (TimeSpan time)
+		public void PassTime (float time)
 		{
 			NextActionTime -= time;
+			Update (time);
 		}
 
 		public void Initialize ()
@@ -31,7 +31,7 @@ namespace Units
 			throw new NotImplementedException ();
 		}
 
-		public TimeSpan NextActionTime { get; set; }
+		public float NextActionTime { get; set; }
 
 		public ManejadorRecursos Recursos { get; }
 
@@ -131,25 +131,37 @@ namespace Units
 				var target = targetCell.GetUnidadHere ();
 				if (target == null)
 					return false;
-				NextActionTime = tiempoMelee;
+				NextActionTime = calcularTiempoMelee ();
 				MeleeDamage (target);
 			}
 			else
 			{
-				NextActionTime = tiempoMov;
+				NextActionTime = calcularTiempoMov (dir);
 			}
 			return true;
 		}
 
+		float calcularTiempoMelee ()
+		{
+			var dex = Recursos.ValorRecurso ("dex").Value;
+			return 1 / dex;
+		}
+
+		float calcularTiempoMov (MovementDirectionEnum dir)
+		{
+			var vel = Recursos.ValorRecurso ("vel").Value;
+			return 1 / vel;
+		}
+
 		public IIntelligence Inteligencia { get; set; }
 
-		public void Update (GameTime gameTime)
+		public void Update (float gameTime)
 		{
 			if (Habilitado)
 				ForceUpdate (gameTime);
 		}
 
-		public void ForceUpdate (GameTime gameTime)
+		protected void ForceUpdate (float gameTime)
 		{
 			Recursos.Update (gameTime);
 		}
@@ -169,6 +181,22 @@ namespace Units
 				Valor = 5
 			};
 			Recursos.Add (RecursoHP);
+			Recursos.Add (new StatRecurso ("vel", this)
+			{
+				TasaRecuperaciónNormal = 1,
+				TasaRecuperaciónMax = 0.5f,
+				Base = 10,
+				Max = 10,
+				Valor = 10
+			});
+			Recursos.Add (new StatRecurso ("dex", this)
+			{
+				TasaRecuperaciónNormal = 1,
+				TasaRecuperaciónMax = 0.5f,
+				Base = 7,
+				Max = 7,
+				Valor = 7
+			});
 		}
 	}
 }
