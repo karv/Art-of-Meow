@@ -59,7 +59,8 @@ namespace Units
 			TimeSpan duración = TimeSpan.FromMilliseconds (300);
 			DoDamage (u, dmg);
 			var vs = new VanishingString (scr, dmg.ToString (), duración);
-			scr.AddComponent (vs);
+			vs.FontName = "fonts";
+			vs.Initialize ();
 		}
 	}
 }

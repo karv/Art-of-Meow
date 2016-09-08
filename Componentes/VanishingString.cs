@@ -23,6 +23,25 @@ namespace Componentes
 		string _texto;
 		Vector2 topLeft;
 
+		string _fontName;
+
+		/// <summary>
+		/// Gets or sets the name of the font.
+		/// </summary>
+		public string FontName
+		{
+			get
+			{
+				return _fontName;
+			}
+			set
+			{
+				if (Font != null)
+					throw new InvalidOperationException ("Cannot change font name after content is loaded.");
+				_fontName = value;
+			}
+		}
+
 		/// <summary>
 		/// Velocidad de este control.
 		/// </summary>
@@ -127,7 +146,7 @@ namespace Componentes
 
 		protected override void LoadContent ()
 		{
-			Font = Screen.Content.Load<BitmapFont> ("fonts");
+			Font = Screen.Content.Load<BitmapFont> (FontName);
 		}
 
 		protected override void Dispose ()
