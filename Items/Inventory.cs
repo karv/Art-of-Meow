@@ -25,16 +25,26 @@ namespace Items
 
 		public ContentManager Content { get; }
 
-		public void LoadContent ()
+		protected void LoadContent ()
 		{
 			IconTexture = Content.Load<Texture2D> (IconTextureName);
 			Font = Content.Load <BitmapFont> (FontName);
 		}
 
-		public void UnloadContent ()
+		protected void UnloadContent ()
 		{
 			IconTexture = null;
 			Font = null;
+		}
+
+		void IComponent.LoadContent ()
+		{
+			LoadContent ();
+		}
+
+		void IComponent.UnloadContent ()
+		{
+			UnloadContent ();
 		}
 
 		void System.IDisposable.Dispose ()
@@ -42,8 +52,9 @@ namespace Items
 			UnloadContent ();
 		}
 
-		public void Initialize ()
+		public virtual void Initialize ()
 		{
+			LoadContent ();
 		}
 
 		public IComponentContainerComponent<IGameComponent> Container { get; }
