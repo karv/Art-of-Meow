@@ -5,7 +5,7 @@ namespace Items.Declarations.Pots
 	{
 		protected override Microsoft.Xna.Framework.Color GetColor ()
 		{
-			return Color.Red;
+			return Microsoft.Xna.Framework.Color.Red;
 		}
 
 		public override string Nombre
