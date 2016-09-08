@@ -7,8 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Shapes;
-using Units.Recursos;
 using Units.Inteligencia;
+using Units.Recursos;
 
 namespace Units
 {
@@ -179,6 +179,14 @@ namespace Units
 				Valor = 5
 			};
 			Recursos.Add (RecursoHP);
+			Recursos.Add (new StatRecurso ("vel", this)
+			{
+				TasaRecuperaciónNormal = 1,
+				TasaRecuperaciónMax = 0.5f,
+				Base = 10,
+				Max = 10,
+				Valor = 10
+			});
 		}
 	}
 }
