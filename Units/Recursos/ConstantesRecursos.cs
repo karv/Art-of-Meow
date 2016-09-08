@@ -1,4 +1,4 @@
-﻿namespace AoM
+﻿namespace Units.Recursos
 {
 	public static class ConstantesRecursos
 	{

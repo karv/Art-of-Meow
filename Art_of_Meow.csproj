@@ -85,7 +85,7 @@
     <Compile Include="Items\Declarations\CommonItemBase.cs" />
     <Compile Include="Units\Recursos\StatRecurso.cs" />
     <Compile Include="IInternalUpdate.cs" />
-    <Compile Include="ConstantesRecursos.cs" />
+    <Compile Include="Units\Recursos\ConstantesRecursos.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
