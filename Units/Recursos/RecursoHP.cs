@@ -4,7 +4,7 @@ namespace Units.Recursos
 {
 	public class RecursoHP : IRecurso
 	{
-		public void Update (Microsoft.Xna.Framework.GameTime gameTime)
+		public void Update (float gameTime)
 		{
 		}
 

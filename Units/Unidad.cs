@@ -21,9 +21,10 @@ namespace Units
 			Inteligencia.DoAction ();
 		}
 
-		public void PassTime (TimeSpan time)
+		public void PassTime (float time)
 		{
 			NextActionTime -= time;
+			Update (time);
 		}
 
 		public void Initialize ()
@@ -31,7 +32,7 @@ namespace Units
 			throw new NotImplementedException ();
 		}
 
-		public TimeSpan NextActionTime { get; set; }
+		public float NextActionTime { get; set; }
 
 		public ManejadorRecursos Recursos { get; }
 
@@ -124,10 +125,10 @@ namespace Units
 		/// <param name="dir">Direction</param>
 		public bool MoveOrMelee (MovementDirectionEnum dir)
 		{
-			TimeSpan tiempoMov = TimeSpan.FromMinutes (1);
-			TimeSpan tiempoMelee = TimeSpan.FromMinutes (2);
+			//float tiempoMov = 1;
+			float tiempoMelee = 2;
 			#if DEBUG
-			if (NextActionTime != TimeSpan.Zero)
+			if (NextActionTime != 0)
 			{
 				Debug.WriteLine (
 					"Se regresó el control a una unidad con NextActionTime > 0",
@@ -146,20 +147,26 @@ namespace Units
 			}
 			else
 			{
-				NextActionTime = tiempoMov;
+				NextActionTime = calcularTiempoMov (dir);
 			}
 			return true;
 		}
 
+		float calcularTiempoMov (MovementDirectionEnum dir)
+		{
+			var vel = Recursos.ValorRecurso ("vel").Value;
+			return 1 / vel;
+		}
+
 		public IIntelligence Inteligencia { get; set; }
 
-		public void Update (GameTime gameTime)
+		public void Update (float gameTime)
 		{
 			if (Habilitado)
 				ForceUpdate (gameTime);
 		}
 
-		public void ForceUpdate (GameTime gameTime)
+		protected void ForceUpdate (float gameTime)
 		{
 			Recursos.Update (gameTime);
 		}

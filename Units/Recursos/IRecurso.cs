@@ -6,7 +6,7 @@ namespace Units.Recursos
 	/// <summary>
 	/// Un 'stat' de una unidad.
 	/// </summary>
-	public interface IRecurso : IUpdate
+	public interface IRecurso : AoM.IInternalUpdate
 	{
 		/// <summary>
 		/// Nombre (debe ser único en el manejador de recursos) del recurso

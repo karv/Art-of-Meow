@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{AF2D54DE-9879-4C2F-8911-628AB7D239A2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Art_of_Meow</RootNamespace>
+    <RootNamespace>AoM</RootNamespace>
     <AssemblyName>Art_of_Meow</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <StartupObject>Art_of_Meow.Program</StartupObject>
@@ -84,6 +84,7 @@
     <Compile Include="Items\Declarations\Pots\HealingPotion.cs" />
     <Compile Include="Items\Declarations\CommonItemBase.cs" />
     <Compile Include="Units\Recursos\StatRecurso.cs" />
+    <Compile Include="IInternalUpdate.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

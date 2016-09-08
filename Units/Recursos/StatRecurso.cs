@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using AoM;
 
 namespace Units.Recursos
 {
@@ -10,7 +10,7 @@ namespace Units.Recursos
 	{
 		#region IUpdate implementation
 
-		void MonoGame.Extended.IUpdate.Update (GameTime gameTime)
+		void IInternalUpdate.Update (float gameTime)
 		{
 			RegenMax (gameTime);
 			RegenCurr (gameTime);
@@ -19,19 +19,19 @@ namespace Units.Recursos
 		/// <summary>
 		/// Realiza la regeneración del valor máximo
 		/// </summary>
-		protected virtual void RegenMax (GameTime gameTime)
+		protected virtual void RegenMax (float gameTime)
 		{
 			var diff = Base - Max;
-			Max += diff * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			Max += diff * gameTime;
 		}
 
 		/// <summary>
 		/// Realiza la regeneración del valor actual.
 		/// </summary>
-		protected virtual void RegenCurr (GameTime gameTime)
+		protected virtual void RegenCurr (float gameTime)
 		{
 			var diff = Max - Valor;
-			Valor += diff * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			Valor += diff * gameTime;
 		}
 
 		#endregion

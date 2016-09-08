@@ -23,25 +23,29 @@ namespace Art_of_Meow
 			}
 		}
 
-		public void PassTime (TimeSpan time)
+		public void PassTime (float time)
 		{
 			foreach (var ob in UpdateGridObjects)
 				ob.PassTime (time);
 		}
 
-		public TimeSpan ExecuteNext ()
+		/// <summary>
+		/// Runs the game until the next action
+		/// </summary>
+		/// <returns>The passed internal time.</returns>
+		public float ExecuteNext ()
 		{
 			Actual = NextObject ();
 			if (Actual == null)
 				throw new Exception ("No existe objeto Update.");
 			#if DEBUG
-			if (Actual.NextActionTime != TimeSpan.Zero)
+			if (Actual.NextActionTime != 0)
 				Debug.WriteLine (
 					string.Format ("Ejecutando objeto {0}.", Actual),
 					"Action");
 			#endif
 			PassTime (Actual.NextActionTime);
-			if (Actual.NextActionTime != TimeSpan.Zero)
+			if (Actual.NextActionTime != 0)
 			{
 				Debug.WriteLine (
 					"Ejecutando objeto con tiempo de espera positivo",
