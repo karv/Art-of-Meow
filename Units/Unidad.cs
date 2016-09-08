@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Shapes;
 using Units.Inteligencia;
 using Units.Recursos;
+using AoM;
 
 namespace Units
 {
@@ -143,13 +144,13 @@ namespace Units
 
 		float calcularTiempoMelee ()
 		{
-			var dex = Recursos.ValorRecurso ("dex").Value;
+			var dex = Recursos.ValorRecurso (ConstantesRecursos.Destreza).Value;
 			return 1 / dex;
 		}
 
 		float calcularTiempoMov (MovementDirectionEnum dir)
 		{
-			var vel = Recursos.ValorRecurso ("vel").Value;
+			var vel = Recursos.ValorRecurso (ConstantesRecursos.Velocidad).Value;
 			return 1 / vel;
 		}
 
@@ -181,7 +182,7 @@ namespace Units
 				Valor = 5
 			};
 			Recursos.Add (RecursoHP);
-			Recursos.Add (new StatRecurso ("vel", this)
+			Recursos.Add (new StatRecurso (ConstantesRecursos.Velocidad, this)
 			{
 				TasaRecuperaciónNormal = 1,
 				TasaRecuperaciónMax = 0.5f,
@@ -189,7 +190,7 @@ namespace Units
 				Max = 10,
 				Valor = 10
 			});
-			Recursos.Add (new StatRecurso ("dex", this)
+			Recursos.Add (new StatRecurso (ConstantesRecursos.Destreza, this)
 			{
 				TasaRecuperaciónNormal = 1,
 				TasaRecuperaciónMax = 0.5f,
