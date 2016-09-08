@@ -26,6 +26,11 @@ namespace Units
 			NextActionTime -= time;
 		}
 
+		public void Initialize ()
+		{
+			throw new NotImplementedException ();
+		}
+
 		public TimeSpan NextActionTime { get; set; }
 
 		public ManejadorRecursos Recursos { get; }

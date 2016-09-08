@@ -22,6 +22,11 @@ namespace Cells.CellObjects
 			CollidePlayer = false;
 		}
 
+		public void Initialize ()
+		{
+			throw new System.NotImplementedException ();
+		}
+
 		public bool CollidePlayer { get; set; }
 
 		public bool Collision (IGridObject collObj)

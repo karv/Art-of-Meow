@@ -6,7 +6,7 @@ using MonoGame.Extended.Shapes;
 
 namespace Cells.CellObjects
 {
-	public interface IGridObject : IDisposable
+	public interface IGridObject : IGameComponent, IDisposable
 	{
 		/// <summary>
 		/// Gets the cell-based localization.

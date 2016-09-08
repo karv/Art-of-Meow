@@ -28,6 +28,11 @@ namespace Cells.CellObjects
 			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
+		public void Initialize ()
+		{
+			throw new System.NotImplementedException ();
+		}
+
 		public Color? UseColor { get { return Color.White; } }
 
 		public float Depth { get { return Depths.Background; } }
