@@ -38,12 +38,6 @@ namespace AoM
 			Actual = NextObject ();
 			if (Actual == null)
 				throw new Exception ("No existe objeto Update.");
-			#if DEBUG
-			if (Actual.NextActionTime != 0)
-				Debug.WriteLine (
-					string.Format ("Ejecutando objeto {0}.", Actual),
-					"Action");
-			#endif
 			var passTime = Actual.NextActionTime;
 			PassTime (passTime);
 			if (Actual.NextActionTime != 0)
