@@ -37,7 +37,6 @@ namespace Units.Recursos
 
 		public void Update (float gameTime)
 		{
-			throw new NotImplementedException ();
 		}
 
 		#endregion

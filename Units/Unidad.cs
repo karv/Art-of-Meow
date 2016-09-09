@@ -113,8 +113,9 @@ namespace Units
 		{
 			if (Equipo == target.Equipo)
 				return;
-			var hp = target.Recursos.GetRecurso ("hp");
-			hp.Valor -= 1;
+			var hp = target.Recursos.GetRecurso (ConstantesRecursos.HP);
+			var dmg = Recursos.ValorRecurso (ConstantesRecursos.DañoMelee).Value / 8;
+			hp.Valor -= dmg;
 		}
 
 		/// <summary>
