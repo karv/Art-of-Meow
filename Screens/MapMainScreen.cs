@@ -9,6 +9,7 @@ using Moggle.Comm;
 using Units.Inteligencia;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using Units.Buffs;
 
 namespace Screens
 {
@@ -60,6 +61,7 @@ namespace Screens
 				MapGrid = GameGrid,
 				Location = StartingPoint
 			};
+			Jugador.Buffs.Hook (new PoisonBuff ());
 
 			var Humanintel = new HumanIntelligence (Jugador);
 			Jugador.Inteligencia = Humanintel;
