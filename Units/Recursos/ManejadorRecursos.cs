@@ -77,6 +77,11 @@ namespace Units.Recursos
 			return sb.ToString ();
 		}
 
+		public IEnumerable<IRecurso> Enumerar ()
+		{
+			return _data.Values;
+		}
+
 		/// <summary>
 		/// </summary>
 		public ManejadorRecursos ()
@@ -88,6 +93,7 @@ namespace Units.Recursos
 		/// </summary>
 		/// <param name="recursos">Recursos</param>
 		public ManejadorRecursos (IEnumerable<IRecurso> recursos)
+			: this ()
 		{
 			foreach (var rec in recursos)
 				Add (rec);
