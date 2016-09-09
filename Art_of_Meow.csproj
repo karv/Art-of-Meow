@@ -94,6 +94,7 @@
     <Compile Include="Units\Buffs\BuffManager.cs" />
     <Compile Include="Units\Buffs\Buff.cs" />
     <Compile Include="Debugging\Logger.cs" />
+    <Compile Include="Units\Buffs\PoisonBuff.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
