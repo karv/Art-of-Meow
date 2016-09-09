@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
+using System.Linq;
 
 namespace Items
 {
@@ -52,6 +53,11 @@ namespace Items
 
 		public virtual void Initialize ()
 		{
+		}
+
+		public ILookup<string, IItem> Group ()
+		{
+			return Items.ToLookup (i => i.Nombre);
 		}
 
 		public IComponentContainerComponent<IGameComponent> Container { get; }
