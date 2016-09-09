@@ -39,8 +39,10 @@ namespace AoM
 			if (Actual == null)
 				throw new Exception ("No existe objeto Update.");
 			var passTime = Actual.NextActionTime;
+			#if DEBUG
 			if (passTime < 0)
-				throw new Exception ();
+				throw new Exception ("passTime < 0");
+			#endif
 			PassTime (passTime);
 			Debug.WriteLineIf (Actual.NextActionTime != 0,
 				"Ejecutando objeto con tiempo de espera positivo",
