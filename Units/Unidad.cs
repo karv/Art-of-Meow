@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Shapes;
 using Units.Inteligencia;
 using Units.Recursos;
+using Units.Buffs;
+using OpenTK.Platform.MacOS;
 
 namespace Units
 {
@@ -48,6 +50,8 @@ namespace Units
 		}
 
 		public ManejadorRecursos Recursos { get; }
+
+		public BuffManager Buffs { get; }
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
@@ -192,6 +196,7 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
+			Buffs = new BuffManager (this);
 
 			inicializarRecursos ();
 		}
