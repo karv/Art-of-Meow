@@ -184,6 +184,7 @@ namespace Units
 		protected void ForceUpdate (float gameTime)
 		{
 			Recursos.Update (gameTime);
+			Buffs.Update (gameTime);
 		}
 
 		public override string ToString ()
