@@ -23,7 +23,7 @@ namespace Units.Recursos
 		}
 	}
 
-	public abstract class RecursoFml : IRecurso
+	public class RecursoFml : IRecurso
 	{
 		/// <summary>
 		/// Fórmula del recurso
@@ -68,7 +68,7 @@ namespace Units.Recursos
 		/// <value>The valor.</value>
 		public float Valor
 		{
-			get { throw new NotImplementedException (); }
+			get { return Fml.Evaluar (); }
 			set { throw new InvalidOperationException (); }
 		}
 
@@ -81,7 +81,7 @@ namespace Units.Recursos
 		/// <param name="fml">Fórmula del valor</param>
 		/// <param name="unidad">Unidad</param>
 		/// <param name="nombre">Nombre único</param>
-		protected RecursoFml (string fml, IUnidad unidad, string nombre)
+		public RecursoFml (string fml, IUnidad unidad, string nombre)
 		{
 			Fml = new RecFml (fml, unidad.Recursos);
 			Unidad = unidad;
