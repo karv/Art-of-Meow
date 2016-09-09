@@ -90,6 +90,9 @@
     <Compile Include="IInternalUpdate.cs" />
     <Compile Include="Units\Recursos\ConstantesRecursos.cs" />
     <Compile Include="Units\Recursos\RecursoFml.cs" />
+    <Compile Include="Units\Buffs\IBuff.cs" />
+    <Compile Include="Units\Buffs\BuffManager.cs" />
+    <Compile Include="Units\Buffs\Buff.cs" />
     <Compile Include="Debugging\Logger.cs" />
   </ItemGroup>
   <ProjectExtensions>
@@ -115,5 +118,6 @@
     <Folder Include="Items\Declarations\" />
     <Folder Include="Items\Declarations\Pots\" />
     <Folder Include="Debugging\" />
+    <Folder Include="Units\Buffs\" />
   </ItemGroup>
 </Project>
