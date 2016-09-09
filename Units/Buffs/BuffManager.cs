@@ -121,6 +121,7 @@ namespace Units.Buffs
 		public BuffManager (IUnidad unidad)
 		{
 			HookedOn = unidad;
+			Buffs = new List<IBuff> ();
 		}
 	}
 }
