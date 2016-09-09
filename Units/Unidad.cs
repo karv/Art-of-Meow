@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Shapes;
 using Units.Inteligencia;
 using Units.Recursos;
-using AoM;
 
 namespace Units
 {
@@ -38,7 +37,7 @@ namespace Units
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
-		public readonly RecursoHP RecursoHP;
+		public RecursoHP RecursoHP { get; private set; }
 
 		public Grid MapGrid { get; set; }
 
@@ -114,8 +113,9 @@ namespace Units
 		{
 			if (Equipo == target.Equipo)
 				return;
-			var hp = target.Recursos.GetRecurso ("hp");
-			hp.Valor -= 1;
+			var hp = target.Recursos.GetRecurso (ConstantesRecursos.HP);
+			var dmg = Recursos.ValorRecurso (ConstantesRecursos.DañoMelee).Value / 8;
+			hp.Valor -= dmg;
 		}
 
 		/// <summary>
@@ -178,6 +178,12 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
+
+			inicializarRecursos ();
+		}
+
+		void inicializarRecursos ()
+		{
 			RecursoHP = new RecursoHP (this)
 			{
 				Max = 5,
@@ -200,6 +206,19 @@ namespace Units
 				Max = 7,
 				Valor = 7
 			});
+			Recursos.Add (new StatRecurso (ConstantesRecursos.Fuerza, this)
+			{
+				TasaRecuperaciónNormal = 1,
+				TasaRecuperaciónMax = 0.5f,
+				Base = 10,
+				Max = 10,
+				Valor = 10
+			});
+
+			Recursos.Add (new RecursoFml (
+				ConstantesRecursos.Fuerza,
+				this,
+				ConstantesRecursos.DañoMelee));
 		}
 	}
 }
