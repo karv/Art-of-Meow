@@ -40,12 +40,9 @@ namespace AoM
 				throw new Exception ("No existe objeto Update.");
 			var passTime = Actual.NextActionTime;
 			PassTime (passTime);
-			if (Actual.NextActionTime != 0)
-			{
-				Debug.WriteLine (
-					"Ejecutando objeto con tiempo de espera positivo",
-					"IUpdateGridObject");
-			}
+			Debug.WriteLineIf (Actual.NextActionTime != 0,
+				"Ejecutando objeto con tiempo de espera positivo",
+				"IUpdateGridObject");
 			Actual.Execute ();
 			return passTime;
 		}
