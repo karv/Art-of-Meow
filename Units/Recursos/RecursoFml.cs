@@ -3,26 +3,10 @@ using AdvMath;
 
 namespace Units.Recursos
 {
-	class RecFml : Fórmula
-	{
-		readonly ManejadorRecursos _manRec;
-
-		public override float EvaluarVariable (string nombreVariable)
-		{
-			var ret = _manRec.ValorRecurso (nombreVariable);
-
-			if (ret.HasValue)
-				return ret.Value;
-			throw new Exception ("Recurso inexistente.");
-		}
-
-		public RecFml (string s, ManejadorRecursos man)
-			: base (s)
-		{
-			_manRec = man;
-		}
-	}
-
+	/// <summary>
+	/// Un recurso secundario de sólo lectura. 
+	/// Su valor está determinado por una <see cref="AdvMath.Fórmula"/>
+	/// </summary>
 	public class RecursoFml : IRecurso
 	{
 		/// <summary>
@@ -85,6 +69,26 @@ namespace Units.Recursos
 			Fml = new RecFml (fml, unidad.Recursos);
 			Unidad = unidad;
 			NombreÚnico = nombre;
+		}
+
+		class RecFml : Fórmula
+		{
+			readonly ManejadorRecursos _manRec;
+
+			public override float EvaluarVariable (string nombreVariable)
+			{
+				var ret = _manRec.ValorRecurso (nombreVariable);
+
+				if (ret.HasValue)
+					return ret.Value;
+				throw new Exception ("Recurso inexistente.");
+			}
+
+			public RecFml (string s, ManejadorRecursos man)
+				: base (s)
+			{
+				_manRec = man;
+			}
 		}
 	}
 }
