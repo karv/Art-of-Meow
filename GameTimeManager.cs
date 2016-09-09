@@ -44,7 +44,8 @@ namespace AoM
 					string.Format ("Ejecutando objeto {0}.", Actual),
 					"Action");
 			#endif
-			PassTime (Actual.NextActionTime);
+			var passTime = Actual.NextActionTime;
+			PassTime (passTime);
 			if (Actual.NextActionTime != 0)
 			{
 				Debug.WriteLine (
@@ -52,7 +53,7 @@ namespace AoM
 					"IUpdateGridObject");
 			}
 			Actual.Execute ();
-			return Actual.NextActionTime;
+			return passTime;
 		}
 
 		public IUpdateGridObject NextObject ()
