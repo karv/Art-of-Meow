@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AoM;
 
 namespace Units.Buffs
@@ -59,6 +60,44 @@ namespace Units.Buffs
 			buff.Terminating ();
 			buff.Manager = null;
 			Buffs.Remove (buff);
+		}
+
+		/// <summary>
+		/// Determina si tiene un buff dado
+		/// </summary>
+		/// <returns><c>true</c> si tiene el buff; otherwise, <c>false</c>.</returns>
+		/// <param name="buff">Buff.</param>
+		public bool HasBuff (IBuff buff)
+		{
+			return Buffs.Contains (buff);
+		}
+
+		/// <summary>
+		/// Determina si tiene un buff dado
+		/// </summary>
+		/// <returns><c>true</c> si tiene el buff; otherwise, <c>false</c>.</returns>
+		/// <param name="nombreÚnico">nombre único del buff</param>
+		public bool HasBuff (string nombreÚnico)
+		{
+			return Buffs.Any (z => z.Nombre == nombreÚnico);
+		}
+
+		/// <summary>
+		/// Determina si contiene un buff de un tipo dado.
+		/// </summary>
+		public bool HasBuffOfType<T> ()
+			where T : IBuff
+		{
+			return BuffOfType<T> ().Any ();
+		}
+
+		/// <summary>
+		/// Enumera los buffs de un cierto tipo
+		/// </summary>
+		public IEnumerable<T> BuffOfType<T> () 
+			where T : IBuff
+		{
+			return Buffs.OfType<T> ();
 		}
 
 		/// <summary>
