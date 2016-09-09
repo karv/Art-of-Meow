@@ -9,7 +9,6 @@ using MonoGame.Extended.Shapes;
 using Units.Inteligencia;
 using Units.Recursos;
 using Units.Buffs;
-using OpenTK.Platform.MacOS;
 
 namespace Units
 {

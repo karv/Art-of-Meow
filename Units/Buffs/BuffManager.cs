@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System;
+using AoM;
 
 namespace Units.Buffs
 {
 	/// <summary>
 	/// Manejador de buffs
 	/// </summary>
-	public class BuffManager
+	public class BuffManager : IInternalUpdate
 	{
 		/// <summary>
 		/// Devuelve la unidad donde estos buffs están anclados.
@@ -35,6 +36,8 @@ namespace Units.Buffs
 		/// </summary>
 		public void Hook (IBuff buff)
 		{
+			if (buff == null)
+				throw new ArgumentNullException ("buff");
 			if (buff.Manager != null)
 				throw new InvalidOperationException ("Buff already hooked.");
 			buff.Manager = this;
@@ -48,6 +51,8 @@ namespace Units.Buffs
 		/// </summary>
 		public void UnHook (IBuff buff)
 		{
+			if (buff == null)
+				throw new ArgumentNullException ("buff");
 			if (buff.Manager != this)
 				throw new InvalidOperationException ("Buff is not hooked.");
 			RemoveBuff?.Invoke (this, buff);
@@ -65,6 +70,12 @@ namespace Units.Buffs
 		/// </summary>
 		public event EventHandler<IBuff> RemoveBuff;
 
+		public void Update (float gameTime)
+		{
+			foreach (var buff in Buffs)
+				buff.Update (gameTime);
+		}
+
 		/// <summary>
 		/// </summary>
 		/// <param name="unidad">Unidad.</param>
@@ -73,5 +84,4 @@ namespace Units.Buffs
 			HookedOn = unidad;
 		}
 	}
-	
 }
