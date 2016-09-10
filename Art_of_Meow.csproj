@@ -8,7 +8,7 @@
     <RootNamespace>AoM</RootNamespace>
     <AssemblyName>Art_of_Meow</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <StartupObject>Art_of_Meow.Program</StartupObject>
+    <StartupObject>AoM.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -90,6 +90,7 @@
     <Compile Include="IInternalUpdate.cs" />
     <Compile Include="Units\Recursos\ConstantesRecursos.cs" />
     <Compile Include="Units\Recursos\RecursoFml.cs" />
+    <Compile Include="Debugging\Logger.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -113,5 +114,6 @@
     <Folder Include="Items\" />
     <Folder Include="Items\Declarations\" />
     <Folder Include="Items\Declarations\Pots\" />
+    <Folder Include="Debugging\" />
   </ItemGroup>
 </Project>

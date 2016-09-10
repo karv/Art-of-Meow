@@ -1,5 +1,9 @@
-﻿
-namespace Art_of_Meow
+﻿using System.Threading;
+using Debugging;
+using System.Diagnostics;
+
+
+namespace AoM
 {
 	public class Program
 	{
@@ -7,6 +11,8 @@ namespace Art_of_Meow
 
 		public static void Main ()
 		{
+			var lg = new Logger ("debug.log");
+			Debug.Listeners.Add (lg);
 			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);
 			MyGame.Run ();
 		}

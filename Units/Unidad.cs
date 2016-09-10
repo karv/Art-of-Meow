@@ -1,5 +1,5 @@
 ﻿using System;
-using Art_of_Meow;
+using AoM;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
