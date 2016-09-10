@@ -153,15 +153,13 @@ namespace Cells
 
 		public override void Update (GameTime gameTime)
 		{
-			// applyDelta ();
 			var time = TimeManager.ExecuteNext ();
 			updateUnits (time);
 		}
 
 		void updateUnits (float gameTime)
 		{
-			foreach (var x in Objects.OfType<IUnidad> ())
-				x.PassTime (gameTime);
+			// No se debe invocar x.PassTime, TimeManager ya invocó esto.
 		}
 
 		#region Cámara

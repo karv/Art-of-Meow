@@ -31,7 +31,21 @@ namespace Units
 			throw new NotImplementedException ();
 		}
 
-		public float NextActionTime { get; set; }
+		float _nextActionTime;
+
+		public float NextActionTime
+		{
+			get
+			{
+				return _nextActionTime;
+			}
+			set
+			{
+				if (value < 0)
+					throw new Exception ();
+				_nextActionTime = value;
+			}
+		}
 
 		public ManejadorRecursos Recursos { get; }
 

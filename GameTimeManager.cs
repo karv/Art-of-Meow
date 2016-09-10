@@ -4,6 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
+using Microsoft.Xna.Framework.Graphics;
+using Units;
+using Units.Inteligencia;
 
 namespace AoM
 {
@@ -57,6 +60,7 @@ namespace AoM
 			foreach (var ob in UpdateGridObjects)
 				if (ret == null || ret.NextActionTime > ob.NextActionTime)
 					ret = ob;
+			Debug.WriteLine (ret);
 			return ret;
 		}
 
