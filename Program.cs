@@ -13,7 +13,6 @@ namespace AoM
 		{
 			var lg = new Logger ("debug.log");
 			Debug.Listeners.Add (lg);
-			Debug.WriteLine ("Iniciando");
 			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);
 			MyGame.Run ();
 		}
