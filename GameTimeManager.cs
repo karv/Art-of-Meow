@@ -60,7 +60,6 @@ namespace AoM
 			foreach (var ob in UpdateGridObjects)
 				if (ret == null || ret.NextActionTime > ob.NextActionTime)
 					ret = ob;
-			Debug.WriteLine (ret);
 			return ret;
 		}
 
