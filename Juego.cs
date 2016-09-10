@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 
-namespace Art_of_Meow
+namespace AoM
 {
 	public class Juego : Moggle.Game
 	{
