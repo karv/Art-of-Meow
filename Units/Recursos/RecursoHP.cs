@@ -8,7 +8,7 @@ namespace Units.Recursos
 {
 	public class RecursoHP : IRecurso, IRelDraw
 	{
-		public readonly Color BgColor = Color.DarkBlue * 0.2f;
+		public readonly Color BgColor = Color.Black * 0.4f;
 		public readonly Color FillColor = Color.Red;
 
 		public void Update (float gameTime)
