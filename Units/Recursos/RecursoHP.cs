@@ -15,16 +15,26 @@ namespace Units.Recursos
 		{
 		}
 
-		public void Draw (Rectangle topLeft,
+		public void Draw (Rectangle rect,
 		                  SpriteBatch batch)
 		{
 			var text = Juego.Textures.SolidTexture;
-			batch.Draw (text, topLeft, BgColor);
+			batch.Draw (text, rect, BgColor);
+			/* Vertical
 			var fullRect = new Rectangle (
 				               topLeft.X,
 				               topLeft.Bottom - (int)(RelativeHp * topLeft.Height),
 				               topLeft.Width,
 				               (int)(RelativeHp * topLeft.Height));
+			*/
+
+			/* Horizontal*/
+			var fullRect = new Rectangle (
+				               rect.Location,
+				               new Point (
+					               (int)(RelativeHp * rect.Width),
+					               rect.Height));
+
 			batch.Draw (text, fullRect, FillColor);
 		}
 
