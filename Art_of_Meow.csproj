@@ -95,7 +95,8 @@
     <Compile Include="Units\Buffs\Buff.cs" />
     <Compile Include="Debugging\Logger.cs" />
     <Compile Include="Units\Buffs\PoisonBuff.cs" />
-    <Compile Include="Componentes\ControlIconosRecursos.cs" />
+    <Compile Include="Componentes\RecursoView.cs" />
+    <Compile Include="Componentes\ListaIconos.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

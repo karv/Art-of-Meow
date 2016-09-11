@@ -1,10 +1,8 @@
-﻿using Moggle.Controles;
-using System;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using MonoGame.Extended.Shapes;
+using Moggle.Controles;
 using MonoGame.Extended;
-using OpenTK.Graphics.ES20;
+using MonoGame.Extended.Shapes;
 
 namespace Componentes
 {
@@ -14,9 +12,9 @@ namespace Componentes
 	}
 
 	/// <summary>
-	/// Control del GUI que maneja la visivilidad los recursos.
+	/// Control del GUI que maneja la visibilidad los recursos.
 	/// </summary>
-	public class ControlIconosRecursos : DSBC
+	public class ListaIconos : DSBC
 	{
 		/// <summary>
 		/// Devuelve o establece la posición
@@ -28,7 +26,7 @@ namespace Componentes
 		/// Devuelve la lista de iconos
 		/// </summary>
 		/// <value>The iconos.</value>
-		public List<IRelDraw> Iconos { get; }
+		public List<IRelDraw> Iconos { get; protected set; }
 
 		/// <summary>
 		/// Devuelve o establece el tamaño de cada icono
@@ -73,7 +71,7 @@ namespace Componentes
 		{
 		}
 
-		public ControlIconosRecursos (IComponentContainerComponent<IGameComponent> cont)
+		public ListaIconos (IComponentContainerComponent<IGameComponent> cont)
 			: base (cont)
 		{
 			Iconos = new List<IRelDraw> ();
@@ -81,4 +79,3 @@ namespace Componentes
 		}
 	}
 }
-
