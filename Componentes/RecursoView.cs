@@ -14,7 +14,6 @@ namespace Componentes
 		                    ManejadorRecursos recs)
 			: base (cont)
 		{
-			TopLeft = Vector2.Zero;
 			Recursos = recs;
 			Iconos = new List<IRelDraw> (Recursos.Enumerar ().OfType<IRelDraw> ());
 		}

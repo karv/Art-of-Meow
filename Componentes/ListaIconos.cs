@@ -6,11 +6,6 @@ using MonoGame.Extended.Shapes;
 
 namespace Componentes
 {
-	public interface IRelDraw
-	{
-		void Draw (RectangleF topLeft);
-	}
-
 	/// <summary>
 	/// Control del GUI que maneja la visibilidad los recursos.
 	/// </summary>
@@ -20,7 +15,7 @@ namespace Componentes
 		/// Devuelve o establece la posición
 		/// </summary>
 		/// <value>The top left.</value>
-		public Vector2 TopLeft { get; set; }
+		public Point TopLeft { get; set; }
 
 		/// <summary>
 		/// Devuelve la lista de iconos
@@ -32,13 +27,13 @@ namespace Componentes
 		/// Devuelve o establece el tamaño de cada icono
 		/// </summary>
 		/// <value>The size of the icon.</value>
-		public SizeF IconSize { get; set; }
+		public Size IconSize { get; set; }
 
 		/// <summary>
 		/// Devuelve o establece el espaciado vertical entre iconos
 		/// </summary>
 		/// <value>The V space.</value>
-		public float VSpace { get; set; }
+		public int VSpace { get; set; }
 
 		public override IShapeF GetBounds ()
 		{
@@ -47,7 +42,7 @@ namespace Componentes
 			var size = new SizeF (
 				           IconSize.Width,
 				           IconSize.Height * Iconos.Count + VSpace * Iconos.Count - 1);
-			return new RectangleF (TopLeft, size);
+			return new RectangleF (TopLeft.ToVector2 (), size);
 		}
 
 		/// <summary>
@@ -55,12 +50,12 @@ namespace Componentes
 		/// </summary>
 		public override void Draw (GameTime gameTime)
 		{
-			var iconTopLeft = new Vector2 (TopLeft.X, TopLeft.Y);
+			var iconTopLeft = new Point (TopLeft.X, TopLeft.Y);
 			foreach (var ic in Iconos)
 			{
-				var outputRect = new RectangleF (iconTopLeft, IconSize);
-				ic.Draw (outputRect);
-				iconTopLeft += new Vector2 (0, IconSize.Height + VSpace);
+				var outputRect = new Rectangle (iconTopLeft, IconSize);
+				ic.Draw (outputRect, Screen.Batch);
+				iconTopLeft += new Point (0, IconSize.Height + VSpace);
 			}
 		}
 
@@ -75,7 +70,7 @@ namespace Componentes
 			: base (cont)
 		{
 			Iconos = new List<IRelDraw> ();
-			IconSize = new SizeF (16, 16);
+			IconSize = new Size (16, 16);
 		}
 	}
 }

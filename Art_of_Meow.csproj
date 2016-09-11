@@ -97,6 +97,7 @@
     <Compile Include="Units\Buffs\PoisonBuff.cs" />
     <Compile Include="Componentes\RecursoView.cs" />
     <Compile Include="Componentes\ListaIconos.cs" />
+    <Compile Include="Componentes\IRelDraw.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
