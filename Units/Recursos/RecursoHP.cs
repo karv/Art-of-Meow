@@ -22,9 +22,9 @@ namespace Units.Recursos
 			batch.Draw (text, topLeft, BgColor);
 			var fullRect = new Rectangle (
 				               topLeft.X,
-				               topLeft.Y + (int)(RelativeHp * topLeft.Height),
+				               topLeft.Bottom - (int)(RelativeHp * topLeft.Height),
 				               topLeft.Width,
-				               topLeft.Height - (int)(topLeft.Y + RelativeHp * topLeft.Height));
+				               (int)(RelativeHp * topLeft.Height));
 			batch.Draw (text, fullRect, FillColor);
 		}
 

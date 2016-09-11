@@ -10,6 +10,7 @@ using Units.Inteligencia;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using Units.Buffs;
+using Componentes;
 
 namespace Screens
 {
@@ -17,6 +18,8 @@ namespace Screens
 	{
 		
 		public override Color BgColor { get { return Color.DarkBlue; } }
+
+		RecursoView _recursoView;
 
 		public const int NumChasers = 5;
 
@@ -69,8 +72,9 @@ namespace Screens
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
-		}
 
+			_recursoView = new RecursoView (this, Jugador.Recursos);
+		}
 
 		public override void Initialize ()
 		{
