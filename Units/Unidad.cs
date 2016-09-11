@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Shapes;
+using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 
@@ -48,6 +49,8 @@ namespace Units
 		}
 
 		public ManejadorRecursos Recursos { get; }
+
+		public BuffManager Buffs { get; }
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
@@ -181,6 +184,7 @@ namespace Units
 		protected void ForceUpdate (float gameTime)
 		{
 			Recursos.Update (gameTime);
+			Buffs.Update (gameTime);
 		}
 
 		public override string ToString ()
@@ -192,6 +196,7 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
+			Buffs = new BuffManager (this);
 
 			inicializarRecursos ();
 		}
