@@ -1,15 +1,16 @@
-using Moggle.Screens;
-using Microsoft.Xna.Framework;
-using Cells;
-using Units;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Cells;
+using Componentes;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Moggle.Comm;
+using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
-using Moggle.Comm;
-using Units.Inteligencia;
-using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
+using Units;
 using Units.Buffs;
+using Units.Inteligencia;
 
 namespace Screens
 {
@@ -17,6 +18,8 @@ namespace Screens
 	{
 		
 		public override Color BgColor { get { return Color.DarkBlue; } }
+
+		public RecursoView _recursoView { get; private set; }
 
 		public const int NumChasers = 5;
 
@@ -33,7 +36,7 @@ namespace Screens
 			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
 			GameGrid.VisibleCells = new Size (visCellX, visCellY);
 			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
-			GameGrid.ControlTopLeft = new Vector2 (ScreenOffsX / 2, 0);
+			GameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
 
 			buildChasers ();
 		}
@@ -69,8 +72,9 @@ namespace Screens
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
-		}
 
+			_recursoView = new RecursoView (this, Jugador.Recursos);
+		}
 
 		public override void Initialize ()
 		{

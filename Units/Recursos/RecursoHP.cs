@@ -1,11 +1,41 @@
 ﻿using System;
+using AoM;
+using Componentes;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Units.Recursos
 {
-	public class RecursoHP : IRecurso
+	public class RecursoHP : IRecurso, IRelDraw
 	{
+		public readonly Color BgColor = Color.Black * 0.4f;
+		public readonly Color FillColor = Color.Red;
+
 		public void Update (float gameTime)
 		{
+		}
+
+		public void Draw (Rectangle rect,
+		                  SpriteBatch batch)
+		{
+			var text = Juego.Textures.SolidTexture;
+			batch.Draw (text, rect, BgColor);
+			/* Vertical
+			var fullRect = new Rectangle (
+				               topLeft.X,
+				               topLeft.Bottom - (int)(RelativeHp * topLeft.Height),
+				               topLeft.Width,
+				               (int)(RelativeHp * topLeft.Height));
+			*/
+
+			/* Horizontal*/
+			var fullRect = new Rectangle (
+				               rect.Location,
+				               new Point (
+					               (int)(RelativeHp * rect.Width),
+					               rect.Height));
+
+			batch.Draw (text, fullRect, FillColor);
 		}
 
 		public string NombreÚnico { get { return "hp"; } }

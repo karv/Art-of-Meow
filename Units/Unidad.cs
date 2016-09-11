@@ -2,17 +2,17 @@
 using AoM;
 using Cells;
 using Cells.CellObjects;
+using Componentes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Shapes;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 
 namespace Units
 {
-	public class Unidad : IUnidad
+	public class Unidad : IUnidad, IRelDraw
 	{
 		public int Equipo { get; set; }
 
@@ -88,25 +88,23 @@ namespace Units
 			get { return RecursoHP.RelativeHp; }
 		}
 
-		public void Draw (RectangleF area, SpriteBatch bat)
+		public void Draw (Rectangle area, SpriteBatch bat)
 		{
 			if (Habilitado)
 				ForceDraw (area, bat);
 		}
 
-		public void ForceDraw (RectangleF area, SpriteBatch bat)
+		public void ForceDraw (Rectangle area, SpriteBatch bat)
 		{
-			// TODO: Invocar el método extendido de MonoGame.Extended
-			var ar = area.ToRectangle ();
 			bat.Draw (
 				Texture,
-				ar, null, Color.White,
+				area, null, Color.White,
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Unidad);
 
 			// Barras
-			var rec = new Rectangle (ar.Left, ar.Bottom, ar.Width, 3);
+			var rec = new Rectangle (area.Left, area.Bottom, area.Width, 3);
 
 			bat.Draw (Juego.Textures.SolidTexture, rec, Color.Gray * 0.7f);
 			var fgRect = new Rectangle (
@@ -116,7 +114,6 @@ namespace Units
 					             rec.Height));
 
 			bat.Draw (Juego.Textures.SolidTexture, fgRect, Color.Red);
-
 		}
 
 		public void Dispose ()

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AoM;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
@@ -81,15 +80,15 @@ namespace Cells
 		/// <summary>
 		/// Posición top left del control.
 		/// </summary>
-		public Vector2 ControlTopLeft = Vector2.Zero;
+		public Point ControlTopLeft = Point.Zero;
 		public Size VisibleCells = new Size (50, 20);
 
-		public SizeF ControlSize
+		public Size ControlSize
 		{
 			get
 			{
-				return new SizeF (VisibleCells.Width * CellSize.Width,
-					VisibleCells.Height * CellSize.Height);
+				return new Size ((int)(VisibleCells.Width * CellSize.Width),
+					(int)(VisibleCells.Height * CellSize.Height));
 			}
 		}
 
@@ -97,18 +96,18 @@ namespace Cells
 		/// Devuelve la posición de un spot de celda (por lo tanto coordenadas absolutas)
 		/// </summary>
 		/// <param name="p">coordenadas del spot</param>
-		public Vector2 CellSpotLocation (Point p)
+		public Point CellSpotLocation (Point p)
 		{
-			var _x = ControlTopLeft.X + CellSize.Width * (p.X - CurrentVisibleTopLeft.X);
-			var _y = ControlTopLeft.Y + CellSize.Height * (p.Y - CurrentVisibleTopLeft.Y);
-			return new Vector2 (_x, _y);
+			var _x = (int)(ControlTopLeft.X + CellSize.Width * (p.X - CurrentVisibleTopLeft.X));
+			var _y = (int)(ControlTopLeft.Y + CellSize.Height * (p.Y - CurrentVisibleTopLeft.Y));
+			return new Point (_x, _y);
 		}
 
 		public RectangleF Bounds
 		{
 			get
 			{
-				return new RectangleF (ControlTopLeft, ControlSize);
+				return new RectangleF (ControlTopLeft.ToVector2 (), ControlSize);
 			}
 		}
 
@@ -117,7 +116,7 @@ namespace Cells
 		/// </summary>
 		/// <param name="x">Coordenada X</param>
 		/// <param name="y">Coordenada Y</param>
-		public Vector2 CellSpotLocation (int x, int y)
+		public Point CellSpotLocation (int x, int y)
 		{
 			return CellSpotLocation (new Point (x, y));
 		}
@@ -133,7 +132,9 @@ namespace Cells
 				{
 					if (x.Texture == null)
 						Console.WriteLine ();
-					var rectOutput = new RectangleF (CellSpotLocation (x.Location), CellSize);
+					var rectOutput = new Rectangle (
+						                 CellSpotLocation (x.Location),
+						                 (Size)CellSize);
 					x.Draw (rectOutput, bat);
 				}
 			}

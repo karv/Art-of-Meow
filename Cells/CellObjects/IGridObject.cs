@@ -1,12 +1,12 @@
 using System;
+using Componentes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Shapes;
 
 namespace Cells.CellObjects
 {
-	public interface IGridObject : IGameComponent, IDisposable
+	public interface IGridObject : IGameComponent, IDisposable, IRelDraw
 	{
 		/// <summary>
 		/// Gets the cell-based localization.
@@ -21,12 +21,5 @@ namespace Cells.CellObjects
 		/// Determina si este objeto evita que otro objeto pueda ocupar esta misma celda.
 		/// </summary>
 		bool Collision (IGridObject collObj);
-
-		/// <summary>
-		/// Draws this object in a position (screen-wise)
-		/// </summary>
-		/// <param name="area">TopLeft of the output.</param>
-		/// <param name="bat">SpriteBatch de dibujo</param>
-		void Draw (RectangleF area, SpriteBatch bat);
 	}
 }
