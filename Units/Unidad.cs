@@ -9,6 +9,7 @@ using MonoGame.Extended.Shapes;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
+using Componentes;
 
 namespace Units
 {
@@ -116,7 +117,6 @@ namespace Units
 					             rec.Height));
 
 			bat.Draw (Juego.Textures.SolidTexture, fgRect, Color.Red);
-
 		}
 
 		public void Dispose ()
