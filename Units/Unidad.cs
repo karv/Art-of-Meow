@@ -2,14 +2,13 @@
 using AoM;
 using Cells;
 using Cells.CellObjects;
+using Componentes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Shapes;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
-using Componentes;
 
 namespace Units
 {
@@ -97,7 +96,6 @@ namespace Units
 
 		public void ForceDraw (Rectangle area, SpriteBatch bat)
 		{
-			// TODO: Invocar el método extendido de MonoGame.Extended
 			bat.Draw (
 				Texture,
 				area, null, Color.White,

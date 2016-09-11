@@ -1,9 +1,8 @@
 using System;
+using Componentes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Shapes;
-using Componentes;
 
 namespace Cells.CellObjects
 {
@@ -22,6 +21,5 @@ namespace Cells.CellObjects
 		/// Determina si este objeto evita que otro objeto pueda ocupar esta misma celda.
 		/// </summary>
 		bool Collision (IGridObject collObj);
-
 	}
 }
