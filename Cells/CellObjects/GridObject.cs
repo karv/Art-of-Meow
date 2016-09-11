@@ -39,13 +39,11 @@ namespace Cells.CellObjects
 			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
-		public void Draw (RectangleF area, SpriteBatch bat)
+		public void Draw (Rectangle area, SpriteBatch bat)
 		{
-			// TODO:
-			var ar = area.ToRectangle ();
 			bat.Draw (
 				Texture,
-				ar, null, UseColor,
+				area, null, UseColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depth);

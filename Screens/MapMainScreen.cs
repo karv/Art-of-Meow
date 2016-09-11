@@ -19,7 +19,7 @@ namespace Screens
 		
 		public override Color BgColor { get { return Color.DarkBlue; } }
 
-		RecursoView _recursoView;
+		public RecursoView _recursoView { get; private set; }
 
 		public const int NumChasers = 5;
 
@@ -36,7 +36,7 @@ namespace Screens
 			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
 			GameGrid.VisibleCells = new Size (visCellX, visCellY);
 			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
-			GameGrid.ControlTopLeft = new Vector2 (ScreenOffsX / 2, 0);
+			GameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
 
 			buildChasers ();
 		}

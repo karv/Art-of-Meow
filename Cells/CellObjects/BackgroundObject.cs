@@ -37,13 +37,12 @@ namespace Cells.CellObjects
 
 		public float Depth { get { return Depths.Background; } }
 
-		public void Draw (RectangleF area, SpriteBatch bat)
+		public void Draw (Rectangle area, SpriteBatch bat)
 		{
 			// TODO: Implementar la extensión Draw con RectangleF
-			var ar = area.ToRectangle ();
 			bat.Draw (
 				Texture,
-				ar, null, Color.White,
+				area, null, Color.White,
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Background);
