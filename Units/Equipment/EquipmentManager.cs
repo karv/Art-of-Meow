@@ -35,8 +35,9 @@ namespace Units.Equipment
 			}
 		}
 
-		public EquipmentManager ()
+		public EquipmentManager (IUnidad owner)
 		{
+			Owner = owner;
 			equipment = new List<IEquipment> ();
 		}
 
