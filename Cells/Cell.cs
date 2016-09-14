@@ -14,7 +14,7 @@ namespace Cells
 		/// <summary>
 		/// Devuelve el peso de movimiento
 		/// </summary>
-		public float Peso ()
+		public float PesoMovimiento ()
 		{
 			var ret = 1f;
 			foreach (var movCell in Objects.OfType<IMovementGridObject> ())
