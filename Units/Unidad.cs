@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
+using Units.Equipment;
 
 namespace Units
 {
@@ -51,6 +52,8 @@ namespace Units
 		public ManejadorRecursos Recursos { get; }
 
 		public BuffManager Buffs { get; }
+
+		public EquipmentManager Equipment { get; }
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
@@ -194,7 +197,7 @@ namespace Units
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos ();
 			Buffs = new BuffManager (this);
-
+			Equipment = new EquipmentManager (this);
 			inicializarRecursos ();
 		}
 

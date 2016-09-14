@@ -98,6 +98,8 @@
     <Compile Include="Componentes\RecursoView.cs" />
     <Compile Include="Componentes\ListaIconos.cs" />
     <Compile Include="Componentes\IRelDraw.cs" />
+    <Compile Include="Units\Equipment\EquipmentManager.cs" />
+    <Compile Include="Items\IEquipment.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -123,5 +125,6 @@
     <Folder Include="Items\Declarations\Pots\" />
     <Folder Include="Debugging\" />
     <Folder Include="Units\Buffs\" />
+    <Folder Include="Units\Equipment\" />
   </ItemGroup>
 </Project>
