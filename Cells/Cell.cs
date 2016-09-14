@@ -11,6 +11,17 @@ namespace Cells
 	{
 		readonly List<IGridObject> Objects;
 
+		/// <summary>
+		/// Devuelve el peso de movimiento
+		/// </summary>
+		public float Peso ()
+		{
+			var ret = 1f;
+			foreach (var movCell in Objects.OfType<IMovementGridObject> ())
+				ret += movCell.CoefMovement;
+			return ret;
+		}
+
 		public bool Contains (IGridObject obj)
 		{
 			if (obj == null)
