@@ -98,6 +98,7 @@
     <Compile Include="Componentes\RecursoView.cs" />
     <Compile Include="Componentes\ListaIconos.cs" />
     <Compile Include="Componentes\IRelDraw.cs" />
+    <Compile Include="Cells\CellObjects\IMovementGridObject.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
