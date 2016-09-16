@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Items;
 using System.Linq;
 using System.Diagnostics;
+using System;
 
 namespace Units.Equipment
 {
@@ -21,11 +22,18 @@ namespace Units.Equipment
 
 		List<IEquipment> equipment { get; }
 
+		/// <summary>
+		/// Equipa un item
+		/// </summary>
 		public void EquipItem (IEquipment equip)
 		{
+			if (equip.Owner != null)
+				throw new InvalidOperationException ("equip no debe estar equipado para equiparse.");
 			if (CurrentSlotCount (equip.Slot) < SlotSize [equip.Slot])
 			{
 				equipment.Add (equip);
+				equip.Owner = this;
+				AgregadoEquipment?.Invoke (this, equip);
 			}
 			else
 			{
@@ -35,16 +43,50 @@ namespace Units.Equipment
 			}
 		}
 
+		/// <summary>
+		/// Desequipa un item.
+		/// </summary>
+		/// <param name="equip">Equip.</param>
+		public void UnequipItem (IEquipment equip)
+		{
+			if (equip.Owner != this)
+				throw new InvalidOperationException ("Objeto no está equipado.");
+
+			EliminadoEquipment?.Invoke (this, equip);
+			equip.Owner = null;
+			equipment.Remove (equip);
+		}
+
+		/// <summary>
+		/// Devuelve el número de items equipados en un slot dado.
+		/// </summary>
+		public int CurrentSlotCount (EquipSlot slot)
+		{
+			return equipment.Count (z => z.Slot == slot);
+		}
+
+
+		#region Events
+
+		/// <summary>
+		/// Ocurre al agregar un nuevo equipment.
+		/// </summary>
+		public event EventHandler<IEquipment> AgregadoEquipment;
+
+		/// <summary>
+		/// Ocurre al eliminar un equipment.
+		/// </summary>
+		public event EventHandler<IEquipment> EliminadoEquipment;
+
+		#endregion
+
 		public EquipmentManager (IUnidad owner)
 		{
 			Owner = owner;
 			equipment = new List<IEquipment> ();
 		}
 
-		public int CurrentSlotCount (EquipSlot slot)
-		{
-			return equipment.Count (z => z.Slot == slot);
-		}
+		#region Static
 
 		public static Dictionary<EquipSlot, int> SlotSize;
 
@@ -55,5 +97,7 @@ namespace Units.Equipment
 			SlotSize.Add (EquipSlot.Head, 1);
 			SlotSize.Add (EquipSlot.Body, 1);
 		}
+
+		#endregion
 	}
 }
