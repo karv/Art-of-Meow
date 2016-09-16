@@ -13,6 +13,10 @@ namespace Cells
 {
 	public class Grid : DSBC, IComponentContainerComponent<IGridObject>
 	{
+		public Cell GetCell (Point p)
+		{
+			return new Cell (this, p);
+		}
 
 		public ICollection<IGridObject> Objects
 		{

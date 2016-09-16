@@ -10,6 +10,7 @@ using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 using Units.Equipment;
+using System.Diagnostics;
 
 namespace Units
 {
@@ -124,6 +125,9 @@ namespace Units
 			Texture = null;
 		}
 
+		/// <summary>
+		/// Gets the cell-based localization.
+		/// </summary>
 		public Point Location { get; set; }
 
 		public void MeleeDamage (IUnidad target)
@@ -142,6 +146,7 @@ namespace Units
 		/// <param name="dir">Direction</param>
 		public bool MoveOrMelee (MovementDirectionEnum dir)
 		{
+			var desde = Location;
 			// Intenta mover este objeto; si no puede, intenta atacar.
 			if (!MapGrid.MoveCellObject (this, dir))
 			{
@@ -156,7 +161,7 @@ namespace Units
 			}
 			else
 			{
-				NextActionTime = calcularTiempoMov (dir);
+				NextActionTime = calcularTiempoMov (desde, Location);
 			}
 			return true;
 		}
@@ -167,10 +172,25 @@ namespace Units
 			return 1 / dex;
 		}
 
-		float calcularTiempoMov (MovementDirectionEnum dir)
+		float calcularTiempoMov (Point desde, Point hasta)
 		{
 			var vel = Recursos.ValorRecurso (ConstantesRecursos.Velocidad).Value;
-			return 1 / vel;
+			var cellOrig = MapGrid.GetCell (desde);
+			var cellDest = MapGrid.GetCell (hasta);
+			var peso = (cellOrig.PesoMovimiento () + cellDest.PesoMovimiento ()) / 2;
+
+			if (desde.X != hasta.X && desde.Y != hasta.Y) // Mov inclinado
+				peso *= 1.4f;
+
+			Debug.WriteLine (
+				string.Format (
+					"Peso de movimiento de {0} a {1} por {2} en {3}",
+					desde,
+					hasta,
+					this,
+					peso),
+				"Movimiento");
+			return peso / vel;
 		}
 
 		public IIntelligence Inteligencia { get; set; }
