@@ -8,11 +8,16 @@ using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
+using Microsoft.Xna.Framework.Content;
 
 namespace Cells
 {
 	public class Grid : DSBC, IComponentContainerComponent<IGridObject>
 	{
+		public Cell GetCell (Point p)
+		{
+			return new Cell (this, p);
+		}
 
 		public ICollection<IGridObject> Objects
 		{
@@ -146,10 +151,10 @@ namespace Cells
 			return Bounds;
 		}
 
-		protected override void LoadContent ()
+		protected override void LoadContent (ContentManager manager)
 		{
 			foreach (var x in _objects)
-				x.LoadContent (Screen.Content);
+				x.LoadContent (manager);
 		}
 
 		public override void Update (GameTime gameTime)

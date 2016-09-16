@@ -9,14 +9,13 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using Units.Buffs;
 using Units.Inteligencia;
+using Units.Buffs;
 
 namespace Screens
 {
 	public class MapMainScreen : Screen
 	{
-		
 		public override Color BgColor { get { return Color.DarkBlue; } }
 
 		public RecursoView _recursoView { get; private set; }
@@ -71,6 +70,12 @@ namespace Screens
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
+			var haste = new HasteBuff (Jugador.Buffs)
+			{
+				SpeedDelta = 10,
+				Duración = 30
+			};
+			Jugador.Buffs.Hook (haste);
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}

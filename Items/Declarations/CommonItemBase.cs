@@ -38,7 +38,7 @@ namespace Items.Declarations
 
 		#region IComponent implementation
 
-		void Moggle.Controles.IComponent.LoadContent ()
+		void Moggle.Controles.IComponent.LoadContent (ContentManager manager)
 		{
 			LoadContent ();
 		}

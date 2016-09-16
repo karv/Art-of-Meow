@@ -3,6 +3,7 @@ using Cells;
 using Cells.CellObjects;
 using Units.Recursos;
 using Units.Equipment;
+using Units.Buffs;
 
 namespace Units
 {
@@ -18,6 +19,8 @@ namespace Units
 		ManejadorRecursos Recursos { get; }
 
 		EquipmentManager Equipment { get; }
+
+		BuffManager Buffs { get; }
 
 		bool Habilitado { get; }
 
