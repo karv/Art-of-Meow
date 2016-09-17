@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Cells;
 
 namespace Items.Declarations
 {
@@ -16,20 +15,15 @@ namespace Items.Declarations
 
 		public Color Color { get { return GetColor (); } }
 
-		public ContentManager Content { get { return GridMap.Screen.Content; } }
-
-		public Grid GridMap { get; }
-
 		protected abstract Color GetColor ();
 
-		protected virtual void LoadContent ()
+		protected virtual void LoadContent (ContentManager manager)
 		{
-			Texture = Content.Load<Texture2D> (TextureName);
+			Texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		protected virtual void UnloadContent ()
 		{
-			Texture = null;
 		}
 
 		protected virtual void Initialize ()
@@ -40,7 +34,7 @@ namespace Items.Declarations
 
 		void Moggle.Controles.IComponent.LoadContent (ContentManager manager)
 		{
-			LoadContent ();
+			LoadContent (manager);
 		}
 
 		void Moggle.Controles.IComponent.UnloadContent ()
@@ -49,7 +43,7 @@ namespace Items.Declarations
 		}
 
 		Moggle.Controles.IComponentContainerComponent<IGameComponent> Moggle.Controles.IComponent.Container
-		{ get { return (Moggle.Controles.IComponentContainerComponent<IGameComponent>)GridMap; } }
+		{ get { return null; } }
 
 		#endregion
 
@@ -99,9 +93,8 @@ namespace Items.Declarations
 
 		#endregion
 
-		protected CommonItemBase (Grid grid)
+		protected CommonItemBase ()
 		{
-			GridMap = grid;
 		}
 	}
 }

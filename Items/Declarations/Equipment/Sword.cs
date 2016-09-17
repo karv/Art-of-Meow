@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 
 namespace Items.Declarations.Equipment
 {
@@ -8,21 +11,27 @@ namespace Items.Declarations.Equipment
 	/// </summary>
 	public class Sword : IEquipment
 	{
-		public string TextureString { get; }
+		public string IconString { get; }
+
+		public Texture Icon { get; protected set; }
 
 		#region IComponent implementation
 
 		public void LoadContent (ContentManager manager)
 		{
-			throw new NotImplementedException ();
+			Icon = manager.Load<Texture2D> (IconString);
 		}
 
 		public void UnloadContent ()
 		{
-			throw new NotImplementedException ();
+			Debug.WriteLineIf (
+				Owner == null,
+				"Disposing equiped item " + this,
+				"Equipment");
+			Owner?.UnequipItem (this);
 		}
 
-		public Moggle.Controles.IComponentContainerComponent<Microsoft.Xna.Framework.IGameComponent> Container
+		public Moggle.Controles.IComponentContainerComponent<IGameComponent> Container
 		{
 			get
 			{
@@ -34,9 +43,9 @@ namespace Items.Declarations.Equipment
 
 		#region IDisposable implementation
 
-		public void Dispose ()
+		void IDisposable.Dispose ()
 		{
-			throw new NotImplementedException ();
+			UnloadContent ();
 		}
 
 		#endregion
@@ -45,7 +54,6 @@ namespace Items.Declarations.Equipment
 
 		public void Initialize ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		#endregion
@@ -54,59 +62,37 @@ namespace Items.Declarations.Equipment
 
 		public EquipSlot Slot
 		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
+			get { return EquipSlot.None; }
 		}
 
-		public Units.Equipment.EquipmentManager Owner
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-			set
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		public Units.Equipment.EquipmentManager Owner { get; set; }
 
 		#endregion
 
 		#region IItem implementation
 
-		public string Nombre
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		public string Nombre { get; }
 
 		public string DefaultTextureName
 		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
+			get { return IconString; }
 		}
 
-		public Microsoft.Xna.Framework.Color DefaultColor
+		public Color DefaultColor
 		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
+			get { return Color.Transparent; }
 		}
 
 		#endregion
 
-
+		protected Sword (string icon)
+		{
+			IconString = icon;
+		}
 
 		public Sword ()
+			: this ("sword")
 		{
 		}
 	}
 }
-

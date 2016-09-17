@@ -96,6 +96,7 @@ namespace Units.Equipment
 			SlotSize.Add (EquipSlot.None, 0);
 			SlotSize.Add (EquipSlot.Head, 1);
 			SlotSize.Add (EquipSlot.Body, 1);
+			SlotSize.Add (EquipSlot.MainHand, 1);
 		}
 
 		#endregion

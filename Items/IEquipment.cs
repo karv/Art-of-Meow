@@ -6,7 +6,8 @@ namespace Items
 	{
 		None,
 		Head,
-		Body
+		Body,
+		MainHand
 	}
 
 	public interface IEquipment : IItem

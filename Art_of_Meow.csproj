@@ -107,6 +107,7 @@
     <Compile Include="Units\Equipment\EquipmentManager.cs" />
     <Compile Include="Items\Declarations\Equipment\Sword.cs" />
     <Compile Include="Items\IEquipment.cs" />
+    <Compile Include="Items\ItemFactory.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
