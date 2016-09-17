@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System;
+using Units.Buffs;
 
 namespace Units.Recursos
 {
@@ -10,17 +12,28 @@ namespace Units.Recursos
 	{
 		readonly Dictionary<string, IRecurso> _data;
 
+		public IUnidad Unidad { get; }
+
 		/// <summary>
 		/// Devuelve el valor de un recurso
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
-		public float? ValorRecurso (string nombre)
+		public float ValorRecursoBase (string nombre)
 		{
-			// Analysis disable RedundantExplicitNullableCreation
 			IRecurso ret;
-			var fRet = _data.TryGetValue (nombre, out ret) ? new float? (ret.Valor) : null;
-			return fRet;
-			// Analysis restore RedundantExplicitNullableCreation
+			if (_data.TryGetValue (nombre, out ret))
+				return ret.Valor;
+			throw new Exception ("Recurso inexistente: " + nombre);
+		}
+
+		public float ValorRecurso (string nombre)
+		{
+			var retBase = ValorRecursoBase (nombre);
+
+			foreach (var buff in Unidad.Buffs.BuffOfType<IStatsBuff> ())
+				retBase += buff.StatDelta (nombre);
+			
+			return retBase;
 		}
 
 		/// <summary>

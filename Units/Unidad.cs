@@ -132,7 +132,7 @@ namespace Units
 			if (Equipo == target.Equipo)
 				return;
 			var hp = target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			var dmg = Recursos.ValorRecurso (ConstantesRecursos.DañoMelee).Value / 8;
+			var dmg = Recursos.ValorRecurso (ConstantesRecursos.DañoMelee) / 8;
 			hp.Valor -= dmg;
 		}
 
@@ -165,13 +165,13 @@ namespace Units
 
 		float calcularTiempoMelee ()
 		{
-			var dex = Recursos.ValorRecurso (ConstantesRecursos.Destreza).Value;
+			var dex = Recursos.ValorRecurso (ConstantesRecursos.Destreza);
 			return 1 / dex;
 		}
 
 		float calcularTiempoMov (Point desde, Point hasta)
 		{
-			var vel = Recursos.ValorRecurso (ConstantesRecursos.Velocidad).Value;
+			var vel = Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
 			var cellOrig = MapGrid.GetCell (desde);
 			var cellDest = MapGrid.GetCell (hasta);
 			var peso = (cellOrig.PesoMovimiento () + cellDest.PesoMovimiento ()) / 2;
