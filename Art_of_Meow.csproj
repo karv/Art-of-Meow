@@ -108,6 +108,8 @@
     <Compile Include="Items\Declarations\Equipment\Sword.cs" />
     <Compile Include="Items\IEquipment.cs" />
     <Compile Include="Items\ItemFactory.cs" />
+    <Compile Include="Units\Buffs\EquipBuff.cs" />
+    <Compile Include="Units\Buffs\IBuffGenerating.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
