@@ -91,7 +91,7 @@ namespace Items.Declarations.Equipment
 		}
 
 		public Sword ()
-			: this ("sword")
+			: this (@"Items/katana")
 		{
 		}
 	}
