@@ -15,16 +15,20 @@ namespace Items
 	{
 		public static IItem CreateItem (ItemType type)
 		{
+			IItem ret;
 			switch (type)
 			{
 				case ItemType.Sword:
-					return new Sword ();
+					ret = new Sword ();
+					break;
 				case ItemType.Potion:
-					return new HealingPotion ();
+					ret = new HealingPotion ();
+					break;
 				default:
 					throw new Exception ();
 			}
+			ret.Initialize ();
+			return ret;
 		}
 	}
 }
-

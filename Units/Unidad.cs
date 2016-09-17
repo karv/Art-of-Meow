@@ -71,6 +71,7 @@ namespace Units
 		public void LoadContent (ContentManager content)
 		{
 			Texture = content.Load<Texture2D> (TextureStr);
+			Equipment.LoadContent (content);
 		}
 
 		public bool Collision (IGridObject collObj)

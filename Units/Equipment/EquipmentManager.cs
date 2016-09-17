@@ -4,6 +4,7 @@ using Items;
 using System.Linq;
 using System.Diagnostics;
 using System;
+using Microsoft.Xna.Framework.Content;
 
 namespace Units.Equipment
 {
@@ -65,6 +66,11 @@ namespace Units.Equipment
 			return equipment.Count (z => z.Slot == slot);
 		}
 
+		public void LoadContent (ContentManager manager)
+		{
+			foreach (var eq in equipment)
+				eq.LoadContent (manager);
+		}
 
 		#region Events
 

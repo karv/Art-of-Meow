@@ -11,6 +11,7 @@ using MonoGame.Extended.InputListeners;
 using Units;
 using Units.Inteligencia;
 using Units.Buffs;
+using Items;
 
 namespace Screens
 {
@@ -52,9 +53,9 @@ namespace Screens
 
 			var Humanintel = new HumanIntelligence (Jugador);
 			Jugador.Inteligencia = Humanintel;
-			//Components.Add (Humanintel);
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
+			Jugador.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}

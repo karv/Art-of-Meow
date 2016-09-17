@@ -62,7 +62,7 @@ namespace Items.Declarations.Equipment
 
 		public EquipSlot Slot
 		{
-			get { return EquipSlot.None; }
+			get { return EquipSlot.MainHand; }
 		}
 
 		public Units.Equipment.EquipmentManager Owner { get; set; }
