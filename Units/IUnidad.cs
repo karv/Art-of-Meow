@@ -2,6 +2,7 @@
 using Cells;
 using Cells.CellObjects;
 using Units.Recursos;
+using Units.Buffs;
 
 namespace Units
 {
@@ -15,6 +16,8 @@ namespace Units
 		void MeleeDamage (IUnidad target);
 
 		ManejadorRecursos Recursos { get; }
+
+		BuffManager Buffs { get; }
 
 		bool Habilitado { get; }
 
