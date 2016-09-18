@@ -101,6 +101,9 @@
     <Compile Include="Cells\CellObjects\IMovementGridObject.cs" />
     <Compile Include="Units\Buffs\IStatsBuff.cs" />
     <Compile Include="Units\Buffs\StatsBuff.cs" />
+    <Compile Include="Units\Buffs\HasteBuff.cs" />
+    <Compile Include="Helper\InitializationHelper.cs" />
+    <Compile Include="Helper\Timer.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -126,5 +129,6 @@
     <Folder Include="Items\Declarations\Pots\" />
     <Folder Include="Debugging\" />
     <Folder Include="Units\Buffs\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
 </Project>
