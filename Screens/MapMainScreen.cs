@@ -15,7 +15,6 @@ namespace Screens
 {
 	public class MapMainScreen : Screen
 	{
-		
 		public override Color BgColor { get { return Color.DarkBlue; } }
 
 		public RecursoView _recursoView { get; private set; }
