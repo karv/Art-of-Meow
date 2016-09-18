@@ -10,6 +10,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
 using Units.Inteligencia;
+using Units.Buffs;
 
 namespace Screens
 {
@@ -69,6 +70,12 @@ namespace Screens
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			GameGrid.TryCenterOn (Jugador.Location);
+			var haste = new HasteBuff (Jugador.Buffs)
+			{
+				SpeedDelta = 10,
+				Duración = 30
+			};
+			Jugador.Buffs.Hook (haste);
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}

@@ -79,8 +79,9 @@ namespace Units.Buffs
 			Manager.UnHook (this);
 		}
 
-		public HasteBuff ()
+		public HasteBuff (BuffManager manager)
 		{
+			Manager = manager;
 			timer = new Helper.Timer ();
 			timer.ConteoCero += timer_countdown;
 		}

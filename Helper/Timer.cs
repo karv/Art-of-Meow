@@ -23,7 +23,7 @@ namespace Helper
 		public float Restante
 		{
 			get{ return Math.Max (0, _restante); }
-			set { _restante == value; }
+			set { _restante = value; }
 		}
 
 		/// <summary>
