@@ -97,16 +97,17 @@ namespace Units.Recursos
 
 		/// <summary>
 		/// </summary>
-		public ManejadorRecursos ()
+		public ManejadorRecursos (IUnidad unid)
 		{
 			_data = new Dictionary<string, IRecurso> ();
+			Unidad = unid;
 		}
 
 		/// <summary>
 		/// </summary>
 		/// <param name="recursos">Recursos</param>
-		public ManejadorRecursos (IEnumerable<IRecurso> recursos)
-			: this ()
+		public ManejadorRecursos (IUnidad unid, IEnumerable<IRecurso> recursos)
+			: this (unid)
 		{
 			foreach (var rec in recursos)
 				Add (rec);

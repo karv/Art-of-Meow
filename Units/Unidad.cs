@@ -216,7 +216,7 @@ namespace Units
 		public Unidad (string texture = TextureType)
 		{
 			TextureStr = texture;
-			Recursos = new ManejadorRecursos ();
+			Recursos = new ManejadorRecursos (this);
 			Buffs = new BuffManager (this);
 			Equipment = new EquipmentManager (this);
 			inicializarRecursos ();
