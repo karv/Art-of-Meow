@@ -17,7 +17,7 @@ namespace Units.Buffs
 		/// </summary>
 		public EquipmentManager EquipManager { get; }
 
-		public BuffManager BuffManager { get; }
+		public BuffManager BuffManager { get; set; }
 
 		public ManejadorRecursos RecManager { get; }
 
@@ -41,36 +41,18 @@ namespace Units.Buffs
 		/// Nombre
 		/// </summary>
 		/// <value>The nombre.</value>
-		public string Nombre
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		public string Nombre { get { return "Equipment"; } }
 
 		/// <summary>
 		/// Devuelve la textura a usar
 		/// </summary>
 		/// <value>The name of the base texture.</value>
-		public string BaseTextureName
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		public string BaseTextureName { get { return null; } }
 
-		public BuffManager Manager
+		BuffManager IBuff.Manager
 		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-			set
-			{
-				throw new NotImplementedException ();
-			}
+			get { return BuffManager; }
+			set { BuffManager = value; }
 		}
 
 		#endregion
