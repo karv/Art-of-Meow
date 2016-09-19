@@ -10,6 +10,8 @@ namespace Units.Buffs
 	{
 		Dictionary<string, float> delta { get; }
 
+		public bool IsVisible { get { return false; } }
+
 		/// <summary>
 		/// Devuelve el Equipment de la unidad
 		/// </summary>
@@ -26,11 +28,6 @@ namespace Units.Buffs
 		/// </summary>
 		public void Terminating ()
 		{
-			foreach (var x in delta)
-			{
-				
-			}
-			throw new NotImplementedException ();
 		}
 
 		/// <summary>
@@ -38,7 +35,6 @@ namespace Units.Buffs
 		/// </summary>
 		public void Initialize ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		/// <summary>

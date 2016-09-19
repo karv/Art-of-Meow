@@ -19,7 +19,9 @@ namespace Units.Equipment
 		/// <summary>
 		/// Devuelve el buff que representa el equipment.
 		/// </summary>
+		// TODO
 		public IBuff EquipBuff { get; private set; }
+
 
 		List<IEquipment> equipment { get; }
 

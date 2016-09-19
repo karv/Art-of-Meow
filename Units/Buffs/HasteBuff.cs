@@ -8,6 +8,8 @@ namespace Units.Buffs
 		float _speedDelta;
 		readonly Helper.Timer timer;
 
+		public bool IsVisible { get { return true; } }
+
 		public bool Inicializado { get; private set; }
 
 		public float SpeedDelta
