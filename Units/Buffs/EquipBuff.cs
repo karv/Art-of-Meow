@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Items;
+﻿using System.Collections.Generic;
 using Units.Equipment;
 using Units.Recursos;
 
@@ -61,14 +59,15 @@ namespace Units.Buffs
 
 		public void Update (float gameTime)
 		{
-			throw new NotImplementedException ();
 		}
 
 		#endregion
 
-		public EquipBuff ()
+		public EquipBuff (IUnidad unid)
 		{
+			EquipManager = unid.Equipment;
+			BuffManager = unid.Buffs;
+			RecManager = unid.Recursos;
 		}
 	}
 }
-
