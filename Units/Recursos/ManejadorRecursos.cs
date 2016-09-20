@@ -42,7 +42,7 @@ namespace Units.Recursos
 		/// <param name="nombre">Nombre.</param>
 		public float RecursoExtra (string nombre)
 		{
-			var ret = 0;
+			var ret = 0f;
 			foreach (var buff in Unidad.Buffs.BuffOfType<IStatsBuff> ())
 				ret += buff.StatDelta (nombre);
 			return ret;

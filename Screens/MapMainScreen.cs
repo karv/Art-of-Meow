@@ -12,6 +12,8 @@ using Units;
 using Units.Inteligencia;
 using Units.Buffs;
 using Items;
+using Units.Recursos;
+using Items.Declarations.Equipment;
 
 namespace Screens
 {
@@ -56,6 +58,22 @@ namespace Screens
 			Jugador.MapGrid = GameGrid;
 			Jugador.Location = StartingPoint;
 			Jugador.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
+
+			// TEST ing
+			var haste = new HasteBuff ()
+			{
+				SpeedDelta = 10,
+				Duración = 5
+			};
+			haste.Initialize ();
+			Jugador.Buffs.Hook (haste);
+			var spd = Jugador.Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
+			System.Console.WriteLine (spd);
+
+			var sword = ItemFactory.CreateItem (ItemType.Sword) as Sword;
+			Jugador.Equipment.EquipItem (sword);
+
+
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}

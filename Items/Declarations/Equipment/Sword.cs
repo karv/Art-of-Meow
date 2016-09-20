@@ -3,17 +3,26 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Units.Buffs;
+using Units.Recursos;
 
 namespace Items.Declarations.Equipment
 {
 	/// <summary>
 	/// Una espada sin propiedades especiales
 	/// </summary>
-	public class Sword : IEquipment
+	public class Sword : IEquipment, IBuffGenerating
 	{
 		public string IconString { get; }
 
 		public Texture Icon { get; protected set; }
+
+		public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, float>> GetDeltaStat ()
+		{
+			yield return new System.Collections.Generic.KeyValuePair<string, float> (
+				ConstantesRecursos.DañoMelee,
+				3);
+		}
 
 		#region IComponent implementation
 
