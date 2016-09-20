@@ -73,8 +73,6 @@ namespace Screens
 			var sword = ItemFactory.CreateItem (ItemType.Sword) as Sword;
 			Jugador.Equipment.EquipItem (sword);
 
-			var dmg = Jugador.Recursos.ValorRecurso (ConstantesRecursos.DañoMelee);
-
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}
 
