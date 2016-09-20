@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Units.Recursos;
+using Items;
 
 namespace Units.Buffs
 {
-	public class EquipBuff : IBuff
+	public class EquipBuff : IStatsBuff
 	{
-		Dictionary<string, float> delta { get; }
+		ICollection<IEquipment> equipment;
 
 		public bool IsVisible { get { return false; } }
 
@@ -17,6 +19,23 @@ namespace Units.Buffs
 		public BuffManager BuffManager { get; set; }
 
 		public ManejadorRecursos RecManager { get; }
+
+		public float StatDelta (string resName)
+		{
+			var ret = 0f;
+			foreach (var x in equipment.OfType<IBuffGenerating> ())
+			{
+				foreach (var buffEntry in x.GetDeltaStat ())
+				{
+					if (buffEntry.Key == resName)
+					{
+						ret += buffEntry.Value;
+						break;
+					}
+				}
+			}
+			return ret;
+		}
 
 		#region IBuff implementation
 
@@ -32,21 +51,6 @@ namespace Units.Buffs
 		/// </summary>
 		public void Initialize ()
 		{
-		}
-
-		public void CalcularDiccionario (IEnumerable<IBuffGenerating> buffGen)
-		{
-			delta.Clear ();
-			foreach (var x in buffGen)
-			{
-				foreach (var b in x.GetDeltaStat ())
-				{
-					if (delta.ContainsKey (b.Key))
-						delta [b.Key] += b.Value;
-					else
-						delta.Add (b.Key, b.Value);
-				}
-			}
 		}
 
 		/// <summary>
@@ -77,11 +81,9 @@ namespace Units.Buffs
 
 		#endregion
 
-		public EquipBuff (IUnidad unid)
+		public EquipBuff (ICollection<IEquipment> eqs)
 		{
-			//EquipManager = unid.Equipment;
-			BuffManager = unid.Buffs;
-			RecManager = unid.Recursos;
+			equipment = eqs;
 		}
 	}
 }

@@ -35,7 +35,6 @@ namespace Units.Equipment
 				equipment.Add (equip);
 				equip.Owner = this;
 				AgregadoEquipment?.Invoke (this, equip);
-				recalcularStats ();
 			}
 			else
 			{
@@ -58,12 +57,6 @@ namespace Units.Equipment
 			equip.Owner = null;
 			equipment.Remove (equip);
 
-			recalcularStats ();
-		}
-
-		void recalcularStats ()
-		{
-			EquipBuff.CalcularDiccionario (equipment.OfType<IBuffGenerating> ());
 		}
 
 		/// <summary>
@@ -98,7 +91,7 @@ namespace Units.Equipment
 		{
 			Owner = owner;
 			equipment = new List<IEquipment> ();
-			EquipBuff = new EquipBuff (this);
+			EquipBuff = new EquipBuff (equipment);
 		}
 
 		#region Static
