@@ -10,6 +10,8 @@ namespace Units.Buffs
 	{
 		readonly IDictionary<string, float> deltas;
 
+		public override bool IsVisible { get { return false; } }
+
 		/// <summary>
 		/// Devuelve la textura a usar
 		/// </summary>

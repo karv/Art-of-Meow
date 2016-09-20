@@ -39,6 +39,9 @@
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="AdvMath">
+      <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
+    </Reference>
     <Reference Include="Controles_Moggle">
       <HintPath>packages\Moggle.0.4\lib\Controles_Moggle.dll</HintPath>
     </Reference>
@@ -47,9 +50,6 @@
     </Reference>
     <Reference Include="NVorbis">
       <HintPath>packages\Moggle.0.4\lib\NVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="AdvMath">
-      <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +104,12 @@
     <Compile Include="Units\Buffs\HasteBuff.cs" />
     <Compile Include="Helper\InitializationHelper.cs" />
     <Compile Include="Helper\Timer.cs" />
+    <Compile Include="Units\Equipment\EquipmentManager.cs" />
+    <Compile Include="Items\Declarations\Equipment\Sword.cs" />
+    <Compile Include="Items\IEquipment.cs" />
+    <Compile Include="Items\ItemFactory.cs" />
+    <Compile Include="Units\Buffs\EquipBuff.cs" />
+    <Compile Include="Units\Buffs\IBuffGenerating.cs" />
     <Compile Include="Units\Recursos\Recurso.cs" />
   </ItemGroup>
   <ProjectExtensions>
@@ -131,5 +137,7 @@
     <Folder Include="Debugging\" />
     <Folder Include="Units\Buffs\" />
     <Folder Include="Helper\" />
+    <Folder Include="Units\Equipment\" />
+    <Folder Include="Items\Declarations\Equipment\" />
   </ItemGroup>
 </Project>

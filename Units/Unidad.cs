@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
+using Units.Equipment;
 using System.Diagnostics;
 
 namespace Units
@@ -53,6 +54,8 @@ namespace Units
 
 		public BuffManager Buffs { get; }
 
+		public EquipmentManager Equipment { get; }
+
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
 		public RecursoHP RecursoHP { get; private set; }
@@ -68,6 +71,7 @@ namespace Units
 		public void LoadContent (ContentManager content)
 		{
 			Texture = content.Load<Texture2D> (TextureStr);
+			Equipment.LoadContent (content);
 		}
 
 		public bool Collision (IGridObject collObj)
@@ -212,9 +216,9 @@ namespace Units
 		public Unidad (string texture = TextureType)
 		{
 			TextureStr = texture;
-			Recursos = new ManejadorRecursos ();
+			Recursos = new ManejadorRecursos (this);
+			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
-
 			inicializarRecursos ();
 		}
 

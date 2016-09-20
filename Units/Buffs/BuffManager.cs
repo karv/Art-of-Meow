@@ -122,6 +122,7 @@ namespace Units.Buffs
 		{
 			HookedOn = unidad;
 			Buffs = new List<IBuff> ();
+			Buffs.Add (unidad.Equipment.EquipBuff);
 		}
 	}
 }

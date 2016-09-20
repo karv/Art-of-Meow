@@ -8,6 +8,8 @@ namespace Units.Buffs
 		float _speedDelta;
 		readonly Helper.Timer timer;
 
+		public bool IsVisible { get { return true; } }
+
 		public bool Inicializado { get; private set; }
 
 		public float SpeedDelta
@@ -79,9 +81,8 @@ namespace Units.Buffs
 			Manager.UnHook (this);
 		}
 
-		public HasteBuff (BuffManager manager)
+		public HasteBuff ()
 		{
-			Manager = manager;
 			timer = new Helper.Timer ();
 			timer.ConteoCero += timer_countdown;
 		}
