@@ -26,14 +26,26 @@ namespace Units.Recursos
 			throw new Exception ("Recurso inexistente: " + nombre);
 		}
 
+		/// <summary>
+		/// Devuelve el valor final de un recurso 
+		/// </summary>
 		public float ValorRecurso (string nombre)
 		{
-			var retBase = ValorRecursoBase (nombre);
+			var ret = ValorRecursoBase (nombre) + RecursoExtra (nombre);
+			return ret;
+		}
 
+		/// <summary>
+		/// Devuelve el valor de recursos modificado por Buffs.
+		/// </summary>
+		/// <returns>The extra.</returns>
+		/// <param name="nombre">Nombre.</param>
+		public float RecursoExtra (string nombre)
+		{
+			var ret = 0;
 			foreach (var buff in Unidad.Buffs.BuffOfType<IStatsBuff> ())
-				retBase += buff.StatDelta (nombre);
-			
-			return retBase;
+				ret += buff.StatDelta (nombre);
+			return ret;
 		}
 
 		/// <summary>
@@ -86,7 +98,11 @@ namespace Units.Recursos
 		{
 			var sb = new StringBuilder ();
 			foreach (var x in _data)
-				sb.AppendFormat ("[{0}]: [{1}]\n", x.Key, x.Value);
+				sb.AppendFormat (
+					"[{0}]: {2}\t\t [{1}]\n",
+					x.Key,
+					x.Value,
+					ValorRecurso (x.Key));
 			return sb.ToString ();
 		}
 
