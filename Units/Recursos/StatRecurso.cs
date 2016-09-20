@@ -1,17 +1,17 @@
 ﻿using System;
-using AoM;
 
 namespace Units.Recursos
 {
 	/// <summary>
 	/// Recurso genérico de stats
 	/// </summary>
-	public class StatRecurso : IRecurso
+	public class StatRecurso : Recurso
 	{
 		#region IUpdate implementation
 
-		void IInternalUpdate.Update (float gameTime)
+		public override void Update (float gameTime)
 		{
+			base.Update (gameTime);
 			RegenMax (gameTime);
 			RegenCurr (gameTime);
 		}
@@ -42,19 +42,32 @@ namespace Units.Recursos
 		/// Nombre (debe ser único en el manejador de recursos) del recurso
 		/// </summary>
 		/// <value>The nombre único.</value>
-		public string NombreÚnico { get; }
+		protected override string GetShortName ()
+		{
+			return NombreCorto;
+		}
+
+		protected override string GetLongName ()
+		{
+			return NombreLargo;
+		}
+
+		protected override string GetUniqueName ()
+		{
+			return NombreÚnico;
+		}
 
 		/// <summary>
 		/// Nombre corto
 		/// </summary>
-		/// <value>The nombre corto.</value>
 		public string NombreCorto { get; set; }
 
 		/// <summary>
 		/// Nombre largo
 		/// </summary>
-		/// <value>The nombre largo.</value>
 		public string NombreLargo { get; set; }
+
+		public string NombreÚnico { get; }
 
 		readonly float [] currMaxNormal = new float[3];
 
@@ -62,7 +75,7 @@ namespace Units.Recursos
 		/// Valor actual del recurso.
 		/// </summary>
 		/// <value>The valor.</value>
-		public float Valor
+		public override float Valor
 		{ 
 			get { return currMaxNormal [0]; } 
 			set	{ currMaxNormal [0] = Math.Min (value, Max); }
@@ -108,12 +121,6 @@ namespace Units.Recursos
 		/// </summary>
 		public float TasaRecuperaciónMax { get; set; }
 
-		/// <summary>
-		/// Unidad que posee este recurso.
-		/// </summary>
-		/// <value>The unidad.</value>
-		public IUnidad Unidad { get; }
-
 		#endregion
 
 		public override string ToString ()
@@ -124,9 +131,9 @@ namespace Units.Recursos
 		/// <param name="nombreÚnico">Nombre único.</param>
 		/// <param name="unidad">Unidad.</param>
 		public StatRecurso (string nombreÚnico, IUnidad unidad)
+			: base (unidad)
 		{
 			NombreÚnico = nombreÚnico;
-			Unidad = unidad;
 		}
 	}
 }

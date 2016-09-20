@@ -104,6 +104,7 @@
     <Compile Include="Units\Buffs\HasteBuff.cs" />
     <Compile Include="Helper\InitializationHelper.cs" />
     <Compile Include="Helper\Timer.cs" />
+    <Compile Include="Units\Recursos\Recurso.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

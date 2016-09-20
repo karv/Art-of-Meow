@@ -6,7 +6,7 @@ namespace Units.Recursos
 	/// <summary>
 	/// Un 'stat' de una unidad.
 	/// </summary>
-	public interface IRecurso : IParámetroRecurso
+	public interface IRecurso : IInternalUpdate
 	{
 		/// <summary>
 		/// Nombre corto
@@ -17,6 +17,16 @@ namespace Units.Recursos
 		/// Nombre largo
 		/// </summary>
 		string NombreLargo { get; }
+
+		/// <summary>
+		/// Nombre (debe ser único en el manejador de recursos) del recurso
+		/// </summary>
+		string NombreÚnico { get; }
+
+		/// <summary>
+		/// Valor actual del recurso.
+		/// </summary>
+		float Valor { get; set; }
 
 		/// <summary>
 		/// Devuelve el valor de un parámetro

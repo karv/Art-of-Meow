@@ -7,7 +7,7 @@ namespace Units.Recursos
 	/// Un recurso secundario de sólo lectura. 
 	/// Su valor está determinado por una <see cref="AdvMath.Fórmula"/>
 	/// </summary>
-	public class RecursoFml : IRecurso
+	public class RecursoFml : Recurso
 	{
 		/// <summary>
 		/// Fórmula del recurso
@@ -17,15 +17,27 @@ namespace Units.Recursos
 
 		protected Fórmula Fml { get; }
 
-		#region IInternalUpdate implementation
+		#region IRecurso implementation
 
-		public void Update (float gameTime)
+		/// <summary>
+		/// Nombre (debe ser único en el manejador de recursos) del recurso
+		/// </summary>
+		/// <value>The nombre único.</value>
+		protected override string GetShortName ()
 		{
+			return NombreCorto;
 		}
 
-		#endregion
+		protected override string GetLongName ()
+		{
+			return NombreLargo;
+		}
 
-		#region IRecurso implementation
+		protected override string GetUniqueName ()
+		{
+			return NombreÚnico;
+		}
+
 
 		/// <summary>
 		/// Nombre (debe ser único en el manejador de recursos) del recurso
@@ -49,13 +61,11 @@ namespace Units.Recursos
 		/// Valor actual del recurso.
 		/// </summary>
 		/// <value>The valor.</value>
-		public float Valor
+		public override float Valor
 		{
 			get { return Fml.Evaluar (); }
 			set { throw new InvalidOperationException (); }
 		}
-
-		public IUnidad Unidad { get; }
 
 		#endregion
 
@@ -65,9 +75,9 @@ namespace Units.Recursos
 		/// <param name="unidad">Unidad</param>
 		/// <param name="nombre">Nombre único</param>
 		public RecursoFml (string fml, IUnidad unidad, string nombre)
+			: base (unidad)
 		{
 			Fml = new RecFml (fml, unidad.Recursos);
-			Unidad = unidad;
 			NombreÚnico = nombre;
 		}
 
