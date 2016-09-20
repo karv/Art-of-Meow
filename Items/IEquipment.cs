@@ -1,4 +1,5 @@
 ﻿using Units.Equipment;
+using Units.Buffs;
 
 namespace Items
 {
@@ -6,7 +7,8 @@ namespace Items
 	{
 		None,
 		Head,
-		Body
+		Body,
+		MainHand
 	}
 
 	public interface IEquipment : IItem

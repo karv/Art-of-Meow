@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System;
+using Units.Buffs;
 
 namespace Units.Recursos
 {
@@ -10,17 +12,40 @@ namespace Units.Recursos
 	{
 		readonly Dictionary<string, IRecurso> _data;
 
+		public IUnidad Unidad { get; }
+
 		/// <summary>
 		/// Devuelve el valor de un recurso
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
-		public float? ValorRecurso (string nombre)
+		public float ValorRecursoBase (string nombre)
 		{
-			// Analysis disable RedundantExplicitNullableCreation
 			IRecurso ret;
-			var fRet = _data.TryGetValue (nombre, out ret) ? new float? (ret.Valor) : null;
-			return fRet;
-			// Analysis restore RedundantExplicitNullableCreation
+			if (_data.TryGetValue (nombre, out ret))
+				return ret.Valor;
+			throw new Exception ("Recurso inexistente: " + nombre);
+		}
+
+		/// <summary>
+		/// Devuelve el valor final de un recurso 
+		/// </summary>
+		public float ValorRecurso (string nombre)
+		{
+			var ret = ValorRecursoBase (nombre) + RecursoExtra (nombre);
+			return ret;
+		}
+
+		/// <summary>
+		/// Devuelve el valor de recursos modificado por Buffs.
+		/// </summary>
+		/// <returns>The extra.</returns>
+		/// <param name="nombre">Nombre.</param>
+		public float RecursoExtra (string nombre)
+		{
+			var ret = 0f;
+			foreach (var buff in Unidad.Buffs.BuffOfType<IStatsBuff> ())
+				ret += buff.StatDelta (nombre);
+			return ret;
 		}
 
 		/// <summary>
@@ -73,7 +98,11 @@ namespace Units.Recursos
 		{
 			var sb = new StringBuilder ();
 			foreach (var x in _data)
-				sb.AppendFormat ("[{0}]: [{1}]\n", x.Key, x.Value);
+				sb.AppendFormat (
+					"[{0}]: {2}\t\t [{1}]\n",
+					x.Key,
+					x.Value,
+					ValorRecurso (x.Key));
 			return sb.ToString ();
 		}
 
@@ -84,16 +113,17 @@ namespace Units.Recursos
 
 		/// <summary>
 		/// </summary>
-		public ManejadorRecursos ()
+		public ManejadorRecursos (IUnidad unid)
 		{
 			_data = new Dictionary<string, IRecurso> ();
+			Unidad = unid;
 		}
 
 		/// <summary>
 		/// </summary>
 		/// <param name="recursos">Recursos</param>
-		public ManejadorRecursos (IEnumerable<IRecurso> recursos)
-			: this ()
+		public ManejadorRecursos (IUnidad unid, IEnumerable<IRecurso> recursos)
+			: this (unid)
 		{
 			foreach (var rec in recursos)
 				Add (rec);

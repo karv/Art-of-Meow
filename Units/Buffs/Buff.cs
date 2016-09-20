@@ -6,6 +6,8 @@ namespace Units.Buffs
 		{
 		}
 
+		public abstract bool IsVisible { get; }
+
 		public abstract string BaseTextureName { get; }
 
 		public abstract string Nombre { get; }

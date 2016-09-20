@@ -78,10 +78,7 @@ namespace Units.Recursos
 			public override float EvaluarVariable (string nombreVariable)
 			{
 				var ret = _manRec.ValorRecurso (nombreVariable);
-
-				if (ret.HasValue)
-					return ret.Value;
-				throw new Exception ("Recurso inexistente.");
+				return ret;
 			}
 
 			public RecFml (string s, ManejadorRecursos man)

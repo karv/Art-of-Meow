@@ -4,6 +4,7 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
+using Microsoft.Xna.Framework.Content;
 
 namespace Componentes
 {
@@ -125,7 +126,7 @@ namespace Componentes
 				Screen.Batch.DrawString (Font, Texto, TopLeft, ColorActual);
 		}
 
-		protected override void LoadContent ()
+		protected override void LoadContent (ContentManager manager)
 		{
 			Font = Screen.Content.Load<BitmapFont> ("fonts");
 		}

@@ -8,6 +8,7 @@ using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
+using Microsoft.Xna.Framework.Content;
 
 namespace Cells
 {
@@ -68,6 +69,8 @@ namespace Cells
 		/// <param name="obj">Object.</param>
 		public void AddCellObject (IGridObject obj)
 		{
+			if (obj == null)
+				throw new ArgumentNullException ("obj");
 			Objects.Add (obj);
 		}
 
@@ -130,6 +133,7 @@ namespace Cells
 			//var bat = Screen.
 			//bat.Begin (SpriteSortMode.BackToFront);
 			var bat = Screen.Batch;
+			// THINK: ¿necesito copiar la lista?
 			foreach (var x in new HashSet<IGridObject>  (_objects))
 			{
 				if (IsVisible (x.Location))
@@ -150,10 +154,10 @@ namespace Cells
 			return Bounds;
 		}
 
-		protected override void LoadContent ()
+		protected override void LoadContent (ContentManager manager)
 		{
 			foreach (var x in _objects)
-				x.LoadContent (Screen.Content);
+				x.LoadContent (manager);
 		}
 
 		public override void Update (GameTime gameTime)
@@ -267,7 +271,7 @@ namespace Cells
 			for (int i = 0; i < xSize; i++)
 				for (int j = 0; j < ySize; j++)
 				{
-					_objects.Add (new BackgroundObject (
+					AddCellObject (new BackgroundObject (
 						new Point (i, j),
 						"floor"));
 					if (_r.NextDouble () < probZacate)

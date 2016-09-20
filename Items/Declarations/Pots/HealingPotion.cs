@@ -25,8 +25,8 @@ namespace Items.Declarations.Pots
 			}
 		}
 
-		public HealingPotion (Cells.Grid grid)
-			: base (grid)
+		public HealingPotion ()
+			: base ()
 		{
 		}
 	}

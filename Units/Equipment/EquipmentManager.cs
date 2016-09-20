@@ -4,6 +4,7 @@ using Items;
 using System.Linq;
 using System.Diagnostics;
 using System;
+using Microsoft.Xna.Framework.Content;
 
 namespace Units.Equipment
 {
@@ -18,7 +19,7 @@ namespace Units.Equipment
 		/// <summary>
 		/// Devuelve el buff que representa el equipment.
 		/// </summary>
-		public IBuff EquipBuff { get; private set; }
+		public EquipBuff EquipBuff { get; private set; }
 
 		List<IEquipment> equipment { get; }
 
@@ -65,6 +66,11 @@ namespace Units.Equipment
 			return equipment.Count (z => z.Slot == slot);
 		}
 
+		public void LoadContent (ContentManager manager)
+		{
+			foreach (var eq in equipment)
+				eq.LoadContent (manager);
+		}
 
 		#region Events
 
@@ -84,6 +90,7 @@ namespace Units.Equipment
 		{
 			Owner = owner;
 			equipment = new List<IEquipment> ();
+			EquipBuff = new EquipBuff (equipment);
 		}
 
 		#region Static
@@ -96,6 +103,7 @@ namespace Units.Equipment
 			SlotSize.Add (EquipSlot.None, 0);
 			SlotSize.Add (EquipSlot.Head, 1);
 			SlotSize.Add (EquipSlot.Body, 1);
+			SlotSize.Add (EquipSlot.MainHand, 1);
 		}
 
 		#endregion
