@@ -14,6 +14,8 @@ namespace Units.Buffs
 		/// </summary>
 		string BaseTextureName { get; }
 
+		bool IsVisible { get; }
+
 		/// <summary>
 		/// El manejador de buffs
 		/// </summary>

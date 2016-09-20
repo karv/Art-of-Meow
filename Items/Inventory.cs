@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
+using System.Linq;
 
 namespace Items
 {
@@ -23,12 +24,10 @@ namespace Items
 
 		public string FontName { get; set; }
 
-		public ContentManager Content { get; }
-
-		protected void LoadContent ()
+		protected void LoadContent (ContentManager manager)
 		{
-			IconTexture = Content.Load<Texture2D> (IconTextureName);
-			Font = Content.Load <BitmapFont> (FontName);
+			IconTexture = manager.Load<Texture2D> (IconTextureName);
+			Font = manager.Load <BitmapFont> (FontName);
 		}
 
 		protected void UnloadContent ()
@@ -37,9 +36,9 @@ namespace Items
 			Font = null;
 		}
 
-		void IComponent.LoadContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			LoadContent ();
+			LoadContent (manager);
 		}
 
 		void IComponent.UnloadContent ()
@@ -54,14 +53,17 @@ namespace Items
 
 		public virtual void Initialize ()
 		{
-			LoadContent ();
+		}
+
+		public ILookup<string, IItem> Group ()
+		{
+			return Items.ToLookup (i => i.Nombre);
 		}
 
 		public IComponentContainerComponent<IGameComponent> Container { get; }
 
 		public Inventory (Screen scr)
 		{
-			Content = scr.Content;
 			Container = scr;
 		}
 	}

@@ -39,17 +39,17 @@
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="Controles_Moggle">
-      <HintPath>packages\Moggle.0.3\lib\Controles_Moggle.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Extended">
-      <HintPath>packages\Moggle.0.3\lib\MonoGame.Extended.dll</HintPath>
-    </Reference>
-    <Reference Include="NVorbis">
-      <HintPath>packages\Moggle.0.3\lib\NVorbis.dll</HintPath>
-    </Reference>
     <Reference Include="AdvMath">
       <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
+    </Reference>
+    <Reference Include="Controles_Moggle">
+      <HintPath>packages\Moggle.0.4\lib\Controles_Moggle.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Extended">
+      <HintPath>packages\Moggle.0.4\lib\MonoGame.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>packages\Moggle.0.4\lib\NVorbis.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +98,19 @@
     <Compile Include="Componentes\RecursoView.cs" />
     <Compile Include="Componentes\ListaIconos.cs" />
     <Compile Include="Componentes\IRelDraw.cs" />
+    <Compile Include="Cells\CellObjects\IMovementGridObject.cs" />
+    <Compile Include="Units\Buffs\IStatsBuff.cs" />
+    <Compile Include="Units\Buffs\StatsBuff.cs" />
+    <Compile Include="Units\Buffs\HasteBuff.cs" />
+    <Compile Include="Helper\InitializationHelper.cs" />
+    <Compile Include="Helper\Timer.cs" />
+    <Compile Include="Units\Equipment\EquipmentManager.cs" />
+    <Compile Include="Items\Declarations\Equipment\Sword.cs" />
+    <Compile Include="Items\IEquipment.cs" />
+    <Compile Include="Items\ItemFactory.cs" />
+    <Compile Include="Units\Buffs\EquipBuff.cs" />
+    <Compile Include="Units\Buffs\IBuffGenerating.cs" />
+    <Compile Include="Units\Recursos\Recurso.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -123,5 +136,8 @@
     <Folder Include="Items\Declarations\Pots\" />
     <Folder Include="Debugging\" />
     <Folder Include="Units\Buffs\" />
+    <Folder Include="Helper\" />
+    <Folder Include="Units\Equipment\" />
+    <Folder Include="Items\Declarations\Equipment\" />
   </ItemGroup>
 </Project>

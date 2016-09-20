@@ -9,14 +9,16 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using Units.Buffs;
 using Units.Inteligencia;
+using Units.Buffs;
+using Items;
+using Units.Recursos;
+using Items.Declarations.Equipment;
 
 namespace Screens
 {
 	public class MapMainScreen : Screen
 	{
-		
 		public override Color BgColor { get { return Color.DarkBlue; } }
 
 		public RecursoView _recursoView { get; private set; }
@@ -41,6 +43,39 @@ namespace Screens
 			buildChasers ();
 		}
 
+		void inicializarJugador ()
+		{
+			Jugador = new Unidad
+			{
+				Equipo = 1,
+				Inteligencia = new HumanIntelligence (Jugador),
+				MapGrid = GameGrid,
+				Location = StartingPoint
+			};
+
+			var Humanintel = new HumanIntelligence (Jugador);
+			Jugador.Inteligencia = Humanintel;
+			Jugador.MapGrid = GameGrid;
+			Jugador.Location = StartingPoint;
+			Jugador.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
+
+			// TEST ing
+			var haste = new HasteBuff ()
+			{
+				SpeedDelta = 10,
+				Duración = 5
+			};
+			haste.Initialize ();
+			Jugador.Buffs.Hook (haste);
+			var spd = Jugador.Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
+			System.Console.WriteLine (spd);
+
+			var sword = ItemFactory.CreateItem (ItemType.Sword) as Sword;
+			Jugador.Equipment.EquipItem (sword);
+
+			_recursoView = new RecursoView (this, Jugador.Recursos);
+		}
+
 		void buildChasers ()
 		{
 			for (int i = 0; i < NumChasers; i++)
@@ -56,34 +91,22 @@ namespace Screens
 				chaser.RecursoHP.Fill ();
 				UnidadesArtificial.Add (chaser);
 			}
-
-			Jugador = new Unidad
-			{
-				Equipo = 1,
-				Inteligencia = new HumanIntelligence (Jugador),
-				MapGrid = GameGrid,
-				Location = StartingPoint
-			};
-
-			var Humanintel = new HumanIntelligence (Jugador);
-			Jugador.Inteligencia = Humanintel;
-			//Components.Add (Humanintel);
-			Jugador.MapGrid = GameGrid;
-			Jugador.Location = StartingPoint;
-			GameGrid.TryCenterOn (Jugador.Location);
-
-			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}
 
 		public override void Initialize ()
 		{
+			inicializarJugador ();
+			buildChasers ();
+
 			GameGrid.AddCellObject (Jugador);
 			foreach (var x in UnidadesArtificial)
 				GameGrid.AddCellObject (x);
 
+
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
+			GameGrid.TryCenterOn (Jugador.Location);
 		}
 
 		public override bool RecibirSeñal (KeyboardEventArgs key)

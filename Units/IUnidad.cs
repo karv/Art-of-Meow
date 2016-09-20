@@ -4,6 +4,8 @@ using Cells.CellObjects;
 using Componentes;
 using Moggle.Screens;
 using Units.Recursos;
+using Units.Equipment;
+using Units.Buffs;
 
 namespace Units
 {
@@ -17,6 +19,10 @@ namespace Units
 		void MeleeDamage (IUnidad target);
 
 		ManejadorRecursos Recursos { get; }
+
+		EquipmentManager Equipment { get; }
+
+		BuffManager Buffs { get; }
 
 		bool Habilitado { get; }
 
