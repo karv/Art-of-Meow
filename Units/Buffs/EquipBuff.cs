@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Units.Equipment;
 using Units.Recursos;
 
 namespace Units.Buffs
@@ -13,7 +12,7 @@ namespace Units.Buffs
 		/// <summary>
 		/// Devuelve el Equipment de la unidad
 		/// </summary>
-		public EquipmentManager EquipManager { get; }
+		//public EquipmentManager EquipManager { get; }
 
 		public BuffManager BuffManager { get; set; }
 
@@ -33,6 +32,21 @@ namespace Units.Buffs
 		/// </summary>
 		public void Initialize ()
 		{
+		}
+
+		public void CalcularDiccionario (IEnumerable<IBuffGenerating> buffGen)
+		{
+			delta.Clear ();
+			foreach (var x in buffGen)
+			{
+				foreach (var b in x.GetDeltaStat ())
+				{
+					if (delta.ContainsKey (b.Key))
+						delta [b.Key] += b.Value;
+					else
+						delta.Add (b.Key, b.Value);
+				}
+			}
 		}
 
 		/// <summary>
@@ -65,7 +79,7 @@ namespace Units.Buffs
 
 		public EquipBuff (IUnidad unid)
 		{
-			EquipManager = unid.Equipment;
+			//EquipManager = unid.Equipment;
 			BuffManager = unid.Buffs;
 			RecManager = unid.Recursos;
 		}
