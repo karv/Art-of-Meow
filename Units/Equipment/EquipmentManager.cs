@@ -19,9 +19,7 @@ namespace Units.Equipment
 		/// <summary>
 		/// Devuelve el buff que representa el equipment.
 		/// </summary>
-		// TODO
-		public IBuff EquipBuff { get; private set; }
-
+		public EquipBuff EquipBuff { get; private set; }
 
 		List<IEquipment> equipment { get; }
 
@@ -37,6 +35,7 @@ namespace Units.Equipment
 				equipment.Add (equip);
 				equip.Owner = this;
 				AgregadoEquipment?.Invoke (this, equip);
+				recalcularStats ();
 			}
 			else
 			{
@@ -58,6 +57,13 @@ namespace Units.Equipment
 			EliminadoEquipment?.Invoke (this, equip);
 			equip.Owner = null;
 			equipment.Remove (equip);
+
+			recalcularStats ();
+		}
+
+		void recalcularStats ()
+		{
+			EquipBuff.CalcularDiccionario (equipment.OfType<IBuffGenerating> ());
 		}
 
 		/// <summary>
@@ -92,6 +98,7 @@ namespace Units.Equipment
 		{
 			Owner = owner;
 			equipment = new List<IEquipment> ();
+			EquipBuff = new EquipBuff (this);
 		}
 
 		#region Static
