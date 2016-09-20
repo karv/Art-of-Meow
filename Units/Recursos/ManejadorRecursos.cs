@@ -117,6 +117,7 @@ namespace Units.Recursos
 		{
 			_data = new Dictionary<string, IRecurso> ();
 			Unidad = unid;
+			Add (Unidad.Equipment.EquipBuff);
 		}
 
 		/// <summary>
