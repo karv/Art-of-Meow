@@ -1,4 +1,6 @@
-﻿namespace Units.Recursos
+﻿using System;
+
+namespace Units.Recursos
 {
 	/// <summary>
 	/// Recurso de valor 'fijo'
@@ -8,6 +10,13 @@
 		public void Update (float gameTime)
 		{
 		}
+
+		IParámetroRecurso IRecurso.ValorParámetro (string paramName)
+		{
+			throw new Exception ("Cannot get value of this kind of resource.");
+		}
+
+		public IRecurso Recurso { get { return this; } }
 
 		public string NombreCorto { get; set; }
 

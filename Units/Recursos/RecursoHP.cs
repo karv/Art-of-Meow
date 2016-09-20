@@ -6,14 +6,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Units.Recursos
 {
-	public class RecursoHP : IRecurso, IRelDraw
+	public class RecursoHP : Recurso, IRelDraw
 	{
 		public readonly Color BgColor = Color.Black * 0.4f;
 		public readonly Color FillColor = Color.Red;
-
-		public void Update (float gameTime)
-		{
-		}
 
 		public void Draw (Rectangle rect,
 		                  SpriteBatch batch)
@@ -38,6 +34,21 @@ namespace Units.Recursos
 			batch.Draw (text, fullRect, FillColor);
 		}
 
+		protected override string GetShortName ()
+		{
+			return NombreCorto;
+		}
+
+		protected override string GetLongName ()
+		{
+			return NombreLargo;
+		}
+
+		protected override string GetUniqueName ()
+		{
+			return NombreÚnico;
+		}
+
 		public string NombreÚnico { get { return "hp"; } }
 
 		public string NombreCorto { get { return "HP"; } }
@@ -46,7 +57,7 @@ namespace Units.Recursos
 
 		float _valor;
 
-		public float Valor
+		public override float Valor
 		{
 			get { return _valor; }
 			set
@@ -69,16 +80,14 @@ namespace Units.Recursos
 			_valor = 0;
 		}
 
-		public IUnidad Unidad { get; }
-
 		public override string ToString ()
 		{
 			return string.Format ("{0}: {1}/{2}", NombreCorto, Valor, Max);
 		}
 
 		public RecursoHP (IUnidad unidad)
+			: base (unidad)
 		{
-			Unidad = unidad;
 		}
 	}
 }
