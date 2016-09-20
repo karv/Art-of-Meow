@@ -217,8 +217,8 @@ namespace Units
 		{
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);
-			Buffs = new BuffManager (this);
 			Equipment = new EquipmentManager (this);
+			Buffs = new BuffManager (this);
 			inicializarRecursos ();
 		}
 
