@@ -38,7 +38,6 @@ namespace Cells.CellObjects
 
 		public void Draw (Rectangle area, SpriteBatch bat)
 		{
-			// TODO: Implementar la extensión Draw con RectangleF
 			bat.Draw (
 				Texture,
 				area, null, Color.White,
