@@ -133,8 +133,7 @@ namespace Cells
 			//var bat = Screen.
 			//bat.Begin (SpriteSortMode.BackToFront);
 			var bat = Screen.Batch;
-			// THINK: ¿necesito copiar la lista?
-			foreach (var x in new HashSet<IGridObject>  (_objects))
+			foreach (var x in _objects)
 			{
 				if (IsVisible (x.Location))
 				{
