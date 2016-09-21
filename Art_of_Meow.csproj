@@ -111,6 +111,7 @@
     <Compile Include="Units\Buffs\EquipBuff.cs" />
     <Compile Include="Units\Buffs\IBuffGenerating.cs" />
     <Compile Include="Units\Recursos\Recurso.cs" />
+    <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

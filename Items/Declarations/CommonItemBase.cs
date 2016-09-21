@@ -2,20 +2,30 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace Items.Declarations
 {
 	public abstract class CommonItemBase : IItem
 	{
-		public abstract string Nombre { get; }
+		public string TextureName { get; protected set; }
 
-		public abstract string TextureName { get; }
+		Texture2D _texture;
 
-		public Texture2D Texture { get; protected set; }
+		public Texture2D Texture
+		{
+			get{ return _texture; }
+			protected set
+			{
+				if (IsInitialized)
+					throw new InvalidOperationException ("Cannot set texture after initialization.");
+				_texture = value;
+			}
+		}
 
-		public Color Color { get { return GetColor (); } }
+		public Color Color { get; set; }
 
-		protected abstract Color GetColor ();
+		public bool IsInitialized { get; private set; }
 
 		protected virtual void LoadContent (ContentManager manager)
 		{
@@ -28,6 +38,9 @@ namespace Items.Declarations
 
 		protected virtual void Initialize ()
 		{
+			Debug.WriteLineIf (IsInitialized,
+				string.Format ("Object {0} initialized multiple times.", this), "Init");
+			IsInitialized = true;
 		}
 
 		#region IComponent implementation
@@ -67,34 +80,17 @@ namespace Items.Declarations
 
 		#region IItem implementation
 
-		string IItem.Nombre
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		public string Nombre { get; }
 
-		string IItem.DefaultTextureName
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		string IItem.DefaultTextureName { get { return TextureName; } }
 
-		Color IItem.DefaultColor
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		Color IItem.DefaultColor { get { return Color; } }
 
 		#endregion
 
-		protected CommonItemBase ()
+		protected CommonItemBase (string nombre)
 		{
+			Nombre = nombre;
 		}
 	}
 }

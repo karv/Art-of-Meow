@@ -1,9 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Units.Buffs;
+﻿using Units.Buffs;
 using Units.Recursos;
 
 namespace Items.Declarations.Equipment
@@ -11,12 +6,8 @@ namespace Items.Declarations.Equipment
 	/// <summary>
 	/// Una espada sin propiedades especiales
 	/// </summary>
-	public class Sword : IEquipment, IBuffGenerating
+	public class Sword : Equipment, IBuffGenerating
 	{
-		public string IconString { get; }
-
-		public Texture Icon { get; protected set; }
-
 		public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, float>> GetDeltaStat ()
 		{
 			yield return new System.Collections.Generic.KeyValuePair<string, float> (
@@ -24,83 +15,20 @@ namespace Items.Declarations.Equipment
 				3);
 		}
 
-		#region IComponent implementation
-
-		public void LoadContent (ContentManager manager)
-		{
-			Icon = manager.Load<Texture2D> (IconString);
-		}
-
-		public void UnloadContent ()
-		{
-			Debug.WriteLineIf (
-				Owner == null,
-				"Disposing equiped item " + this,
-				"Equipment");
-			Owner?.UnequipItem (this);
-		}
-
-		public Moggle.Controles.IComponentContainerComponent<IGameComponent> Container
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
-
-		#endregion
-
-		#region IDisposable implementation
-
-		void IDisposable.Dispose ()
-		{
-			UnloadContent ();
-		}
-
-		#endregion
-
-		#region IGameComponent implementation
-
-		public void Initialize ()
-		{
-		}
-
-		#endregion
-
 		#region IEquipment implementation
 
-		public EquipSlot Slot
-		{
-			get { return EquipSlot.MainHand; }
-		}
-
-		public Units.Equipment.EquipmentManager Owner { get; set; }
+		public override EquipSlot Slot { get { return EquipSlot.MainHand; } }
 
 		#endregion
 
-		#region IItem implementation
-
-		public string Nombre { get; }
-
-		public string DefaultTextureName
+		protected Sword (string nombre, string icon)
+			: base (nombre)
 		{
-			get { return IconString; }
-		}
-
-		public Color DefaultColor
-		{
-			get { return Color.Transparent; }
-		}
-
-		#endregion
-
-		protected Sword (string icon)
-		{
-			IconString = icon;
+			TextureName = icon;
 		}
 
 		public Sword ()
-			: this (@"Items/katana")
+			: this ("Sword", @"Items/katana")
 		{
 		}
 	}
