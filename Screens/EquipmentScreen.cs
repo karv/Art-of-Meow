@@ -1,5 +1,4 @@
-﻿using System;
-using Moggle.Screens;
+﻿using Moggle.Screens;
 
 namespace Screens
 {
