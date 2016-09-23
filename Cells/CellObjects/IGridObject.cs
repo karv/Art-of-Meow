@@ -1,7 +1,6 @@
 using System;
 using Componentes;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 
@@ -17,8 +16,6 @@ namespace Cells.CellObjects
 		Texture2D Texture { get; }
 
 		Grid Grid { get; }
-
-		void LoadContent (ContentManager content);
 
 		/// <summary>
 		/// Determina si este objeto evita que otro objeto pueda ocupar esta misma celda.
