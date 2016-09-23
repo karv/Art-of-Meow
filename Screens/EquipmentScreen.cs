@@ -61,15 +61,10 @@ namespace Screens
 		{
 			var item = Contenedor.FocusedItem;
 			if (Equals (item.Owner, Equipment))
-			{
 				Equipment.UnequipItem (item);
-				Contenedor.Selection.Deselect (item);
-			}
 			else
-			{
 				Equipment.EquipItem (item);
-				Contenedor.Selection.Deselect (item);
-			}
+			rebuildSelection ();
 		}
 
 		public EquipmentScreen (IScreen baseScreen, IUnidad unid)
