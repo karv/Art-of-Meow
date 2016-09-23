@@ -4,8 +4,8 @@ using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
-using Units.Equipment;
 using Units;
+using Units.Equipment;
 
 namespace Screens
 {

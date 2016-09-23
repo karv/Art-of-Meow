@@ -1,10 +1,10 @@
-﻿using Units.Buffs;
+﻿using System;
 using System.Collections.Generic;
-using Items;
-using System.Linq;
 using System.Diagnostics;
-using System;
+using System.Linq;
+using Items;
 using Microsoft.Xna.Framework.Content;
+using Units.Buffs;
 
 namespace Units.Equipment
 {

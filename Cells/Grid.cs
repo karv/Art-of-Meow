@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using AoM;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
-using Microsoft.Xna.Framework.Content;
 
 namespace Cells
 {

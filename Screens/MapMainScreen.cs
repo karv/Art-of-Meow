@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Cells;
 using Componentes;
+using Items;
+using Items.Declarations.Equipment;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
@@ -9,12 +11,9 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using Units.Inteligencia;
 using Units.Buffs;
-using Items;
+using Units.Inteligencia;
 using Units.Recursos;
-using Items.Declarations.Equipment;
-using System.Globalization;
 
 namespace Screens
 {
@@ -61,7 +60,7 @@ namespace Screens
 			Jugador.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
 
 			// TEST ing
-			var haste = new HasteBuff ()
+			var haste = new HasteBuff
 			{
 				SpeedDelta = 10,
 				Duración = 5
