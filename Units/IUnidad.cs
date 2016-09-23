@@ -4,6 +4,7 @@ using Cells.CellObjects;
 using Units.Recursos;
 using Units.Equipment;
 using Units.Buffs;
+using Items;
 
 namespace Units
 {
@@ -25,6 +26,8 @@ namespace Units
 		bool Habilitado { get; }
 
 		int Equipo { get; }
+
+		IInventory Inventory { get; }
 	}
 
 	static class UnidadImplementation

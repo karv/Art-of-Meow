@@ -7,6 +7,7 @@ using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using System.Linq;
+using System;
 
 namespace Items
 {
@@ -23,6 +24,21 @@ namespace Items
 		public string IconTextureName { get; set; }
 
 		public string FontName { get; set; }
+
+		public IEnumerable<T> ItemsOfType<T> ()
+		{
+			return Items.OfType<T> ();
+		}
+
+		public IEnumerable<T> ItemsOfType<T> (Func<T, bool> pred)
+		{
+			return Items.OfType<T> ().Where (pred);
+		}
+
+		public IEnumerable<IItem> Where (Func<IItem, bool> pred)
+		{
+			return Items.Where (pred);
+		}
 
 		protected void LoadContent (ContentManager manager)
 		{
@@ -60,11 +76,9 @@ namespace Items
 			return Items.ToLookup (i => i.Nombre);
 		}
 
-		public IComponentContainerComponent<IControl> Container { get; }
-
-		public Inventory (Screen scr)
+		public Inventory ()
 		{
-			Container = scr;
+			Items = new List<IItem> ();
 		}
 	}
 }

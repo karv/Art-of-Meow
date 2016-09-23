@@ -14,6 +14,7 @@ using Units.Buffs;
 using Items;
 using Units.Recursos;
 using Items.Declarations.Equipment;
+using System.Globalization;
 
 namespace Screens
 {
@@ -142,6 +143,10 @@ namespace Screens
 					Debug.WriteLine (Jugador.Recursos);
 					break;
 					#endif
+				case Keys.I:
+					var scr = new EquipmentScreen (this, Jugador.Inventory);
+					scr.Ejecutar ();
+					break;
 			/*
 				case Microsoft.Xna.Framework.Input.Keys.Down:
 				case Microsoft.Xna.Framework.Input.Keys.NumPad2:

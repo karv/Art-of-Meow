@@ -11,6 +11,7 @@ using Units.Inteligencia;
 using Units.Recursos;
 using Units.Equipment;
 using System.Diagnostics;
+using Items;
 
 namespace Units
 {
@@ -21,6 +22,10 @@ namespace Units
 		public void UnloadContent ()
 		{
 		}
+
+		public Inventory Inventory { get; }
+
+		IInventory IUnidad.Inventory { get { return Inventory; } }
 
 		public Grid Grid { get; }
 
@@ -233,6 +238,7 @@ namespace Units
 			Recursos = new ManejadorRecursos (this);
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
+			Inventory = new Inventory ();
 			inicializarRecursos ();
 		}
 

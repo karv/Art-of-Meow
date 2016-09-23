@@ -14,23 +14,27 @@ namespace Screens
 
 		public override void Initialize ()
 		{
-			foreach (var eq in Inventory.Items.OfType<IEquipment> ())
-				Contenedor.Add (eq);
-			
 			base.Initialize ();
+			buildEquipmentList ();
 		}
 
 		void buildEquipmentList ()
 		{
-			
+			foreach (var eq in Inventory.Items.OfType<IEquipment> ())
+				Contenedor.Add (eq);
+
+			Contenedor.Selection.AllowMultiple = false;
+			Contenedor.Selection.AllowEmpty = false;
+
 		}
 
 		public override bool DibujarBase{ get { return true; } }
 
-		public EquipmentScreen (IScreen baseScreen)
+		public EquipmentScreen (IScreen baseScreen, Inventory inv)
 			: base (baseScreen.Juego,
 			        baseScreen)
 		{
+			Inventory = inv;
 			Contenedor = new ContenedorSelección<IEquipment> (this)
 			{
 				TextureFondoName = "brick-wall",
@@ -47,9 +51,6 @@ namespace Screens
 				GridSize = new MonoGame.Extended.Size (30, 30),
 				BgColor = Color.Black
 			};
-			Contenedor.Selection.AllowMultiple = false;
-			Contenedor.Selection.AllowEmpty = false;
-
 
 			AddComponent (Contenedor);
 		}
