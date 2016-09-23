@@ -18,6 +18,20 @@ namespace Units
 	{
 		public int Equipo { get; set; }
 
+		public void UnloadContent ()
+		{
+		}
+
+		public Grid Grid { get; }
+
+		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
+		{
+			get
+			{
+				throw new NotImplementedException ();
+			}
+		}
+
 		public virtual void Execute ()
 		{
 			Inteligencia.DoAction ();

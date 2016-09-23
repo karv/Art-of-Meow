@@ -60,7 +60,7 @@ namespace Items
 			return Items.ToLookup (i => i.Nombre);
 		}
 
-		public IComponentContainerComponent<IGameComponent> Container { get; }
+		public IComponentContainerComponent<IControl> Container { get; }
 
 		public Inventory (Screen scr)
 		{

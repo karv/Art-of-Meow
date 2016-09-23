@@ -68,7 +68,7 @@ namespace Componentes
 		{
 		}
 
-		public ListaIconos (IComponentContainerComponent<IGameComponent> cont)
+		public ListaIconos (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{
 			Iconos = new List<IRelDraw> ();

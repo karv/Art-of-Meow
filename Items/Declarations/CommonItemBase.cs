@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
+using MonoGame.Extended;
 
 namespace Items.Declarations
 {
@@ -43,6 +44,11 @@ namespace Items.Declarations
 			IsInitialized = true;
 		}
 
+		public void Draw (SpriteBatch bat, Rectangle rect)
+		{
+			bat.Draw (Texture, rect, Color);
+		}
+
 		#region IComponent implementation
 
 		void Moggle.Controles.IComponent.LoadContent (ContentManager manager)
@@ -54,9 +60,6 @@ namespace Items.Declarations
 		{
 			UnloadContent ();
 		}
-
-		Moggle.Controles.IComponentContainerComponent<IGameComponent> Moggle.Controles.IComponent.Container
-		{ get { return null; } }
 
 		#endregion
 

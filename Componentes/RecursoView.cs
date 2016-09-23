@@ -10,7 +10,7 @@ namespace Componentes
 	{
 		ManejadorRecursos Recursos { get; }
 
-		public RecursoView (IComponentContainerComponent<IGameComponent> cont,
+		public RecursoView (IComponentContainerComponent<IControl> cont,
 		                    ManejadorRecursos recs)
 			: base (cont)
 		{

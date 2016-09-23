@@ -3,10 +3,11 @@ using Componentes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 
 namespace Cells.CellObjects
 {
-	public interface IGridObject : IGameComponent, IDisposable, IRelDraw
+	public interface IGridObject : IControl, IDisposable, IRelDraw
 	{
 		/// <summary>
 		/// Gets the cell-based localization.
@@ -14,6 +15,8 @@ namespace Cells.CellObjects
 		Point Location { get; set; }
 
 		Texture2D Texture { get; }
+
+		Grid Grid { get; }
 
 		void LoadContent (ContentManager content);
 

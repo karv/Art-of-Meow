@@ -272,7 +272,8 @@ namespace Cells
 				{
 					AddCellObject (new BackgroundObject (
 						new Point (i, j),
-						"floor"));
+						"floor",
+						this));
 					if (_r.NextDouble () < probZacate)
 					{
 						var newObj = new GridObject ("vanilla-flower");
