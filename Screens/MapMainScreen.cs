@@ -72,7 +72,8 @@ namespace Screens
 			System.Console.WriteLine (spd);
 
 			var sword = ItemFactory.CreateItem (ItemType.Sword) as Sword;
-			Jugador.Equipment.EquipItem (sword);
+			//Jugador.Equipment.EquipItem (sword);
+			Jugador.Inventory.Add (sword);
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}
@@ -144,8 +145,11 @@ namespace Screens
 					break;
 					#endif
 				case Keys.I:
-					var scr = new EquipmentScreen (this, Jugador.Inventory);
-					scr.Ejecutar ();
+					if (Jugador.Inventory.Any ())
+					{
+						var scr = new EquipmentScreen (this, Jugador.Inventory);
+						scr.Ejecutar ();
+					}
 					break;
 			/*
 				case Microsoft.Xna.Framework.Input.Keys.Down:

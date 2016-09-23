@@ -40,16 +40,31 @@ namespace Items
 			return Items.Where (pred);
 		}
 
-		protected void LoadContent (ContentManager manager)
+		public void LoadContent (ContentManager manager)
 		{
-			IconTexture = manager.Load<Texture2D> (IconTextureName);
-			Font = manager.Load <BitmapFont> (FontName);
+			// TODO: eventualmente debería tener algo de texto
+
+			//IconTexture = manager.Load<Texture2D> (IconTextureName);
+			//Font = manager.Load <BitmapFont> (FontName);
+
+			foreach (var item in Items)
+				item.LoadContent (manager);
 		}
 
-		protected void UnloadContent ()
+		public void UnloadContent ()
 		{
 			IconTexture = null;
 			Font = null;
+		}
+
+		public bool Any ()
+		{
+			return Items.Any ();
+		}
+
+		public void Add (IItem item)
+		{
+			Items.Add (item);
 		}
 
 		void IComponent.LoadContent (ContentManager manager)
