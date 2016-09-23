@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
-using MonoGame.Extended;
 
 namespace Items.Declarations
 {
@@ -30,7 +29,7 @@ namespace Items.Declarations
 
 		protected virtual void LoadContent (ContentManager manager)
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			_texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		protected virtual void UnloadContent ()
