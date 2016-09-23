@@ -30,6 +30,7 @@ namespace Items.Declarations.Equipment
 		public Sword ()
 			: this ("Sword", @"Items/katana")
 		{
+			Color = Microsoft.Xna.Framework.Color.Black;
 		}
 	}
 }

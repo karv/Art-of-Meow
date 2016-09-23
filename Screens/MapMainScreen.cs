@@ -74,6 +74,10 @@ namespace Screens
 			var sword = ItemFactory.CreateItem (ItemType.Sword) as Sword;
 			//Jugador.Equipment.EquipItem (sword);
 			Jugador.Inventory.Add (sword);
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}
@@ -147,7 +151,7 @@ namespace Screens
 				case Keys.I:
 					if (Jugador.Inventory.Any ())
 					{
-						var scr = new EquipmentScreen (this, Jugador.Inventory);
+						var scr = new EquipmentScreen (this, Jugador);
 						scr.Ejecutar ();
 					}
 					break;

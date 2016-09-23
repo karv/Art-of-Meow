@@ -1,21 +1,23 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
-using System;
 using Units.Equipment;
+using Units;
 
 namespace Screens
 {
 	public class EquipmentScreen : DialScreen
 	{
-		public Inventory Inventory;
+		public IInventory Inventory;
 		public EquipmentManager Equipment;
+		List<IEquipment> selectableEquipment;
 
 		public ContenedorSelección<IEquipment> Contenedor { get; }
 
-		public override Color BgColor { get { return Color.Gray * 0.8f; } }
+		public override Color BgColor { get { return Color.DarkGray; } }
 
 		public override void Initialize ()
 		{
@@ -25,7 +27,13 @@ namespace Screens
 
 		void buildEquipmentList ()
 		{
+			selectableEquipment = new List<IEquipment> ();
 			foreach (var eq in Inventory.Items.OfType<IEquipment> ())
+				selectableEquipment.Add (eq);
+			foreach (var eq in Equipment.EnumerateEquipment ())
+				selectableEquipment.Add (eq);
+
+			foreach (var eq in selectableEquipment)
 				Contenedor.Add (eq);
 
 			Contenedor.Selection.AllowMultiple = true;
@@ -37,7 +45,6 @@ namespace Screens
 			Contenedor.Selection.ClearSelection ();
 			foreach (var eq in Equipment.EnumerateEquipment ())
 				Contenedor.Selection.Select (eq);
-			
 		}
 
 		public override bool DibujarBase{ get { return true; } }
@@ -49,16 +56,33 @@ namespace Screens
 			return base.RecibirSeñal (key);
 		}
 
-		public EquipmentScreen (IScreen baseScreen, Inventory inv)
+
+		void Contenedor_cambio_selección (object sender, System.EventArgs e)
+		{
+			var item = Contenedor.FocusedItem;
+			if (Equals (item.Owner, Equipment))
+			{
+				Equipment.UnequipItem (item);
+				Contenedor.Selection.Deselect (item);
+			}
+			else
+			{
+				Equipment.EquipItem (item);
+				Contenedor.Selection.Deselect (item);
+			}
+		}
+
+		public EquipmentScreen (IScreen baseScreen, IUnidad unid)
 			: base (baseScreen.Juego,
 			        baseScreen)
 		{
-			Inventory = inv;
+			Inventory = unid.Inventory;
+			Equipment = unid.Equipment;
 			Contenedor = new ContenedorSelección<IEquipment> (this)
 			{
-				TextureFondoName = "brick-wall",
+				TextureFondoName = "Interface//win_bg",
 				TipoOrden = Contenedor<IEquipment>.TipoOrdenEnum.FilaPrimero,
-				TamañoBotón = new MonoGame.Extended.Size (16, 16),
+				TamañoBotón = new MonoGame.Extended.Size (32, 32),
 				Posición = new Point (30, 30),
 				Márgenes = new MargenType
 				{
@@ -67,11 +91,12 @@ namespace Screens
 					Bot = 5,
 					Right = 5
 				},
-				GridSize = new MonoGame.Extended.Size (30, 30),
-				BgColor = Color.Black
+				GridSize = new MonoGame.Extended.Size (15, 15),
+				BgColor = Color.LightBlue * 0.5f
 			};
 
 			AddComponent (Contenedor);
+			Contenedor.Activado += Contenedor_cambio_selección;
 		}
 	}
 }
