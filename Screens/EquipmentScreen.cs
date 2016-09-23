@@ -3,14 +3,19 @@ using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
+using System;
+using Units.Equipment;
 
 namespace Screens
 {
 	public class EquipmentScreen : DialScreen
 	{
 		public Inventory Inventory;
+		public EquipmentManager Equipment;
 
 		public ContenedorSelección<IEquipment> Contenedor { get; }
+
+		public override Color BgColor { get { return Color.Gray * 0.8f; } }
 
 		public override void Initialize ()
 		{
@@ -23,12 +28,26 @@ namespace Screens
 			foreach (var eq in Inventory.Items.OfType<IEquipment> ())
 				Contenedor.Add (eq);
 
-			Contenedor.Selection.AllowMultiple = false;
-			Contenedor.Selection.AllowEmpty = false;
+			Contenedor.Selection.AllowMultiple = true;
+			Contenedor.Selection.AllowEmpty = true;
+		}
 
+		void rebuildSelection ()
+		{
+			Contenedor.Selection.ClearSelection ();
+			foreach (var eq in Equipment.EnumerateEquipment ())
+				Contenedor.Selection.Select (eq);
+			
 		}
 
 		public override bool DibujarBase{ get { return true; } }
+
+		public override bool RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		{
+			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+				Salir ();
+			return base.RecibirSeñal (key);
+		}
 
 		public EquipmentScreen (IScreen baseScreen, Inventory inv)
 			: base (baseScreen.Juego,

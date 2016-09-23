@@ -21,6 +21,11 @@ namespace Units.Equipment
 		/// </summary>
 		public EquipBuff EquipBuff { get; private set; }
 
+		public IEnumerable<IEquipment> EnumerateEquipment ()
+		{
+			return equipment;
+		}
+
 		List<IEquipment> equipment { get; }
 
 		/// <summary>
