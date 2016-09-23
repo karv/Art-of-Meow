@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using AoM;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
-using Microsoft.Xna.Framework.Content;
 
 namespace Cells
 {
@@ -272,7 +272,8 @@ namespace Cells
 				{
 					AddCellObject (new BackgroundObject (
 						new Point (i, j),
-						"floor"));
+						"floor",
+						this));
 					if (_r.NextDouble () < probZacate)
 					{
 						var newObj = new GridObject ("vanilla-flower");

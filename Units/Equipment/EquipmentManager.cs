@@ -1,10 +1,10 @@
-﻿using Units.Buffs;
+﻿using System;
 using System.Collections.Generic;
-using Items;
-using System.Linq;
 using System.Diagnostics;
-using System;
+using System.Linq;
+using Items;
 using Microsoft.Xna.Framework.Content;
+using Units.Buffs;
 
 namespace Units.Equipment
 {
@@ -20,6 +20,11 @@ namespace Units.Equipment
 		/// Devuelve el buff que representa el equipment.
 		/// </summary>
 		public EquipBuff EquipBuff { get; private set; }
+
+		public IEnumerable<IEquipment> EnumerateEquipment ()
+		{
+			return equipment;
+		}
 
 		List<IEquipment> equipment { get; }
 

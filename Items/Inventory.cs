@@ -7,6 +7,7 @@ using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended.BitmapFonts;
 using System.Linq;
+using System;
 
 namespace Items
 {
@@ -24,16 +25,46 @@ namespace Items
 
 		public string FontName { get; set; }
 
-		protected void LoadContent (ContentManager manager)
+		public IEnumerable<T> ItemsOfType<T> ()
 		{
-			IconTexture = manager.Load<Texture2D> (IconTextureName);
-			Font = manager.Load <BitmapFont> (FontName);
+			return Items.OfType<T> ();
 		}
 
-		protected void UnloadContent ()
+		public IEnumerable<T> ItemsOfType<T> (Func<T, bool> pred)
+		{
+			return Items.OfType<T> ().Where (pred);
+		}
+
+		public IEnumerable<IItem> Where (Func<IItem, bool> pred)
+		{
+			return Items.Where (pred);
+		}
+
+		public void LoadContent (ContentManager manager)
+		{
+			// TODO: eventualmente debería tener algo de texto
+
+			//IconTexture = manager.Load<Texture2D> (IconTextureName);
+			//Font = manager.Load <BitmapFont> (FontName);
+
+			foreach (var item in Items)
+				item.LoadContent (manager);
+		}
+
+		public void UnloadContent ()
 		{
 			IconTexture = null;
 			Font = null;
+		}
+
+		public bool Any ()
+		{
+			return Items.Any ();
+		}
+
+		public void Add (IItem item)
+		{
+			Items.Add (item);
 		}
 
 		void IComponent.LoadContent (ContentManager manager)
@@ -60,11 +91,9 @@ namespace Items
 			return Items.ToLookup (i => i.Nombre);
 		}
 
-		public IComponentContainerComponent<IGameComponent> Container { get; }
-
-		public Inventory (Screen scr)
+		public Inventory ()
 		{
-			Container = scr;
+			Items = new List<IItem> ();
 		}
 	}
 }

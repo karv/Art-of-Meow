@@ -10,12 +10,13 @@ namespace Cells.CellObjects
 
 		public Texture2D Texture { get; private set; }
 
-		public BackgroundObject (Point loc,
-		                         string texture)
+		public void UnloadContent ()
 		{
-			StringTexture = texture;
-			Location = loc;
 		}
+
+		public Grid Grid { get; }
+
+		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container { get; }
 
 		bool IGridObject.Collision (IGridObject collObj)
 		{
@@ -51,6 +52,15 @@ namespace Cells.CellObjects
 		public void Dispose ()
 		{
 			Texture = null;
+		}
+
+		public BackgroundObject (Point loc,
+		                         string texture, 
+		                         Grid grid)
+		{
+			StringTexture = texture;
+			Location = loc;
+			Grid = grid;
 		}
 	}
 }

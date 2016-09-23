@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Cells;
 using Componentes;
+using Items;
+using Items.Declarations.Equipment;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
@@ -9,11 +11,9 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using Units.Inteligencia;
 using Units.Buffs;
-using Items;
+using Units.Inteligencia;
 using Units.Recursos;
-using Items.Declarations.Equipment;
 
 namespace Screens
 {
@@ -60,7 +60,7 @@ namespace Screens
 			Jugador.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
 
 			// TEST ing
-			var haste = new HasteBuff ()
+			var haste = new HasteBuff
 			{
 				SpeedDelta = 10,
 				Duración = 5
@@ -71,7 +71,12 @@ namespace Screens
 			System.Console.WriteLine (spd);
 
 			var sword = ItemFactory.CreateItem (ItemType.Sword) as Sword;
-			Jugador.Equipment.EquipItem (sword);
+			//Jugador.Equipment.EquipItem (sword);
+			Jugador.Inventory.Add (sword);
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}
@@ -142,6 +147,13 @@ namespace Screens
 					Debug.WriteLine (Jugador.Recursos);
 					break;
 					#endif
+				case Keys.I:
+					if (Jugador.Inventory.Any ())
+					{
+						var scr = new EquipmentScreen (this, Jugador);
+						scr.Ejecutar ();
+					}
+					break;
 			/*
 				case Microsoft.Xna.Framework.Input.Keys.Down:
 				case Microsoft.Xna.Framework.Input.Keys.NumPad2:

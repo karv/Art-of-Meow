@@ -6,7 +6,7 @@ namespace Items
 	/// <summary>
 	/// Representa la instancia de un objeto
 	/// </summary>
-	public interface IItem : IComponent
+	public interface IItem : IComponent, IDibujable
 	{
 		string Nombre { get; }
 

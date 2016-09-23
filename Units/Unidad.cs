@@ -1,22 +1,41 @@
 ﻿using System;
+using System.Diagnostics;
 using AoM;
 using Cells;
 using Cells.CellObjects;
 using Componentes;
+using Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Units.Buffs;
+using Units.Equipment;
 using Units.Inteligencia;
 using Units.Recursos;
-using Units.Equipment;
-using System.Diagnostics;
 
 namespace Units
 {
 	public class Unidad : IUnidad, IRelDraw
 	{
 		public int Equipo { get; set; }
+
+		public void UnloadContent ()
+		{
+		}
+
+		public Inventory Inventory { get; }
+
+		IInventory IUnidad.Inventory { get { return Inventory; } }
+
+		public Grid Grid { get; }
+
+		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
+		{
+			get
+			{
+				throw new NotImplementedException ();
+			}
+		}
 
 		public virtual void Execute ()
 		{
@@ -72,6 +91,7 @@ namespace Units
 		{
 			Texture = content.Load<Texture2D> (TextureStr);
 			Equipment.LoadContent (content);
+			Inventory.LoadContent (content);
 		}
 
 		public bool Collision (IGridObject collObj)
@@ -219,6 +239,7 @@ namespace Units
 			Recursos = new ManejadorRecursos (this);
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
+			Inventory = new Inventory ();
 			inicializarRecursos ();
 		}
 

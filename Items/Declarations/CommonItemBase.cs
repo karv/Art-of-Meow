@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using System.Diagnostics;
 
 namespace Items.Declarations
 {
@@ -29,7 +29,7 @@ namespace Items.Declarations
 
 		protected virtual void LoadContent (ContentManager manager)
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			_texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		protected virtual void UnloadContent ()
@@ -43,6 +43,11 @@ namespace Items.Declarations
 			IsInitialized = true;
 		}
 
+		public void Draw (SpriteBatch bat, Rectangle rect)
+		{
+			bat.Draw (Texture, rect, Color);
+		}
+
 		#region IComponent implementation
 
 		void Moggle.Controles.IComponent.LoadContent (ContentManager manager)
@@ -54,9 +59,6 @@ namespace Items.Declarations
 		{
 			UnloadContent ();
 		}
-
-		Moggle.Controles.IComponentContainerComponent<IGameComponent> Moggle.Controles.IComponent.Container
-		{ get { return null; } }
 
 		#endregion
 

@@ -21,6 +21,15 @@ namespace Cells.CellObjects
 			CollidePlayer = false;
 		}
 
+		public void UnloadContent ()
+		{
+		}
+
+		public Grid Grid { get; }
+
+		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
+		{ get { return Grid as Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl>; } }
+
 		public void Initialize ()
 		{
 			throw new System.NotImplementedException ();
