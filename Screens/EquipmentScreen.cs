@@ -23,6 +23,7 @@ namespace Screens
 		{
 			base.Initialize ();
 			buildEquipmentList ();
+			rebuildSelection ();
 		}
 
 		void buildEquipmentList ()
