@@ -1,6 +1,6 @@
-﻿using System.Threading;
-using Debugging;
+﻿using System;
 using System.Diagnostics;
+using Debugging;
 
 
 namespace AoM
@@ -15,6 +15,7 @@ namespace AoM
 			Debug.Listeners.Add (lg);
 			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);
 			MyGame.Run ();
+			Environment.Exit (0);
 		}
 	}
 }
