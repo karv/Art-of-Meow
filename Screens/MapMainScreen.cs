@@ -30,17 +30,13 @@ namespace Screens
 		public List<IUnidad> UnidadesArtificial = new List<IUnidad> ();
 		public readonly Point StartingPoint = new Point (50, 50);
 
-		public override void LoadContent ()
+		void generateGridSizes ()
 		{
-			base.LoadContent ();
-			// Calcular tamaño
 			int visCellX = (int)(GetDisplayMode.Width / GameGrid.CellSize.Width);
 			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
 			GameGrid.VisibleCells = new Size (visCellX, visCellY);
 			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
 			GameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
-
-			buildChasers ();
 		}
 
 		void inicializarJugador ()
@@ -100,6 +96,7 @@ namespace Screens
 
 		public override void Initialize ()
 		{
+			generateGridSizes ();
 			inicializarJugador ();
 			buildChasers ();
 
