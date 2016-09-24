@@ -14,6 +14,7 @@ using Units;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Screens
 {
@@ -156,6 +157,13 @@ namespace Screens
 					break;
 			}
 			GameGrid.CenterIfNeeded (Jugador);
+		}
+
+		public override void Draw (GameTime gameTime)
+		{
+			Batch.Begin (SpriteSortMode.BackToFront);
+			EntreBatches (gameTime);
+			Batch.End ();
 		}
 
 		public MapMainScreen (Moggle.Game game)

@@ -79,12 +79,19 @@ namespace Screens
 				TipoOrden = Contenedor<IEquipment>.TipoOrdenEnum.FilaPrimero,
 				TamañoBotón = new MonoGame.Extended.Size (32, 32),
 				Posición = new Point (30, 30),
-				Márgenes = new MargenType
+				MargenExterno = new MargenType
 				{
 					Top = 5,
 					Left = 5,
 					Bot = 5,
 					Right = 5
+				},
+				MargenInterno = new MargenType
+				{
+					Top = 1,
+					Left = 1,
+					Bot = 1,
+					Right = 1
 				},
 				GridSize = new MonoGame.Extended.Size (15, 15),
 				BgColor = Color.LightBlue * 0.5f

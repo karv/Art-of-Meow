@@ -48,6 +48,8 @@ namespace Cells.CellObjects
 
 		public void Draw (SpriteBatch bat, Rectangle area)
 		{
+			if (StringTexture == "brick-wall")
+				System.Console.WriteLine ();
 			bat.Draw (
 				Texture,
 				area, null, UseColor,
