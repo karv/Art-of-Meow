@@ -200,18 +200,33 @@ namespace Cells
 		/// <param name="p">Dirección de celda.</param>
 		public bool IsVisible (Point p)
 		{
-			return CurrentVisibleTopLeft.X <= p.X &&
-			p.X < CurrentVisibleTopLeft.X + VisibleCells.Width &&
-			CurrentVisibleTopLeft.Y <= p.Y &&
-			p.Y < CurrentVisibleTopLeft.Y + VisibleCells.Height;
+			return GetVisivilityBox ().Contains (p);
 		}
+
+		/// <summary>
+		/// Gets a rectangle representing the edges (mod grid) of the view
+		/// </summary>
+		public Rectangle GetVisivilityBox ()
+		{
+			return new Rectangle (CurrentVisibleTopLeft, VisibleCells);
+		}
+
+		static Size _edgeSize = new Size (4, 3);
 
 		public void CenterIfNeeded (IGridObject obj)
 		{
 			if (obj == null)
 				throw new ArgumentNullException ("obj");
-			if (!IsVisible (obj.Location))
+
+			if (!IsInCenter (obj.Location, _edgeSize))
 				TryCenterOn (obj.Location);
+		}
+
+		bool IsInCenter (Point p, Size edge_size)
+		{
+			var edge = GetVisivilityBox ();
+			edge.Inflate (-edge_size.Width, -edge_size.Height);
+			return edge.Contains (p);
 		}
 
 		#endregion
