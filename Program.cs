@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using Debugging;
 
-
 namespace AoM
 {
 	public class Program
@@ -15,6 +14,8 @@ namespace AoM
 			Debug.Listeners.Add (lg);
 			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);
 			MyGame.Run ();
+			lg.WriteInAll ("=== End of log ===");
+			lg.Close ();
 			Environment.Exit (0);
 		}
 	}

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System;
 
 namespace Debugging
 {
@@ -35,6 +35,7 @@ namespace Debugging
 			base.Dispose (disposing);
 		}
 
+
 		public override void Close ()
 		{
 			foreach (var str in Streams)
@@ -53,6 +54,17 @@ namespace Debugging
 		string completeMessage (string message)
 		{
 			return IncluirFecha ? string.Format ("{0:T}\t{1}", DateTime.Now, message) : message;
+		}
+
+		public void WriteInAll (string message)
+		{
+			foreach (var x in Streams.Values)
+				x.Write (message);
+		}
+
+		public void WriteLineInAll (string message)
+		{
+			WriteInAll (message + "\n");
 		}
 
 		public override void Write (string message)
