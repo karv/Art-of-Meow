@@ -151,46 +151,10 @@ namespace Screens
 						scr.Ejecutar ();
 					}
 					break;
-			/*
-				case Microsoft.Xna.Framework.Input.Keys.Down:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad2:
-					actionDir = MovementDirectionEnum.Down;
+				case Keys.C:
+					GameGrid.TryCenterOn (Jugador.Location);
 					break;
-				case Microsoft.Xna.Framework.Input.Keys.Right:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad6:
-					actionDir = MovementDirectionEnum.Right;
-					break;
-				case Microsoft.Xna.Framework.Input.Keys.Up:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad8:
-					actionDir = MovementDirectionEnum.Up;
-					break;
-				case Microsoft.Xna.Framework.Input.Keys.Left:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad4:
-					actionDir = MovementDirectionEnum.Left;
-					break;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad1:
-					actionDir = MovementDirectionEnum.DownLeft;
-					break;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad3:
-					actionDir = MovementDirectionEnum.DownRight;
-					break;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad7:
-					actionDir = MovementDirectionEnum.UpLeft;
-					break;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad9:
-					actionDir = MovementDirectionEnum.UpRight;
-					break;
-*/
 			}
-
-			/*
-			if (actionDir != MovementDirectionEnum.NoMov)
-			{
-				endTurn = Jugador.MoveOrMelee (actionDir);
-				shouldTryRecenter = endTurn;
-			}
-			*/
-
 			GameGrid.CenterIfNeeded (Jugador);
 		}
 
