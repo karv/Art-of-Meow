@@ -94,7 +94,8 @@ namespace Screens
 					Right = 1
 				},
 				GridSize = new MonoGame.Extended.Size (15, 15),
-				BgColor = Color.LightBlue * 0.5f
+				BgColor = Color.LightBlue * 0.5f,
+				SelectionEnabled = true
 			};
 
 			AddComponent (Contenedor);
