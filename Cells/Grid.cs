@@ -161,13 +161,7 @@ namespace Cells
 
 		public override void Update (GameTime gameTime)
 		{
-			var time = TimeManager.ExecuteNext ();
-			updateUnits (time);
-		}
-
-		void updateUnits (float gameTime)
-		{
-			// No se debe invocar x.PassTime, TimeManager ya invocó esto.
+			TimeManager.ExecuteNext ();
 		}
 
 		/// <summary>
