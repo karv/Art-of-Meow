@@ -30,9 +30,8 @@ namespace Cells.CellObjects
 		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
 		{ get { return Grid as Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl>; } }
 
-		public void Initialize ()
+		public virtual void Initialize ()
 		{
-			throw new System.NotImplementedException ();
 		}
 
 		public bool CollidePlayer { get; set; }

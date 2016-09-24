@@ -30,7 +30,6 @@ namespace Cells.CellObjects
 
 		public void Initialize ()
 		{
-			throw new System.NotImplementedException ();
 		}
 
 		public Color? UseColor { get { return Color.White; } }

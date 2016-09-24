@@ -170,6 +170,17 @@ namespace Cells
 			// No se debe invocar x.PassTime, TimeManager ya invocó esto.
 		}
 
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		/// No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
+		public override void Initialize ()
+		{
+			base.Initialize ();
+			foreach (var x in _objects)
+				x.Initialize ();
+		}
+
 		#region Cámara
 
 		/// <summary>

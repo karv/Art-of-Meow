@@ -50,7 +50,6 @@ namespace Units
 
 		public void Initialize ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		float _nextActionTime;
