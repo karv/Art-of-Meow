@@ -46,7 +46,7 @@ namespace Cells.CellObjects
 			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
-		public void Draw (Rectangle area, SpriteBatch bat)
+		public void Draw (SpriteBatch bat, Rectangle area)
 		{
 			bat.Draw (
 				Texture,

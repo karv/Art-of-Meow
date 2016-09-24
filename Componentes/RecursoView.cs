@@ -15,7 +15,7 @@ namespace Componentes
 			: base (cont)
 		{
 			Recursos = recs;
-			Iconos = new List<IRelDraw> (Recursos.Enumerar ().OfType<IRelDraw> ());
+			Iconos = new List<IDibujable> (Recursos.Enumerar ().OfType<IDibujable> ());
 			IconSize = new MonoGame.Extended.Size (64, 12);
 			TopLeft = new Point (3, 3);
 		}

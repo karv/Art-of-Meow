@@ -1,12 +1,11 @@
 using System;
-using Componentes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 
 namespace Cells.CellObjects
 {
-	public interface IGridObject : IControl, IDisposable, IRelDraw
+	public interface IGridObject : IControl, IDisposable, IDibujable
 	{
 		/// <summary>
 		/// Gets the cell-based localization.

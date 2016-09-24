@@ -3,7 +3,6 @@ using System.Diagnostics;
 using AoM;
 using Cells;
 using Cells.CellObjects;
-using Componentes;
 using Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -12,10 +11,11 @@ using Units.Buffs;
 using Units.Equipment;
 using Units.Inteligencia;
 using Units.Recursos;
+using Moggle.Controles;
 
 namespace Units
 {
-	public class Unidad : IUnidad, IRelDraw
+	public class Unidad : IUnidad, IDibujable
 	{
 		public int Equipo { get; set; }
 
@@ -112,7 +112,7 @@ namespace Units
 			get { return RecursoHP.RelativeHp; }
 		}
 
-		public void Draw (Rectangle area, SpriteBatch bat)
+		public void Draw (SpriteBatch bat, Rectangle area)
 		{
 			if (Habilitado)
 				ForceDraw (area, bat);

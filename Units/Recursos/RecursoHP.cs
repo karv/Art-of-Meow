@@ -1,18 +1,17 @@
 ﻿using System;
 using AoM;
-using Componentes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 
 namespace Units.Recursos
 {
-	public class RecursoHP : Recurso, IRelDraw
+	public class RecursoHP : Recurso, IDibujable
 	{
 		public readonly Color BgColor = Color.Black * 0.4f;
 		public readonly Color FillColor = Color.Red;
 
-		public void Draw (Rectangle rect,
-		                  SpriteBatch batch)
+		public void Draw (SpriteBatch batch, Rectangle rect)
 		{
 			var text = Juego.Textures.SolidTexture;
 			batch.Draw (text, rect, BgColor);

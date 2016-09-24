@@ -36,7 +36,7 @@ namespace Cells.CellObjects
 
 		public float Depth { get { return Depths.Background; } }
 
-		public void Draw (Rectangle area, SpriteBatch bat)
+		public void Draw (SpriteBatch bat, Rectangle area)
 		{
 			bat.Draw (
 				Texture,

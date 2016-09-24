@@ -21,7 +21,7 @@ namespace Componentes
 		/// Devuelve la lista de iconos
 		/// </summary>
 		/// <value>The iconos.</value>
-		public List<IRelDraw> Iconos { get; protected set; }
+		public List<IDibujable> Iconos { get; protected set; }
 
 		/// <summary>
 		/// Devuelve o establece el tamaño de cada icono
@@ -55,7 +55,7 @@ namespace Componentes
 			foreach (var ic in Iconos)
 			{
 				var outputRect = new Rectangle (iconTopLeft, IconSize);
-				ic.Draw (outputRect, Screen.Batch);
+				ic.Draw (Screen.Batch, outputRect);
 				iconTopLeft += new Point (0, IconSize.Height + VSpace);
 			}
 			Screen.Batch.End ();
@@ -71,7 +71,7 @@ namespace Componentes
 		public ListaIconos (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{
-			Iconos = new List<IRelDraw> ();
+			Iconos = new List<IDibujable> ();
 			IconSize = new Size (16, 16);
 		}
 	}

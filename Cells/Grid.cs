@@ -142,7 +142,7 @@ namespace Cells
 					var rectOutput = new Rectangle (
 						                 CellSpotLocation (x.Location),
 						                 (Size)CellSize);
-					x.Draw (rectOutput, bat);
+					x.Draw (bat, rectOutput);
 				}
 			}
 			bat.End ();

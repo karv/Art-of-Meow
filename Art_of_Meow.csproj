@@ -97,7 +97,6 @@
     <Compile Include="Units\Buffs\PoisonBuff.cs" />
     <Compile Include="Componentes\RecursoView.cs" />
     <Compile Include="Componentes\ListaIconos.cs" />
-    <Compile Include="Componentes\IRelDraw.cs" />
     <Compile Include="Cells\CellObjects\IMovementGridObject.cs" />
     <Compile Include="Units\Buffs\IStatsBuff.cs" />
     <Compile Include="Units\Buffs\StatsBuff.cs" />
