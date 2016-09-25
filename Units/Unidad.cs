@@ -17,7 +17,7 @@ namespace Units
 {
 	public class Unidad : IUnidad, IDibujable
 	{
-		string _nombre { get; }
+		public string Nombre { get; }
 
 		public int Equipo { get; set; }
 
@@ -231,18 +231,13 @@ namespace Units
 
 		public override string ToString ()
 		{
-			return string.Format (
-				"[Unidad: NextActionTime={0}, Habilitado={1}, Location={2}, Inteligencia={3}]",
-				NextActionTime,
-				Habilitado,
-				Location,
-				Inteligencia);
+			return string.Format ("[Unidad: {0}", Nombre);
 		}
 
 
 		public Unidad (string texture = TextureType)
 		{
-			_nombre = getNextName ();
+			Nombre = getNextName ();
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);
 			Equipment = new EquipmentManager (this);
