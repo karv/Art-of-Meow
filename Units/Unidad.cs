@@ -17,6 +17,8 @@ namespace Units
 {
 	public class Unidad : IUnidad, IDibujable
 	{
+		string _nombre { get; }
+
 		public int Equipo { get; set; }
 
 		public void UnloadContent ()
@@ -229,11 +231,18 @@ namespace Units
 
 		public override string ToString ()
 		{
-			return string.Format ("IA: {0}", Inteligencia);
+			return string.Format (
+				"[Unidad: NextActionTime={0}, Habilitado={1}, Location={2}, Inteligencia={3}]",
+				NextActionTime,
+				Habilitado,
+				Location,
+				Inteligencia);
 		}
+
 
 		public Unidad (string texture = TextureType)
 		{
+			_nombre = getNextName ();
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);
 			Equipment = new EquipmentManager (this);
@@ -279,6 +288,13 @@ namespace Units
 				ConstantesRecursos.Fuerza,
 				this,
 				ConstantesRecursos.DañoMelee));
+		}
+
+		static int nextId = 0;
+
+		static string getNextName ()
+		{
+			return "Unidad " + nextId++;
 		}
 	}
 }
