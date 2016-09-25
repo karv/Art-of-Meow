@@ -43,7 +43,10 @@ namespace Units.Inteligencia
 
 		public override string ToString ()
 		{
-			return string.Format ("[ChaseIntelligence: Yo={0}, Target={1}]", Yo, Target);
+			return string.Format (
+				"[ChaseIntelligence: Yo={0}, Target={1}]",
+				Yo.Nombre,
+				Target.Nombre);
 		}
 
 		public ChaseIntelligence (Unidad yo)
