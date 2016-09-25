@@ -13,7 +13,22 @@ namespace Units
 
 		public IUnidad Unidad { get; }
 
-		public float ExperienciaAcumulada { get; set; }
+		float _expAcum;
+
+		public float ExperienciaAcumulada
+		{
+			get
+			{
+				return _expAcum;
+			}
+			set
+			{
+				
+				_expAcum = value;
+				if (Autoflush)
+					Flush ();
+			}
+		}
 
 		void _normalizeDistDict ()
 		{
@@ -28,12 +43,15 @@ namespace Units
 				_distribuciónExp [x] /= suma;
 		}
 
+		public bool Autoflush = true;
+
 		public void Flush ()
 		{
 			_normalizeDistDict ();
 			foreach (var x in _distribuciónExp)
 				x.Key.ReceiveExperience (ExperienciaAcumulada * x.Value);
 			_distribuciónExp.Clear ();
+			ExperienciaAcumulada = 0;
 		}
 
 		public void AddAssignation (IParámetroRecurso par, float cant)
@@ -49,7 +67,6 @@ namespace Units
 			foreach (var x in rec.EnumerateParameters ())
 				AddAssignation (x, cant);
 		}
-
 
 		public ExpManager (IUnidad unid)
 		{
