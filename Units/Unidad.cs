@@ -42,6 +42,12 @@ namespace Units
 			Inteligencia.DoAction ();
 		}
 
+		public float GetExperienceValue ()
+		{
+			// TODO: calcularlo bien.
+			return 1;
+		}
+
 		public void PassTime (float time)
 		{
 			NextActionTime -= time;
@@ -181,6 +187,18 @@ namespace Units
 				dex.Valor *= 0.8f;
 				Exp.AddAssignation (dex, 1);
 				MeleeDamage (target);
+				if (!target.Habilitado)
+				{
+					var extraExp = target.GetExperienceValue ();
+					Exp.ExperienciaAcumulada += extraExp;
+					Debug.WriteLine (
+						string.Format (
+							"{0} recibe exp {1} por asesinar a {2}",
+							this,
+							extraExp,
+							target),
+						"Experience");
+				}
 			}
 			else
 			{

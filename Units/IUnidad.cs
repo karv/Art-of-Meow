@@ -8,7 +8,7 @@ using Units.Recursos;
 
 namespace Units
 {
-	public interface IUnidad : IUpdateGridObject
+	public interface IUnidad : IUpdateGridObject, IExpGiver
 	{
 		Grid MapGrid { get; }
 

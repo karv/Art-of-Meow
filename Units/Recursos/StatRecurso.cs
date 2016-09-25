@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Units.Recursos
 {
@@ -71,14 +72,16 @@ namespace Units.Recursos
 
 		readonly float [] currMaxNormal = new float[3];
 
+		IParámetroRecurso ValorP { get; }
+
 		/// <summary>
 		/// Valor actual del recurso.
 		/// </summary>
 		/// <value>The valor.</value>
 		public override float Valor
 		{ 
-			get { return currMaxNormal [0]; } 
-			set	{ currMaxNormal [0] = Math.Min (value, Max); }
+			get { return ValorP.Valor; } 
+			set { ValorP.Valor = Math.Min (value, Max); }
 		}
 
 		/// <summary>
@@ -125,7 +128,7 @@ namespace Units.Recursos
 
 		public override string ToString ()
 		{
-			return string.Format ("{0}//{1}//{2}", Valor, Max, Base);
+			return string.Format ("{0}/{1}/{2}", Valor, Max, Base);
 		}
 
 		/// <param name="nombreÚnico">Nombre único.</param>
@@ -134,6 +137,35 @@ namespace Units.Recursos
 			: base (unidad)
 		{
 			NombreÚnico = nombreÚnico;
+			ValorP = new ValorParám (this, "valor");
+			Parámetros.Add (ValorP);
+		}
+
+		public class ValorParám : IParámetroRecurso
+		{
+			public void ReceiveExperience (float exp)
+			{
+				Valor += exp;
+				Debug.WriteLine (
+					string.Format ("{0} recibe exp {1}.\nNuevo val: {2}", this, exp, Valor),
+					"Experiencia");
+			}
+
+			public void Update (float gameTime)
+			{
+			}
+
+			public IRecurso Recurso { get; }
+
+			public string NombreÚnico { get; }
+
+			public float Valor { get; set; }
+
+			public ValorParám (IRecurso rec, string nombre)
+			{
+				Recurso = rec;
+				NombreÚnico = nombre;
+			}
 		}
 	}
 }

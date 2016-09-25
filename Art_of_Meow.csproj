@@ -113,6 +113,7 @@
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
     <Compile Include="Units\ExpManager.cs" />
+    <Compile Include="Units\IExpGiver.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

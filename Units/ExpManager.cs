@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Units.Recursos;
+using System.Linq;
 
 namespace Units
 {
@@ -39,7 +40,7 @@ namespace Units
 			if (suma == 0)
 				throw new Exception ("Cannot normalize vector zero.");
 
-			foreach (var x in _distribuciónExp.Keys)
+			foreach (var x in _distribuciónExp.Keys.ToArray ())
 				_distribuciónExp [x] /= suma;
 		}
 
@@ -47,6 +48,8 @@ namespace Units
 
 		public void Flush ()
 		{
+			if (ExperienciaAcumulada == 0)
+				return;
 			_normalizeDistDict ();
 			foreach (var x in _distribuciónExp)
 				x.Key.ReceiveExperience (ExperienciaAcumulada * x.Value);
