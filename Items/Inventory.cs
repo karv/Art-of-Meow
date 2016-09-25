@@ -91,6 +91,11 @@ namespace Items
 			return Items.ToLookup (i => i.Nombre);
 		}
 
+		public override string ToString ()
+		{
+			return string.Format ("[Inventory:\n{0}]", Items);
+		}
+
 		public Inventory ()
 		{
 			Items = new List<IItem> ();
