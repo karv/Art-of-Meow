@@ -28,7 +28,7 @@ namespace Units
 				_distribuciónExp [x] /= suma;
 		}
 
-		public void AssignExperience ()
+		public void Flush ()
 		{
 			_normalizeDistDict ();
 			foreach (var x in _distribuciónExp)
