@@ -179,6 +179,7 @@ namespace Units
 				NextActionTime = calcularTiempoMelee ();
 				var dex = Recursos.GetRecurso (ConstantesRecursos.Destreza) as StatRecurso;
 				dex.Valor *= 0.8f;
+				Exp.AddAssignation (dex, 1);
 				MeleeDamage (target);
 			}
 			else
