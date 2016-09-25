@@ -115,6 +115,15 @@ namespace Units.Buffs
 				buff.Update (gameTime);
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[BuffManager: HookedOn={0}, Buffs={1}, Count={2}]",
+				HookedOn,
+				Buffs,
+				Count);
+		}
+
 		/// <summary>
 		/// </summary>
 		/// <param name="unidad">Unidad.</param>
