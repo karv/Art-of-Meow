@@ -42,8 +42,14 @@ namespace Units
 				_distribuciónExp [par] += cant;
 			else
 				_distribuciónExp.Add (par, cant);
-				
 		}
+
+		public void AddAssignation (IRecurso rec, float cant)
+		{
+			foreach (var x in rec.EnumerateParameters ())
+				AddAssignation (x, cant);
+		}
+
 
 		public ExpManager (IUnidad unid)
 		{

@@ -16,6 +16,11 @@ namespace Units.Recursos
 			throw new Exception ("Cannot get value of this kind of resource.");
 		}
 
+		System.Collections.Generic.IEnumerable<IParámetroRecurso> IRecurso.EnumerateParameters ()
+		{
+			throw new Exception ("Cannot get value of this kind of resource.");
+		}
+
 		public IRecurso Recurso { get { return this; } }
 
 		public string NombreCorto { get; set; }

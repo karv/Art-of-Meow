@@ -7,6 +7,11 @@ namespace Units.Recursos
 	{
 		protected List<IParámetroRecurso> Parámetros;
 
+		public IEnumerable<IParámetroRecurso> EnumerateParameters ()
+		{
+			return Parámetros;
+		}
+
 		#region IRecurso implementation
 
 		public IParámetroRecurso ValorParámetro (string paramName)

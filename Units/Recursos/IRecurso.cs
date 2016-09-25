@@ -1,5 +1,6 @@
 ﻿using Units;
 using AoM;
+using System.Collections.Generic;
 
 namespace Units.Recursos
 {
@@ -34,6 +35,8 @@ namespace Units.Recursos
 		/// <returns>The parámetro.</returns>
 		/// <param name="paramName">Parameter name.</param>
 		IParámetroRecurso ValorParámetro (string paramName);
+
+		IEnumerable<IParámetroRecurso> EnumerateParameters ();
 
 		/// <summary>
 		/// Unidad que posee este recurso.

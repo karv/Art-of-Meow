@@ -183,6 +183,7 @@ namespace Units
 			}
 			else
 			{
+				Exp.AddAssignation (Recursos.GetRecurso (ConstantesRecursos.Velocidad), 1);
 				NextActionTime = calcularTiempoMov (desde, Location);
 			}
 			return true;
