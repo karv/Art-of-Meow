@@ -64,5 +64,16 @@ namespace Cells.CellObjects
 		}
 
 		public Point Location { get; set; }
+
+		public override string ToString ()
+		{
+			return string.Format (
+				"[GridObject: StringTexture={0}, UseColor={1}, CollidePlayer={2}, Location={3}]",
+				StringTexture,
+				UseColor,
+				CollidePlayer,
+				Location);
+		}
+		
 	}
 }

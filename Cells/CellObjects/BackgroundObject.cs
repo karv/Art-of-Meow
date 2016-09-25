@@ -53,6 +53,16 @@ namespace Cells.CellObjects
 			Texture = null;
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[BackgroundObject: StringTexture={0}, Color={1}, Location={2}]",
+				StringTexture,
+				UseColor,
+				Location);
+		}
+
+
 		public BackgroundObject (Point loc,
 		                         string texture, 
 		                         Grid grid)

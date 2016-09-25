@@ -271,6 +271,19 @@ namespace Cells
 
 		#endregion
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[Grid: _objects={0}, CellSize={1}, CurrentVisibleTopLeft={2}, ControlTopLeft={3}, VisibleCells={4}, GridSize={5}, ControlSize={6}]",
+				_objects,
+				CellSize,
+				CurrentVisibleTopLeft,
+				ControlTopLeft,
+				VisibleCells,
+				GridSize,
+				ControlSize);
+		}
+
 		public Grid (int xSize, int ySize, Moggle.Screens.IScreen scr)
 			: base (scr)
 		{
