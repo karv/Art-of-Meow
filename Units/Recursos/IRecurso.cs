@@ -57,5 +57,7 @@ namespace Units.Recursos
 		/// Valor actual del recurso.
 		/// </summary>
 		float Valor { get; set; }
+
+		void ReceiveExperience (float exp);
 	}
 }
