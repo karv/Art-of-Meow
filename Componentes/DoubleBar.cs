@@ -93,6 +93,15 @@ namespace Componentes
 			return Bounds;
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[DoubleBar: MaxValue={0}, CurrValue={1}, RelativeValue={2}]",
+				MaxValue,
+				CurrValue,
+				RelativeValue);
+		}
+
 		public DoubleBar (IScreen scr)
 			: base (scr)
 		{

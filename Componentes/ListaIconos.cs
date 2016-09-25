@@ -68,6 +68,14 @@ namespace Componentes
 		{
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[ListaIconos: TopLeft={0}, Iconos={1}]",
+				TopLeft,
+				Iconos);
+		}
+
 		public ListaIconos (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{
