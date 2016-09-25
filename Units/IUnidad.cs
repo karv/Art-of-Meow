@@ -21,6 +21,8 @@ namespace Units
 
 		EquipmentManager Equipment { get; }
 
+		ExpManager Exp { get; }
+
 		BuffManager Buffs { get; }
 
 		bool Habilitado { get; }

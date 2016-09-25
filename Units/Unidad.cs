@@ -29,7 +29,7 @@ namespace Units
 
 		public Grid Grid { get; }
 
-		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
+		public IComponentContainerComponent<IControl> Container
 		{
 			get
 			{
@@ -73,6 +73,8 @@ namespace Units
 		public BuffManager Buffs { get; }
 
 		public EquipmentManager Equipment { get; }
+
+		public ExpManager Exp { get; }
 
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
@@ -238,6 +240,7 @@ namespace Units
 			Recursos = new ManejadorRecursos (this);
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
+			Exp = new ExpManager (this);
 			Inventory = new Inventory ();
 			inicializarRecursos ();
 		}

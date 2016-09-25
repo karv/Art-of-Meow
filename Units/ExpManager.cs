@@ -24,8 +24,8 @@ namespace Units
 			if (suma == 0)
 				throw new Exception ("Cannot normalize vector zero.");
 
-			foreach (var x in _distribuciónExp)
-				x.Value /= suma;
+			foreach (var x in _distribuciónExp.Keys)
+				_distribuciónExp [x] /= suma;
 		}
 
 		public void AssignExperience ()
@@ -45,8 +45,9 @@ namespace Units
 				
 		}
 
-		public ExpManager ()
+		public ExpManager (IUnidad unid)
 		{
+			Unidad = unid;
 			_distribuciónExp = new Dictionary<IParámetroRecurso, float> ();
 		}
 	}
