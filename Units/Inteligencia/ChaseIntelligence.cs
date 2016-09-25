@@ -4,7 +4,7 @@ using Cells.CellObjects;
 
 namespace Units.Inteligencia
 {
-	public class ChaseIntelligence  : IIntelligence
+	public class ChaseIntelligence : IIntelligence
 	{
 		public Grid MapGrid { get { return Yo.MapGrid; } }
 
@@ -39,6 +39,11 @@ namespace Units.Inteligencia
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
 			Yo.MoveOrMelee (dir);
+		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[ChaseIntelligence: Yo={0}, Target={1}]", Yo, Target);
 		}
 
 		public ChaseIntelligence (Unidad yo)
