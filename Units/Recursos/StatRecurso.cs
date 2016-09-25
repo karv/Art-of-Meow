@@ -161,6 +161,15 @@ namespace Units.Recursos
 
 			public float Valor { get; set; }
 
+			public override string ToString ()
+			{
+				return string.Format (
+					"[ValorParám: Recurso={0}, NombreÚnico={1}, Valor={2}]",
+					Recurso,
+					NombreÚnico,
+					Valor);
+			}
+
 			public ValorParám (IRecurso rec, string nombre)
 			{
 				Recurso = rec;
