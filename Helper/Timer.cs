@@ -77,6 +77,15 @@ namespace Helper
 			ConteoCero?.Invoke (this, EventArgs.Empty);
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[Timer: ConteoInicial={0}, Restante={1}, Habilitado={2}]",
+				ConteoInicial,
+				Restante,
+				Habilitado);
+		}
+
 		/// <summary>
 		/// Ocurre cada vez que se llega a cero.
 		/// </summary>

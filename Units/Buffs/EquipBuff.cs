@@ -81,6 +81,16 @@ namespace Units.Buffs
 
 		#endregion
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[EquipBuff: equipment={0}, BuffManager={1}, RecManager={2}, Nombre={3}]",
+				equipment,
+				BuffManager,
+				RecManager,
+				Nombre);
+		}
+
 		public EquipBuff (ICollection<IEquipment> eqs)
 		{
 			equipment = eqs;

@@ -22,6 +22,15 @@ namespace Units.Buffs
 		{
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[Buff: Nombre={0}, Unidad={1}]",
+				Nombre,
+				Manager.HookedOn);
+		}
+
+
 		BuffManager IBuff.Manager
 		{
 			get { return Manager; }

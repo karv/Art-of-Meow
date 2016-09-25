@@ -55,6 +55,11 @@ namespace Units.Buffs
 				deltas.Add (resName, delta);
 		}
 
+		public override string ToString ()
+		{
+			return base.ToString () + string.Format ("[StatsBuff: deltas={0}]", deltas);
+		}
+
 		/// <summary>
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>

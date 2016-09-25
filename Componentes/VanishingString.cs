@@ -159,6 +159,15 @@ namespace Componentes
 			calcularBounds ();
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[VanishingString: _texto={0}, Restante={1}, TiempoInicial={2}]",
+				_texto,
+				Restante,
+				TiempoInicial);
+		}
+
 		public event EventHandler AlTerminar;
 	}
 }
