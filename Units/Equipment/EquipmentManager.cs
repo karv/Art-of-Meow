@@ -91,6 +91,15 @@ namespace Units.Equipment
 
 		#endregion
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[EquipmentManager: Owner={0}, EquipBuff={1}, equipment={2}]",
+				Owner,
+				EquipBuff,
+				equipment);
+		}
+
 		public EquipmentManager (IUnidad owner)
 		{
 			Owner = owner;
