@@ -90,6 +90,11 @@ namespace Items.Declarations
 
 		#endregion
 
+		public override string ToString ()
+		{
+			return string.Format ("[CommonItemBase: {0}]", Nombre);
+		}
+
 		protected CommonItemBase (string nombre)
 		{
 			Nombre = nombre;

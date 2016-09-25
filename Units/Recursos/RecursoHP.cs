@@ -81,7 +81,11 @@ namespace Units.Recursos
 
 		public override string ToString ()
 		{
-			return string.Format ("{0}: {1}/{2}", NombreCorto, Valor, Max);
+			return base.ToString () + string.Format (
+				"{0}: {1}/{2}",
+				NombreCorto,
+				Valor,
+				Max);
 		}
 
 		public RecursoHP (IUnidad unidad)

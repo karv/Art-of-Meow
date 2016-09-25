@@ -64,6 +64,11 @@ namespace Cells
 					Objects.Add (x);
 		}
 
+		public override string ToString ()
+		{
+			return string.Format ("[Cell: Objects={0}]", Objects);
+		}
+
 		public Cell (IEnumerable<IGridObject> objs)
 		{
 			Objects = new List<IGridObject> (objs);

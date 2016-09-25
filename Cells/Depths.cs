@@ -8,5 +8,4 @@ namespace Cells
 		public const float Foreground = 0.1f;
 		public const float Unidad = 0;
 	}
-	
 }

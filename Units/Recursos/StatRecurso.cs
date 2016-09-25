@@ -128,7 +128,7 @@ namespace Units.Recursos
 
 		public override string ToString ()
 		{
-			return string.Format ("{0}/{1}/{2}", Valor, Max, Base);
+			return base.ToString () + string.Format ("{0}/{1}/{2}", Valor, Max, Base);
 		}
 
 		/// <param name="nombreÚnico">Nombre único.</param>

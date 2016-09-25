@@ -10,6 +10,11 @@ namespace Componentes
 	{
 		ManejadorRecursos Recursos { get; }
 
+		public override string ToString ()
+		{
+			return string.Format ("[RecursoView: Recursos={0}]", Recursos);
+		}
+
 		public RecursoView (IComponentContainerComponent<IControl> cont,
 		                    ManejadorRecursos recs)
 			: base (cont)

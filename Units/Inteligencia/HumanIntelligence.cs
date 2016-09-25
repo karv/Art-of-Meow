@@ -64,6 +64,11 @@ namespace Units.Inteligencia
 			return false;
 		}
 
+		public override string ToString ()
+		{
+			return string.Format ("[HumanIntelligence: Yo={0}]", Yo);
+		}
+
 		public HumanIntelligence (Unidad yo)
 		{
 			Yo = yo;

@@ -33,6 +33,16 @@ namespace Units.Recursos
 
 		public IUnidad Unidad { get; }
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[RecursoEstático: Recurso={0}, NombreÚnico={1}, Valor={2}, Unidad={3}]",
+				Recurso,
+				NombreÚnico,
+				Valor,
+				Unidad);
+		}
+
 		public RecursoEstático (string nombre, IUnidad unidad)
 		{
 			NombreÚnico = nombre;
