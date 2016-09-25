@@ -20,6 +20,15 @@ namespace Items.Declarations.Equipment
 			Owner?.UnequipItem (this);
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[Equipment: Slot={0}, Owner={1}, Nombre={2}]",
+				Slot,
+				Owner,
+				Nombre);
+		}
+
 		protected Equipment (string nombre)
 			: base (nombre)
 		{
