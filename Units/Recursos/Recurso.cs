@@ -45,6 +45,16 @@ namespace Units.Recursos
 
 		#endregion
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[Recurso: Parámetros={0}, Valor={1}, NombreÚnico={2}, Unidad={3}]",
+				Parámetros,
+				Valor,
+				GetUniqueName (),
+				Unidad);
+		}
+
 		protected Recurso (IUnidad unidad)
 		{
 			Unidad = unidad;

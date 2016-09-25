@@ -111,6 +111,14 @@ namespace Units.Recursos
 			return _data.Values;
 		}
 
+		public override string ToString ()
+		{
+			return string.Format (
+				"[ManejadorRecursos: _data={0}, Unidad={1}]",
+				_data,
+				Unidad);
+		}
+
 		/// <summary>
 		/// </summary>
 		public ManejadorRecursos (IUnidad unid)

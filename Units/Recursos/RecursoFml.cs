@@ -69,6 +69,13 @@ namespace Units.Recursos
 
 		#endregion
 
+		public override string ToString ()
+		{
+			return base.ToString () + string.Format (
+				"[RecursoFml: Fórmula={0}]",
+				Fórmula);
+		}
+
 		/// <summary>
 		/// </summary>
 		/// <param name="fml">Fórmula del valor</param>
