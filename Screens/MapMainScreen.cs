@@ -24,6 +24,8 @@ namespace Screens
 
 		public RecursoView _recursoView { get; private set; }
 
+		public HookDisplay _playerHooks { get; private set; }
+
 		public const int NumChasers = 5;
 
 		public Grid GameGrid;
@@ -76,6 +78,21 @@ namespace Screens
 			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
+			_playerHooks = new HookDisplay (this, Jugador)
+			{
+				MargenInterno = new Moggle.Controles.MargenType
+				{
+					Top = 1,
+					Bot = 1,
+					Left = 1,
+					Right = 1
+				},
+				TamañoBotón = new Size (16, 16),
+				TipoOrden = Moggle.Controles.Contenedor<Moggle.Controles.IDibujable>.TipoOrdenEnum.ColumnaPrimero,
+				Posición = new Point (0, 100), //TODO
+				GridSize = new Size (10, 2),
+				BgColor = Color.Aqua
+			};
 		}
 
 		void buildChasers ()
