@@ -94,8 +94,7 @@ namespace Units.Buffs
 		/// <summary>
 		/// Enumera los buffs de un cierto tipo
 		/// </summary>
-		public IEnumerable<T> BuffOfType<T> () 
-			where T : IBuff
+		public IEnumerable<T> BuffOfType<T> ()
 		{
 			return Buffs.OfType<T> ();
 		}
