@@ -112,6 +112,7 @@
     <Compile Include="Units\Recursos\Recurso.cs" />
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
+    <Compile Include="Items\Declarations\Equipment\GenericArmor.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
