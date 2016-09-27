@@ -5,6 +5,7 @@ using Items;
 using Units.Buffs;
 using Units.Equipment;
 using Units.Recursos;
+using Units.Skills;
 
 namespace Units
 {
@@ -22,6 +23,8 @@ namespace Units
 		EquipmentManager Equipment { get; }
 
 		BuffManager Buffs { get; }
+
+		SkillManager Skills { get; }
 
 		bool Habilitado { get; }
 
