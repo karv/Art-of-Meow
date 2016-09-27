@@ -10,7 +10,8 @@ namespace Items
 	{
 		Sword,
 		Potion,
-		Leather_Armor
+		Leather_Armor,
+		Leather_Cap
 	}
 
 	public static class ItemFactory
@@ -28,6 +29,13 @@ namespace Items
 					break;
 				case ItemType.Leather_Armor:
 					ret = new GenericArmor ("Leather Armor", EquipSlot.Body)
+					{
+						Color = Color.OrangeRed,
+						TextureNameGeneric = "" // TODO
+					};
+					break;
+				case ItemType.Leather_Cap:
+					ret = new GenericArmor ("Leather Cap", EquipSlot.Head)
 					{
 						Color = Color.OrangeRed,
 						TextureNameGeneric = "" // TODO
