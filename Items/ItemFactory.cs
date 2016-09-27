@@ -3,9 +3,11 @@ using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
 using Microsoft.Xna.Framework;
 
-
 namespace Items
 {
+	/// <summary>
+	/// Tipo de objeto
+	/// </summary>
 	public enum ItemType
 	{
 		Sword,
@@ -14,8 +16,14 @@ namespace Items
 		Leather_Cap
 	}
 
+	/// <summary>
+	/// It cab create new items from their type
+	/// </summary>
 	public static class ItemFactory
 	{
+		/// <summary>
+		/// Creates an item
+		/// </summary>
 		public static IItem CreateItem (ItemType type)
 		{
 			IItem ret;
