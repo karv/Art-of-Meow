@@ -1,6 +1,7 @@
 ﻿using System;
 using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
+using Microsoft.Xna.Framework;
 
 
 namespace Items
@@ -8,7 +9,8 @@ namespace Items
 	public enum ItemType
 	{
 		Sword,
-		Potion
+		Potion,
+		Leather_Armor
 	}
 
 	public static class ItemFactory
@@ -23,6 +25,13 @@ namespace Items
 					break;
 				case ItemType.Potion:
 					ret = new HealingPotion ();
+					break;
+				case ItemType.Leather_Armor:
+					ret = new GenericArmor ("Leather Armor", EquipSlot.Body)
+					{
+						Color = Color.OrangeRed,
+						TextureNameGeneric = "" // TODO
+					};
 					break;
 				default:
 					throw new Exception ();
