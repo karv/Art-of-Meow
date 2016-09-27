@@ -112,6 +112,8 @@
     <Compile Include="Units\Recursos\Recurso.cs" />
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
+    <Compile Include="Screens\InvokeSkillListScreen.cs" />
+    <Compile Include="Units\ISkill.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

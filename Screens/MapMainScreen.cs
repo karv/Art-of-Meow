@@ -148,7 +148,7 @@ namespace Screens
 				case Keys.I:
 					if (Jugador.Inventory.Any ())
 					{
-						var scr = new EquipmentScreen (this, Jugador);
+						var scr = new InvokeSkillListScreen (this, Jugador);
 						scr.Ejecutar ();
 					}
 					break;
