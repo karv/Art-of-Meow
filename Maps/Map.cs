@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using OpenTK.Graphics.ES20;
 
 namespace Maps
 {
@@ -127,10 +128,12 @@ namespace Maps
 		}
 
 		public Map (string fileName)
+			: this (new StreamReader (fileName))
 		{
-			_r = new Random ();
+		}
 
-			var reader = new StreamReader (fileName);
+		public Map (StreamReader reader)
+		{
 			var sizeX = int.Parse (reader.ReadLine ());
 			var sizeY = int.Parse (reader.ReadLine ());
 
