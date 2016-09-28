@@ -76,6 +76,8 @@ namespace Units
 
 		public EquipmentManager Equipment { get; }
 
+		public Units.Skills.SkillManager Skills { get; }
+
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
 		public RecursoHP RecursoHP { get; private set; }
@@ -243,6 +245,7 @@ namespace Units
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
 			Inventory = new Inventory ();
+			Skills = new Units.Skills.SkillManager (this);
 			inicializarRecursos ();
 		}
 

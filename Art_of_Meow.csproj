@@ -115,6 +115,8 @@
     <Compile Include="Units\Recursos\Recurso.cs" />
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
+    <Compile Include="Units\Skills\ISkill.cs" />
+    <Compile Include="Units\Skills\SkillManager.cs" />
     <Compile Include="Maps\Map.cs" />
   </ItemGroup>
   <ProjectExtensions>
@@ -144,6 +146,7 @@
     <Folder Include="Helper\" />
     <Folder Include="Units\Equipment\" />
     <Folder Include="Items\Declarations\Equipment\" />
+    <Folder Include="Units\Skills\" />
     <Folder Include="Maps\" />
   </ItemGroup>
 </Project>
