@@ -5,6 +5,7 @@ using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Maps
 {
@@ -128,8 +129,19 @@ namespace Maps
 		public Map (string fileName)
 		{
 			_r = new Random ();
-			// TODO
-		}
 
+			var reader = new StreamReader (fileName);
+			var sizeX = int.Parse (reader.ReadLine ());
+			var sizeY = int.Parse (reader.ReadLine ());
+
+			for (int i = 0; i < sizeY; i++)
+			{
+				var currLine = new char[sizeX];
+				reader.ReadBlock (currLine, 0, sizeX);
+
+				for (int j = 0; j < sizeX; j++)
+					_data [j, i] = currLine [j];
+			}
+		}
 	}
 }
