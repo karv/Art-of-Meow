@@ -21,6 +21,9 @@ namespace Maps
 		readonly char [,] _data;
 		readonly Random _r;
 
+		public bool BoundGrid = true;
+		public bool AddFeatures = true;
+
 		public void AddBoundsTo (char c, Grid grid)
 		{
 			foreach (var pt in contorno())
@@ -58,6 +61,10 @@ namespace Maps
 				for (int iy = 0; iy < MapSize.Height; iy++)
 					ret.AddCellObject (MakeObject (_data [ix, iy], ret, new Point (ix, iy)));
 
+			if (BoundGrid)
+				AddBoundsTo ('W', ret);
+			if (AddFeatures)
+				AddRandomFlavorFeatures (ret);
 			return ret;
 		}
 
