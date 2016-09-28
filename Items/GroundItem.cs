@@ -1,5 +1,6 @@
 using Cells.CellObjects;
 using Items;
+using Cells;
 
 namespace Items
 {
@@ -10,8 +11,8 @@ namespace Items
 	{
 		public IItem ItemClass { get; }
 
-		public GroundItem (IItem type)
-			: base (type.DefaultTextureName)
+		public GroundItem (IItem type, Grid grid)
+			: base (type.DefaultTextureName, grid)
 		{
 			ItemClass = type;
 		}

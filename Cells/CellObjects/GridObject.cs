@@ -15,10 +15,11 @@ namespace Cells.CellObjects
 
 		public Texture2D Texture { get; private set; }
 
-		public GridObject (string texture)
+		public GridObject (string texture, Grid grid)
 		{
 			StringTexture = texture;
 			CollidePlayer = false;
+			Grid = grid;
 		}
 
 		public void UnloadContent ()
