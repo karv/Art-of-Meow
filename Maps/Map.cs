@@ -5,6 +5,8 @@ using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using OpenTK.Graphics.ES20;
 
 namespace Maps
 {
@@ -126,10 +128,25 @@ namespace Maps
 		}
 
 		public Map (string fileName)
+			: this (new StreamReader (fileName))
 		{
-			_r = new Random ();
-			// TODO
 		}
 
+		public Map (StreamReader reader)
+		{
+			var sizeX = int.Parse (reader.ReadLine ());
+			var sizeY = int.Parse (reader.ReadLine ());
+			_data = new char[sizeX, sizeY];
+			_r = new Random ();
+
+			for (int i = 0; i < sizeY; i++)
+			{
+				var currLine = new char[sizeX];
+				reader.ReadBlock (currLine, 0, sizeX);
+
+				for (int j = 0; j < sizeX; j++)
+					_data [j, i] = currLine [j];
+			}
+		}
 	}
 }
