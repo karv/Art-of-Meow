@@ -55,6 +55,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="OpenTK.dll.config" />
+    <None Include="Maps\void.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />

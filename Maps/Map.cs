@@ -136,6 +136,8 @@ namespace Maps
 		{
 			var sizeX = int.Parse (reader.ReadLine ());
 			var sizeY = int.Parse (reader.ReadLine ());
+			_data = new char[sizeX, sizeY];
+			_r = new Random ();
 
 			for (int i = 0; i < sizeY; i++)
 			{
