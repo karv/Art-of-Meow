@@ -77,6 +77,7 @@ namespace Maps
 			switch (c)
 			{
 				case ' ':
+				case (char)0:
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
 					var newObj = new GridObject ("brick-wall", grid);
