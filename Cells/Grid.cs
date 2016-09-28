@@ -289,34 +289,6 @@ namespace Cells
 		{
 			GridSize = new Point (xSize, ySize);
 			TimeManager = new GameTimeManager (this);
-			// Inicializar cada celda
-			foreach (var x in contorno ())
-			{
-				var newObj = new GridObject ("brick-wall");
-				newObj.Depth = Depths.Foreground;
-				newObj.CollidePlayer = true;
-				newObj.UseColor = Color.DarkGray;
-				newObj.Location = x;
-				_objects.Add (newObj);
-			}
-
-			for (int i = 0; i < xSize; i++)
-				for (int j = 0; j < ySize; j++)
-				{
-					AddCellObject (new BackgroundObject (
-						new Point (i, j),
-						"floor",
-						this));
-					if (_r.NextDouble () < probZacate)
-					{
-						var newObj = new GridObject ("vanilla-flower");
-						newObj.Location = new Point (i, j);
-						newObj.Depth = Depths.GroundDecoration;
-						newObj.CollidePlayer = false;
-						newObj.UseColor = Color.Green;
-						_objects.Add (newObj);
-					}
-				}
 		}
 	}
 }

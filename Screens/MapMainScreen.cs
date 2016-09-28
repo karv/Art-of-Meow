@@ -15,6 +15,7 @@ using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 using Microsoft.Xna.Framework.Graphics;
+using Maps;
 
 namespace Screens
 {
@@ -169,7 +170,11 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GameGrid = new Grid (100, 100, this);
+			//var size = new Size (100, 100);
+			var map = new Map (@"Maps/void.map");
+
+
+			GameGrid = map.GenerateGrid (this);
 		}
 	}
 }

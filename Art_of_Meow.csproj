@@ -55,6 +55,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="OpenTK.dll.config" />
+    <None Include="Maps\void.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -113,7 +116,9 @@
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
     <Compile Include="Screens\InvokeSkillListScreen.cs" />
-    <Compile Include="Units\ISkill.cs" />
+    <Compile Include="Units\Skills\ISkill.cs" />
+    <Compile Include="Units\Skills\SkillManager.cs" />
+    <Compile Include="Maps\Map.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -142,5 +147,7 @@
     <Folder Include="Helper\" />
     <Folder Include="Units\Equipment\" />
     <Folder Include="Items\Declarations\Equipment\" />
+    <Folder Include="Units\Skills\" />
+    <Folder Include="Maps\" />
   </ItemGroup>
 </Project>
