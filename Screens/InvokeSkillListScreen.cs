@@ -56,6 +56,12 @@ namespace Screens
 			Salir ();
 		}
 
+		public override void Salir ()
+		{
+			base.Salir ();
+			Contenedor.Activado -= AlSeleccionarSkill;
+		}
+
 		public InvokeSkillListScreen (IScreen baseScreen, IUnidad unid)
 			: base (baseScreen.Juego,
 			        baseScreen)
