@@ -11,6 +11,8 @@ namespace Units.Skills
 
 		public bool Any { get { return Skills.Any (); } }
 
+		public bool AnyVisible { get { return Skills.Any (z => z.IsVisible (Unidad)); } }
+
 		public SkillManager (IUnidad unid)
 		{
 			Unidad = unid;

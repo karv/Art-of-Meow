@@ -157,7 +157,7 @@ namespace Screens
 					GameGrid.TryCenterOn (Jugador.Location);
 					break;
 				case Keys.S:
-					if (Jugador.Skills.Any)
+					if (Jugador.Skills.AnyVisible)
 					{
 						var scr = new InvokeSkillListScreen (this, Jugador);
 						scr.Ejecutar ();
