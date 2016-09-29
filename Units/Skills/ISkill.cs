@@ -4,5 +4,6 @@ namespace Units.Skills
 {
 	public interface ISkill : IDibujable, IComponent
 	{
+		void Execute (IUnidad user);
 	}
 }

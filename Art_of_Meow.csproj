@@ -119,6 +119,7 @@
     <Compile Include="Units\Skills\ISkill.cs" />
     <Compile Include="Units\Skills\SkillManager.cs" />
     <Compile Include="Maps\Map.cs" />
+    <Compile Include="Units\Skills\SelfHealSkill.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
