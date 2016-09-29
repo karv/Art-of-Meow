@@ -33,7 +33,7 @@ namespace Units.Skills
 
 		Texture2D _texture;
 
-		const string TextureName = "unit";
+		const string TextureName = "person";
 
 		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{

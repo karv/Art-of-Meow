@@ -16,6 +16,8 @@ using Units.Inteligencia;
 using Units.Recursos;
 using Microsoft.Xna.Framework.Graphics;
 using Maps;
+using Items.Declarations.Pots;
+using Units.Skills;
 
 namespace Screens
 {
@@ -73,8 +75,9 @@ namespace Screens
 			Jugador.Inventory.Add (sword);
 			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
 			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
-			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
-			Jugador.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			var healSkill = new SelfHealSkill ();
+			Jugador.Skills.Skills.Add (healSkill);
+			healSkill.Initialize ();
 
 			_recursoView = new RecursoView (this, Jugador.Recursos);
 		}
