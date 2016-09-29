@@ -1,6 +1,6 @@
 using Moggle.Controles;
 
-namespace Units
+namespace Units.Skills
 {
 	public interface ISkill : IDibujable, IComponent
 	{
