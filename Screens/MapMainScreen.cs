@@ -149,12 +149,19 @@ namespace Screens
 				case Keys.I:
 					if (Jugador.Inventory.Any ())
 					{
-						var scr = new InvokeSkillListScreen (this, Jugador);
+						var scr = new EquipmentScreen (this, Jugador);
 						scr.Ejecutar ();
 					}
 					break;
 				case Keys.C:
 					GameGrid.TryCenterOn (Jugador.Location);
+					break;
+				case Keys.S:
+					if (Jugador.Skills.Any)
+					{
+						var scr = new InvokeSkillListScreen (this, Jugador);
+						scr.Ejecutar ();
+					}
 					break;
 			}
 			GameGrid.CenterIfNeeded (Jugador);

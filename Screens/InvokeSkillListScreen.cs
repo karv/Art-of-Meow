@@ -37,7 +37,8 @@ namespace Screens
 
 		void buildSkillList ()
 		{
-			throw new NotImplementedException ();
+			foreach (var sk in Unidad.Skills.Skills)
+				Contenedor.Add (sk);
 		}
 
 		public override bool DibujarBase { get { return true; } }
