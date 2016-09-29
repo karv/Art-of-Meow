@@ -8,10 +8,23 @@ namespace Units.Skills
 	{
 		#region ISkill implementation
 
+		const float _heal = 10f;
+		const float _mpCost = 3f;
+
 		public void Execute (IUnidad user)
 		{
 			var hpRec = user.Recursos.GetRecurso (ConstantesRecursos.HP);
 			hpRec.Valor += 10;
+		}
+
+		public bool IsCastable (IUnidad user)
+		{
+			return true;
+		}
+
+		public bool IsVisible (IUnidad user)
+		{
+			return true;
 		}
 
 		#endregion
