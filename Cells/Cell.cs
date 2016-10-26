@@ -53,6 +53,9 @@ namespace Cells
 			return Objects.FirstOrDefault (z => pred (z));
 		}
 
+		/// <summary>
+		/// Gets the <see cref="IUnidad"/> in this cell if any. <c>null</c> otherwise
+		/// </summary>
 		public IUnidad GetUnidadHere ()
 		{
 			return ExistsReturn (z => z is IUnidad) as IUnidad;
@@ -66,6 +69,19 @@ namespace Cells
 			return Objects.Any (z => z.Collision (collObj) || collObj.Collision (z));
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.Cell"/>.
+		/// </summary>
+		public override string ToString ()
+		{
+			return string.Format ("[Cell: Objects={0}]", Objects);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
+		/// </summary>
+		/// <param name="grid">Grid of this <c>Cell</c></param>
+		/// <param name="location">Grid-wise coordinates of this Cell</param>
 		public Cell (Grid grid, Point location)
 		{
 			Objects = new List<IGridObject> ();
@@ -74,12 +90,11 @@ namespace Cells
 					Objects.Add (x);
 		}
 
-		public override string ToString ()
-		{
-			return string.Format ("[Cell: Objects={0}]", Objects);
-		}
-
-		public Cell (IEnumerable<IGridObject> objs)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
+		/// </summary>
+		/// <param name="objs">Collection of objects</param>
+		protected Cell (IEnumerable<IGridObject> objs)
 		{
 			Objects = new List<IGridObject> (objs);
 		}
