@@ -52,6 +52,12 @@ namespace Items
 			return Items.OfType<T> ();
 		}
 
+		/// <summary>
+		/// Enmerates the items of a given type satisfacing a predicate
+		/// </summary>
+		/// <returns>The of type.</returns>
+		/// <param name="pred">Predicate</param>
+		/// <typeparam name="T">Type of items</typeparam>
 		public IEnumerable<T> ItemsOfType<T> (Func<T, bool> pred)
 		{
 			return Items.OfType<T> ().Where (pred);
@@ -80,17 +86,27 @@ namespace Items
 				item.LoadContent (manager);
 		}
 
+		/// <summary>
+		/// Desarga el contenido gráfico.
+		/// </summary>
 		public void UnloadContent ()
 		{
 			IconTexture = null;
 			Font = null;
 		}
 
+		/// <summary>
+		/// Determines if theres any item in the inventory
+		/// </summary>
 		public bool Any ()
 		{
 			return Items.Any ();
 		}
 
+		/// <summary>
+		/// Adds an item
+		/// </summary>
+		/// <param name="item">Item.</param>
 		public void Add (IItem item)
 		{
 			Items.Add (item);
