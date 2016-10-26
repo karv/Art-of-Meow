@@ -129,7 +129,7 @@ namespace Units
 				area, null, Color.White,
 				0, Vector2.Zero,
 				SpriteEffects.None,
-				Depths.Unidad);
+				Depths.Unit);
 
 			// Barras
 			var rec = new Rectangle (area.Left, area.Bottom, area.Width, 3);

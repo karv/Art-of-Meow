@@ -20,7 +20,7 @@ namespace Componentes
 			: base (cont)
 		{
 			Recursos = recs;
-			Iconos = new List<IDibujable> (Recursos.Enumerar ().OfType<IDibujable> ());
+			Iconos = new List<IDibujable> (Recursos.Enumerate ().OfType<IDibujable> ());
 			IconSize = new MonoGame.Extended.Size (64, 12);
 			TopLeft = new Point (3, 3);
 		}
