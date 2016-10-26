@@ -15,29 +15,46 @@ using Moggle.Controles;
 
 namespace Units
 {
+	/// <summary>
+	/// Game player
+	/// </summary>
 	public class Unidad : IUnidad, IDibujable
 	{
+		/// <summary>
+		/// Gets the name
+		/// </summary>
+		/// <value>The nombre.</value>
 		public string Nombre { get; }
 
+		/// <summary>
+		/// Gets the team's id
+		/// </summary>
 		public int Equipo { get; set; }
 
+		/// <summary>
+		/// Desarga el contenido gráfico.
+		/// </summary>
 		public void UnloadContent ()
 		{
 		}
 
+		/// <summary>
+		/// Gets the inventory of this unit
+		/// </summary>
 		public Inventory Inventory { get; }
 
 		IInventory IUnidad.Inventory { get { return Inventory; } }
 
+		/// <summary>
+		/// Gets the grid.
+		/// </summary>
+		/// <value>The grid.</value>
 		public Grid Grid { get; }
 
-		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+
+		IComponentContainerComponent<IControl> IControl.Container 
+		{ get { return (IComponentContainerComponent<IControl>)Grid; } }
+
 
 		public virtual void Execute ()
 		{
