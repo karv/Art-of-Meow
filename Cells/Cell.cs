@@ -50,11 +50,7 @@ namespace Cells
 		/// <param name="pred">Predicate</param>
 		public IGridObject ExistsReturn (Predicate<IGridObject> pred)
 		{
-			foreach (var x in Objects)
-				if (pred (x))
-					return x;
-
-			return null;
+			return Objects.FirstOrDefault (z => pred (z));
 		}
 
 		public IUnidad GetUnidadHere ()
