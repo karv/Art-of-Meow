@@ -7,6 +7,10 @@ using Units;
 
 namespace Cells
 {
+	/// <summary>
+	/// A state of a grid generated at some point.
+	/// </summary>
+	/// <remarks>Modify this class won't change the <see cref="Grid"/></remarks>
 	public class Cell
 	{
 		readonly List<IGridObject> Objects;
@@ -22,6 +26,10 @@ namespace Cells
 			return ret;
 		}
 
+		/// <summary>
+		/// Determines if this cell contains a <see cref="IGridObject"/>
+		/// </summary>
+		/// <param name="obj">Object to determine if it is contained</param>
 		public bool Contains (IGridObject obj)
 		{
 			if (obj == null)
@@ -34,6 +42,12 @@ namespace Cells
 			return false;
 		}
 
+
+		/// <summary>
+		/// Gets the first objects satisfacing a predicate
+		/// </summary>
+		/// <returns>An object which satisface a predicate. <c>null</c> if it does not exist</returns>
+		/// <param name="pred">Predicate</param>
 		public IGridObject ExistsReturn (Predicate<IGridObject> pred)
 		{
 			foreach (var x in Objects)

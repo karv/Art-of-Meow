@@ -4,10 +4,19 @@ using Debugging;
 
 namespace AoM
 {
+	/// <summary>
+	/// MAin program
+	/// </summary>
 	public class Program
 	{
+		/// <summary>
+		/// The game engine
+		/// </summary>
 		public static Juego MyGame = new Juego ();
 
+		/// <summary>
+		/// The entry point of the program, where the program control starts and ends.
+		/// </summary>
 		public static void Main ()
 		{
 			var lg = new Logger ("debug.log");

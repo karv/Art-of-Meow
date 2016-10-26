@@ -1,21 +1,42 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Cells.CellObjects
 {
+	/// <summary>
+	/// Un objeto de <see cref="Grid"/> que no interactúa
+	/// </summary>
 	public class BackgroundObject : IGridObject
 	{
+		/// <summary>
+		/// The name of the texture
+		/// </summary>
 		public readonly string StringTexture;
 
+		/// <summary>
+		/// Gets the texture
+		/// </summary>
 		public Texture2D Texture { get; private set; }
 
+		/// <summary>
+		/// Desarga el contenido gráfico.
+		/// </summary>
 		public void UnloadContent ()
 		{
 		}
 
+		/// <summary>
+		/// Gets the grid.
+		/// </summary>
 		public Grid Grid { get; }
 
+		/// <summary>
+		/// Gets the container of the control.
+		///  This could be the Screen or Game itself.
+		/// </summary>
+		/// <value>The container.</value>
 		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container { get; }
 
 		bool IGridObject.Collision (IGridObject collObj)
@@ -23,46 +44,72 @@ namespace Cells.CellObjects
 			return false;
 		}
 
+		/// <summary>
+		/// Carga el contenido gráfico.
+		/// </summary>
+		/// <param name="content">Content.</param>
 		public void LoadContent (ContentManager content)
 		{
 			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
+		/// <summary>
+		/// Initialize this instance.
+		/// </summary>
 		public void Initialize ()
 		{
 		}
 
-		public Color? UseColor { get { return Color.White; } }
+		// REMOVE This methos is never used.
+		static Color useColor { get { return Color.White; } }
 
-		public float Depth { get { return Depths.Background; } }
+		// REMOVE This methos is never used.
+		static float depth { get { return Depths.Background; } }
 
+		/// <summary>
+		/// Dibuja el objeto sobre un rectpangulo específico
+		/// </summary>
+		/// <param name="bat">Batch</param>
+		/// <param name="area">Area.</param>
 		public void Draw (SpriteBatch bat, Rectangle area)
 		{
 			bat.Draw (
 				Texture,
-				area, null, Color.White,
+				area, null, useColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Background);
 		}
 
+		/// <summary>
+		/// Gets the cell-based localization.
+		/// </summary>
+		/// <value>The location.</value>
 		public Point Location { get; set; }
 
-		public void Dispose ()
+		void IDisposable.Dispose ()
 		{
 			Texture = null;
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.CellObjects.BackgroundObject"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Cells.CellObjects.BackgroundObject"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (
-				"[BackgroundObject: StringTexture={0}, Color={1}, Location={2}]",
+				"[BackgroundObject: StringTexture={0}, Location={1}]",
 				StringTexture,
-				UseColor,
 				Location);
 		}
 
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.CellObjects.BackgroundObject"/> class.
+		/// </summary>
+		/// <param name="loc">Location.</param>
+		/// <param name="texture">Texture.</param>
+		/// <param name="grid">Grid.</param>
 		public BackgroundObject (Point loc,
 		                         string texture, 
 		                         Grid grid)

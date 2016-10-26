@@ -122,7 +122,7 @@ namespace Screens
 
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
-			var pl = GameGrid.ObjectoActual as Unidad;
+			var pl = GameGrid.CurrentObject as Unidad;
 			var currobj = pl?.Inteligencia as IReceptorTeclado;
 			if (currobj != null && currobj.RecibirSeñal (key))
 				return;
