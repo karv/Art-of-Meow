@@ -1,12 +1,11 @@
-﻿using MonoGame.Extended;
-using Cells;
-using Moggle.Screens;
-using Cells.CellObjects;
-using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using OpenTK.Graphics.ES20;
+using Cells;
+using Cells.CellObjects;
+using Microsoft.Xna.Framework;
+using Moggle.Screens;
+using MonoGame.Extended;
 
 namespace Maps
 {
@@ -16,6 +15,10 @@ namespace Maps
 	/// </summary>
 	public class Map
 	{
+		/// <summary>
+		/// Gets the size of the map.
+		/// </summary>
+		/// <value>The size of the map.</value>
 		public Size MapSize { get { return new Size (
 				_data.GetLength (0),
 				_data.GetLength (1)); } }
@@ -23,9 +26,21 @@ namespace Maps
 		readonly char [,] _data;
 		readonly Random _r;
 
+		/// <summary>
+		/// Should a bounding rectangle of impassable terrain be added around the map
+		/// </summary>
 		public bool BoundGrid = true;
+
+		/// <summary>
+		/// Should add flavor features, like plants on the ground
+		/// </summary>
 		public bool AddFeatures = true;
 
+		/// <summary>
+		/// Add bounds to a grid, with a tile represented by a character
+		/// </summary>
+		/// <param name="c">Character representing a <see cref="IGridObject"/></param>
+		/// <param name="grid">The grid where the bounds are suposed to be added</param>
 		public void AddBoundsTo (char c, Grid grid)
 		{
 			foreach (var pt in contorno())
@@ -70,6 +85,13 @@ namespace Maps
 			return ret;
 		}
 
+		/// <summary>
+		/// Makes a object from a given <c>char</c>
+		/// </summary>
+		/// <returns>A <see cref="IGridObject"/> represented by a <c>char</c> value</returns>
+		/// <param name="c">A <c>char</c> value representing the <see cref="IGridObject"/></param>
+		/// <param name="grid">Grid.</param>
+		/// <param name="p">Location grid-wise of the item to add</param>
 		public IGridObject MakeObject (char c, Grid grid, Point p)
 		{
 			if (grid == null)
@@ -92,6 +114,10 @@ namespace Maps
 			throw new Exception ("Unknown map symbol " + c);
 		}
 
+		/// <summary>
+		/// Adds random flavored features to a grid
+		/// </summary>
+		/// <param name="grid">Grid.</param>
 		public void AddRandomFlavorFeatures (Grid grid)
 		{
 			const float probZacate = 0.1f;
@@ -108,6 +134,10 @@ namespace Maps
 					}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Maps.Map"/> class.
+		/// </summary>
+		/// <param name="data">A 2-dimentional array containing the <c>char</c> value info of every cell in the grid</param>
 		public Map (char [,] data)
 		{
 			_r = new Random ();
@@ -115,25 +145,43 @@ namespace Maps
 			data.CopyTo (_data, 0);
 		}
 
+		/// <summary>
+		/// Initializes a new void instance of the <see cref="Maps.Map"/> class. 
+		/// This constructor will generate a 0x0 map, and this value cannot be changed.
+		/// </summary>
 		public Map ()
 		{
 			_r = new Random ();
 			_data = new char[0, 0];
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Maps.Map"/> class of a given size
+		/// </summary>
+		/// <param name="size">Size of the map in cells-long</param>
 		public Map (Size size)
 		{
 			_r = new Random ();
 			_data = new char[size.Width, size.Height];
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Maps.Map"/> class by reading the content from a .map file
+		/// </summary>
+		/// <param name="fileName">The .map file name</param>
 		public Map (string fileName)
 			: this (new StreamReader (fileName))
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Maps.Map"/> class by reading the content from a 
+		/// <see cref="StreamReader"/> with a .map format
+		/// </summary>
+		/// <param name="reader">A stream reader</param>
 		public Map (StreamReader reader)
 		{
+			// TODO: Make exception-proof
 			var sizeX = int.Parse (reader.ReadLine ());
 			var sizeY = int.Parse (reader.ReadLine ());
 			_data = new char[sizeX, sizeY];

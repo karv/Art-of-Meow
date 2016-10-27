@@ -8,6 +8,9 @@ using Units.Buffs;
 
 namespace Units.Equipment
 {
+	/// <summary>
+	/// Equipment manager: manages buff and equip/unequip of the equipment of <see cref="IUnidad"/>
+	/// </summary>
 	public sealed class EquipmentManager
 	{
 		/// <summary>
@@ -21,6 +24,10 @@ namespace Units.Equipment
 		/// </summary>
 		public EquipBuff EquipBuff { get; private set; }
 
+		/// <summary>
+		/// Enumerates all the equiped <see cref="IEquipment"/> in the corresponging <see cref="IUnidad"/>
+		/// </summary>
+		/// <returns>The equipment.</returns>
 		public IEnumerable<IEquipment> EnumerateEquipment ()
 		{
 			return equipment;
@@ -71,6 +78,9 @@ namespace Units.Equipment
 			return equipment.Count (z => z.Slot == slot);
 		}
 
+		/// <summary>
+		/// Loads the content of the equipment
+		/// </summary>
 		public void LoadContent (ContentManager manager)
 		{
 			foreach (var eq in equipment)
@@ -91,6 +101,10 @@ namespace Units.Equipment
 
 		#endregion
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Equipment.EquipmentManager"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Equipment.EquipmentManager"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (
@@ -100,6 +114,10 @@ namespace Units.Equipment
 				equipment);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Equipment.EquipmentManager"/> class.
+		/// </summary>
+		/// <param name="owner">Owner.</param>
 		public EquipmentManager (IUnidad owner)
 		{
 			Owner = owner;
@@ -109,6 +127,9 @@ namespace Units.Equipment
 
 		#region Static
 
+		/// <summary>
+		/// Gets a dictionary that assigns every slot the quantity of that kind that can be equiped
+		/// </summary>
 		public static Dictionary<EquipSlot, int> SlotSize;
 
 		static EquipmentManager ()
