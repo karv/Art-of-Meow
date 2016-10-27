@@ -1,5 +1,8 @@
 namespace Cells.CellObjects
 {
+	/// <summary>
+	/// REpresents a <see cref="IGridObject"/> that has a determined movement speed
+	/// </summary>
 	public interface IMovementGridObject : IGridObject
 	{
 		/// <summary>

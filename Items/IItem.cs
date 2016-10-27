@@ -8,10 +8,20 @@ namespace Items
 	/// </summary>
 	public interface IItem : IComponent, IDibujable
 	{
+		/// <summary>
+		/// Gets the name for the item
+		/// </summary>
+		/// <value>The nombre.</value>
 		string Nombre { get; }
 
+		/// <summary>
+		/// Gets the default texture name
+		/// </summary>
 		string DefaultTextureName { get; }
 
+		/// <summary>
+		/// Gets the default color
+		/// </summary>
 		Color DefaultColor { get; }
 	}
 }

@@ -9,6 +9,9 @@ namespace Units.Recursos
 	{
 		#region IUpdate implementation
 
+		/// <summary>
+		/// Updates the parameters, and manages regeneration
+		/// </summary>
 		public override void Update (float gameTime)
 		{
 			base.Update (gameTime);
@@ -47,11 +50,17 @@ namespace Units.Recursos
 			return NombreCorto;
 		}
 
+		/// <summary>
+		/// Gets the long detailed name
+		/// </summary>
 		protected override string GetLongName ()
 		{
 			return NombreLargo;
 		}
 
+		/// <summary>
+		/// Gets the unique name (mod resources)
+		/// </summary>
 		protected override string GetUniqueName ()
 		{
 			return NombreÚnico;
@@ -67,6 +76,9 @@ namespace Units.Recursos
 		/// </summary>
 		public string NombreLargo { get; set; }
 
+		/// <summary>
+		/// Nombre único
+		/// </summary>
 		public string NombreÚnico { get; }
 
 		readonly float [] currMaxNormal = new float[3];
@@ -123,6 +135,10 @@ namespace Units.Recursos
 
 		#endregion
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Recursos.StatRecurso"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Recursos.StatRecurso"/>.</returns>
 		public override string ToString ()
 		{
 			return base.ToString () + string.Format ("{0}//{1}//{2}", Valor, Max, Base);

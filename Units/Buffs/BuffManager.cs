@@ -109,12 +109,20 @@ namespace Units.Buffs
 		/// </summary>
 		public event EventHandler<IBuff> RemoveBuff;
 
+		/// <summary>
+		/// Updates the buffs
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public void Update (float gameTime)
 		{
 			foreach (var buff in Buffs)
 				buff.Update (gameTime);
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Buffs.BuffManager"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Buffs.BuffManager"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (
