@@ -12,6 +12,9 @@ namespace Units.Recursos
 	{
 		readonly Dictionary<string, IRecurso> _data;
 
+		/// <summary>
+		/// Gets the unidad.having this manager
+		/// </summary>
 		public IUnidad Unidad { get; }
 
 		/// <summary>
@@ -94,6 +97,10 @@ namespace Units.Recursos
 				x.Update (gameTime);
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Recursos.ManejadorRecursos"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Recursos.ManejadorRecursos"/>.</returns>
 		public override string ToString ()
 		{
 			var sb = new StringBuilder ();
@@ -106,7 +113,10 @@ namespace Units.Recursos
 			return sb.ToString ();
 		}
 
-		public IEnumerable<IRecurso> Enumerar ()
+		/// <summary>
+		/// Enumerate the resources
+		/// </summary>
+		public IEnumerable<IRecurso> Enumerate ()
 		{
 			return _data.Values;
 		}
@@ -121,6 +131,7 @@ namespace Units.Recursos
 
 		/// <summary>
 		/// </summary>
+		/// <param name="unid">Unidad</param>
 		/// <param name="recursos">Recursos</param>
 		public ManejadorRecursos (IUnidad unid, IEnumerable<IRecurso> recursos)
 			: this (unid)

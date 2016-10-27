@@ -4,18 +4,29 @@ using System.Diagnostics;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
-using Microsoft.Xna.Framework.Graphics;
-using Units;
-using Units.Inteligencia;
 
 namespace AoM
 {
+	/// <summary>
+	/// Manager of in-game time
+	/// </summary>
 	public class GameTimeManager
 	{
+		/// <summary>
+		/// Gets the map grid
+		/// </summary>
+		/// <value>The map grid.</value>
 		Grid MapGrid { get; }
 
+		/// <summary>
+		/// Gets the entire collection of objects
+		/// </summary>
 		ICollection<IGridObject> Objects { get { return MapGrid.Objects; } }
 
+		/// <summary>
+		/// Gets the current object
+		/// </summary>
+		/// <value>The actual.</value>
 		public IUpdateGridObject Actual { get; private set; }
 
 		IEnumerable<IUpdateGridObject> UpdateGridObjects
@@ -26,6 +37,10 @@ namespace AoM
 			}
 		}
 
+		/// <summary>
+		/// Pass the time
+		/// </summary>
+		/// <param name="time">length of time to pass</param>
 		public void PassTime (float time)
 		{
 			foreach (var ob in UpdateGridObjects)
@@ -54,6 +69,9 @@ namespace AoM
 			return passTime;
 		}
 
+		/// <summary>
+		/// Gets the object with lower action time
+		/// </summary>
 		public IUpdateGridObject NextObject ()
 		{
 			IUpdateGridObject ret = null;
@@ -63,6 +81,10 @@ namespace AoM
 			return ret;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AoM.GameTimeManager"/> class.
+		/// </summary>
+		/// <param name="grid">Grid.</param>
 		public GameTimeManager (Grid grid)
 		{
 			MapGrid = grid;

@@ -35,6 +35,9 @@ namespace Componentes
 		/// <value>The V space.</value>
 		public int VSpace { get; set; }
 
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
 		public override IShapeF GetBounds ()
 		{
 			if (Iconos.Count == 0)
@@ -68,6 +71,10 @@ namespace Componentes
 		{
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Componentes.ListaIconos"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Componentes.ListaIconos"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (
@@ -76,6 +83,10 @@ namespace Componentes
 				Iconos);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Componentes.ListaIconos"/> class.
+		/// </summary>
+		/// <param name="cont">Container of this control</param>
 		public ListaIconos (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{

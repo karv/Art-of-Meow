@@ -4,10 +4,20 @@ using Moggle.Controles;
 
 namespace Units.Skills
 {
+	/// <summary>
+	/// Skill manager.
+	/// </summary>
 	public class SkillManager : IComponent
 	{
+		/// <summary>
+		/// Unidad that has these skills
+		/// </summary>
 		public IUnidad Unidad { get; }
 
+		/// <summary>
+		/// Gets the collection of skills
+		/// </summary>
+		/// <value>The skills.</value>
 		public List<ISkill> Skills { get; }
 
 		public bool Any { get { return Skills.Any (); } }
@@ -37,6 +47,10 @@ namespace Units.Skills
 				sk.Initialize ();
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Skills.SkillManager"/> class.
+		/// </summary>
+		/// <param name="unid">Unidad</param>
 		public SkillManager (IUnidad unid)
 		{
 			Unidad = unid;

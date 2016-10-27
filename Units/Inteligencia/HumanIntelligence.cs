@@ -6,13 +6,16 @@ namespace Units.Inteligencia
 	/// </summary>
 	public class HumanIntelligence : IIntelligence, Moggle.Comm.IReceptorTeclado
 	{
-		public readonly Unidad Yo;
+		/// <summary>
+		/// The controlled unidad
+		/// </summary>
+		public readonly Unidad ControlledUnidad;
 
 		void IIntelligence.DoAction ()
 		{
 			if (ActionDir != MovementDirectionEnum.NoMov)
 			{
-				Yo.MoveOrMelee (ActionDir);
+				ControlledUnidad.MoveOrMelee (ActionDir);
 				ActionDir = MovementDirectionEnum.NoMov;
 			}
 		}
@@ -64,14 +67,24 @@ namespace Units.Inteligencia
 			return false;
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Inteligencia.HumanIntelligence"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Inteligencia.HumanIntelligence"/>.</returns>
 		public override string ToString ()
 		{
-			return string.Format ("[HumanIntelligence: Yo={0}]", Yo.Nombre);
+			return string.Format (
+				"[HumanIntelligence: Yo={0}]",
+				ControlledUnidad.Nombre);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Inteligencia.HumanIntelligence"/> class.
+		/// </summary>
+		/// <param name="yo">Controlled unidad</param>
 		public HumanIntelligence (Unidad yo)
 		{
-			Yo = yo;
+			ControlledUnidad = yo;
 		}
 	}
 	

@@ -5,14 +5,33 @@ using Items.Declarations.Pots;
 
 namespace Items
 {
+	/// <summary>
+	/// Gets the type of an item
+	/// </summary>
 	public enum ItemType
 	{
+		/// <summary>
+		/// Sword
+		/// </summary>
+		/// <seealso cref="Items.Declarations.Equipment.Sword"/>
 		Sword,
+		/// <summary>
+		/// Potion
+		/// </summary>
+		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
 		Potion
 	}
 
+	/// <summary>
+	/// This class produces new items from its type
+	/// </summary>
 	public static class ItemFactory
 	{
+		/// <summary>
+		/// Creates a new item of the given type
+		/// </summary>
+		/// <returns>A newly created item</returns>
+		/// <param name="type">Type of the item</param>
 		public static IItem CreateItem (ItemType type)
 		{
 			IItem ret;
