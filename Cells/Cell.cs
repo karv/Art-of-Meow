@@ -7,6 +7,10 @@ using Units;
 
 namespace Cells
 {
+	/// <summary>
+	/// A state of a grid generated at some point.
+	/// </summary>
+	/// <remarks>Modify this class won't change the <see cref="Grid"/></remarks>
 	public class Cell
 	{
 		readonly List<IGridObject> Objects;
@@ -22,6 +26,10 @@ namespace Cells
 			return ret;
 		}
 
+		/// <summary>
+		/// Determines if this cell contains a <see cref="IGridObject"/>
+		/// </summary>
+		/// <param name="obj">Object to determine if it is contained</param>
 		public bool Contains (IGridObject obj)
 		{
 			if (obj == null)
@@ -34,15 +42,20 @@ namespace Cells
 			return false;
 		}
 
+
+		/// <summary>
+		/// Gets the first objects satisfacing a predicate
+		/// </summary>
+		/// <returns>An object which satisface a predicate. <c>null</c> if it does not exist</returns>
+		/// <param name="pred">Predicate</param>
 		public IGridObject ExistsReturn (Predicate<IGridObject> pred)
 		{
-			foreach (var x in Objects)
-				if (pred (x))
-					return x;
-
-			return null;
+			return Objects.FirstOrDefault (z => pred (z));
 		}
 
+		/// <summary>
+		/// Gets the <see cref="IUnidad"/> in this cell if any. <c>null</c> otherwise
+		/// </summary>
 		public IUnidad GetUnidadHere ()
 		{
 			return ExistsReturn (z => z is IUnidad) as IUnidad;
@@ -56,6 +69,19 @@ namespace Cells
 			return Objects.Any (z => z.Collision (collObj) || collObj.Collision (z));
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.Cell"/>.
+		/// </summary>
+		public override string ToString ()
+		{
+			return string.Format ("[Cell: Objects={0}]", Objects);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
+		/// </summary>
+		/// <param name="grid">Grid of this <c>Cell</c></param>
+		/// <param name="location">Grid-wise coordinates of this Cell</param>
 		public Cell (Grid grid, Point location)
 		{
 			Objects = new List<IGridObject> ();
@@ -64,12 +90,11 @@ namespace Cells
 					Objects.Add (x);
 		}
 
-		public override string ToString ()
-		{
-			return string.Format ("[Cell: Objects={0}]", Objects);
-		}
-
-		public Cell (IEnumerable<IGridObject> objs)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
+		/// </summary>
+		/// <param name="objs">Collection of objects</param>
+		protected Cell (IEnumerable<IGridObject> objs)
 		{
 			Objects = new List<IGridObject> (objs);
 		}

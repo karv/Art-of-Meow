@@ -15,47 +15,76 @@ using Moggle.Controles;
 
 namespace Units
 {
+	/// <summary>
+	/// Game player
+	/// </summary>
 	public class Unidad : IUnidad, IDibujable
 	{
+		/// <summary>
+		/// Gets the name
+		/// </summary>
+		/// <value>The nombre.</value>
 		public string Nombre { get; }
 
+		/// <summary>
+		/// Gets the team's id
+		/// </summary>
 		public int Equipo { get; set; }
 
+		/// <summary>
+		/// Desarga el contenido gráfico.
+		/// </summary>
 		public void UnloadContent ()
 		{
 		}
 
+		/// <summary>
+		/// Gets the inventory of this unit
+		/// </summary>
 		public Inventory Inventory { get; }
 
 		IInventory IUnidad.Inventory { get { return Inventory; } }
 
+		/// <summary>
+		/// Gets the grid.
+		/// </summary>
+		/// <value>The grid.</value>
 		public Grid Grid { get; }
 
-		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
 
+		IComponentContainerComponent<IControl> IControl.Container 
+		{ get { return (IComponentContainerComponent<IControl>)Grid; } }
+
+		/// <summary>
+		/// Execute this unidad's turn
+		/// </summary>
 		public virtual void Execute ()
 		{
 			Inteligencia.DoAction ();
 		}
 
+		/// <summary>
+		/// Pass time
+		/// </summary>
+		/// <param name="time">Time.</param>
 		public void PassTime (float time)
 		{
 			NextActionTime -= time;
 			Update (time);
 		}
 
+		/// <summary>
+		/// Initialize this instance.
+		/// </summary>
 		public void Initialize ()
 		{
 		}
 
 		float _nextActionTime;
 
+		/// <summary>
+		/// Gets the time for the next action.
+		/// </summary>
 		public float NextActionTime
 		{
 			get
@@ -70,26 +99,65 @@ namespace Units
 			}
 		}
 
+		/// <summary>
+		/// Gets the resources of this unit
+		/// </summary>
+		/// <value>The recursos.</value>
 		public ManejadorRecursos Recursos { get; }
 
+		/// <summary>
+		/// Gets the buffs if this unit
+		/// </summary>
+		/// <value>The buffs.</value>
 		public BuffManager Buffs { get; }
 
+		/// <summary>
+		/// Gets the equipment of this unit
+		/// </summary>
+		/// <value>The equipment.</value>
 		public EquipmentManager Equipment { get; }
 
+		/// <summary>
+		/// Gets the skills of this unit
+		/// </summary>
+		/// <value>The skills.</value>
 		public Units.Skills.SkillManager Skills { get; }
 
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Units.Unidad"/> is habilitado.
+		/// </summary>
+		/// <value><c>true</c> if habilitado; otherwise, <c>false</c>.</value>
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
+		/// <summary>
+		/// Gets the HP
+		/// </summary>
 		public RecursoHP RecursoHP { get; private set; }
 
+		/// <summary>
+		/// Gets the map grid
+		/// </summary>
+		/// <value>The map grid.</value>
 		public Grid MapGrid { get; set; }
 
-		public const string TextureType = "person";
+		const string TextureType = "person";
 
+		/// <summary>
+		/// Gets or sets the texture string.
+		/// </summary>
+		/// <value>The texture string.</value>
 		public string TextureStr { get; protected set; }
 
+		/// <summary>
+		/// Gets the texture used to draw this object
+		/// </summary>
+		/// <value>The texture.</value>
 		public Texture2D Texture { get; protected set; }
 
+		/// <summary>
+		/// Carga el contenido gráfico de la unidad, equipment e inventory
+		/// </summary>
+		/// <param name="content">Content.</param>
 		public void LoadContent (ContentManager content)
 		{
 			Texture = content.Load<Texture2D> (TextureStr);
@@ -97,6 +165,10 @@ namespace Units
 			Inventory.LoadContent (content);
 		}
 
+		/// <summary>
+		/// Determina si este objeto evita que otro objeto pueda ocupar esta misma celda.
+		/// </summary>
+		/// <param name="collObj">Coll object.</param>
 		public bool Collision (IGridObject collObj)
 		{
 			if (!Habilitado)
@@ -116,12 +188,22 @@ namespace Units
 			get { return RecursoHP.RelativeHp; }
 		}
 
+		/// <summary>
+		/// Dibuja el objeto sobre un rectpangulo específico
+		/// </summary>
+		/// <param name="bat">Batch</param>
+		/// <param name="area">Rectángulo de dibujo</param>
 		public void Draw (SpriteBatch bat, Rectangle area)
 		{
 			if (Habilitado)
 				ForceDraw (area, bat);
 		}
 
+		/// <summary>
+		/// Draw the unidad, even if it not enabled
+		/// </summary>
+		/// <param name="bat">Batch</param>
+		/// <param name="area">Rectángulo de dibujo</param>
 		public void ForceDraw (Rectangle area, SpriteBatch bat)
 		{
 			bat.Draw (
@@ -129,7 +211,7 @@ namespace Units
 				area, null, Color.White,
 				0, Vector2.Zero,
 				SpriteEffects.None,
-				Depths.Unidad);
+				Depths.Unit);
 
 			// Barras
 			var rec = new Rectangle (area.Left, area.Bottom, area.Width, 3);
@@ -144,8 +226,17 @@ namespace Units
 			bat.Draw (Juego.Textures.SolidTexture, fgRect, Color.Red);
 		}
 
+		/// <summary>
+		/// Releases all resource used by the <see cref="Units.Unidad"/> object.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Units.Unidad"/>. The <see cref="Dispose"/>
+		/// method leaves the <see cref="Units.Unidad"/> in an unusable state. After calling <see cref="Dispose"/>, you must
+		/// release all references to the <see cref="Units.Unidad"/> so the garbage collector can reclaim the memory that the
+		/// <see cref="Units.Unidad"/> was occupying.</remarks>
 		public void Dispose ()
 		{
+			if (Grid.Objects.Contains (this))
+				throw new Exception ("Cannot dispose if this unidad is still present in game.");
 			Texture = null;
 		}
 
@@ -154,6 +245,10 @@ namespace Units
 		/// </summary>
 		public Point Location { get; set; }
 
+		/// <summary>
+		/// Causes melee damage to a given target
+		/// </summary>
+		/// <param name="target">Target</param>
 		public void MeleeDamage (IUnidad target)
 		{
 			if (Equipo == target.Equipo)
@@ -217,26 +312,44 @@ namespace Units
 			return peso / vel;
 		}
 
+		/// <summary>
+		/// Gets or sets the controller of this unidad
+		/// </summary>
+		/// <value>The inteligencia.</value>
 		public IIntelligence Inteligencia { get; set; }
 
+		/// <summary>
+		/// Update
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public void Update (float gameTime)
 		{
 			if (Habilitado)
 				ForceUpdate (gameTime);
 		}
 
+		/// <summary>
+		/// Updates this unidad, even if it is not <see cref="Habilitado"/>
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		protected void ForceUpdate (float gameTime)
 		{
 			Recursos.Update (gameTime);
 			Buffs.Update (gameTime);
 		}
 
+		/// <summary>
+		/// Gets the name.
+		/// </summary>
 		public override string ToString ()
 		{
 			return string.Format ("[Unidad: {0}", Nombre);
 		}
 
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Unidad"/> class.
+		/// </summary>
+		/// <param name="texture">Texture name</param>
 		public Unidad (string texture = TextureType)
 		{
 			Nombre = getNextName ();

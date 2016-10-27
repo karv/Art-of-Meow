@@ -9,16 +9,37 @@ using Units.Equipment;
 
 namespace Screens
 {
+	/// <summary>
+	/// This screen allows the user to change the equipment of a <see cref="IUnidad"/>
+	/// </summary>
 	public class EquipmentScreen : DialScreen
 	{
+		/// <summary>
+		/// The inventory of the <see cref="IUnidad"/>
+		/// </summary>
 		public IInventory Inventory;
+		/// <summary>
+		/// The equipment manager for the <see cref="IUnidad"/>
+		/// </summary>
 		public EquipmentManager Equipment;
 		List<IEquipment> selectableEquipment;
 
+		/// <summary>
+		/// The control that lists the equipment
+		/// </summary>
+		/// <value>The contenedor.</value>
 		public ContenedorSelección<IEquipment> Contenedor { get; }
 
+		/// <summary>
+		/// Color de fondo. <see cref="Color.DarkGray"/>
+		/// </summary>
 		public override Color BgColor { get { return Color.DarkGray; } }
 
+		/// <summary>
+		/// Initializes its controls,
+		/// reloads the equipment list,
+		/// marks the equiped items
+		/// </summary>
 		public override void Initialize ()
 		{
 			base.Initialize ();
@@ -48,8 +69,15 @@ namespace Screens
 				Contenedor.Selection.Select (eq);
 		}
 
+		/// <summary>
+		/// Always draw screen base
+		/// </summary>
 		public override bool DibujarBase{ get { return true; } }
 
+		/// <summary>
+		/// Rebice señal del teclado.
+		/// <c>Esc</c> leaves this screen
+		/// </summary>
 		public override bool RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
 		{
 			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
@@ -68,6 +96,11 @@ namespace Screens
 			rebuildSelection ();
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Screens.EquipmentScreen"/> class.
+		/// </summary>
+		/// <param name="baseScreen">Base screen.</param>
+		/// <param name="unid">Unidad</param>
 		public EquipmentScreen (IScreen baseScreen, IUnidad unid)
 			: base (baseScreen.Juego,
 			        baseScreen)
