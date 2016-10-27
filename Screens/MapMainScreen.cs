@@ -16,9 +16,6 @@ using Units;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
-using Microsoft.Xna.Framework.Graphics;
-using Maps;
-using Items.Declarations.Pots;
 using Units.Skills;
 
 namespace Screens
