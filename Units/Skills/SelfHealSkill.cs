@@ -3,9 +3,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units.Recursos;
+using Units.Order;
 
 namespace Units.Skills
 {
+	
 	/// <summary>
 	/// Skill that allows the user to heal ?-self
 	/// </summary>
@@ -22,8 +24,13 @@ namespace Units.Skills
 		/// <param name="user">The caster</param>
 		public void Execute (IUnidad user)
 		{
-			var hpRec = user.Recursos.GetRecurso (ConstantesRecursos.HP);
-			hpRec.Valor += 10;
+			user.EnqueueOrder (new ExecuteOrder (user, doEffect));
+		}
+
+		static void doEffect (IUnidad target)
+		{
+			var hpRec = target.Recursos.GetRecurso (ConstantesRecursos.HP);
+			hpRec.Valor += _heal;
 		}
 
 		/// <summary>
@@ -33,7 +40,8 @@ namespace Units.Skills
 		/// <param name="user">User</param>
 		public bool IsCastable (IUnidad user)
 		{
-			return true;
+			var mpRec = user.Recursos.GetRecurso (ConstantesRecursos.MP);
+			return mpRec.Valor >= _mpCost;
 		}
 
 		/// <summary>

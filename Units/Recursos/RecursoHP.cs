@@ -93,7 +93,12 @@ namespace Units.Recursos
 			get { return _valor; }
 			set
 			{
+				ValorChanged?.Invoke (this, EventArgs.Empty);
 				_valor = Math.Min (Math.Max (value, 0), Max);
+				if (_valor == Max)
+					ReachedMax?.Invoke (this, EventArgs.Empty);
+				if (_valor == 0)
+					ReachedZero?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
@@ -112,7 +117,7 @@ namespace Units.Recursos
 		/// </summary>
 		public void Fill ()
 		{
-			_valor = Max;
+			Valor = Max;
 		}
 
 		/// <summary>
@@ -120,8 +125,21 @@ namespace Units.Recursos
 		/// </summary>
 		public void Empty ()
 		{
-			_valor = 0;
+			Valor = 0;
 		}
+
+		/// <summary>
+		/// Occurs when value changed.
+		/// </summary>
+		public event EventHandler ValorChanged;
+		/// <summary>
+		/// Occurs when reached zero.
+		/// </summary>
+		public event EventHandler ReachedZero;
+		/// <summary>
+		/// Occurs when reached max.
+		/// </summary>
+		public event EventHandler ReachedMax;
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoHP"/>.

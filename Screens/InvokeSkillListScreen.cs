@@ -90,6 +90,7 @@ namespace Screens
 		void AlSeleccionarSkill (object sender, EventArgs e)
 		{
 			_selección = Contenedor.FocusedItem;
+			_selección.Execute (Unidad);
 			Salir ();
 		}
 

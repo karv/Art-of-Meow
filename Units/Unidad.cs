@@ -40,6 +40,14 @@ namespace Units
 		}
 
 		/// <summary>
+		/// Enqueues a primitive order 
+		/// </summary>
+		public void EnqueueOrder (IPrimitiveOrder order)
+		{
+			PrimitiveOrders.Queue (order);
+		}
+
+		/// <summary>
 		/// Gets the inventory of this unit
 		/// </summary>
 		public Inventory Inventory { get; }
@@ -262,7 +270,7 @@ namespace Units
 					return false;
 
 				// Construct the order
-				Debug.Assert (PrimitiveOrders.IsIdle); // Unidad debe estar idle para llegar aquí
+				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
 
 				PrimitiveOrders.Queue (new MeleeDamageOrder (this, target));
 				PrimitiveOrders.Queue (new CooldownOrder (this, calcularTiempoMelee ()));
@@ -276,6 +284,13 @@ namespace Units
 						Location)));
 			}
 			return true;
+		}
+
+		[Conditional ("DEBUG")]
+		internal void assertIsIdleCheck ()
+		{
+			if (!PrimitiveOrders.IsIdle)
+				throw new Exception ();
 		}
 
 		float calcularTiempoMelee ()
@@ -329,6 +344,21 @@ namespace Units
 		{
 			Recursos.Update (gameTime);
 			Buffs.Update (gameTime);
+		}
+
+		/// <summary>
+		/// Occurs when this unidad is killed.
+		/// </summary>
+		public event EventHandler Killed
+		{
+			add
+			{
+				RecursoHP.ReachedZero += value;
+			}
+			remove
+			{
+				RecursoHP.ReachedZero -= value;
+			}
 		}
 
 		/// <summary>

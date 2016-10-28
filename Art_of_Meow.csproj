@@ -125,6 +125,7 @@
     <Compile Include="Units\Order\IPrimitiveOrder.cs" />
     <Compile Include="Units\Order\OrderQueue.cs" />
     <Compile Include="Units\Order\PrimitiveOrder.cs" />
+    <Compile Include="Units\Order\MeleeDamageOrder.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

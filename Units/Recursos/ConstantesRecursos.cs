@@ -26,5 +26,10 @@
 		/// The HP
 		/// </summary>
 		public const string HP = "hp";
+		/// <summary>
+		/// Magic points
+		/// </summary>
+		public const string MP = "mp";
+
 	}
 }
