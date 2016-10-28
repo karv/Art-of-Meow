@@ -74,7 +74,7 @@ namespace Units.Inteligencia
 		public override string ToString ()
 		{
 			return string.Format (
-				"[HumanIntelligence: Yo={0}]",
+				"[HI|{0}]",
 				ControlledUnidad.Nombre);
 		}
 

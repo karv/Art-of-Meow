@@ -51,6 +51,11 @@ namespace Units
 		/// <value>The grid.</value>
 		public Grid Grid { get; }
 
+		/// <summary>
+		/// Gets the orders corresponding this unidad
+		/// </summary>
+		/// <value>The primitive orders.</value>
+		public OrderQueue PrimitiveOrders { get; }
 
 		IComponentContainerComponent<IControl> IControl.Container 
 		{ get { return (IComponentContainerComponent<IControl>)Grid; } }
@@ -60,7 +65,8 @@ namespace Units
 		/// </summary>
 		public virtual void Execute ()
 		{
-			Inteligencia.DoAction ();
+			if (PrimitiveOrders.IsIdle)
+				Inteligencia.DoAction ();
 		}
 
 		/// <summary>
