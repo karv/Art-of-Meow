@@ -348,6 +348,7 @@ namespace Units
 			Nombre = getNextName ();
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);
+			PrimitiveOrders = new OrderQueue ();
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
 			Inventory = new Inventory ();
