@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Units.Order
 {
@@ -40,6 +41,25 @@ namespace Units.Order
 		public bool CanCancel ()
 		{
 			return queueSkill.TrueForAll (z => z.CanCancel);
+		}
+
+		/// <summary>
+		/// Gets the expected termination time for all the queue
+		/// </summary>
+		public float ExpectedTerminationTime ()
+		{
+			return queueSkill.OfType<ITimedPrimitiveOrder> ().Sum (z => z.ExceptedTime);
+		}
+
+		/// <summary>
+		/// Returns the excepcted time for the first order.
+		/// </summary>
+		/// <returns>The first order termination time.</returns>
+		public float ExpectedFirstOrderTerminationTime ()
+		{
+			if (IsIdle)
+				return 0;
+			return (CurrentOrder as ITimedPrimitiveOrder)?.ExceptedTime ?? 0;
 		}
 
 		/// <summary>

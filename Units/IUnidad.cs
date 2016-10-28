@@ -20,11 +20,6 @@ namespace Units
 		Grid MapGrid { get; }
 
 		/// <summary>
-		/// Try to damage a target.
-		/// </summary>
-		void MeleeDamage (IUnidad target);
-
-		/// <summary>
 		/// Gets the resources of this unit
 		/// </summary>
 		/// <value>The recursos.</value>

@@ -2,6 +2,17 @@
 namespace Units.Order
 {
 	/// <summary>
+	/// A primitive order where time of termination is determined
+	/// </summary>
+	public interface ITimedPrimitiveOrder : IPrimitiveOrder
+	{
+		/// <summary>
+		/// Gets the expected time before this order ends
+		/// </summary>
+		float ExceptedTime { get; }
+	}
+
+	/// <summary>
 	/// Represents a primitive order in a <see cref="IUnidad"/>'s <see cref="OrderQueue"/>
 	/// </summary>
 	public interface IPrimitiveOrder

@@ -4,7 +4,7 @@ namespace Units.Order
 	/// <summary>
 	/// This order disables a unidad from taking other orders during a fixed time
 	/// </summary>
-	public class CooldownOrder : PrimitiveOrder
+	public class CooldownOrder : PrimitiveOrder, ITimedPrimitiveOrder
 	{
 		/// <summary>
 		/// Time until this order if finished
@@ -31,8 +31,10 @@ namespace Units.Order
 		/// <value><c>true</c> if this instance can cancel; otherwise, <c>false</c>.</value>
 		protected override bool CanCancel { get { return false; } }
 
+		float ITimedPrimitiveOrder.ExceptedTime { get { return Time; } }
+
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Units.CooldownOrder"/> class.
+		/// Initializes a new instance of the <see cref="Units.Order.CooldownOrder"/> class.
 		/// </summary>
 		/// <param name="unidad">User</param>
 		/// <param name="initialTime">Initial time.</param>

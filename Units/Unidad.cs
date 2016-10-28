@@ -66,8 +66,7 @@ namespace Units
 		/// </summary>
 		public virtual void Execute ()
 		{
-			if (PrimitiveOrders.IsIdle)
-				Inteligencia.DoAction ();
+			Inteligencia.DoAction ();
 		}
 
 		/// <summary>
@@ -76,7 +75,6 @@ namespace Units
 		/// <param name="time">Time.</param>
 		public void PassTime (float time)
 		{
-			NextActionTime -= time;
 			PrimitiveOrders.PassTime (time);
 			Update (time);
 		}
@@ -88,8 +86,6 @@ namespace Units
 		{
 		}
 
-		float _nextActionTime;
-
 		/// <summary>
 		/// Gets the time for the next action.
 		/// </summary>
@@ -97,13 +93,7 @@ namespace Units
 		{
 			get
 			{
-				return _nextActionTime;
-			}
-			set
-			{
-				if (value < 0)
-					throw new Exception ();
-				_nextActionTime = value;
+				return PrimitiveOrders.ExpectedFirstOrderTerminationTime ();
 			}
 		}
 
@@ -255,19 +245,6 @@ namespace Units
 		public Point Location { get; set; }
 
 		/// <summary>
-		/// Causes melee damage to a given target
-		/// </summary>
-		/// <param name="target">Target</param>
-		public void MeleeDamage (IUnidad target)
-		{
-			if (Equipo == target.Equipo)
-				return;
-			var hp = target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			var dmg = Recursos.ValorRecurso (ConstantesRecursos.DañoMelee) / 8;
-			hp.Valor -= dmg;
-		}
-
-		/// <summary>
 		/// Move or melee to a direction
 		/// </summary>
 		/// <returns><c>true</c>, if action was taken, <c>false</c> otherwise.</returns>
@@ -278,18 +255,25 @@ namespace Units
 			// Intenta mover este objeto; si no puede, intenta atacar.
 			if (!MapGrid.MoveCellObject (this, dir))
 			{
+				// Do melee
 				var targetCell = new Cell (MapGrid, Location + dir.AsDirectionalPoint ());
 				var target = targetCell.GetUnidadHere ();
 				if (target == null)
 					return false;
-				NextActionTime = calcularTiempoMelee ();
-				var dex = Recursos.GetRecurso (ConstantesRecursos.Destreza) as StatRecurso;
-				dex.Valor *= 0.8f;
-				MeleeDamage (target);
+
+				// Construct the order
+				Debug.Assert (PrimitiveOrders.IsIdle); // Unidad debe estar idle para llegar aquí
+
+				PrimitiveOrders.Queue (new MeleeDamageOrder (this, target));
+				PrimitiveOrders.Queue (new CooldownOrder (this, calcularTiempoMelee ()));
 			}
 			else
 			{
-				NextActionTime = calcularTiempoMov (desde, Location);
+				PrimitiveOrders.Queue (new CooldownOrder (
+					this,
+					calcularTiempoMov (
+						desde,
+						Location)));
 			}
 			return true;
 		}
