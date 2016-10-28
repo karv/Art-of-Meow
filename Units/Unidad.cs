@@ -12,6 +12,7 @@ using Units.Equipment;
 using Units.Inteligencia;
 using Units.Recursos;
 using Moggle.Controles;
+using Units.Order;
 
 namespace Units
 {
@@ -76,6 +77,7 @@ namespace Units
 		public void PassTime (float time)
 		{
 			NextActionTime -= time;
+			PrimitiveOrders.PassTime (time);
 			Update (time);
 		}
 
