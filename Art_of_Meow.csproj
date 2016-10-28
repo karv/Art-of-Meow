@@ -120,6 +120,11 @@
     <Compile Include="Units\Skills\SkillManager.cs" />
     <Compile Include="Maps\Map.cs" />
     <Compile Include="Units\Skills\SelfHealSkill.cs" />
+    <Compile Include="Units\Order\CooldownOrder.cs" />
+    <Compile Include="Units\Order\ExecuteOrder.cs" />
+    <Compile Include="Units\Order\IPrimitiveOrder.cs" />
+    <Compile Include="Units\Order\OrderQueue.cs" />
+    <Compile Include="Units\Order\PrimitiveOrder.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -150,5 +155,6 @@
     <Folder Include="Items\Declarations\Equipment\" />
     <Folder Include="Units\Skills\" />
     <Folder Include="Maps\" />
+    <Folder Include="Units\Order\" />
   </ItemGroup>
 </Project>

@@ -43,7 +43,6 @@ namespace Units.Inteligencia
 
 		void IIntelligence.DoAction ()
 		{
-			ControlledUnidad.NextActionTime = 2; // ¿Qué es esto?
 			TryUpdateTarget ();
 			var dir = ControlledUnidad.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)

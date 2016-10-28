@@ -95,7 +95,7 @@ namespace Screens
 
 		/// <summary>
 		/// Se sale de este diálogo.
-		///  Libera todo los recursos usados.
+		/// Libera todo los recursos usados.
 		/// </summary>
 		public override void Salir ()
 		{
