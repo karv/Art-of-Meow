@@ -18,7 +18,7 @@ namespace Units.Order
 			var dex = Unidad.Recursos.GetRecurso (ConstantesRecursos.Destreza) as StatRecurso;
 			dex.Valor *= 0.8f;
 
-			if (Unidad.Equipo == Target.Equipo)
+			if (Unidad.Team == Target.Team)
 				return;
 			var hp = Target.Recursos.GetRecurso (ConstantesRecursos.HP);
 			Damage = Unidad.Recursos.ValorRecurso (ConstantesRecursos.DañoMelee) / 8;

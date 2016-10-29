@@ -29,10 +29,8 @@ namespace Units.Inteligencia
 
 		bool isSelectableAsTarget (IGridObject obj)
 		{
-			var otro = obj as Unidad;
-			if (otro == null)
-				return false;
-			return otro.Equipo != ControlledUnidad.Equipo;
+			var otro = obj as IUnidad;
+			return otro != null && ControlledUnidad.IsEnemyOf (otro);
 		}
 
 		void TryUpdateTarget ()
