@@ -150,7 +150,7 @@ namespace Units
 		/// <value>The map grid.</value>
 		public Grid MapGrid { get; set; }
 
-		const string TextureType = "person";
+		const string TextureType = "swordman";
 
 		/// <summary>
 		/// Gets or sets the texture string.
