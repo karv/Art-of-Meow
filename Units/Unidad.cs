@@ -30,7 +30,7 @@ namespace Units
 		/// <summary>
 		/// Gets the team's id
 		/// </summary>
-		public int Equipo { get; set; }
+		public TeamManager Team { get; set; }
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -219,7 +219,7 @@ namespace Units
 		{
 			bat.Draw (
 				Texture,
-				area, null, Color.White,
+				area, null, Team.TeamColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Unit);

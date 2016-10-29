@@ -80,7 +80,7 @@ namespace Screens
 		{
 			Player = new Unidad
 			{
-				Equipo = 1,
+				Team = new TeamManager (Color.Red),
 				Inteligencia = new HumanIntelligence (Player),
 				MapGrid = GameGrid,
 				Location = StartingPoint
@@ -120,11 +120,12 @@ namespace Screens
 		/// </summary>
 		void buildChasers ()
 		{
+			var enemyTeam = new TeamManager (Color.Blue);
 			for (int i = 0; i < NumChasers; i++)
 			{
 				var chaser = new Unidad
 				{
-					Equipo = 2,
+					Team = enemyTeam,
 					MapGrid = GameGrid,
 					Location = GameGrid.RandomPoint ()
 				};

@@ -18,5 +18,11 @@ namespace Units
 		{
 			_members = new List<IUnidad> ();
 		}
+
+		public TeamManager (Color color)
+			: this ()
+		{
+			TeamColor = color;
+		}
 	}
 }

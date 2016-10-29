@@ -56,7 +56,7 @@ namespace Units
 		/// Gets the id of the team of this unit
 		/// </summary>
 		/// <value>The equipo.</value>
-		int Equipo { get; }
+		TeamManager Team { get; }
 
 		/// <summary>
 		/// Gets the inventory of this unit
@@ -80,6 +80,11 @@ namespace Units
 		{
 			foreach (var o in orders)
 				unid.EnqueueOrder (o);
+		}
+
+		public static bool IsEnemyOf (this IUnidad unid, IUnidad other)
+		{
+			return !unid.Team.Equals (other.Team);
 		}
 	}
 }
