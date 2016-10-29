@@ -16,6 +16,7 @@ using Units;
 using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
+using Units.Skills;
 
 namespace Screens
 {
@@ -107,8 +108,9 @@ namespace Screens
 			Player.Inventory.Add (sword);
 			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
 			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
-			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
-			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			var healSkill = new SelfHealSkill ();
+			Player.Skills.Skills.Add (healSkill);
+			healSkill.Initialize ();
 
 			_recursoView = new RecursoView (this, Player.Recursos);
 		}
@@ -192,11 +194,9 @@ namespace Screens
 				case Keys.Escape:
 					Juego.Exit ();
 					break;
-					#if DEBUG
 				case Keys.Tab:
 					Debug.WriteLine (Player.Recursos);
 					break;
-					#endif
 				case Keys.I:
 					if (Player.Inventory.Any ())
 					{
@@ -206,6 +206,13 @@ namespace Screens
 					break;
 				case Keys.C:
 					GameGrid.TryCenterOn (Player.Location);
+					break;
+				case Keys.S:
+					if (Player.Skills.AnyVisible)
+					{
+						var scr = new InvokeSkillListScreen (this, Player);
+						scr.Ejecutar ();
+					}
 					break;
 			}
 			GameGrid.CenterIfNeeded (Player);

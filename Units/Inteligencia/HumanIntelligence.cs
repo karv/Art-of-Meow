@@ -13,6 +13,7 @@ namespace Units.Inteligencia
 
 		void IIntelligence.DoAction ()
 		{
+			ControlledUnidad.assertIsIdleCheck ();
 			if (ActionDir != MovementDirectionEnum.NoMov)
 			{
 				ControlledUnidad.MoveOrMelee (ActionDir);
@@ -74,7 +75,7 @@ namespace Units.Inteligencia
 		public override string ToString ()
 		{
 			return string.Format (
-				"[HumanIntelligence: Yo={0}]",
+				"[HI|{0}]",
 				ControlledUnidad.Nombre);
 		}
 

@@ -6,6 +6,8 @@ using Units.Buffs;
 using Units.Equipment;
 using Units.Recursos;
 using Units.Skills;
+using Units.Order;
+using System.Collections.Generic;
 
 namespace Units
 {
@@ -18,11 +20,6 @@ namespace Units
 		/// Gets the map grid
 		/// </summary>
 		Grid MapGrid { get; }
-
-		/// <summary>
-		/// Try to damage a target.
-		/// </summary>
-		void MeleeDamage (IUnidad target);
 
 		/// <summary>
 		/// Gets the resources of this unit
@@ -47,6 +44,8 @@ namespace Units
 		/// </summary>
 		/// <value>The skills.</value>
 		SkillManager Skills { get; }
+
+		void EnqueueOrder (IPrimitiveOrder order);
 
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Units.IUnidad"/> is enabled, and therefore may act.
@@ -74,6 +73,13 @@ namespace Units
 		public static void Die (this IUnidad u)
 		{
 			u.MapGrid.RemoveObject (u);
+		}
+
+		public static void EnqueueOrder (this IUnidad unid,
+		                                 IEnumerable<IPrimitiveOrder> orders)
+		{
+			foreach (var o in orders)
+				unid.EnqueueOrder (o);
 		}
 	}
 }

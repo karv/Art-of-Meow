@@ -11,6 +11,13 @@ namespace Cells.CellObjects
 		float NextActionTime { get; }
 
 		/// <summary>
+		/// Gets a value indicating whether this object is ready to <see cref="Execute"/>
+		/// </summary>
+		bool IsReady { get; }
+
+		bool Enabled { get; }
+
+		/// <summary>
 		/// Execute this
 		/// </summary>
 		void Execute ();

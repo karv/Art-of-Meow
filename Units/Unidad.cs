@@ -12,6 +12,7 @@ using Units.Equipment;
 using Units.Inteligencia;
 using Units.Recursos;
 using Moggle.Controles;
+using Units.Order;
 
 namespace Units
 {
@@ -39,6 +40,16 @@ namespace Units
 		}
 
 		/// <summary>
+		/// Enqueues a primitive order 
+		/// </summary>
+		public void EnqueueOrder (IPrimitiveOrder order)
+		{
+			PrimitiveOrders.Queue (order);
+		}
+
+		bool IUpdateGridObject.IsReady { get { return PrimitiveOrders.IsIdle; } }
+
+		/// <summary>
 		/// Gets the inventory of this unit
 		/// </summary>
 		public Inventory Inventory { get; }
@@ -51,6 +62,11 @@ namespace Units
 		/// <value>The grid.</value>
 		public Grid Grid { get; }
 
+		/// <summary>
+		/// Gets the orders corresponding this unidad
+		/// </summary>
+		/// <value>The primitive orders.</value>
+		public OrderQueue PrimitiveOrders { get; }
 
 		IComponentContainerComponent<IControl> IControl.Container 
 		{ get { return (IComponentContainerComponent<IControl>)Grid; } }
@@ -69,7 +85,7 @@ namespace Units
 		/// <param name="time">Time.</param>
 		public void PassTime (float time)
 		{
-			NextActionTime -= time;
+			PrimitiveOrders.PassTime (time);
 			Update (time);
 		}
 
@@ -80,8 +96,6 @@ namespace Units
 		{
 		}
 
-		float _nextActionTime;
-
 		/// <summary>
 		/// Gets the time for the next action.
 		/// </summary>
@@ -89,13 +103,7 @@ namespace Units
 		{
 			get
 			{
-				return _nextActionTime;
-			}
-			set
-			{
-				if (value < 0)
-					throw new Exception ();
-				_nextActionTime = value;
+				return PrimitiveOrders.ExpectedFirstOrderTerminationTime ();
 			}
 		}
 
@@ -128,6 +136,8 @@ namespace Units
 		/// </summary>
 		/// <value><c>true</c> if habilitado; otherwise, <c>false</c>.</value>
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
+
+		bool IUpdateGridObject.Enabled { get { return Habilitado; } }
 
 		/// <summary>
 		/// Gets the HP
@@ -163,6 +173,7 @@ namespace Units
 			Texture = content.Load<Texture2D> (TextureStr);
 			Equipment.LoadContent (content);
 			Inventory.LoadContent (content);
+			Skills.LoadContent (content);
 		}
 
 		/// <summary>
@@ -246,19 +257,6 @@ namespace Units
 		public Point Location { get; set; }
 
 		/// <summary>
-		/// Causes melee damage to a given target
-		/// </summary>
-		/// <param name="target">Target</param>
-		public void MeleeDamage (IUnidad target)
-		{
-			if (Equipo == target.Equipo)
-				return;
-			var hp = target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			var dmg = Recursos.ValorRecurso (ConstantesRecursos.DañoMelee) / 8;
-			hp.Valor -= dmg;
-		}
-
-		/// <summary>
 		/// Move or melee to a direction
 		/// </summary>
 		/// <returns><c>true</c>, if action was taken, <c>false</c> otherwise.</returns>
@@ -269,20 +267,35 @@ namespace Units
 			// Intenta mover este objeto; si no puede, intenta atacar.
 			if (!MapGrid.MoveCellObject (this, dir))
 			{
+				// Do melee
 				var targetCell = new Cell (MapGrid, Location + dir.AsDirectionalPoint ());
 				var target = targetCell.GetUnidadHere ();
 				if (target == null)
 					return false;
-				NextActionTime = calcularTiempoMelee ();
-				var dex = Recursos.GetRecurso (ConstantesRecursos.Destreza) as StatRecurso;
-				dex.Valor *= 0.8f;
-				MeleeDamage (target);
+
+				// Construct the order
+				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
+
+				PrimitiveOrders.Queue (new MeleeDamageOrder (this, target));
+				PrimitiveOrders.Queue (new CooldownOrder (this, calcularTiempoMelee ()));
 			}
 			else
 			{
-				NextActionTime = calcularTiempoMov (desde, Location);
+				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
+				PrimitiveOrders.Queue (new CooldownOrder (
+					this,
+					calcularTiempoMov (
+						desde,
+						Location)));
 			}
 			return true;
+		}
+
+		[Conditional ("DEBUG")]
+		internal void assertIsIdleCheck ()
+		{
+			if (!PrimitiveOrders.IsIdle)
+				throw new Exception ();
 		}
 
 		float calcularTiempoMelee ()
@@ -339,6 +352,21 @@ namespace Units
 		}
 
 		/// <summary>
+		/// Occurs when this unidad is killed.
+		/// </summary>
+		public event EventHandler Killed
+		{
+			add
+			{
+				RecursoHP.ReachedZero += value;
+			}
+			remove
+			{
+				RecursoHP.ReachedZero -= value;
+			}
+		}
+
+		/// <summary>
 		/// Gets the name.
 		/// </summary>
 		public override string ToString ()
@@ -355,6 +383,7 @@ namespace Units
 			Nombre = getNextName ();
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);
+			PrimitiveOrders = new OrderQueue ();
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
 			Inventory = new Inventory ();

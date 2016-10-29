@@ -33,9 +33,10 @@ namespace AoM
 		{
 			get
 			{
-				return Objects.OfType<IUpdateGridObject> ();
+				return Objects.OfType<IUpdateGridObject> ().Where (z => z.Enabled);
 			}
 		}
+
 
 		/// <summary>
 		/// Pass the time
@@ -62,10 +63,20 @@ namespace AoM
 				throw new Exception ("passTime < 0");
 			#endif
 			PassTime (passTime);
-			Debug.WriteLineIf (Actual.NextActionTime != 0,
+			#if DEBUG
+			if (!Actual.IsReady)
+				Console.WriteLine ();
+			//Debugger.Break ();
+			#endif
+			Debug.WriteLineIf (!Actual.IsReady,
 				"Ejecutando objeto con tiempo de espera positivo",
 				"IUpdateGridObject");
-			Actual.Execute ();
+			foreach (var actuador in UpdateGridObjects)
+			{
+				if (actuador.IsReady)
+					actuador.Execute ();
+			}
+			//Actual.Execute ();
 			return passTime;
 		}
 
