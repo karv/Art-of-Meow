@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Units.Buffs;
+using Cells;
 
 namespace Test
 {
@@ -8,11 +9,13 @@ namespace Test
 	{
 		BuffManager Man;
 		Units.Unidad Unit;
+		Grid GameGrid;
 
 		[SetUp]
 		public void Setup ()
 		{
-			Unit = new Units.Unidad ();
+			GameGrid = new Grid (0, 0, null);
+			Unit = new Units.Unidad (GameGrid);
 			Man = new BuffManager (Unit);
 		}
 

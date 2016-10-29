@@ -1,3 +1,5 @@
+using System;
+
 
 namespace Cells
 {
@@ -17,10 +19,14 @@ namespace Cells
 		/// <summary>
 		/// The foreground objects depth
 		/// </summary>
-		public const float Foreground = 0.1f;
+		public const float Foreground = 0.15f;
 		/// <summary>
 		/// Unit's depth
 		/// </summary>
-		public const float Unit = 0;
+		public const float Unit = 0.1f;
+		/// <summary>
+		/// The controls layer
+		/// </summary>
+		public const float Gui = 0;
 	}
 }

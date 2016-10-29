@@ -13,6 +13,8 @@ using Units.Inteligencia;
 using Units.Recursos;
 using Moggle.Controles;
 using Units.Order;
+using System.Net.Mime;
+using System.Net;
 
 namespace Units
 {
@@ -224,17 +226,28 @@ namespace Units
 				SpriteEffects.None,
 				Depths.Unit);
 
+
 			// Barras
-			var rec = new Rectangle (area.Left, area.Bottom, area.Width, 3);
+			const int ht = 3;
+			int sepPoint = (int)(area.Width * hpRelativeValue);
+			var rec = new Rectangle (
+				          area.Left + sepPoint,
+				          area.Bottom,
+				          area.Width - sepPoint,
+				          ht);
 
-			bat.Draw (Juego.Textures.SolidTexture, rec, Color.Gray * 0.7f);
-			var fgRect = new Rectangle (
-				             rec.Location, 
-				             new Point (
-					             (int)(rec.Width * hpRelativeValue),
-					             rec.Height));
+			bat.Draw (
+				Juego.Textures.SolidTexture,
+				destinationRectangle: rec,
+				color: Color.DarkGray * 0.7f,
+				layerDepth: Depths.Gui);
+			var fgRect = new Rectangle (area.Left, rec.Top, sepPoint, ht);
 
-			bat.Draw (Juego.Textures.SolidTexture, fgRect, Color.Red);
+			bat.Draw (
+				Juego.Textures.SolidTexture,
+				destinationRectangle: fgRect,
+				color: Color.Red,
+				layerDepth: Depths.Gui);
 		}
 
 		/// <summary>
@@ -378,8 +391,10 @@ namespace Units
 		/// Initializes a new instance of the <see cref="Units.Unidad"/> class.
 		/// </summary>
 		/// <param name="texture">Texture name</param>
-		public Unidad (string texture = TextureType)
+		/// <param name="grid">Game grid</param>
+		public Unidad (Grid grid, string texture = TextureType)
 		{
+			Grid = grid;
 			Nombre = getNextName ();
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);

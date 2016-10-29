@@ -78,7 +78,7 @@ namespace Screens
 		/// </summary>
 		void inicializarJugador ()
 		{
-			Player = new Unidad
+			Player = new Unidad (GameGrid)
 			{
 				Team = new TeamManager (Color.Red),
 				Inteligencia = new HumanIntelligence (Player),
@@ -123,7 +123,7 @@ namespace Screens
 			var enemyTeam = new TeamManager (Color.Blue);
 			for (int i = 0; i < NumChasers; i++)
 			{
-				var chaser = new Unidad
+				var chaser = new Unidad (GameGrid)
 				{
 					Team = enemyTeam,
 					MapGrid = GameGrid,
