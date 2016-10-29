@@ -43,6 +43,7 @@ namespace Units.Inteligencia
 
 		void IIntelligence.DoAction ()
 		{
+			ControlledUnidad.assertIsIdleCheck ();
 			TryUpdateTarget ();
 			var dir = ControlledUnidad.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)

@@ -26,6 +26,11 @@ namespace Units.Order
 
 		}
 
+		public override float PassTime (float gameTime)
+		{
+			return base.PassTime (gameTime);
+		}
+
 		public MeleeDamageOrder (IUnidad unidad,
 		                         IUnidad target)
 			: base (unidad, null)

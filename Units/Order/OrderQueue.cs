@@ -63,28 +63,34 @@ namespace Units.Order
 		}
 
 		/// <summary>
-		/// Updates the queue
+		/// Updates the queue and returns the 'unused' time
 		/// </summary>
 		/// <param name="time">Game-time passed</param>
-		public void PassTime (float time)
+		public float PassTime (float time)
 		{
 			// TODO: por ahora sólo revisa un PrimitiveOrder por update.
 
-			if (IsIdle)
-				return;
 
-			if (!isCurrentOrderStarted)
+			while (true)
 			{
-				CurrentOrder.Start ();
-				isCurrentOrderStarted = true;
+				if (IsIdle)
+					return time;
+				if (!isCurrentOrderStarted)
+				{
+					CurrentOrder.Start ();
+					isCurrentOrderStarted = true;
+				}
+				time = CurrentOrder.PassTime (time);
+				if (CurrentOrder.Finished)
+				{
+					CurrentOrder.Finish ();
+					queueSkill.RemoveAt (0);
+					isCurrentOrderStarted = false;
+				}
+				else
+					return 0;
 			}
-			CurrentOrder.PassTime (time);
-			if (CurrentOrder.Finished)
-			{
-				CurrentOrder.Finish ();
-				queueSkill.RemoveAt (0);
-				isCurrentOrderStarted = false;
-			}
+			return 0;
 		}
 
 		/// <summary>

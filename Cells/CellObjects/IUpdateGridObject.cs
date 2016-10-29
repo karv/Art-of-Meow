@@ -10,6 +10,8 @@ namespace Cells.CellObjects
 		/// </summary>
 		float NextActionTime { get; }
 
+		bool IsReady { get; }
+
 		/// <summary>
 		/// Execute this
 		/// </summary>

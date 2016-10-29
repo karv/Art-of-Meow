@@ -16,8 +16,9 @@ namespace Units.Order
 		/// Executed with the game update
 		/// </summary>
 		/// <param name="gameTime">Time passed</param>
-		public virtual void PassTime (float gameTime)
+		public virtual float PassTime (float gameTime)
 		{
+			return gameTime;
 		}
 
 		/// <summary>

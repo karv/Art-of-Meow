@@ -13,6 +13,7 @@ namespace Units.Inteligencia
 
 		void IIntelligence.DoAction ()
 		{
+			ControlledUnidad.assertIsIdleCheck ();
 			if (ActionDir != MovementDirectionEnum.NoMov)
 			{
 				ControlledUnidad.MoveOrMelee (ActionDir);

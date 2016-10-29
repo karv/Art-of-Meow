@@ -35,11 +35,11 @@ namespace Units.Order
 		bool Finished { get; }
 
 		/// <summary>
-		/// Updates this order by a given time
+		/// Updates this order by a given time and returns the unused time
 		/// </summary>
 		/// <returns><c>true</c>, if the order is finished, <c>false</c> otherwise.</returns>
 		/// <param name="gameTime">Time passed</param>
-		void PassTime (float gameTime);
+		float PassTime (float gameTime);
 
 		/// <summary>
 		/// This method is executed when this order becomes first in the <see cref="OrderQueue"/>

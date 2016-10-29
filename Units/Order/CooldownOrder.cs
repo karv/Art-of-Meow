@@ -15,9 +15,11 @@ namespace Units.Order
 		/// Updates this order by a given time
 		/// </summary>
 		/// <param name="gameTime">Time passed</param>
-		public override void PassTime (float gameTime)
+		public override float PassTime (float gameTime)
 		{
 			Time -= gameTime;
+			// This always finishes the time
+			return 0;
 		}
 
 		/// <summary>

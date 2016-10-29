@@ -47,6 +47,8 @@ namespace Units
 			PrimitiveOrders.Queue (order);
 		}
 
+		bool IUpdateGridObject.IsReady { get { return PrimitiveOrders.IsIdle; } }
+
 		/// <summary>
 		/// Gets the inventory of this unit
 		/// </summary>
@@ -277,6 +279,7 @@ namespace Units
 			}
 			else
 			{
+				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
 				PrimitiveOrders.Queue (new CooldownOrder (
 					this,
 					calcularTiempoMov (
