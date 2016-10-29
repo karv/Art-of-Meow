@@ -194,11 +194,9 @@ namespace Screens
 				case Keys.Escape:
 					Juego.Exit ();
 					break;
-					#if DEBUG
 				case Keys.Tab:
 					Debug.WriteLine (Player.Recursos);
 					break;
-					#endif
 				case Keys.I:
 					if (Player.Inventory.Any ())
 					{

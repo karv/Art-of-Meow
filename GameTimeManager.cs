@@ -33,9 +33,10 @@ namespace AoM
 		{
 			get
 			{
-				return Objects.OfType<IUpdateGridObject> ();
+				return Objects.OfType<IUpdateGridObject> ().Where (z => z.Enabled);
 			}
 		}
+
 
 		/// <summary>
 		/// Pass the time

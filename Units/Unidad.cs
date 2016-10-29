@@ -137,6 +137,8 @@ namespace Units
 		/// <value><c>true</c> if habilitado; otherwise, <c>false</c>.</value>
 		public bool Habilitado { get { return RecursoHP.Valor > 0; } }
 
+		bool IUpdateGridObject.Enabled { get { return Habilitado; } }
+
 		/// <summary>
 		/// Gets the HP
 		/// </summary>
