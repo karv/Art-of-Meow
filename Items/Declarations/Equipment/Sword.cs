@@ -34,6 +34,7 @@ namespace Items.Declarations.Equipment
 		/// <summary>
 		/// Causes melee effect on a target
 		/// </summary>
+		/// <param name="user">The user of the melee move</param>
 		/// <param name="target">Target.</param>
 		public void DoMeleeEffectOn (IUnidad user, IUnidad target)
 		{

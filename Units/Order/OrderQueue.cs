@@ -68,9 +68,6 @@ namespace Units.Order
 		/// <param name="time">Game-time passed</param>
 		public float PassTime (float time)
 		{
-			// TODO: por ahora sólo revisa un PrimitiveOrder por update.
-
-
 			while (true)
 			{
 				if (IsIdle)
@@ -90,7 +87,6 @@ namespace Units.Order
 				else
 					return 0;
 			}
-			return 0;
 		}
 
 		/// <summary>
