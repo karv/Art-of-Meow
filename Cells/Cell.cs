@@ -13,6 +13,9 @@ namespace Cells
 	/// <remarks>Modify this class won't change the <see cref="Grid"/></remarks>
 	public class Cell
 	{
+		/// <summary>
+		/// Gets the list of <see cref="IGridObject"/> in this cell
+		/// </summary>
 		public List<IGridObject> Objects { get; }
 
 		/// <summary>

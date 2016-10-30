@@ -3,18 +3,17 @@ using System.Diagnostics;
 using AoM;
 using Cells;
 using Cells.CellObjects;
+using Cells.Collision;
 using Items;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 using Units.Buffs;
 using Units.Equipment;
 using Units.Inteligencia;
-using Units.Recursos;
-using Moggle.Controles;
 using Units.Order;
-using System.Net.Mime;
-using System.Net;
+using Units.Recursos;
 
 namespace Units
 {
@@ -355,6 +354,11 @@ namespace Units
 		{
 			Recursos.Update (gameTime);
 			Buffs.Update (gameTime);
+		}
+
+		System.Collections.Generic.IEnumerable<ICollisionRule> ICollidableGridObject.GetCollisionRules ()
+		{
+			yield return new DescriptCollitionRule (z => z is IUnidad); // Does not stack
 		}
 
 		/// <summary>
