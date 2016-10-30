@@ -4,22 +4,63 @@ using System;
 
 namespace Units
 {
+	/// <summary>
+	/// The movement direction
+	/// </summary>
 	public enum MovementDirectionEnum
 	{
+		/// <summary>
+		/// Right
+		/// </summary>
 		Right,
+		/// <summary>
+		/// Up right.
+		/// </summary>
 		UpRight,
+		/// <summary>
+		/// Up.
+		/// </summary>
 		Up,
+		/// <summary>
+		/// Up left.
+		/// </summary>
 		UpLeft,
+		/// <summary>
+		/// left.
+		/// </summary>
 		Left,
+		/// <summary>
+		/// Down left.
+		/// </summary>
 		DownLeft,
+		/// <summary>
+		/// Down.
+		/// </summary>
 		Down,
+		/// <summary>
+		/// Down right.
+		/// </summary>
 		DownRight,
+		/// <summary>
+		/// Gets the total number of possible movements
+		/// </summary>
 		__total_dirs,
+		/// <summary>
+		/// No movement
+		/// </summary>
 		NoMov
 	}
 
+	/// <summary>
+	/// Extends the <see cref="MovementDirectionEnum"/> enum
+	/// </summary>
 	public static class Movement
 	{
+		/// <summary>
+		/// Gets the destination point when moving as a <see cref="MovementDirectionEnum"/>
+		/// </summary>
+		/// <param name="from">From.</param>
+		/// <param name="to">The movement destination</param>
 		public static MovementDirectionEnum GetDirectionTo (this Point @from,
 		                                                    Point to)
 		{
@@ -60,6 +101,9 @@ namespace Units
 			return (MovementDirectionEnum)int_dir;
 		}
 
+		/// <summary>
+		/// Converts a <see cref="MovementDirectionEnum"/> into a <see cref="Point"/>
+		/// </summary>
 		public static Point AsDirectionalPoint (this MovementDirectionEnum dir)
 		{
 			switch (dir)

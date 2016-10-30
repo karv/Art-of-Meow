@@ -20,15 +20,16 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Debug\Art_of_Meow.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Release\Art_of_Meow.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -55,6 +56,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="OpenTK.dll.config" />
+    <None Include="Maps\void.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -71,7 +75,6 @@
     <Compile Include="Units\Recursos\IRecurso.cs" />
     <Compile Include="Units\Recursos\ManejadorRecursos.cs" />
     <Compile Include="Units\Recursos\RecursoEstático.cs" />
-    <Compile Include="Componentes\DoubleBar.cs" />
     <Compile Include="Units\Recursos\RecursoHP.cs" />
     <Compile Include="GameTimeManager.cs" />
     <Compile Include="Cells\CellObjects\IUpdateGridObject.cs" />
@@ -112,6 +115,24 @@
     <Compile Include="Units\Recursos\Recurso.cs" />
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
+    <Compile Include="Screens\InvokeSkillListScreen.cs" />
+    <Compile Include="Units\Skills\ISkill.cs" />
+    <Compile Include="Units\Skills\SkillManager.cs" />
+    <Compile Include="Maps\Map.cs" />
+    <Compile Include="Units\Skills\SelfHealSkill.cs" />
+    <Compile Include="Units\Order\CooldownOrder.cs" />
+    <Compile Include="Units\Order\ExecuteOrder.cs" />
+    <Compile Include="Units\Order\IPrimitiveOrder.cs" />
+    <Compile Include="Units\Order\OrderQueue.cs" />
+    <Compile Include="Units\Order\PrimitiveOrder.cs" />
+    <Compile Include="Units\Order\MeleeDamageOrder.cs" />
+    <Compile Include="Units\TeamManager.cs" />
+    <Compile Include="Items\Declarations\Equipment\FistMeleeEffect.cs" />
+    <Compile Include="Items\Declarations\Equipment\IMeleeEffect.cs" />
+    <Compile Include="Cells\Collision\CollisionSystem.cs" />
+    <Compile Include="Cells\Collision\ICollidableGridObject.cs" />
+    <Compile Include="Cells\Collision\ICollisionRule.cs" />
+    <Compile Include="Cells\Collision\DescriptCollitionRule.cs" />
     <Compile Include="Componentes\HookDisplay.cs" />
   </ItemGroup>
   <ProjectExtensions>
@@ -141,5 +162,9 @@
     <Folder Include="Helper\" />
     <Folder Include="Units\Equipment\" />
     <Folder Include="Items\Declarations\Equipment\" />
+    <Folder Include="Units\Skills\" />
+    <Folder Include="Maps\" />
+    <Folder Include="Units\Order\" />
+    <Folder Include="Cells\Collision\" />
   </ItemGroup>
 </Project>

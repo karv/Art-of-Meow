@@ -2,6 +2,9 @@
 
 namespace Units.Buffs
 {
+	/// <summary>
+	/// Represents a buff, a temporal? state affecting a <see cref="IUnidad"/>
+	/// </summary>
 	public interface IBuff : IInternalUpdate
 	{
 		/// <summary>
@@ -14,6 +17,9 @@ namespace Units.Buffs
 		/// </summary>
 		string BaseTextureName { get; }
 
+		/// <summary>
+		/// Gets a value indicating if this buff is shown in the list of active buffs
+		/// </summary>
 		bool IsVisible { get; }
 
 		/// <summary>

@@ -1,5 +1,5 @@
-using Units.Buffs;
 using System.Collections.Generic;
+using Units.Buffs;
 
 namespace Units.Buffs
 {
@@ -10,6 +10,10 @@ namespace Units.Buffs
 	{
 		readonly IDictionary<string, float> deltas;
 
+		/// <summary>
+		/// Gets a value indicating if this buff is shown in the list of active buffs
+		/// </summary>
+		/// <value><c>true</c> if this instance is visible; otherwise, <c>false</c>.</value>
 		public override bool IsVisible { get { return false; } }
 
 		/// <summary>
@@ -55,6 +59,10 @@ namespace Units.Buffs
 				deltas.Add (resName, delta);
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Buffs.StatsBuff"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Buffs.StatsBuff"/>.</returns>
 		public override string ToString ()
 		{
 			return base.ToString () + string.Format ("[StatsBuff: deltas={0}]", deltas);

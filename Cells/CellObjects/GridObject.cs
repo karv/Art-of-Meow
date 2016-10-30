@@ -1,51 +1,106 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Units;
 
 namespace Cells.CellObjects
 {
+	/// <summary>
+	/// A genedir grid object
+	/// </summary>
 	public class GridObject : IGridObject
 	{
+		/// <summary>
+		/// Name of the texture
+		/// </summary>
 		public readonly string StringTexture;
 
+		/// <summary>
+		/// Gets or sets the clor of the texture
+		/// </summary>
+		/// <value>The color of the use.</value>
 		public Color UseColor { get; set; }
 
+		/// <summary>
+		/// Gets or sets the depth(draw order)
+		/// </summary>
 		public float Depth { get; set; }
 
+		/// <summary>
+		/// Gets the texture
+		/// </summary>
 		public Texture2D Texture { get; private set; }
 
-		public GridObject (string texture)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridObject"/> class.
+		/// </summary>
+		/// <param name="texture">Texture name</param>
+		/// <param name="grid">Grid</param>
+		public GridObject (string texture, Grid grid)
 		{
 			StringTexture = texture;
 			CollidePlayer = false;
+			Grid = grid;
 		}
 
+		/// <summary>
+		/// Desarga el contenido gráfico.
+		/// </summary>
 		public void UnloadContent ()
 		{
+			Texture = null;
 		}
 
+		/// <summary>
+		/// Gets the grid
+		/// </summary>
 		public Grid Grid { get; }
 
+		/// <summary>
+		/// Gets the container of the control.
+		///  This could be the Screen or Game itself.
+		/// </summary>
+		/// <value>The container.</value>
 		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
 		{ get { return Grid as Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl>; } }
 
+		/// <summary>
+		/// Initialize this instance.
+		/// </summary>
 		public virtual void Initialize ()
 		{
 		}
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="Cells.CellObjects.GridObject"/> blocks units' movement
+		/// </summary>
+		/// <value><c>true</c> if collide player; otherwise, <c>false</c>.</value>
 		public bool CollidePlayer { get; set; }
 
+		/// <summary>
+		/// Determina si este objeto evita que otro objeto pueda ocupar esta misma celda.
+		/// </summary>
+		/// <param name="collObj">Coll object.</param>
 		public bool Collision (IGridObject collObj)
 		{
 			return CollidePlayer && collObj is IUnidad;
 		}
 
+		/// <summary>
+		/// Carga el contenido gráfico.
+		/// </summary>
+		/// <param name="content">Content.</param>
 		public void LoadContent (ContentManager content)
 		{
 			Texture = content.Load<Texture2D> (StringTexture);
 		}
 
+		/// <summary>
+		/// Dibuja el objeto sobre un rectpangulo específico
+		/// </summary>
+		/// <param name="bat">Batch</param>
+		/// <param name="area">Rectángulo de dibujo</param>
 		public void Draw (SpriteBatch bat, Rectangle area)
 		{
 			if (StringTexture == "brick-wall")
@@ -58,13 +113,21 @@ namespace Cells.CellObjects
 				Depth);
 		}
 
-		public void Dispose ()
+		void IDisposable.Dispose ()
 		{
-			Texture = null;
+			UnloadContent ();
 		}
 
+		/// <summary>
+		/// Gets or sets the cell-based localization.
+		/// </summary>
+		/// <value>The location.</value>
 		public Point Location { get; set; }
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.CellObjects.GridObject"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Cells.CellObjects.GridObject"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (
@@ -74,6 +137,5 @@ namespace Cells.CellObjects
 				CollidePlayer,
 				Location);
 		}
-		
 	}
 }
