@@ -35,7 +35,7 @@ namespace Screens
 		/// </summary>
 		public RecursoView _recursoView { get; private set; }
 
-		public HookDisplay _playerHooks { get; private set; }
+		public BuffDisplay _playerHooks { get; private set; }
 
 		// REMOVE poner esto en otra parte. ¿En Grid?
 		/// <summary>
@@ -114,7 +114,7 @@ namespace Screens
 			healSkill.Initialize ();
 
 			_recursoView = new RecursoView (this, Player.Recursos);
-			_playerHooks = new HookDisplay (this, Player)
+			_playerHooks = new BuffDisplay (this, Player)
 			{
 				MargenInterno = new Moggle.Controles.MargenType
 				{

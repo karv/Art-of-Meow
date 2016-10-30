@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Componentes
 {
-	public class HookDisplay : Contenedor<IDibujable>
+	public class BuffDisplay : Contenedor<IDibujable>
 	{
 		public IUnidad Unidad;
 
@@ -31,10 +31,15 @@ namespace Componentes
 			UpdateObjetcs ();
 		}
 
+		public override void Draw (Microsoft.Xna.Framework.GameTime gameTime)
+		{
+			base.Draw (gameTime);
+		}
+
 		/// <summary>
 		/// Se suscribe a eventos de cambio de Buffs
 		/// </summary>
-		public HookDisplay (IComponentContainerComponent<IControl> cont,
+		public BuffDisplay (IComponentContainerComponent<IControl> cont,
 		                    IUnidad unit)
 			: base (cont)
 		{
