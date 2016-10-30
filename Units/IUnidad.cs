@@ -45,6 +45,10 @@ namespace Units
 		/// <value>The skills.</value>
 		SkillManager Skills { get; }
 
+		/// <summary>
+		/// Enqueues a primitive order
+		/// </summary>
+		/// <param name="order">Order.</param>
 		void EnqueueOrder (IPrimitiveOrder order);
 
 		/// <summary>

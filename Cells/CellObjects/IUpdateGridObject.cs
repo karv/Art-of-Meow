@@ -15,6 +15,10 @@ namespace Cells.CellObjects
 		/// </summary>
 		bool IsReady { get; }
 
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Cells.CellObjects.IUpdateGridObject"/> is enabled.
+		/// </summary>
+		/// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
 		bool Enabled { get; }
 
 		/// <summary>

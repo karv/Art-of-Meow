@@ -2,7 +2,9 @@ using System;
 
 namespace Units.Order
 {
-
+	/// <summary>
+	/// This rder evecutes a <see cref="System.Action{IUnidad}"/>
+	/// </summary>
 	public class ExecuteOrder : PrimitiveOrder
 	{
 		/// <summary>
@@ -42,8 +44,15 @@ namespace Units.Order
 		}
 	}
 
+	/// <summary>
+	/// This rder evecutes a <see cref="System.Action{IUnidad, T}"/>
+	/// </summary>
 	public class ExecuteOrder<T> : PrimitiveOrder
 	{
+		/// <summary>
+		/// Gets or sets the context to pass to <see cref="ActionOnFinish"/>
+		/// </summary>
+		/// <value>The context.</value>
 		public T Context { get; set; }
 
 		/// <summary>

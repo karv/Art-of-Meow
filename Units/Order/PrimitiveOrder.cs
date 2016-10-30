@@ -60,7 +60,7 @@ namespace Units.Order
 		public event EventHandler Finishing;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Units.PrimitiveOrder"/> class.
+		/// Initializes a new instance of the <see cref="PrimitiveOrder"/> class.
 		/// </summary>
 		protected PrimitiveOrder (IUnidad unidad)
 		{

@@ -31,17 +31,21 @@ namespace Items.Declarations.Equipment
 
 		#endregion
 
+		/// <summary>
+		/// Causes melee effect on a target
+		/// </summary>
+		/// <param name="target">Target.</param>
 		public void DoMeleeOn (IUnidad target)
 		{
-			Owner.Owner.EnqueueOrder (new MeleeDamageOrder (UnidadOwner, target));
-			Owner.Owner.EnqueueOrder (new CooldownOrder (
+			UnidadOwner.EnqueueOrder (new MeleeDamageOrder (UnidadOwner, target));
+			UnidadOwner.EnqueueOrder (new CooldownOrder (
 				UnidadOwner,
 				calcularTiempoMelee ()));
 		}
 
 		float calcularTiempoMelee ()
 		{
-			var dex = Owner.Owner.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
+			var dex = UnidadOwner.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
 			return 1 / dex;
 		}
 

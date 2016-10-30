@@ -9,8 +9,16 @@ namespace Units.Order
 	/// </summary>
 	public class MeleeDamageOrder : ExecuteOrder
 	{
+		/// <summary>
+		/// Gets or sets the target for this order
+		/// </summary>
+		/// <value>The target.</value>
 		public IUnidad Target { get; set; }
 
+		/// <summary>
+		/// Gets the damage
+		/// </summary>
+		/// <value>The damage.</value>
 		public float Damage { get; private set; }
 
 		void doDamage (IUnidad unid)
@@ -26,11 +34,11 @@ namespace Units.Order
 
 		}
 
-		public override float PassTime (float gameTime)
-		{
-			return base.PassTime (gameTime);
-		}
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Order.MeleeDamageOrder"/> class.
+		/// </summary>
+		/// <param name="unidad">Unidad.</param>
+		/// <param name="target">Target.</param>
 		public MeleeDamageOrder (IUnidad unidad,
 		                         IUnidad target)
 			: base (unidad, null)

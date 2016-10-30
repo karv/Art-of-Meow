@@ -19,6 +19,10 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public Units.Equipment.EquipmentManager Owner { get; set; }
 
+		/// <summary>
+		/// Gets the <see cref="IUnidad"/> that has this item
+		/// </summary>
+		/// <value>The unidad owner.</value>
 		public IUnidad UnidadOwner { get { return Owner.Owner; } }
 
 		/// <summary>
