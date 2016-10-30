@@ -5,6 +5,7 @@ using System.Linq;
 using Items;
 using Microsoft.Xna.Framework.Content;
 using Units.Buffs;
+using Items.Declarations.Equipment;
 
 namespace Units.Equipment
 {
@@ -31,6 +32,16 @@ namespace Units.Equipment
 		public IEnumerable<IEquipment> EnumerateEquipment ()
 		{
 			return equipment;
+		}
+
+		public IMeleeWeapon GetMeleeDamageType ()
+		{
+			var melees = equipment.OfType<IMeleeWeapon> ();
+			if (melees.Any ())
+				return melees.First ();
+
+			// THINK: ¿Qué hacer si no hay arma melee?
+			throw new Exception ();
 		}
 
 		List<IEquipment> equipment { get; }

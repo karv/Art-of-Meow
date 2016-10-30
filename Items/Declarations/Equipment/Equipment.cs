@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Units;
 
 namespace Items.Declarations.Equipment
 {
@@ -17,6 +18,8 @@ namespace Items.Declarations.Equipment
 		/// Gets or sets the equipment manager where this equipment belongs
 		/// </summary>
 		public Units.Equipment.EquipmentManager Owner { get; set; }
+
+		public IUnidad UnidadOwner { get { return Owner.Owner; } }
 
 		/// <summary>
 		/// Unloads the content by unequiping this.
