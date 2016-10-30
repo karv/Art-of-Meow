@@ -7,6 +7,6 @@ namespace Items.Declarations.Equipment
 	/// </summary>
 	public interface IMeleeEffect
 	{
-		void DoMeleeOn (IUnidad target);
+		void DoMeleeEffectOn (IUnidad user, IUnidad target);
 	}
 }

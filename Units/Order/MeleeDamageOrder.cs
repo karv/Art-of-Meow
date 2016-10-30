@@ -19,7 +19,7 @@ namespace Units.Order
 		/// Gets the damage
 		/// </summary>
 		/// <value>The damage.</value>
-		public float Damage { get; private set; }
+		public float Damage { get; }
 
 		void doDamage (IUnidad unid)
 		{
@@ -29,7 +29,6 @@ namespace Units.Order
 			if (Unidad.Team == Target.Team)
 				return;
 			var hp = Target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			Damage = Unidad.Recursos.ValorRecurso (ConstantesRecursos.DañoMelee) / 8;
 			hp.Valor -= Damage;
 
 		}
@@ -39,12 +38,27 @@ namespace Units.Order
 		/// </summary>
 		/// <param name="unidad">Unidad.</param>
 		/// <param name="target">Target.</param>
+		/// <param name="damage">Damage caused</param>
 		public MeleeDamageOrder (IUnidad unidad,
-		                         IUnidad target)
+		                         IUnidad target, float damage)
 			: base (unidad, null)
 		{
 			Target = target;
 			ActionOnFinish = doDamage;
+			Damage = damage;
 		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Order.MeleeDamageOrder"/> class.
+		/// </summary>
+		/// <param name="unidad">Unidad.</param>
+		/// <param name="target">Target.</param>
+		public MeleeDamageOrder (IUnidad unidad,
+		                         IUnidad target)
+			: this (unidad, target, 0)
+		{
+			Damage = Unidad.Recursos.ValorRecurso (ConstantesRecursos.DañoMelee) / 8;
+		}
+		
 	}
 }

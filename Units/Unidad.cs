@@ -289,7 +289,7 @@ namespace Units
 				// Construct the order
 				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
 				var melee = Equipment.GetMeleeDamageType ();
-				melee.DoMeleeOn (target);
+				melee.DoMeleeEffectOn (this, target);
 			}
 			else
 			{

@@ -40,7 +40,7 @@ namespace Units.Equipment
 		public IMeleeEffect GetMeleeDamageType ()
 		{
 			var melees = equipment.OfType<IMeleeEffect> ();
-			return melees.Any () ? melees.First () : new FistMeleeEffect (Owner);
+			return melees.Any () ? melees.First () : new FistMeleeEffect ();
 		}
 
 		List<IEquipment> equipment { get; }

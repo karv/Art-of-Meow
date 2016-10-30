@@ -5,26 +5,26 @@ using Units;
 
 namespace Items.Declarations.Equipment
 {
-	
+	/// <summary>
+	/// The melee effect when the user has not equiped melee effect weapon
+	/// </summary>
 	public class FistMeleeEffect : IMeleeEffect
 	{
-		IUnidad Owner { get; }
-
-		public void DoMeleeOn (IUnidad target)
+		/// <summary>
+		/// Causes damage on target
+		/// </summary>
+		/// <param name="user">User.</param>
+		/// <param name="target">Target.</param>
+		public void DoMeleeEffectOn (IUnidad user, IUnidad target)
 		{
-			Owner.EnqueueOrder (new MeleeDamageOrder (Owner, target));
-			Owner.EnqueueOrder (new CooldownOrder (Owner, calcularTiempoMelee ()));
+			user.EnqueueOrder (new MeleeDamageOrder (user, target));
+			user.EnqueueOrder (new CooldownOrder (user, calcularTiempoMelee (user)));
 		}
 
-		float calcularTiempoMelee ()
+		static float calcularTiempoMelee (IUnidad user)
 		{
-			var dex = Owner.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
+			var dex = user.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
 			return 1 / dex;
-		}
-
-		public FistMeleeEffect (IUnidad owner)
-		{
-			Owner = owner;
 		}
 	}
 }

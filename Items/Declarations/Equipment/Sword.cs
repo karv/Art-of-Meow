@@ -35,11 +35,11 @@ namespace Items.Declarations.Equipment
 		/// Causes melee effect on a target
 		/// </summary>
 		/// <param name="target">Target.</param>
-		public void DoMeleeOn (IUnidad target)
+		public void DoMeleeEffectOn (IUnidad user, IUnidad target)
 		{
-			UnidadOwner.EnqueueOrder (new MeleeDamageOrder (UnidadOwner, target));
-			UnidadOwner.EnqueueOrder (new CooldownOrder (
-				UnidadOwner,
+			user.EnqueueOrder (new MeleeDamageOrder (user, target));
+			user.EnqueueOrder (new CooldownOrder (
+				user,
 				calcularTiempoMelee ()));
 		}
 
