@@ -90,7 +90,7 @@ namespace Screens
 			Player.Inteligencia = Humanintel;
 			Player.MapGrid = GameGrid;
 			Player.Location = StartingPoint;
-			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
+			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.HealingSword) as IEquipment);
 
 			// TEST ing
 			var haste = new HasteBuff

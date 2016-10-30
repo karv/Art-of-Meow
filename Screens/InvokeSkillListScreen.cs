@@ -4,6 +4,8 @@ using Moggle.Controles;
 using Moggle.Screens;
 using Units;
 using Units.Skills;
+using System.Linq;
+using Items;
 
 namespace Screens
 {
@@ -66,8 +68,14 @@ namespace Screens
 		/// <remarks>It does not clear the state of the list</remarks>
 		void buildSkillList ()
 		{
+			// generar skills propios
 			foreach (var sk in Unidad.Skills.Skills)
 				Contenedor.Add (sk);
+
+			// generar skills de equipment
+			foreach (var eq in Unidad.Equipment.EnumerateEquipment ().OfType<ISkillEquipment> ())
+				foreach (var sk in eq.GetEquipmentSkills ())
+					Contenedor.Add (sk);
 		}
 
 		/// <summary>
