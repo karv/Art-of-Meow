@@ -288,9 +288,8 @@ namespace Units
 
 				// Construct the order
 				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
-
-				PrimitiveOrders.Queue (new MeleeDamageOrder (this, target));
-				PrimitiveOrders.Queue (new CooldownOrder (this, calcularTiempoMelee ()));
+				var melee = Equipment.GetMeleeDamageType ();
+				melee.DoMeleeOn (target);
 			}
 			else
 			{
@@ -309,12 +308,6 @@ namespace Units
 		{
 			if (!PrimitiveOrders.IsIdle)
 				throw new Exception ();
-		}
-
-		float calcularTiempoMelee ()
-		{
-			var dex = Recursos.ValorRecurso (ConstantesRecursos.Destreza);
-			return 1 / dex;
 		}
 
 		float calcularTiempoMov (Point desde, Point hasta)

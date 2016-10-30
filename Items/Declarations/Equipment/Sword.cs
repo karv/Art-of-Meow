@@ -1,12 +1,14 @@
 ﻿using Units.Buffs;
 using Units.Recursos;
+using Units;
+using Units.Order;
 
 namespace Items.Declarations.Equipment
 {
 	/// <summary>
 	/// Una espada sin propiedades especiales
 	/// </summary>
-	public class Sword : Equipment, IBuffGenerating
+	public class Sword : Equipment, IBuffGenerating, IMeleeEffect
 	{
 		/// <summary>
 		/// Enumera los stats y la cantidad que son modificados.
@@ -28,6 +30,20 @@ namespace Items.Declarations.Equipment
 		public override EquipSlot Slot { get { return EquipSlot.MainHand; } }
 
 		#endregion
+
+		public void DoMeleeOn (IUnidad target)
+		{
+			Owner.Owner.EnqueueOrder (new MeleeDamageOrder (UnidadOwner, target));
+			Owner.Owner.EnqueueOrder (new CooldownOrder (
+				UnidadOwner,
+				calcularTiempoMelee ()));
+		}
+
+		float calcularTiempoMelee ()
+		{
+			var dex = Owner.Owner.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
+			return 1 / dex;
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Sword"/> class.

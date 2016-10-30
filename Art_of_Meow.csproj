@@ -127,6 +127,8 @@
     <Compile Include="Units\Order\PrimitiveOrder.cs" />
     <Compile Include="Units\Order\MeleeDamageOrder.cs" />
     <Compile Include="Units\TeamManager.cs" />
+    <Compile Include="Items\Declarations\Equipment\FistMeleeEffect.cs" />
+    <Compile Include="Items\Declarations\Equipment\IMeleeEffect.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
