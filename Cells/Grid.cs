@@ -9,6 +9,7 @@ using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
+using Cells.Collision;
 
 namespace Cells
 {
@@ -38,6 +39,7 @@ namespace Cells
 		}
 
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		readonly CollisionSystem _collisionSystem;
 
 		// REMOVE Esto no debería estar aquí
 		const double probZacate = 0.1;
@@ -305,13 +307,14 @@ namespace Cells
 		/// <returns><c>true</c>, if cell object was moved, <c>false</c> otherwise.</returns>
 		/// <param name="objeto">Objeto a mover</param>
 		/// <param name="dir">Dirección de movimiento</param>
-		public bool MoveCellObject (IGridObject objeto, MovementDirectionEnum dir)
+		public bool MoveCellObject (ICollidableGridObject objeto,
+		                            MovementDirectionEnum dir)
 		{
 			var moveDir = dir.AsDirectionalPoint ();
 			var endLoc = objeto.Location + moveDir;
 
 			var destCell = new Cell (this, endLoc);
-			if (!destCell.Collision (objeto))
+			if (_collisionSystem.CanFill (objeto, destCell))
 			{
 				objeto.Location = endLoc;
 				return true;
@@ -369,6 +372,7 @@ namespace Cells
 		public Grid (int xSize, int ySize, Moggle.Screens.IScreen scr)
 			: base (scr)
 		{
+			_collisionSystem = new CollisionSystem ();
 			GridSize = new Point (xSize, ySize);
 			TimeManager = new GameTimeManager (this);
 		}

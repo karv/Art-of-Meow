@@ -8,13 +8,14 @@ using Units.Recursos;
 using Units.Skills;
 using Units.Order;
 using System.Collections.Generic;
+using Cells.Collision;
 
 namespace Units
 {
 	/// <summary>
 	/// Represents a unit in the game grid
 	/// </summary>
-	public interface IUnidad : IUpdateGridObject
+	public interface IUnidad : IUpdateGridObject, ICollidableGridObject
 	{
 		/// <summary>
 		/// Gets the map grid

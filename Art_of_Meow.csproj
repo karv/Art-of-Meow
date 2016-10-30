@@ -129,6 +129,10 @@
     <Compile Include="Units\TeamManager.cs" />
     <Compile Include="Items\Declarations\Equipment\FistMeleeEffect.cs" />
     <Compile Include="Items\Declarations\Equipment\IMeleeEffect.cs" />
+    <Compile Include="Cells\Collision\CollisionSystem.cs" />
+    <Compile Include="Cells\Collision\ICollidableGridObject.cs" />
+    <Compile Include="Cells\Collision\ICollisionRule.cs" />
+    <Compile Include="Cells\Collision\DescriptCollitionRule.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -160,5 +164,6 @@
     <Folder Include="Units\Skills\" />
     <Folder Include="Maps\" />
     <Folder Include="Units\Order\" />
+    <Folder Include="Cells\Collision\" />
   </ItemGroup>
 </Project>
