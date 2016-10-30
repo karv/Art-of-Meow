@@ -1,6 +1,8 @@
 ﻿using Moggle.Controles;
 using Units;
 using System.Linq;
+using System;
+using Microsoft.Xna.Framework.Content;
 
 namespace Componentes
 {
@@ -17,16 +19,25 @@ namespace Componentes
 			Objetos = Unidad.Buffs.BuffOfType<IDibujable> ().ToList ();
 		}
 
+		protected override void LoadContent (ContentManager manager)
+		{
+			base.LoadContent (manager);
+		}
+
+		public override void Initialize ()
+		{
+			UpdateObjetcs ();
+		}
+
 		/// <summary>
 		/// Cancelar suscripción a Buffs
 		/// </summary>
 		protected override void Dispose ()
 		{
-			Unidad.Buffs.AddBuff -= updateObjetcs;
-			Unidad.Buffs.RemoveBuff -= updateObjetcs;
+			Unidad.Buffs.ListChanged -= updateObjetcs;
 		}
 
-		void updateObjetcs (object sender, Units.Buffs.IBuff e)
+		void updateObjetcs (object sender, EventArgs e)
 		{
 			UpdateObjetcs ();
 		}
@@ -45,9 +56,9 @@ namespace Componentes
 		{
 			Unidad = unit;
 			TextureFondoName = "Interface//win_bg";
+			GridSize = new MonoGame.Extended.Size (3, 3);
 			UpdateObjetcs ();
-			Unidad.Buffs.AddBuff += updateObjetcs;
-			Unidad.Buffs.RemoveBuff += updateObjetcs;
+			Unidad.Buffs.ListChanged += updateObjetcs;
 		}
 	}
 }

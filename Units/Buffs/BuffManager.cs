@@ -45,6 +45,7 @@ namespace Units.Buffs
 			Buffs.Add (buff);
 			buff.Initialize ();
 			AddBuff?.Invoke (this, buff);
+			ListChanged?.Invoke (this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -57,6 +58,7 @@ namespace Units.Buffs
 			if (buff.Manager != this)
 				throw new InvalidOperationException ("Buff is not hooked.");
 			RemoveBuff?.Invoke (this, buff);
+			ListChanged?.Invoke (this, EventArgs.Empty);
 			buff.Terminating ();
 			buff.Manager = null;
 			Buffs.Remove (buff);
@@ -107,6 +109,11 @@ namespace Units.Buffs
 		/// Ocurre cuando se elimina o termina un hook
 		/// </summary>
 		public event EventHandler<IBuff> RemoveBuff;
+
+		/// <summary>
+		/// Occurs when the collection changed
+		/// </summary>
+		public event EventHandler ListChanged;
 
 		/// <summary>
 		/// Updates the buffs

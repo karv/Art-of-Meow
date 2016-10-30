@@ -94,6 +94,22 @@ namespace Screens
 			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.HealingSword) as IEquipment);
 
 			// TEST ing
+
+			// Observe que esta asignación debe ser antes que el hook
+			_playerHooks = new BuffDisplay (this, Player)
+			{
+				MargenInterno = new Moggle.Controles.MargenType
+				{
+					Top = 1,
+					Bot = 1,
+					Left = 1,
+					Right = 1
+				},
+				TamañoBotón = new Size (16, 16),
+				TipoOrden = Moggle.Controles.Contenedor<Moggle.Controles.IDibujable>.TipoOrdenEnum.ColumnaPrimero,
+				Posición = new Point (0, 100), //TODO
+			};
+
 			var haste = new HasteBuff
 			{
 				SpeedDelta = 10,
@@ -114,19 +130,6 @@ namespace Screens
 			healSkill.Initialize ();
 
 			_recursoView = new RecursoView (this, Player.Recursos);
-			_playerHooks = new BuffDisplay (this, Player)
-			{
-				MargenInterno = new Moggle.Controles.MargenType
-				{
-					Top = 1,
-					Bot = 1,
-					Left = 1,
-					Right = 1
-				},
-				TamañoBotón = new Size (16, 16),
-				TipoOrden = Moggle.Controles.Contenedor<Moggle.Controles.IDibujable>.TipoOrdenEnum.ColumnaPrimero,
-				Posición = new Point (0, 100), //TODO
-			};
 		}
 
 		/// <summary>

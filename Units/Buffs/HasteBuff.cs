@@ -1,12 +1,15 @@
 ﻿using System;
 using Units.Recursos;
+using Moggle.Controles;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Units.Buffs
 {
 	/// <summary>
 	/// Buff that raise movement speed
 	/// </summary>
-	public class HasteBuff : IStatsBuff
+	public class HasteBuff : IStatsBuff, IDibujable, IComponent
 	{
 		float _speedDelta;
 		readonly Helper.Timer timer;
@@ -109,7 +112,30 @@ namespace Units.Buffs
 
 		#endregion
 
-		
+		Texture2D icon;
+
+		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+			// TODO: buscarle content
+			icon = manager.Load<Texture2D> (@"Items/katana");
+		}
+
+		public void UnloadContent ()
+		{
+		}
+
+		public void Dispose ()
+		{
+			UnloadContent ();
+		}
+
+		public void Draw (SpriteBatch bat,
+		                  Rectangle rect)
+		{
+			if (IsVisible)
+				bat.Draw (icon, rect, Color.White);
+		}
+
 		void timer_countdown (object sender, EventArgs e)
 		{
 			Manager.UnHook (this);
