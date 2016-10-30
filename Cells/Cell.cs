@@ -13,7 +13,7 @@ namespace Cells
 	/// <remarks>Modify this class won't change the <see cref="Grid"/></remarks>
 	public class Cell
 	{
-		readonly List<IGridObject> Objects;
+		public List<IGridObject> Objects { get; }
 
 		/// <summary>
 		/// Devuelve el peso de movimiento
@@ -64,6 +64,7 @@ namespace Cells
 		/// <summary>
 		/// Determina si esta celda evita que un objeto pueda entrar.
 		/// </summary>
+		[Obsolete ("Usar CollisionSystem")]
 		public bool Collision (IGridObject collObj)
 		{
 			return Objects.Any (z => z.Collision (collObj) || collObj.Collision (z));
