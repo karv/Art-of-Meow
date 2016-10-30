@@ -6,17 +6,9 @@ using Units.Order;
 namespace Items.Declarations.Equipment
 {
 	/// <summary>
-	/// Manager the melee interaction between user and an adjacent foe
-	/// </summary>
-	public interface IMeleeWeapon
-	{
-		void DoMeleeOn (IUnidad target);
-	}
-
-	/// <summary>
 	/// Una espada sin propiedades especiales
 	/// </summary>
-	public class Sword : Equipment, IBuffGenerating, IMeleeWeapon
+	public class Sword : Equipment, IBuffGenerating, IMeleeEffect
 	{
 		/// <summary>
 		/// Enumera los stats y la cantidad que son modificados.
@@ -42,7 +34,9 @@ namespace Items.Declarations.Equipment
 		public void DoMeleeOn (IUnidad target)
 		{
 			Owner.Owner.EnqueueOrder (new MeleeDamageOrder (UnidadOwner, target));
-			Owner.Owner.EnqueueOrder (new CooldownOrder (UnidadOwner, calcularTiempoMelee ()));
+			Owner.Owner.EnqueueOrder (new CooldownOrder (
+				UnidadOwner,
+				calcularTiempoMelee ()));
 		}
 
 		float calcularTiempoMelee ()

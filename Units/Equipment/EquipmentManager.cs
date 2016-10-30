@@ -34,14 +34,13 @@ namespace Units.Equipment
 			return equipment;
 		}
 
-		public IMeleeWeapon GetMeleeDamageType ()
+		/// <summary>
+		/// If any, gets the first melee weapon in equipment; otherwise gets a <see cref="FistMeleeEffect"/> for this Unidad
+		/// </summary>
+		public IMeleeEffect GetMeleeDamageType ()
 		{
-			var melees = equipment.OfType<IMeleeWeapon> ();
-			if (melees.Any ())
-				return melees.First ();
-
-			// THINK: ¿Qué hacer si no hay arma melee?
-			throw new Exception ();
+			var melees = equipment.OfType<IMeleeEffect> ();
+			return melees.Any () ? melees.First () : new FistMeleeEffect (Owner);
 		}
 
 		List<IEquipment> equipment { get; }
