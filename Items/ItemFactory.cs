@@ -16,6 +16,10 @@ namespace Items
 		/// <seealso cref="Items.Declarations.Equipment.Sword"/>
 		Sword,
 		/// <summary>
+		/// Temporal, DELETE|REMOVE|ETC
+		/// </summary>
+		HealingSword,
+		/// <summary>
 		/// Potion
 		/// </summary>
 		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
@@ -42,6 +46,9 @@ namespace Items
 					break;
 				case ItemType.Potion:
 					ret = new HealingPotion ();
+					break;
+				case ItemType.HealingSword:
+					ret = new HealingSword ();
 					break;
 				default:
 					throw new Exception ();

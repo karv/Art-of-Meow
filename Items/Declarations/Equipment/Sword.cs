@@ -1,10 +1,33 @@
-﻿using Units.Buffs;
-using Units.Recursos;
-using Units;
+﻿using Units;
+using Units.Buffs;
 using Units.Order;
+using Units.Recursos;
+using Units.Skills;
+using System;
 
 namespace Items.Declarations.Equipment
 {
+	[ObsoleteAttribute]
+	public class HealingSword : Sword, ISkillEquipment
+	{
+		readonly SelfHealSkill healSkill = new SelfHealSkill ();
+
+		/// <summary>
+		/// Loads the texture
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+			base.LoadContent (manager);
+			healSkill.LoadContent (manager);
+		}
+
+		System.Collections.Generic.IEnumerable<ISkill> ISkillEquipment.GetEquipmentSkills ()
+		{
+			return new ISkill[] { healSkill };
+		}
+	}
+
 	/// <summary>
 	/// Una espada sin propiedades especiales
 	/// </summary>
