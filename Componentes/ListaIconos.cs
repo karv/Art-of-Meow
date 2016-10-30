@@ -53,7 +53,6 @@ namespace Componentes
 		/// </summary>
 		public override void Draw (GameTime gameTime)
 		{
-			Screen.Batch.Begin ();
 			var iconTopLeft = new Point (TopLeft.X, TopLeft.Y);
 			foreach (var ic in Iconos)
 			{
@@ -61,7 +60,6 @@ namespace Componentes
 				ic.Draw (Screen.Batch, outputRect);
 				iconTopLeft += new Point (0, IconSize.Height + VSpace);
 			}
-			Screen.Batch.End ();
 		}
 
 		/// <summary>

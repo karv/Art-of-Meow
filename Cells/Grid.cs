@@ -192,7 +192,6 @@ namespace Cells
 					x.Draw (bat, rectOutput);
 				}
 			}
-			bat.End ();
 		}
 
 		/// <summary>
