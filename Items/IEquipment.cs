@@ -1,4 +1,6 @@
 ﻿using Units.Equipment;
+using System.Collections.Generic;
+using Units.Skills;
 
 namespace Items
 {
@@ -39,5 +41,10 @@ namespace Items
 		/// Gets or sets the maanger of the currenty equiped <see cref="Units.IUnidad"/>
 		/// </summary>
 		EquipmentManager Owner { get; set; }
+	}
+
+	public interface ISkillEquipment : IEquipment
+	{
+		IEnumerable<ISkill> GetEquipmentSkills ();
 	}
 }
