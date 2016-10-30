@@ -6,7 +6,6 @@ using Items;
 using Items.Declarations.Equipment;
 using Maps;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Screens;
@@ -232,17 +231,6 @@ namespace Screens
 					break;
 			}
 			GameGrid.CenterIfNeeded (Player);
-		}
-
-		/// <summary>
-		/// Dibuja la pantalla
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
-		{
-			Batch.Begin (SpriteSortMode.BackToFront);
-			EntreBatches (gameTime);
-			Batch.End ();
 		}
 
 		/// <summary>
