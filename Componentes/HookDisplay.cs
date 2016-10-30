@@ -39,6 +39,7 @@ namespace Componentes
 			: base (cont)
 		{
 			Unidad = unit;
+			TextureFondoName = "Interface//win_bg";
 			UpdateObjetcs ();
 			Unidad.Buffs.AddBuff += updateObjetcs;
 			Unidad.Buffs.RemoveBuff += updateObjetcs;
