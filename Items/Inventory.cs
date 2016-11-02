@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
+using Moggle;
 
 namespace Items
 {
@@ -75,7 +76,7 @@ namespace Items
 		/// Carga el contenido gráfico.
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (ContentManager manager)
+		protected void AddContent (BibliotecaContenido manager)
 		{
 			// TODO: eventualmente debería tener algo de texto
 
@@ -83,7 +84,12 @@ namespace Items
 			//Font = manager.Load <BitmapFont> (FontName);
 
 			foreach (var item in Items)
-				item.LoadContent (manager);
+				item.AddContent (manager);
+		}
+
+		public void InitializeContent (BibliotecaContenido manager)
+		{
+			throw new NotImplementedException ();
 		}
 
 		/// <summary>
@@ -112,14 +118,9 @@ namespace Items
 			Items.Add (item);
 		}
 
-		void IComponent.LoadContent (ContentManager manager)
+		void IComponent.AddContent (BibliotecaContenido manager)
 		{
-			LoadContent (manager);
-		}
-
-		void IComponent.UnloadContent ()
-		{
-			UnloadContent ();
+			AddContent (manager);
 		}
 
 		void IDisposable.Dispose ()

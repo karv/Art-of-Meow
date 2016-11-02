@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Moggle;
 
 namespace Cells.CellObjects
 {
@@ -48,9 +49,14 @@ namespace Cells.CellObjects
 		/// Carga el contenido gráfico.
 		/// </summary>
 		/// <param name="content">Content.</param>
-		public void LoadContent (ContentManager content)
+		public void AddContent (BibliotecaContenido content)
 		{
-			Texture = content.Load<Texture2D> (StringTexture);
+			content.AddContent (StringTexture);
+		}
+
+		public void InitializeContent (BibliotecaContenido manager)
+		{
+			Texture = manager.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>

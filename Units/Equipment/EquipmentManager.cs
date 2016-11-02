@@ -6,13 +6,15 @@ using Items;
 using Microsoft.Xna.Framework.Content;
 using Units.Buffs;
 using Items.Declarations.Equipment;
+using Moggle;
+using OpenTK.Graphics.ES11;
 
 namespace Units.Equipment
 {
 	/// <summary>
 	/// Equipment manager: manages buff and equip/unequip of the equipment of <see cref="IUnidad"/>
 	/// </summary>
-	public sealed class EquipmentManager
+	public class EquipmentManager
 	{
 		/// <summary>
 		/// El poseedor del equipment
@@ -88,13 +90,16 @@ namespace Units.Equipment
 			return equipment.Count (z => z.Slot == slot);
 		}
 
-		/// <summary>
-		/// Loads the content of the equipment
-		/// </summary>
-		public void LoadContent (ContentManager manager)
+		protected void AddContent (BibliotecaContenido manager)
 		{
 			foreach (var eq in equipment)
-				eq.LoadContent (manager);
+				eq.AddContent (manager);
+		}
+
+		protected void InitializeContent (BibliotecaContenido manager)
+		{
+			foreach (var eq in equipment)
+				eq.InitializeContent (manager);
 		}
 
 		#region Events

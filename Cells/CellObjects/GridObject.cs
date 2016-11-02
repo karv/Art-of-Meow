@@ -87,13 +87,15 @@ namespace Cells.CellObjects
 			return CollidePlayer && collObj is IUnidad;
 		}
 
-		/// <summary>
-		/// Carga el contenido gráfico.
-		/// </summary>
-		/// <param name="content">Content.</param>
-		public void LoadContent (ContentManager content)
+
+		public void AddContent (Moggle.BibliotecaContenido content)
 		{
-			Texture = content.Load<Texture2D> (StringTexture);
+			content.AddContent (StringTexture);
+		}
+
+		public void InitializeContent (Moggle.BibliotecaContenido content)
+		{
+			Texture = content.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>

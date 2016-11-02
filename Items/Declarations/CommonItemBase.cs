@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 
 namespace Items.Declarations
 {
@@ -51,10 +52,21 @@ namespace Items.Declarations
 		/// Loads the texture
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected virtual void LoadContent (ContentManager manager)
+		protected virtual void AddContent (BibliotecaContenido manager)
 		{
-			_texture = manager.Load<Texture2D> (TextureName);
+			manager.AddContent (TextureName);
 		}
+
+		protected virtual void InitializeContent (BibliotecaContenido manager)
+		{
+			_texture = manager.GetContent<Texture2D> (TextureName);
+		}
+
+		void Moggle.Controles.IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
+		}
+
 
 		/// <summary>
 		/// Unloads the content.
@@ -85,15 +97,12 @@ namespace Items.Declarations
 
 		#region IComponent implementation
 
-		void Moggle.Controles.IComponent.LoadContent (ContentManager manager)
+		void Moggle.Controles.IComponent.AddContent (BibliotecaContenido manager)
 		{
-			LoadContent (manager);
+			AddContent (manager);
 		}
 
-		void Moggle.Controles.IComponent.UnloadContent ()
-		{
-			UnloadContent ();
-		}
+
 
 		#endregion
 

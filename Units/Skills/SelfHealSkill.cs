@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units.Recursos;
 using Units.Order;
+using Moggle;
 
 namespace Units.Skills
 {
@@ -67,15 +68,14 @@ namespace Units.Skills
 		/// Loads the icon texture
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		public void AddContent (BibliotecaContenido manager)
 		{
-			_texture = manager.Load<Texture2D> (TextureName);
+			manager.AddContent (TextureName);
 		}
 
-		/// <summary>
-		/// </summary>
-		void IComponent.UnloadContent ()
+		public void InitializeContent (BibliotecaContenido manager)
 		{
+			_texture = manager.GetContent<Texture2D> (TextureName);
 		}
 
 		#endregion
