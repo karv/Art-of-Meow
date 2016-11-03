@@ -367,7 +367,7 @@ namespace Units
 
 		System.Collections.Generic.IEnumerable<ICollisionRule> ICollidableGridObject.GetCollisionRules ()
 		{
-			yield return new DescriptCollitionRule (z => z is IUnidad); // Does not stack
+			yield return new DescriptCollitionRule (z => Habilitado && ((z as IUnidad)?.Habilitado ?? false)); // Does not stack
 		}
 
 		/// <summary>
