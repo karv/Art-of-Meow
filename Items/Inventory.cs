@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Items;
-using Microsoft.Xna.Framework.Graphics;
 using Moggle;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
@@ -21,15 +20,6 @@ namespace Items
 		public List<IItem> Items { get; }
 
 		ICollection<IItem> IInventory.Items { get { return Items; } }
-
-		//  THINK: ¿Qué es esto?
-		/// <summary>
-		/// </summary>
-		public Texture2D IconTexture { get; private set; }
-		//  THINK: ¿Qué es esto?
-		/// <summary>
-		/// </summary>
-		public string IconTextureName { get; set; }
 
 		/// <summary>
 		/// Font to use whe listing items
@@ -77,9 +67,6 @@ namespace Items
 		/// <param name="manager">Manager.</param>
 		protected void AddContent (BibliotecaContenido manager)
 		{
-			// TODO: eventualmente debería tener algo de texto
-
-			//IconTexture = manager.Load<Texture2D> (IconTextureName);
 			//Font = manager.Load <BitmapFont> (FontName);
 
 			foreach (var item in Items)
@@ -100,7 +87,6 @@ namespace Items
 		/// </summary>
 		public void UnloadContent ()
 		{
-			IconTexture = null;
 			Font = null;
 		}
 

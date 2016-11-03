@@ -69,10 +69,14 @@ namespace Cells.CellObjects
 		{
 		}
 
-		// REMOVE This methos is never used.
+		/// <summary>
+		/// Constante de color
+		/// </summary>
 		static Color useColor { get { return Color.White; } }
 
-		// REMOVE This methos is never used.
+		/// <summary>
+		/// Constante de profundidad
+		/// </summary>
 		static float depth { get { return Depths.Background; } }
 
 		/// <summary>
@@ -87,7 +91,7 @@ namespace Cells.CellObjects
 				area, null, useColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
-				Depths.Background);
+				depth);
 		}
 
 		/// <summary>

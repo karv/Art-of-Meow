@@ -171,11 +171,7 @@ namespace Units
 		/// <param name="content">Content.</param>
 		public void InitializeContent (BibliotecaContenido content)
 		{
-			// TODO
 			Texture = content.GetContent<Texture2D> (TextureStr);
-			//Equipment. . (content);
-			//Inventory.LoadContent (content);
-			//Skills.LoadContent (content);
 		}
 
 		/// <summary>
@@ -451,7 +447,7 @@ namespace Units
 				ConstantesRecursos.DañoMelee));
 		}
 
-		static int nextId = 0;
+		static int nextId;
 
 		static string getNextName ()
 		{
