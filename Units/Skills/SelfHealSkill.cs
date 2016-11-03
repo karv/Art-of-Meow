@@ -71,6 +71,7 @@ namespace Units.Skills
 		public void AddContent (BibliotecaContenido manager)
 		{
 			manager.AddContent (TextureName);
+			InitializeContent (manager);
 		}
 
 		public void InitializeContent (BibliotecaContenido manager)

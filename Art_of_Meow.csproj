@@ -44,13 +44,13 @@
       <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
     </Reference>
     <Reference Include="Controles_Moggle">
-      <HintPath>packages\Moggle.0.8\lib\Controles_Moggle.dll</HintPath>
+      <HintPath>packages\Moggle.0.8.3\lib\Controles_Moggle.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Extended">
-      <HintPath>packages\Moggle.0.8\lib\MonoGame.Extended.dll</HintPath>
+      <HintPath>packages\Moggle.0.8.3\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
     <Reference Include="NVorbis">
-      <HintPath>packages\Moggle.0.8\lib\NVorbis.dll</HintPath>
+      <HintPath>packages\Moggle.0.8.3\lib\NVorbis.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

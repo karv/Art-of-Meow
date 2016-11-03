@@ -58,8 +58,9 @@ namespace Screens
 		/// </summary>
 		public override void Initialize ()
 		{
-			base.Initialize ();
 			buildSkillList ();
+			base.Initialize ();
+
 		}
 
 		/// <summary>
@@ -68,14 +69,14 @@ namespace Screens
 		/// <remarks>It does not clear the state of the list</remarks>
 		void buildSkillList ()
 		{
+			var cnt = Juego.Contenido;
 			// generar skills propios
-			foreach (var sk in Unidad.Skills.Skills)
-				Contenedor.Add (sk);
 
-			// generar skills de equipment
-			foreach (var eq in Unidad.Equipment.EnumerateEquipment ().OfType<ISkillEquipment> ())
-				foreach (var sk in eq.GetEquipmentSkills ())
-					Contenedor.Add (sk);
+			foreach (var sk in Unidad.EnumerateAllSkills ())
+			{
+				sk.AddContent (cnt);
+				Contenedor.Add (sk);
+			}
 		}
 
 		/// <summary>
@@ -145,7 +146,8 @@ namespace Screens
 				},
 				GridSize = new MonoGame.Extended.Size (15, 15),
 				BgColor = Color.LightBlue * 0.5f,
-				SelectionEnabled = false
+				SelectionEnabled = false,
+
 			};
 
 			AddComponent (Contenedor);
