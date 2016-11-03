@@ -110,7 +110,7 @@ namespace Screens
 				},
 				TamañoBotón = new Size (16, 16),
 				TipoOrden = Moggle.Controles.Contenedor<Moggle.Controles.IDibujable>.TipoOrdenEnum.ColumnaPrimero,
-				Posición = new Point (0, 100), //TODO
+				Posición = new Point (0, 100)
 			};
 
 			var haste = new HasteBuff

@@ -60,7 +60,6 @@ namespace Units.Skills
 		Texture2D _texture;
 
 		const string TextureName = "swordman";
-		// TODO: buscarle un icono
 
 		/// <summary>
 		/// Loads the icon texture

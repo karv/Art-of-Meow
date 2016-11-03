@@ -181,19 +181,25 @@ namespace Maps
 		/// <param name="reader">A stream reader</param>
 		public Map (StreamReader reader)
 		{
-			// TODO: Make exception-proof
-			var sizeX = int.Parse (reader.ReadLine ());
-			var sizeY = int.Parse (reader.ReadLine ());
-			_data = new char[sizeX, sizeY];
-			_r = new Random ();
-
-			for (int i = 0; i < sizeY; i++)
+			try
 			{
-				var currLine = new char[sizeX];
-				reader.ReadBlock (currLine, 0, sizeX);
+				var sizeX = int.Parse (reader.ReadLine ());
+				var sizeY = int.Parse (reader.ReadLine ());
+				_data = new char[sizeX, sizeY];
+				_r = new Random ();
 
-				for (int j = 0; j < sizeX; j++)
-					_data [j, i] = currLine [j];
+				for (int i = 0; i < sizeY; i++)
+				{
+					var currLine = new char[sizeX];
+					reader.ReadBlock (currLine, 0, sizeX);
+
+					for (int j = 0; j < sizeX; j++)
+						_data [j, i] = currLine [j];
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new IOException ("No se puede cargar archivo de mapa.", ex);
 			}
 		}
 	}

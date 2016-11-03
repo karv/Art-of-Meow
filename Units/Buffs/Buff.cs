@@ -23,7 +23,6 @@ namespace Units.Buffs
 		/// </summary>
 		public abstract string BaseTextureName { get; }
 
-		// THINK: ¿Es nombre único/corto/largo?
 		/// <summary>
 		/// Name of the buff
 		/// </summary>

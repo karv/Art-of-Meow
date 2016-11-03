@@ -1,26 +1,31 @@
-﻿namespace Units.Recursos
+﻿using System;
+
+namespace Units.Recursos
 {
-	// TODO: Agregar una descripción de qué hacen estos recursos
 	/// <summary>
 	/// Contains constant strings for resource names
 	/// </summary>
 	public static class ConstantesRecursos
 	{
 		/// <summary>
-		/// Dextery
+		/// Dextery. 
+		/// Afecta rapidez de algunos ataques
 		/// </summary>
 		public const string Destreza = "dex";
 		/// <summary>
-		/// Velocidad
+		/// Velocidad. 
+		/// Velocidad de movimiento
 		/// </summary>
 		public const string Velocidad = "vel";
 		/// <summary>
 		/// The fuerza.
+		/// Afecta el daño melee
 		/// </summary>
 		public const string Fuerza = "str";
 		/// <summary>
 		/// The daño melee.
 		/// </summary>
+		[ObsoleteAttribute]
 		public const string DañoMelee = "melee_dmg";
 		/// <summary>
 		/// The HP

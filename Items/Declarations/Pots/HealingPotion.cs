@@ -1,7 +1,7 @@
 ﻿
 namespace Items.Declarations.Pots
 {
-	// THINK: ¿Dónde se describe qué hace?
+	// TODO: incompleto
 	/// <summary>
 	/// Healing potion.
 	/// </summary>

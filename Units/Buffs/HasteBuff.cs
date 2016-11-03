@@ -88,7 +88,6 @@ namespace Units.Buffs
 			timer.Reset ();
 		}
 
-		// TODO: Add content
 		const string iconName = "clock";
 
 		void IComponent.AddContent (Moggle.BibliotecaContenido manager)
