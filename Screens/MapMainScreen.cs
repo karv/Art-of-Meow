@@ -116,7 +116,7 @@ namespace Screens
 			var haste = new HasteBuff
 			{
 				SpeedDelta = 10,
-				Duración = 5
+				Duración = 1
 			};
 			haste.Initialize ();
 			Player.Buffs.Hook (haste);
