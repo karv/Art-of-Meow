@@ -133,6 +133,7 @@
     <Compile Include="Cells\Collision\ICollidableGridObject.cs" />
     <Compile Include="Cells\Collision\ICollisionRule.cs" />
     <Compile Include="Cells\Collision\DescriptCollitionRule.cs" />
+    <Compile Include="Componentes\BuffDisplay.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

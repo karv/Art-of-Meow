@@ -6,7 +6,6 @@ using Items;
 using Items.Declarations.Equipment;
 using Maps;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Screens;
@@ -35,6 +34,11 @@ namespace Screens
 		/// Resource view manager
 		/// </summary>
 		public RecursoView _recursoView { get; private set; }
+
+		/// <summary>
+		/// Gets the visual control that displays the buffs
+		/// </summary>
+		public BuffDisplay _playerHooks { get; private set; }
 
 		// REMOVE poner esto en otra parte. ¿En Grid?
 		/// <summary>
@@ -93,6 +97,22 @@ namespace Screens
 			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.HealingSword) as IEquipment);
 
 			// TEST ing
+
+			// Observe que esta asignación debe ser antes que el hook
+			_playerHooks = new BuffDisplay (this, Player)
+			{
+				MargenInterno = new Moggle.Controles.MargenType
+				{
+					Top = 1,
+					Bot = 1,
+					Left = 1,
+					Right = 1
+				},
+				TamañoBotón = new Size (16, 16),
+				TipoOrden = Moggle.Controles.Contenedor<Moggle.Controles.IDibujable>.TipoOrdenEnum.ColumnaPrimero,
+				Posición = new Point (0, 100), //TODO
+			};
+
 			var haste = new HasteBuff
 			{
 				SpeedDelta = 10,
@@ -217,17 +237,6 @@ namespace Screens
 					break;
 			}
 			GameGrid.CenterIfNeeded (Player);
-		}
-
-		/// <summary>
-		/// Dibuja la pantalla
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
-		{
-			Batch.Begin (SpriteSortMode.BackToFront);
-			EntreBatches (gameTime);
-			Batch.End ();
 		}
 
 		/// <summary>

@@ -1,4 +1,7 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 using Units.Recursos;
 
 namespace Units.Buffs
@@ -6,7 +9,7 @@ namespace Units.Buffs
 	/// <summary>
 	/// Buff that raise movement speed
 	/// </summary>
-	public class HasteBuff : IStatsBuff
+	public class HasteBuff : IStatsBuff, IDibujable, IComponent
 	{
 		float _speedDelta;
 		readonly Helper.Timer timer;
@@ -82,12 +85,25 @@ namespace Units.Buffs
 			Inicializado = true;
 		}
 
+		// TODO: Add content
+		const string iconName = "clock";
+
+		void IComponent.AddContent (Moggle.BibliotecaContenido manager)
+		{
+			manager.AddContent (iconName);
+		}
+
+		void IComponent.InitializeContent (Moggle.BibliotecaContenido manager)
+		{
+			icon = manager.GetContent<Texture2D> (iconName);
+		}
+
 		/// <summary>
 		/// Name of the buff: Haste
 		/// </summary>
 		string IBuff.Nombre { get { return "Haste"; } }
 
-		string IBuff.BaseTextureName { get { return "Icons//haste"; } }
+		string IBuff.BaseTextureName { get { return iconName; } }
 
 		/// <summary>
 		/// El manejador de buffs
@@ -109,7 +125,19 @@ namespace Units.Buffs
 
 		#endregion
 
-		
+		Texture2D icon;
+
+		void IDisposable.Dispose ()
+		{
+		}
+
+		void IDibujable.Draw (SpriteBatch bat,
+		                      Rectangle rect)
+		{
+			if (IsVisible)
+				bat.Draw (icon, rect, Color.Green);
+		}
+
 		void timer_countdown (object sender, EventArgs e)
 		{
 			Manager.UnHook (this);
@@ -123,6 +151,5 @@ namespace Units.Buffs
 			timer = new Helper.Timer ();
 			timer.ConteoCero += timer_countdown;
 		}
-
 	}
 }
