@@ -58,10 +58,10 @@ namespace Units.Buffs
 			if (buff.Manager != this)
 				throw new InvalidOperationException ("Buff is not hooked.");
 			RemoveBuff?.Invoke (this, buff);
-			ListChanged?.Invoke (this, EventArgs.Empty);
 			buff.Terminating ();
 			buff.Manager = null;
 			Buffs.Remove (buff);
+			ListChanged?.Invoke (this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -121,7 +121,7 @@ namespace Units.Buffs
 		/// <param name="gameTime">Game time.</param>
 		public void Update (float gameTime)
 		{
-			foreach (var buff in Buffs)
+			foreach (var buff in new List<IBuff> ( Buffs))
 				buff.Update (gameTime);
 		}
 

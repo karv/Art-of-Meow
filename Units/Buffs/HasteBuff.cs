@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units.Recursos;
+using System.Diagnostics;
 
 namespace Units.Buffs
 {
@@ -83,6 +84,8 @@ namespace Units.Buffs
 		public void Initialize ()
 		{
 			Inicializado = true;
+			timer.Habilitado = true;
+			timer.Reset ();
 		}
 
 		// TODO: Add content
@@ -140,6 +143,10 @@ namespace Units.Buffs
 
 		void timer_countdown (object sender, EventArgs e)
 		{
+			Debug.WriteLine (string.Format (
+				"Desanclando buff {0} de {1}",
+				this,
+				Manager.HookedOn));
 			Manager.UnHook (this);
 		}
 
