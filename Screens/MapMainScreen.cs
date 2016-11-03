@@ -35,6 +35,9 @@ namespace Screens
 		/// </summary>
 		public RecursoView _recursoView { get; private set; }
 
+		/// <summary>
+		/// Gets the visual control that displays the buffs
+		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
 		// REMOVE poner esto en otra parte. ¿En Grid?

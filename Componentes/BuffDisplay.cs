@@ -1,13 +1,19 @@
-﻿using Moggle.Controles;
-using Units;
+﻿using System;
 using System.Linq;
-using System;
 using Microsoft.Xna.Framework.Content;
+using Moggle.Controles;
+using Units;
 
 namespace Componentes
 {
+	/// <summary>
+	/// Un control que muestra buffs de un jugador
+	/// </summary>
 	public class BuffDisplay : Contenedor<IDibujable>
 	{
+		/// <summary>
+		/// Unidad
+		/// </summary>
 		public IUnidad Unidad;
 
 		/// <summary>
@@ -19,6 +25,10 @@ namespace Componentes
 			Objetos = Unidad.Buffs.BuffOfType<IDibujable> ().ToList ();
 		}
 
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		///  No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
 		public override void Initialize ()
 		{
 			UpdateObjetcs ();
@@ -35,11 +45,6 @@ namespace Componentes
 		void updateObjetcs (object sender, EventArgs e)
 		{
 			UpdateObjetcs ();
-		}
-
-		protected override void Draw (Microsoft.Xna.Framework.GameTime gameTime)
-		{
-			base.Draw (gameTime);
 		}
 
 		/// <summary>
