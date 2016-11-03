@@ -85,12 +85,25 @@ namespace Units.Buffs
 			Inicializado = true;
 		}
 
+		// TODO: Add content
+		const string iconName = "Icons//haste";
+
+		void IComponent.AddContent (Moggle.BibliotecaContenido manager)
+		{
+			manager.AddContent (iconName);
+		}
+
+		void IComponent.InitializeContent (Moggle.BibliotecaContenido manager)
+		{
+			icon = manager.GetContent<Texture2D> (iconName);
+		}
+
 		/// <summary>
 		/// Name of the buff: Haste
 		/// </summary>
 		string IBuff.Nombre { get { return "Haste"; } }
 
-		string IBuff.BaseTextureName { get { return "Icons//haste"; } }
+		string IBuff.BaseTextureName { get { return iconName; } }
 
 		/// <summary>
 		/// El manejador de buffs
@@ -114,23 +127,12 @@ namespace Units.Buffs
 
 		Texture2D icon;
 
-		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
-		{
-			// TODO: buscarle content
-			icon = manager.Load<Texture2D> (@"Items/katana");
-		}
-
-		public void UnloadContent ()
+		void IDisposable.Dispose ()
 		{
 		}
 
-		public void Dispose ()
-		{
-			UnloadContent ();
-		}
-
-		public void Draw (SpriteBatch bat,
-		                  Rectangle rect)
+		void IDibujable.Draw (SpriteBatch bat,
+		                      Rectangle rect)
 		{
 			if (IsVisible)
 				bat.Draw (icon, rect, Color.White);

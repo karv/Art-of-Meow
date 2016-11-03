@@ -6,8 +6,8 @@ using Cells.CellObjects;
 using Cells.Collision;
 using Items;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using Units.Buffs;
 using Units.Equipment;
@@ -169,12 +169,21 @@ namespace Units
 		/// Carga el contenido gráfico de la unidad, equipment e inventory
 		/// </summary>
 		/// <param name="content">Content.</param>
-		public void LoadContent (ContentManager content)
+		public void InitializeContent (BibliotecaContenido content)
 		{
-			Texture = content.Load<Texture2D> (TextureStr);
-			Equipment.LoadContent (content);
-			Inventory.LoadContent (content);
-			Skills.LoadContent (content);
+			// TODO
+			Texture = content.GetContent<Texture2D> (TextureStr);
+			//Equipment. . (content);
+			//Inventory.LoadContent (content);
+			//Skills.LoadContent (content);
+		}
+
+		/// <summary>
+		/// Add its texture to the content
+		/// </summary>
+		public void AddContent (BibliotecaContenido manager)
+		{
+			manager.AddContent (TextureStr);
 		}
 
 		/// <summary>

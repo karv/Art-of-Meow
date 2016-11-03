@@ -38,7 +38,7 @@ namespace Componentes
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			if (Iconos.Count == 0)
 				return RectangleF.Empty;
@@ -51,7 +51,7 @@ namespace Componentes
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			var iconTopLeft = new Point (TopLeft.X, TopLeft.Y);
 			foreach (var ic in Iconos)

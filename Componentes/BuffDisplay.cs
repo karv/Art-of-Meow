@@ -19,11 +19,6 @@ namespace Componentes
 			Objetos = Unidad.Buffs.BuffOfType<IDibujable> ().ToList ();
 		}
 
-		protected override void LoadContent (ContentManager manager)
-		{
-			base.LoadContent (manager);
-		}
-
 		public override void Initialize ()
 		{
 			UpdateObjetcs ();
@@ -42,7 +37,7 @@ namespace Componentes
 			UpdateObjetcs ();
 		}
 
-		public override void Draw (Microsoft.Xna.Framework.GameTime gameTime)
+		protected override void Draw (Microsoft.Xna.Framework.GameTime gameTime)
 		{
 			base.Draw (gameTime);
 		}

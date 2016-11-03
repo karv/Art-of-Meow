@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Units;
 
@@ -87,13 +86,21 @@ namespace Cells.CellObjects
 			return CollidePlayer && collObj is IUnidad;
 		}
 
+
 		/// <summary>
-		/// Carga el contenido gráfico.
+		/// Agrega su textura a la biblioteca
 		/// </summary>
-		/// <param name="content">Content.</param>
-		public void LoadContent (ContentManager content)
+		public void AddContent (Moggle.BibliotecaContenido content)
 		{
-			Texture = content.Load<Texture2D> (StringTexture);
+			content.AddContent (StringTexture);
+		}
+
+		/// <summary>
+		/// Carga la textura
+		/// </summary>
+		public void InitializeContent (Moggle.BibliotecaContenido content)
+		{
+			Texture = content.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>

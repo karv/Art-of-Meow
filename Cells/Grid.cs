@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using AoM;
 using Cells.CellObjects;
+using Cells.Collision;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
-using Cells.Collision;
 
 namespace Cells
 {
@@ -41,8 +40,6 @@ namespace Cells
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
 		readonly CollisionSystem _collisionSystem;
 
-		// REMOVE Esto no debería estar aquí
-		const double probZacate = 0.1;
 		readonly Random _r = new Random ();
 
 		/// <summary>
@@ -175,7 +172,7 @@ namespace Cells
 		/// Dibuja el control.
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			//var bat = Screen.
 			//bat.Begin (SpriteSortMode.BackToFront);
@@ -198,19 +195,30 @@ namespace Cells
 		/// Devuelve el límite gráfico del control.
 		/// </summary>
 		/// <returns>The bounds.</returns>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}
 
 		/// <summary>
-		/// Loads the content.
+		/// Agrega el contenido a la biblitoeca
+		/// </summary>
+		protected override void AddContent (Moggle.BibliotecaContenido manager)
+		{
+			base.AddContent (manager);
+			foreach (var x in _objects)
+				x.AddContent (manager);
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected override void LoadContent (ContentManager manager)
+		protected override void InitializeContent (Moggle.BibliotecaContenido manager)
 		{
+			base.InitializeContent (manager);
 			foreach (var x in _objects)
-				x.LoadContent (manager);
+				x.InitializeContent (manager);
 		}
 
 		/// <summary>

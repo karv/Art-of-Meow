@@ -43,8 +43,14 @@ namespace Items
 		EquipmentManager Owner { get; set; }
 	}
 
+	/// <summary>
+	/// Un equipamento que ofrece Skills al usuario
+	/// </summary>
 	public interface ISkillEquipment : IEquipment
 	{
+		/// <summary>
+		/// Devuelve la lista de skills que ofrece al usuario
+		/// </summary>
 		IEnumerable<ISkill> GetEquipmentSkills ();
 	}
 }

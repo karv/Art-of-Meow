@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Controles;
-using Units.Recursos;
+using Moggle;
 using Units.Order;
+using Units.Recursos;
 
 namespace Units.Skills
 {
-	
 	/// <summary>
 	/// Skill that allows the user to heal ?-self
 	/// </summary>
@@ -67,15 +66,18 @@ namespace Units.Skills
 		/// Loads the icon texture
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		public void AddContent (BibliotecaContenido manager)
 		{
-			_texture = manager.Load<Texture2D> (TextureName);
+			manager.AddContent (TextureName);
+			InitializeContent (manager);
 		}
 
 		/// <summary>
+		/// Carga la textura
 		/// </summary>
-		void IComponent.UnloadContent ()
+		public void InitializeContent (BibliotecaContenido manager)
 		{
+			_texture = manager.GetContent<Texture2D> (TextureName);
 		}
 
 		#endregion

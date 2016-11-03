@@ -4,6 +4,7 @@ using Units.Order;
 using Units.Recursos;
 using Units.Skills;
 using System;
+using Moggle;
 
 namespace Items.Declarations.Equipment
 {
@@ -16,10 +17,20 @@ namespace Items.Declarations.Equipment
 		/// Loads the texture
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			base.LoadContent (manager);
-			healSkill.LoadContent (manager);
+			base.AddContent (manager);
+			healSkill.AddContent (manager);
+		}
+
+		/// <summary>
+		/// Initializes the content.
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			base.InitializeContent (manager);
+			healSkill.InitializeContent (manager);
 		}
 
 		System.Collections.Generic.IEnumerable<ISkill> ISkillEquipment.GetEquipmentSkills ()
