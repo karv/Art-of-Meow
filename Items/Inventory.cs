@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Items;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
 
@@ -75,7 +75,7 @@ namespace Items
 		/// Carga el contenido gráfico.
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (ContentManager manager)
+		protected void AddContent (BibliotecaContenido manager)
 		{
 			// TODO: eventualmente debería tener algo de texto
 
@@ -83,7 +83,16 @@ namespace Items
 			//Font = manager.Load <BitmapFont> (FontName);
 
 			foreach (var item in Items)
-				item.LoadContent (manager);
+				item.AddContent (manager);
+		}
+
+		/// <summary>
+		/// Inicialize el contenido de sus items
+		/// </summary>
+		public void InitializeContent (BibliotecaContenido manager)
+		{
+			foreach (var x in Items)
+				x.InitializeContent (manager);
 		}
 
 		/// <summary>
@@ -112,14 +121,9 @@ namespace Items
 			Items.Add (item);
 		}
 
-		void IComponent.LoadContent (ContentManager manager)
+		void IComponent.AddContent (BibliotecaContenido manager)
 		{
-			LoadContent (manager);
-		}
-
-		void IComponent.UnloadContent ()
-		{
-			UnloadContent ();
+			AddContent (manager);
 		}
 
 		void IDisposable.Dispose ()

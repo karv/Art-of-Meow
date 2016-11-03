@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cells;
 using Cells.CellObjects;
+using Cells.Collision;
 using Items;
 using Units.Buffs;
 using Units.Equipment;
+using Units.Order;
 using Units.Recursos;
 using Units.Skills;
-using Units.Order;
-using System.Collections.Generic;
-using Cells.Collision;
 
 namespace Units
 {
@@ -90,6 +91,22 @@ namespace Units
 		public static bool IsEnemyOf (this IUnidad unid, IUnidad other)
 		{
 			return !unid.Team.Equals (other.Team);
+		}
+
+		public static IEnumerable<ISkill> EnumerateEquipmentSkills (this IUnidad u)
+		{
+			foreach (var eq in u.Equipment.EnumerateEquipment ().OfType<ISkillEquipment> ())
+				foreach (var sk in eq.GetEquipmentSkills ())
+					yield return sk;
+			
+		}
+
+		public static IEnumerable<ISkill> EnumerateAllSkills (this IUnidad u)
+		{
+			foreach (var sk in u.Skills.Skills)
+				yield return sk;
+			foreach (var sk in EnumerateEquipmentSkills (u))
+				yield return sk;
 		}
 	}
 }

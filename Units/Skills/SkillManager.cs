@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Moggle;
 using Moggle.Controles;
 
 namespace Units.Skills
@@ -35,19 +36,29 @@ namespace Units.Skills
 		/// Loads the content of each <see cref="ISkill"/>
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		protected void AddContent (BibliotecaContenido manager)
 		{
 			foreach (var sk in Skills)
-				sk.LoadContent (manager);
+				sk.AddContent (manager);
 		}
 
 		/// <summary>
-		/// Unloads the content of every skill in the list
+		/// Initializes the content of the skills
 		/// </summary>
-		public void UnloadContent ()
+		protected void InitializeContent (BibliotecaContenido manager)
 		{
 			foreach (var sk in Skills)
-				sk.UnloadContent ();
+				sk.InitializeContent (manager);
+		}
+
+		void IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
+		}
+
+		void IComponent.AddContent (BibliotecaContenido manager)
+		{
+			AddContent (manager);
 		}
 
 		/// <summary>
@@ -59,7 +70,6 @@ namespace Units.Skills
 		/// the garbage collector can reclaim the memory that the <see cref="Units.Skills.SkillManager"/> was occupying.</remarks>
 		public void Dispose ()
 		{
-			UnloadContent ();
 		}
 
 		/// <summary>

@@ -4,7 +4,7 @@ using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
-using Microsoft.Xna.Framework.Content;
+using Moggle;
 
 namespace Componentes
 {
@@ -122,7 +122,7 @@ namespace Componentes
 		/// <summary>
 		/// Gets the bounds of the label
 		/// </summary>
-		public override IShapeF GetBounds ()
+		protected override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}
@@ -175,7 +175,7 @@ namespace Componentes
 		/// Dibuja el control.
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
 			if (Font != null)
 				Screen.Batch.DrawString (Font, Texto, TopLeft, ColorActual);
@@ -185,9 +185,17 @@ namespace Componentes
 		/// Loads the font
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected override void LoadContent (ContentManager manager)
+		protected override void AddContent (BibliotecaContenido manager)
 		{
-			Font = Screen.Content.Load<BitmapFont> ("fonts");
+			manager.AddContent ("fonts");
+		}
+
+		/// <summary>
+		/// Carga el valor de <see cref="Font"/>
+		/// </summary>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			Font = Screen.Content.GetContent<BitmapFont> ("fonts");
 		}
 
 		/// <summary>
