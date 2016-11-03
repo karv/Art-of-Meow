@@ -1,8 +1,8 @@
 ﻿using System;
-using Units.Recursos;
-using Moggle.Controles;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
+using Units.Recursos;
 
 namespace Units.Buffs
 {
@@ -151,6 +151,5 @@ namespace Units.Buffs
 			timer = new Helper.Timer ();
 			timer.ConteoCero += timer_countdown;
 		}
-
 	}
 }

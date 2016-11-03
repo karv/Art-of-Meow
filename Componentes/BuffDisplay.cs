@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using Units;
-using Microsoft.Xna.Framework;
 
 namespace Componentes
 {
