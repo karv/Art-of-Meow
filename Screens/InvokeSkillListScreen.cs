@@ -4,8 +4,6 @@ using Moggle.Controles;
 using Moggle.Screens;
 using Units;
 using Units.Skills;
-using System.Linq;
-using Items;
 
 namespace Screens
 {

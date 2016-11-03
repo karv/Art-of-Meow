@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Units;
 
@@ -88,11 +87,17 @@ namespace Cells.CellObjects
 		}
 
 
+		/// <summary>
+		/// Agrega su textura a la biblioteca
+		/// </summary>
 		public void AddContent (Moggle.BibliotecaContenido content)
 		{
 			content.AddContent (StringTexture);
 		}
 
+		/// <summary>
+		/// Carga la textura
+		/// </summary>
 		public void InitializeContent (Moggle.BibliotecaContenido content)
 		{
 			Texture = content.GetContent<Texture2D> (StringTexture);

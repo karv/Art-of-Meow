@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
 
@@ -57,6 +56,9 @@ namespace Items.Declarations
 			manager.AddContent (TextureName);
 		}
 
+		/// <summary>
+		/// Assigns the value of <see cref="Texture"/>
+		/// </summary>
 		protected virtual void InitializeContent (BibliotecaContenido manager)
 		{
 			_texture = manager.GetContent<Texture2D> (TextureName);

@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Items;
-using Microsoft.Xna.Framework.Content;
-using Units.Buffs;
 using Items.Declarations.Equipment;
 using Moggle;
-using OpenTK.Graphics.ES11;
+using Units.Buffs;
 
 namespace Units.Equipment
 {
@@ -90,12 +88,18 @@ namespace Units.Equipment
 			return equipment.Count (z => z.Slot == slot);
 		}
 
+		/// <summary>
+		/// Adds the content of every equipment
+		/// </summary>
 		protected void AddContent (BibliotecaContenido manager)
 		{
 			foreach (var eq in equipment)
 				eq.AddContent (manager);
 		}
 
+		/// <summary>
+		/// Initializes the content of its elements
+		/// </summary>
 		protected void InitializeContent (BibliotecaContenido manager)
 		{
 			foreach (var eq in equipment)

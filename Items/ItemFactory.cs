@@ -2,7 +2,6 @@
 using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
 
-
 namespace Items
 {
 	/// <summary>

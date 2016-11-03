@@ -1,7 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Moggle;
 
 namespace Cells.CellObjects
@@ -54,6 +53,10 @@ namespace Cells.CellObjects
 			content.AddContent (StringTexture);
 		}
 
+		/// <summary>
+		/// Asigna textura el manager
+		/// </summary>
+		/// <param name="manager">Biblioteca de contenido</param>
 		public void InitializeContent (BibliotecaContenido manager)
 		{
 			Texture = manager.GetContent<Texture2D> (StringTexture);

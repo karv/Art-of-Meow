@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using AoM;
 using Cells.CellObjects;
+using Cells.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
-using Cells.Collision;
 
 namespace Cells
 {
@@ -40,8 +40,6 @@ namespace Cells
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
 		readonly CollisionSystem _collisionSystem;
 
-		// REMOVE Esto no debería estar aquí
-		const double probZacate = 0.1;
 		readonly Random _r = new Random ();
 
 		/// <summary>

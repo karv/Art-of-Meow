@@ -23,6 +23,10 @@ namespace Items.Declarations.Equipment
 			healSkill.AddContent (manager);
 		}
 
+		/// <summary>
+		/// Initializes the content.
+		/// </summary>
+		/// <param name="manager">Manager.</param>
 		protected override void InitializeContent (BibliotecaContenido manager)
 		{
 			base.InitializeContent (manager);

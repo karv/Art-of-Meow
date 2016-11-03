@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Moggle.Controles;
 using Moggle;
+using Moggle.Controles;
 
 namespace Units.Skills
 {
@@ -42,6 +42,9 @@ namespace Units.Skills
 				sk.AddContent (manager);
 		}
 
+		/// <summary>
+		/// Initializes the content of the skills
+		/// </summary>
 		protected void InitializeContent (BibliotecaContenido manager)
 		{
 			foreach (var sk in Skills)

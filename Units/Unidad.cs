@@ -6,15 +6,14 @@ using Cells.CellObjects;
 using Cells.Collision;
 using Items;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using Units.Buffs;
 using Units.Equipment;
 using Units.Inteligencia;
 using Units.Order;
 using Units.Recursos;
-using Moggle;
 
 namespace Units
 {
@@ -179,6 +178,9 @@ namespace Units
 			//Skills.LoadContent (content);
 		}
 
+		/// <summary>
+		/// Add its texture to the content
+		/// </summary>
 		public void AddContent (BibliotecaContenido manager)
 		{
 			manager.AddContent (TextureStr);

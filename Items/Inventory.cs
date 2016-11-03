@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Items;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
-using Moggle;
 
 namespace Items
 {
@@ -87,9 +86,13 @@ namespace Items
 				item.AddContent (manager);
 		}
 
+		/// <summary>
+		/// Inicialize el contenido de sus items
+		/// </summary>
 		public void InitializeContent (BibliotecaContenido manager)
 		{
-			throw new NotImplementedException ();
+			foreach (var x in Items)
+				x.InitializeContent (manager);
 		}
 
 		/// <summary>
