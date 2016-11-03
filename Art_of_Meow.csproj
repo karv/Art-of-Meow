@@ -81,7 +81,6 @@
     <Compile Include="Units\Unidad.cs" />
     <Compile Include="Units\Inteligencia\ChaseIntelligence.cs" />
     <Compile Include="Units\Inteligencia\HumanIntelligence.cs" />
-    <Compile Include="Units\Inteligencia\IIntelligence.cs" />
     <Compile Include="Items\Inventory.cs" />
     <Compile Include="Componentes\VanishingString.cs" />
     <Compile Include="Items\IItem.cs" />
@@ -134,6 +133,7 @@
     <Compile Include="Cells\Collision\ICollisionRule.cs" />
     <Compile Include="Cells\Collision\DescriptCollitionRule.cs" />
     <Compile Include="Componentes\BuffDisplay.cs" />
+    <Compile Include="Units\Inteligencia\IUnidadController.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

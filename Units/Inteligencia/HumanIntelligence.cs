@@ -4,14 +4,14 @@ namespace Units.Inteligencia
 	/// <summary>
 	/// Permite al jugador interactuar con su unidad.
 	/// </summary>
-	public class HumanIntelligence : IIntelligence, Moggle.Comm.IReceptorTeclado
+	public class HumanIntelligence : IUnidadController, Moggle.Comm.IReceptorTeclado
 	{
 		/// <summary>
 		/// The controlled unidad
 		/// </summary>
 		public readonly Unidad ControlledUnidad;
 
-		void IIntelligence.DoAction ()
+		void IUnidadController.DoAction ()
 		{
 			ControlledUnidad.assertIsIdleCheck ();
 			if (ActionDir != MovementDirectionEnum.NoMov)

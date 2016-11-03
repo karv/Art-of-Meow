@@ -1,11 +1,10 @@
 
 namespace Units.Inteligencia
 {
-	// TODO: Rename to IUnidadController
 	/// <summary>
 	/// A controller of unidad
 	/// </summary>
-	public interface IIntelligence
+	public interface IUnidadController
 	{
 		/// <summary>
 		/// Does the action at its turn

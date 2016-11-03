@@ -7,7 +7,7 @@ namespace Units.Inteligencia
 	/// <summary>
 	/// Unidad's controllers. Chase and attack the human player
 	/// </summary>
-	public class ChaseIntelligence : IIntelligence
+	public class ChaseIntelligence : IUnidadController
 	{
 		/// <summary>
 		/// Gets the map grid.
@@ -39,7 +39,7 @@ namespace Units.Inteligencia
 				Target = GetTarget ();
 		}
 
-		void IIntelligence.DoAction ()
+		void IUnidadController.DoAction ()
 		{
 			ControlledUnidad.assertIsIdleCheck ();
 			TryUpdateTarget ();

@@ -339,7 +339,7 @@ namespace Units
 		/// Gets or sets the controller of this unidad
 		/// </summary>
 		/// <value>The inteligencia.</value>
-		public IIntelligence Inteligencia { get; set; }
+		public IUnidadController Inteligencia { get; set; }
 
 		/// <summary>
 		/// Update
