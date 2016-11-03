@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using Units;
+using Microsoft.Xna.Framework;
 
 namespace Componentes
 {
@@ -59,6 +60,7 @@ namespace Componentes
 			GridSize = new MonoGame.Extended.Size (3, 3);
 			UpdateObjetcs ();
 			Unidad.Buffs.ListChanged += updateObjetcs;
+			this.BgColor = Color.Red * 0.3f;
 		}
 	}
 }

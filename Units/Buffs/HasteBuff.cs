@@ -86,7 +86,7 @@ namespace Units.Buffs
 		}
 
 		// TODO: Add content
-		const string iconName = "Icons//haste";
+		const string iconName = "clock";
 
 		void IComponent.AddContent (Moggle.BibliotecaContenido manager)
 		{
@@ -135,7 +135,7 @@ namespace Units.Buffs
 		                      Rectangle rect)
 		{
 			if (IsVisible)
-				bat.Draw (icon, rect, Color.White);
+				bat.Draw (icon, rect, Color.Green);
 		}
 
 		void timer_countdown (object sender, EventArgs e)
