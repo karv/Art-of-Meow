@@ -60,10 +60,6 @@ namespace Screens
 		/// AI players
 		/// </summary>
 		public List<IUnidad> AIPlayers = new List<IUnidad> ();
-		/// <summary>
-		/// Gets the <see cref="Player"/>'s grid-wise starting point.
-		/// </summary>
-		public readonly Point StartingPoint = new Point (50, 50);
 
 		/// <summary>
 		/// Calculates the grid size to make it fir correctly
@@ -85,15 +81,11 @@ namespace Screens
 			Player = new Unidad (GameGrid)
 			{
 				Team = new TeamManager (Color.Red),
-				Inteligencia = new HumanIntelligence (Player),
 				MapGrid = GameGrid,
-				Location = StartingPoint
+				Location = new Point (GameGrid.GridSize.X / 2, GameGrid.GridSize.Y / 2)
 			};
 
-			var Humanintel = new HumanIntelligence (Player);
-			Player.Inteligencia = Humanintel;
-			Player.MapGrid = GameGrid;
-			Player.Location = StartingPoint;
+			Player.Inteligencia = new HumanIntelligence (Player);
 			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.HealingSword) as IEquipment);
 
 			// TEST ing
