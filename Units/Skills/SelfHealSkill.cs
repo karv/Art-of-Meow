@@ -59,7 +59,7 @@ namespace Units.Skills
 
 		Texture2D _texture;
 
-		const string TextureName = "swordman";
+		const string TextureName = "heal";
 
 		/// <summary>
 		/// Loads the icon texture
@@ -109,7 +109,7 @@ namespace Units.Skills
 		/// <param name="rect">Rectángulo de dibujo</param>
 		public void Draw (SpriteBatch bat, Rectangle rect)
 		{
-			bat.Draw (_texture, rect, Color.White);
+			bat.Draw (_texture, rect, Color.Red);
 		}
 
 		#endregion
