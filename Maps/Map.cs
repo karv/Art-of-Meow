@@ -104,10 +104,7 @@ namespace Maps
 				case (char)0:
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
-					var newObj = new GridObject ("brick-wall", grid);
-					newObj.Depth = Depths.Foreground;
-					newObj.CollidePlayer = true;
-					newObj.UseColor = Color.DarkGray;
+					var newObj = new GridWall ("brick-wall", grid);
 					newObj.Location = p;
 					return newObj;
 			}
