@@ -17,7 +17,8 @@ namespace Items.Declarations.Equipment
 		/// <param name="target">Target.</param>
 		public void DoMeleeEffectOn (IUnidad user, IUnidad target)
 		{
-			user.EnqueueOrder (new MeleeDamageOrder (user, target));
+			var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Fuerza) / 8;
+			user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
 			user.EnqueueOrder (new CooldownOrder (user, calcularTiempoMelee (user)));
 		}
 

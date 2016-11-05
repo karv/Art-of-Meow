@@ -47,18 +47,5 @@ namespace Units.Order
 			ActionOnFinish = doDamage;
 			Damage = damage;
 		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Units.Order.MeleeDamageOrder"/> class.
-		/// </summary>
-		/// <param name="unidad">Unidad.</param>
-		/// <param name="target">Target.</param>
-		public MeleeDamageOrder (IUnidad unidad,
-		                         IUnidad target)
-			: this (unidad, target, 0)
-		{
-			Damage = Unidad.Recursos.ValorRecurso (ConstantesRecursos.DañoMelee) / 8;
-		}
-		
 	}
 }

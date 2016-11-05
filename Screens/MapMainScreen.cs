@@ -97,7 +97,7 @@ namespace Screens
 			};
 
 			Player.Inteligencia = new HumanIntelligence (Player);
-			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.HealingSword) as IEquipment);
+			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
 
 			// TEST ing
 

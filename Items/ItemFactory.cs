@@ -46,9 +46,6 @@ namespace Items
 				case ItemType.Potion:
 					ret = new HealingPotion ();
 					break;
-				case ItemType.HealingSword:
-					ret = new HealingSword ();
-					break;
 				default:
 					throw new Exception ();
 			}

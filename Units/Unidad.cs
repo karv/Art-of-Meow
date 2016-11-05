@@ -440,11 +440,6 @@ namespace Units
 				Max = 10,
 				Valor = 10
 			});
-
-			Recursos.Add (new RecursoFml (
-				ConstantesRecursos.Fuerza,
-				this,
-				ConstantesRecursos.DañoMelee));
 		}
 
 		static int nextId;
