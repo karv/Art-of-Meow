@@ -75,11 +75,6 @@ namespace Cells.CellObjects
 		static Color useColor { get { return Color.White; } }
 
 		/// <summary>
-		/// Constante de profundidad
-		/// </summary>
-		static float depth { get { return Depths.Background; } }
-
-		/// <summary>
 		/// Dibuja el objeto sobre un rectpangulo específico
 		/// </summary>
 		/// <param name="bat">Batch</param>
@@ -91,7 +86,7 @@ namespace Cells.CellObjects
 				area, null, useColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
-				depth);
+				Depths.Background);
 		}
 
 		/// <summary>
