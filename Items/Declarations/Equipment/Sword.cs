@@ -1,5 +1,4 @@
 ﻿using Units;
-using Units.Buffs;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
@@ -8,6 +7,9 @@ using Moggle;
 
 namespace Items.Declarations.Equipment
 {
+	/// <summary>
+	/// Obsolete
+	/// </summary>
 	[ObsoleteAttribute]
 	public class HealingSword : Sword, ISkillEquipment
 	{
@@ -42,19 +44,8 @@ namespace Items.Declarations.Equipment
 	/// <summary>
 	/// Una espada sin propiedades especiales
 	/// </summary>
-	public class Sword : Equipment, IBuffGenerating, IMeleeEffect
+	public class Sword : Equipment, IMeleeEffect
 	{
-		/// <summary>
-		/// Enumera los stats y la cantidad que son modificados.
-		/// </summary>
-		/// <returns>The delta stat.</returns>
-		public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, float>> GetDeltaStat ()
-		{
-			yield return new System.Collections.Generic.KeyValuePair<string, float> (
-				ConstantesRecursos.DañoMelee,
-				3);
-		}
-
 		#region IEquipment implementation
 
 		/// <summary>
