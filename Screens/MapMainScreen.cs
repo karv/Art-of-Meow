@@ -16,6 +16,7 @@ using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 using Units.Skills;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Screens
 {
@@ -55,6 +56,16 @@ namespace Screens
 		/// The human player
 		/// </summary>
 		public Unidad Player;
+
+		/// <summary>
+		/// Dibuja la pantalla
+		/// </summary>
+		public override void Draw (GameTime gameTime)
+		{
+			Batch.Begin (SpriteSortMode.BackToFront);
+			EntreBatches (gameTime);
+			Batch.End ();
+		}
 
 		/// <summary>
 		/// AI players
