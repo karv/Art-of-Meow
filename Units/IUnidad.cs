@@ -101,11 +101,18 @@ namespace Units
 			
 		}
 
+		public static IEnumerable<ISkill> EnumerateInventorySkills (this IUnidad u)
+		{
+			return u.Inventory.Items.OfType<ISkill> ();
+		}
+
 		public static IEnumerable<ISkill> EnumerateAllSkills (this IUnidad u)
 		{
 			foreach (var sk in u.Skills.Skills)
 				yield return sk;
 			foreach (var sk in EnumerateEquipmentSkills (u))
+				yield return sk;
+			foreach (var sk in u.EnumerateInventorySkills ())
 				yield return sk;
 		}
 	}
