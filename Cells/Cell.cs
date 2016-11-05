@@ -65,15 +65,6 @@ namespace Cells
 		}
 
 		/// <summary>
-		/// Determina si esta celda evita que un objeto pueda entrar.
-		/// </summary>
-		[Obsolete ("Usar CollisionSystem")]
-		public bool Collision (IGridObject collObj)
-		{
-			return Objects.Any (z => z.Collision (collObj) || collObj.Collision (z));
-		}
-
-		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.Cell"/>.
 		/// </summary>
 		public override string ToString ()

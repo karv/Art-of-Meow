@@ -39,10 +39,6 @@ namespace Cells.CellObjects
 		/// <value>The container.</value>
 		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container { get; }
 
-		bool IGridObject.Collision (IGridObject collObj)
-		{
-			return false;
-		}
 
 		/// <summary>
 		/// Carga el contenido gráfico.

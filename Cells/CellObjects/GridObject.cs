@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Units;
+using Moggle.Controles;
 
 namespace Cells.CellObjects
 {
@@ -61,8 +62,8 @@ namespace Cells.CellObjects
 		///  This could be the Screen or Game itself.
 		/// </summary>
 		/// <value>The container.</value>
-		public Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl> Container
-		{ get { return Grid as Moggle.Controles.IComponentContainerComponent<Moggle.Controles.IControl>; } }
+		public IComponentContainerComponent<IControl> Container
+		{ get { return Grid as IComponentContainerComponent<IControl>; } }
 
 		/// <summary>
 		/// Initialize this instance.
@@ -110,8 +111,6 @@ namespace Cells.CellObjects
 		/// <param name="area">Rectángulo de dibujo</param>
 		public void Draw (SpriteBatch bat, Rectangle area)
 		{
-			if (StringTexture == "brick-wall")
-				System.Console.WriteLine ();
 			bat.Draw (
 				Texture,
 				area, null, UseColor,
