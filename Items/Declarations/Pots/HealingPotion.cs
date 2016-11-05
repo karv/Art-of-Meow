@@ -3,17 +3,18 @@ using Units;
 using Units.Order;
 using Units.Recursos;
 
-
 namespace Items.Declarations.Pots
 {
-	// TODO: incompleto
 	/// <summary>
 	/// Healing potion.
 	/// </summary>
 	public class HealingPotion : CommonItemBase, 
 	ISkill // Hace usable este item
 	{
-		protected float HealHp = 5f;
+		/// <summary>
+		/// Cantidad de HP que cura
+		/// </summary>
+		protected virtual float HealHp { get; set; }
 
 		/// <summary>
 		/// Executes this skill
@@ -30,13 +31,13 @@ namespace Items.Declarations.Pots
 			hpRec.Valor += HealHp;
 		}
 
-		public bool IsCastable (IUnidad user)
+		bool ISkill.IsCastable (IUnidad user)
 		{
 			// return true, si el objeto no está en el inventario no aparecerá
 			return true; 
 		}
 
-		public bool IsVisible (IUnidad user)
+		bool ISkill.IsVisible (IUnidad user)
 		{
 			// return true, si el objeto no está en el inventario no aparecerá
 			return true;
@@ -48,6 +49,7 @@ namespace Items.Declarations.Pots
 		public HealingPotion ()
 			: base ("Healing Potion")
 		{
+			HealHp = 5f;
 			Color = Microsoft.Xna.Framework.Color.Red;
 			TextureName = "heal";
 		}
