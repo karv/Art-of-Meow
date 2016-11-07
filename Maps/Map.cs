@@ -199,7 +199,7 @@ namespace Maps
 			// TODO :grid.AddCellObject ();
 //			_data [up.X, up.Y] = 'u';
 			var down = getEmptyCell (grid);
-			var stairDown = new StairsGridBoject ("floor", grid)
+			var stairDown = new StairsGridObject ("floor", grid)
 			{
 				UseColor = Color.DarkOrange,
 				Depth = Depths.Foreground,

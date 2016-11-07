@@ -6,7 +6,7 @@ namespace Cells.CellObjects
 	/// <summary>
 	/// Escaleras como objeto de Grid
 	/// </summary>
-	public class StairsGridBoject : GridObject, IReceptorTeclado
+	public class StairsGridObject : GridObject, IReceptorTeclado
 	{
 		/// <summary>
 		/// Usa la escalera
@@ -27,11 +27,10 @@ namespace Cells.CellObjects
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.CellObjects.StairsGridBoject"/> class.
 		/// </summary>
 		/// <param name="texture">Texture.</param>
 		/// <param name="grid">Grid.</param>
-		public StairsGridBoject (string texture, Grid grid)
+		public StairsGridObject (string texture, Grid grid)
 			: base (texture, grid)
 		{
 		}
