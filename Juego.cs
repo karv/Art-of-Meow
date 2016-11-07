@@ -32,6 +32,7 @@ namespace AoM
 		/// </summary>
 		public Juego ()
 		{
+			Content.RootDirectory = @"Content/Content";
 			Graphics.IsFullScreen = true;
 		}
 	}
