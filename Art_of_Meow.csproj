@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -9,6 +10,7 @@
     <AssemblyName>Art_of_Meow</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <StartupObject>AoM.Program</StartupObject>
+    <MonoGamePlatform>DesktopGL</MonoGamePlatform>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +34,7 @@
     <DocumentationFile>bin\Release\Art_of_Meow.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
@@ -59,6 +62,7 @@
     <None Include="Maps\void.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <MonoGameContentReference Include="content.mgcb" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -167,5 +171,6 @@
     <Folder Include="Maps\" />
     <Folder Include="Units\Order\" />
     <Folder Include="Cells\Collision\" />
+    <Folder Include="Content\" />
   </ItemGroup>
 </Project>
