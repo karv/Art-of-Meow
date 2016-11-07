@@ -251,11 +251,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			//var size = new Size (100, 100);
-			var map = new Map (@"Maps/base.map");
-
-
-			GameGrid = map.GenerateGrid (this);
+			GameGrid = Map.GenerateGrid (@"Maps/base.map", this);
 		}
 
 		/// <summary>
