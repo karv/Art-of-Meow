@@ -96,7 +96,7 @@ namespace Maps
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
-			if (p.X < 0 || p.Y < 0 || p.X >= grid.GridSize.X || p.Y >= grid.GridSize.Y)
+			if (p.X < 0 || p.Y < 0 || p.X >= grid.GridSize.Width || p.Y >= grid.GridSize.Height)
 				throw new Exception ("Point outsite grid bounds");
 			switch (c)
 			{

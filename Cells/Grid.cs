@@ -55,7 +55,7 @@ namespace Cells
 		/// <summary>
 		/// Gets the dimentions lenght of the world, in Grid-long
 		/// </summary>
-		public Point GridSize { get; }
+		public Size GridSize { get; }
 
 		/// <summary>
 		/// Gets the currently active object
@@ -67,15 +67,15 @@ namespace Cells
 		/// </summary>
 		IEnumerable<Point> contorno ()
 		{
-			for (int i = 0; i < GridSize.X; i++)
+			for (int i = 0; i < GridSize.Width; i++)
 			{
 				yield return (new Point (i, 0));
-				yield return (new Point (i, GridSize.Y - 1));
+				yield return (new Point (i, GridSize.Height - 1));
 			}
-			for (int i = 1; i < GridSize.Y - 1; i++)
+			for (int i = 1; i < GridSize.Height - 1; i++)
 			{
 				yield return (new Point (0, i));
-				yield return (new Point (GridSize.X - 1, i));
+				yield return (new Point (GridSize.Width - 1, i));
 			}
 		}
 
@@ -85,7 +85,9 @@ namespace Cells
 		public Point RandomPoint ()
 		{
 			var size = GridSize;
-			return new Point (1 + _r.Next (size.X - 2), 1 + _r.Next (size.Y - 2));
+			return new Point (
+				1 + _r.Next (size.Width - 2),
+				1 + _r.Next (size.Height - 2));
 		}
 
 		/// <summary>
@@ -380,7 +382,7 @@ namespace Cells
 			: base (scr)
 		{
 			_collisionSystem = new CollisionSystem ();
-			GridSize = new Point (xSize, ySize);
+			GridSize = new Size (xSize, ySize);
 			TimeManager = new GameTimeManager (this);
 		}
 	}

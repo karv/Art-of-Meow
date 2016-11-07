@@ -93,7 +93,9 @@ namespace Screens
 			{
 				Team = new TeamManager (Color.Red),
 				MapGrid = GameGrid,
-				Location = new Point (GameGrid.GridSize.X / 2, GameGrid.GridSize.Y / 2)
+				Location = new Point (
+					GameGrid.GridSize.Width / 2,
+					GameGrid.GridSize.Height / 2)
 			};
 
 			Player.Inteligencia = new HumanIntelligence (Player);
