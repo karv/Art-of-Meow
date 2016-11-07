@@ -1,7 +1,7 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/$(Config)/
+/outputDir:.
 /intermediateDir:obj
 /platform:Windows
 /config:Debug
