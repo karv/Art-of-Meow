@@ -146,15 +146,13 @@ namespace Maps
 				case (char)0:
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
-				case 'd': // TODO Escalera abajo, no implementado
-				case 'u': // TODO Escalera arriba, no implementado
 					var newObj = new GridWall ("brick-wall", grid);
 					newObj.Location = p;
 					return newObj;
 				case '\n':
 					return null;
 			}
-			throw new NotImplementedException ("Unknown accepted map symbol " + c);
+			throw new FormatException ("Unknown accepted map symbol " + c);
 		}
 
 		/// <summary>
@@ -195,9 +193,6 @@ namespace Maps
 
 		void makeStairs (Grid grid)
 		{
-			//var up = getEmptyCell (grid);
-			// TODO :grid.AddCellObject ();
-//			_data [up.X, up.Y] = 'u';
 			var down = getEmptyCell (grid);
 			var stairDown = new StairsGridObject ("floor", grid)
 			{
@@ -206,8 +201,6 @@ namespace Maps
 				Location = down
 			};
 			grid.AddCellObject (stairDown);
-			// TODO :grid.AddCellObject ();
-//			_data [down.X, down.Y] = 'd';
 		}
 
 		/// <summary>
