@@ -59,12 +59,12 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="OpenTK.dll.config" />
-    <None Include="Maps\void.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <MonoGameContentReference Include="content.mgcb" />
     <None Include="Content\*.xnb">
       <Link>Content\*.xnb</Link>
+    </None>
+    <None Include="Maps\*.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

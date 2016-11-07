@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
@@ -73,7 +74,6 @@ namespace Maps
 		public Grid GenerateGrid (IScreen scr)
 		{
 			var ret = new Grid (MapSize.Width, MapSize.Height, scr);
-
 			for (int ix = 0; ix < MapSize.Width; ix++)
 				for (int iy = 0; iy < MapSize.Height; iy++)
 					ret.AddCellObject (MakeObject (_data [ix, iy], ret, new Point (ix, iy)));
@@ -104,11 +104,13 @@ namespace Maps
 				case (char)0:
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
+				case 'd': // TODO Escalera abajo, no implementado
+				case 'u': // TODO Escalera arriba, no implementado
 					var newObj = new GridWall ("brick-wall", grid);
 					newObj.Location = p;
 					return newObj;
 			}
-			throw new Exception ("Unknown map symbol " + c);
+			throw new NotImplementedException ("Unknown accepted map symbol " + c);
 		}
 
 		/// <summary>
@@ -180,18 +182,24 @@ namespace Maps
 		{
 			try
 			{
+				char [] aceptedChars = { 'W', 'd', 'u', ' ' };
 				var sizeX = int.Parse (reader.ReadLine ());
 				var sizeY = int.Parse (reader.ReadLine ());
 				_data = new char[sizeX, sizeY];
 				_r = new Random ();
 
-				for (int i = 0; i < sizeY; i++)
+				var i = 0;
+				var mapSize = MapSize.Height * MapSize.Width;
+				while (i < mapSize)
 				{
-					var currLine = new char[sizeX];
-					reader.ReadBlock (currLine, 0, sizeX);
-
-					for (int j = 0; j < sizeX; j++)
-						_data [j, i] = currLine [j];
+					var ix = i % MapSize.Height;
+					var iy = i / MapSize.Height;
+					var chr = (char)reader.Read ();
+					if (aceptedChars.Contains (chr))
+					{
+						_data [ix, iy] = chr;
+						i++;
+					}
 				}
 			}
 			catch (Exception ex)
