@@ -209,6 +209,9 @@ namespace Screens
 					}
 					break;
 			}
+			var playerCell = GameGrid.GetCell (Player.Location);
+			foreach (var x in playerCell.Objects)
+				(x as IReceptorTeclado)?.RecibirSeñal (keyArg);
 			GameGrid.CenterIfNeeded (Player);
 		}
 
