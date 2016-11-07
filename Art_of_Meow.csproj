@@ -63,7 +63,13 @@
     <None Include="Content\*.xnb">
       <Link>Content\*.xnb</Link>
     </None>
-    <None Include="Maps\*.map">
+    <None Include="Maps\void.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\base.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\dung00.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
