@@ -18,6 +18,11 @@ namespace Cells
 	public class Grid : DSBC, IComponentContainerComponent<IGridObject>
 	{
 		/// <summary>
+		/// Devuelve o establece el archivo de generador mapa que se usará como próximo nivel
+		/// </summary>
+		public string DownMap { get; set; }
+
+		/// <summary>
 		/// Builds a <see cref="Cell"/> of the current state of a given point
 		/// </summary>
 		/// <param name="p">Grid-wise point of the cell</param>

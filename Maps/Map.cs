@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended;
+using System.Diagnostics;
 
 namespace Maps
 {
@@ -25,6 +27,11 @@ namespace Maps
 
 		readonly char [,] _data;
 		readonly Random _r;
+
+		/// <summary>
+		/// El nombre del archivo de mapa del siguiente nivel para ser pasado al <see cref="Grid"/> generado
+		/// </summary>
+		public string NextMap = @"Maps/base.map";
 
 		/// <summary>
 		/// Should a bounding rectangle of impassable terrain be added around the map
@@ -72,8 +79,8 @@ namespace Maps
 		/// </summary>
 		public Grid GenerateGrid (IScreen scr)
 		{
+			makeStairs ();
 			var ret = new Grid (MapSize.Width, MapSize.Height, scr);
-
 			for (int ix = 0; ix < MapSize.Width; ix++)
 				for (int iy = 0; iy < MapSize.Height; iy++)
 					ret.AddCellObject (MakeObject (_data [ix, iy], ret, new Point (ix, iy)));
@@ -82,6 +89,8 @@ namespace Maps
 				AddBoundsTo ('W', ret);
 			if (AddFeatures)
 				AddRandomFlavorFeatures (ret);
+			
+			ret.DownMap = NextMap; // Establecer el mapa del siguiente nivel
 			return ret;
 		}
 
@@ -104,11 +113,13 @@ namespace Maps
 				case (char)0:
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
+				case 'd': // TODO Escalera abajo, no implementado
+				case 'u': // TODO Escalera arriba, no implementado
 					var newObj = new GridWall ("brick-wall", grid);
 					newObj.Location = p;
 					return newObj;
 			}
-			throw new Exception ("Unknown map symbol " + c);
+			throw new NotImplementedException ("Unknown accepted map symbol " + c);
 		}
 
 		/// <summary>
@@ -129,6 +140,24 @@ namespace Maps
 						newObj.UseColor = Color.Green;
 						grid.AddCellObject (newObj);
 					}
+		}
+
+		Point getEmptyCell ()
+		{
+			Point ret;
+			do
+				ret = new Point (_r.Next (MapSize.Width), _r.Next (MapSize.Height));
+			while (_data [ret.X, ret.Y] != ' ');
+			return ret;
+		}
+
+
+		void makeStairs ()
+		{
+			var up = getEmptyCell ();
+			_data [up.X, up.Y] = 'u';
+			var down = getEmptyCell ();
+			_data [down.X, down.Y] = 'd';
 		}
 
 		/// <summary>
@@ -180,24 +209,72 @@ namespace Maps
 		{
 			try
 			{
+				char [] aceptedChars = { 'W', 'd', 'u', ' ' };
 				var sizeX = int.Parse (reader.ReadLine ());
 				var sizeY = int.Parse (reader.ReadLine ());
 				_data = new char[sizeX, sizeY];
 				_r = new Random ();
 
-				for (int i = 0; i < sizeY; i++)
+				var i = 0;
+				var mapSize = MapSize.Height * MapSize.Width;
+				while (i < mapSize)
 				{
-					var currLine = new char[sizeX];
-					reader.ReadBlock (currLine, 0, sizeX);
+					var ix = i % MapSize.Height;
+					var iy = i / MapSize.Height;
+					var chr = (char)reader.Read ();
+					if (aceptedChars.Contains (chr))
+					{
+						_data [ix, iy] = chr;
+						i++;
+					}
+				}
 
-					for (int j = 0; j < sizeX; j++)
-						_data [j, i] = currLine [j];
+				// Leer los flags
+				while (!reader.EndOfStream)
+				{
+					var cLine = reader.ReadLine ();
+					var spl = cLine.Split (':');
+					if (spl.Length > 0 && spl [0] == "Next")
+					{
+						// Establecer aquí el valor de NextMap
+						Debug.Assert (spl.Length == 2);
+					
+						var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
+						NextMap = posMaps [_r.Next (posMaps.Count)];
+					}
 				}
 			}
 			catch (Exception ex)
 			{
 				throw new IOException ("No se puede cargar archivo de mapa.", ex);
 			}
+		}
+
+		/// <summary>
+		/// Enumera los nombres de los archivos de mapa que tengan el TAG dado
+		/// </summary>
+		static IEnumerable<string> mapsWithTag (string tag)
+		{
+			var dir = new DirectoryInfo (@"Maps");
+			return dir.EnumerateFiles ("*.map").Where (z => mapFileHasTag (z, tag)).Select (z => z.FullName);
+		}
+
+		static bool mapFileHasTag (FileInfo file, string Tag)
+		{
+			var reader = file.OpenText ();
+			while (!reader.EndOfStream)
+			{
+				var line = reader.ReadLine ();
+				var spl = line.Split (':');
+				if (spl.Length > 0 && spl [0].Trim () == "Tag")
+				{
+					
+					Debug.Assert (spl.Length == 2);
+					if (spl [1].Trim () == Tag)
+						return true;
+				}
+			}
+			return false;
 		}
 	}
 }
