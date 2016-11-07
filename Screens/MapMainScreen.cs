@@ -161,11 +161,7 @@ namespace Screens
 			var spd = Player.Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
 			System.Console.WriteLine (spd);
 
-			var sword = ItemFactory.CreateItem (ItemType.Sword) as Sword;
-			//Jugador.Equipment.EquipItem (sword);
-			Player.Inventory.Add (sword);
-			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
-			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
 			var healSkill = new SelfHealSkill ();
 			Player.Skills.Skills.Add (healSkill);
 			healSkill.Initialize ();
