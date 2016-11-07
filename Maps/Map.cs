@@ -255,8 +255,8 @@ namespace Maps
 			var mapSize = sizeX * sizeY;
 			while (i < mapSize)
 			{
-				var ix = i % sizeY;
-				var iy = i / sizeY;
+				var ix = i % sizeX;
+				var iy = i / sizeX;
 				var chr = (char)dataStream.Read ();
 				var obj = MakeObject (chr, ret, new Point (ix, iy));
 				if (obj != null)
