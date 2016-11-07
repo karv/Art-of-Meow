@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended;
 using System.Diagnostics;
+using Screens;
+using Units;
 
 namespace Maps
 {
@@ -17,16 +19,19 @@ namespace Maps
 	/// </summary>
 	public class Map
 	{
+		/*
 		/// <summary>
 		/// Gets the size of the map.
 		/// </summary>
 		/// <value>The size of the map.</value>
+
 		public Size MapSize { get { return new Size (
 				_data.GetLength (0),
 				_data.GetLength (1)); } }
-
-		readonly char [,] _data;
+		*/
 		readonly Random _r;
+
+		readonly StreamReader dataStream;
 
 		/// <summary>
 		/// El nombre del archivo de mapa del siguiente nivel para ser pasado al <see cref="Grid"/> generado
@@ -34,15 +39,11 @@ namespace Maps
 		public string NextMap = @"Maps/base.map";
 
 		/// <summary>
-		/// Should a bounding rectangle of impassable terrain be added around the map
-		/// </summary>
-		public bool BoundGrid = true;
-
-		/// <summary>
 		/// Should add flavor features, like plants on the ground
 		/// </summary>
 		public bool AddFeatures = true;
 
+		/*
 		/// <summary>
 		/// Add bounds to a grid, with a tile represented by a character
 		/// </summary>
@@ -73,25 +74,57 @@ namespace Maps
 			}
 		}
 
-
+		*/
 		/// <summary>
 		/// Generates a <see cref="Grid"/>
 		/// </summary>
 		public Grid GenerateGrid (IScreen scr)
 		{
-			makeStairs ();
-			var ret = new Grid (MapSize.Width, MapSize.Height, scr);
-			for (int ix = 0; ix < MapSize.Width; ix++)
-				for (int iy = 0; iy < MapSize.Height; iy++)
-					ret.AddCellObject (MakeObject (_data [ix, iy], ret, new Point (ix, iy)));
+			var ret = readMapIntoGrid (scr);
+			makeStairs (ret);
+			getMapOptions (ret);
 
-			if (BoundGrid)
-				AddBoundsTo ('W', ret);
 			if (AddFeatures)
 				AddRandomFlavorFeatures (ret);
 			
 			ret.DownMap = NextMap; // Establecer el mapa del siguiente nivel
 			return ret;
+		}
+
+		void getMapOptions (Grid grid)
+		{
+			// Leer los flags
+			while (!dataStream.EndOfStream)
+			{
+				var cLine = dataStream.ReadLine ();
+				var spl = cLine.Split (':');
+				var uFact = new UnidadFactory (grid);
+				var enTeam = new TeamManager (Color.Blue);
+				switch (spl [0])
+				{
+					case "Next": // Establecer aquí el valor de NextMap
+						Debug.Assert (spl.Length == 2);
+
+						var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
+						NextMap = posMaps [_r.Next (posMaps.Count)];
+						break;
+					
+					case "Enemy": // Agregar un enemigo
+						Debug.Assert (spl.Length == 2);
+						var enemy = uFact.MakeEnemy (spl [1].Trim ());
+						enemy.Team = enTeam;
+						enemy.Location = getEmptyCell (grid);
+						grid.AddCellObject (enemy);
+
+						break;
+					default:
+						Debug.WriteLine (
+							"Entrada de opción desconocida {0} en un mapa {1}",
+							spl [0],
+							dataStream);
+						break;
+				}
+			}
 		}
 
 		/// <summary>
@@ -118,6 +151,8 @@ namespace Maps
 					var newObj = new GridWall ("brick-wall", grid);
 					newObj.Location = p;
 					return newObj;
+				case '\n':
+					return null;
 			}
 			throw new NotImplementedException ("Unknown accepted map symbol " + c);
 		}
@@ -129,8 +164,9 @@ namespace Maps
 		public void AddRandomFlavorFeatures (Grid grid)
 		{
 			const float probZacate = 0.1f;
-			for (int ix = 0; ix < MapSize.Width; ix++)
-				for (int iy = 0; iy < MapSize.Height; iy++)
+			var mapSize = grid.GridSize;
+			for (int ix = 0; ix < mapSize.Width; ix++)
+				for (int iy = 0; iy < mapSize.Height; iy++)
 					if (_r.NextDouble () < probZacate)
 					{
 						var newObj = new GridObject ("vanilla-flower", grid);
@@ -142,53 +178,41 @@ namespace Maps
 					}
 		}
 
-		Point getEmptyCell ()
+		Point getEmptyCell (Grid grid)
 		{
 			Point ret;
+			var mapSize = grid.GridSize;
+			Cell cell;
 			do
-				ret = new Point (_r.Next (MapSize.Width), _r.Next (MapSize.Height));
-			while (_data [ret.X, ret.Y] != ' ');
+			{
+				ret = new Point (_r.Next (mapSize.Width), _r.Next (mapSize.Height));
+				cell = grid.GetCell (ret);
+			}
+			while (cell.Objects.Count > 1); // REMARK: Siembre hay un gridObject que permite el movimiento
 			return ret;
 		}
 
 
-		void makeStairs ()
+		void makeStairs (Grid grid)
 		{
-			var up = getEmptyCell ();
-			_data [up.X, up.Y] = 'u';
-			var down = getEmptyCell ();
-			_data [down.X, down.Y] = 'd';
+			var up = getEmptyCell (grid);
+			// TODO :grid.AddCellObject ();
+//			_data [up.X, up.Y] = 'u';
+			var down = getEmptyCell (grid);
+			// TODO :grid.AddCellObject ();
+//			_data [down.X, down.Y] = 'd';
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Maps.Map"/> class.
-		/// </summary>
-		/// <param name="data">A 2-dimentional array containing the <c>char</c> value info of every cell in the grid</param>
-		public Map (char [,] data)
+		public static Grid GenerateGrid (StreamReader reader, MapMainScreen scr)
 		{
-			_r = new Random ();
-			_data = new char[data.GetLength (0), data.GetLength (1)];
-			data.CopyTo (_data, 0);
+			var map = new Map (reader);
+			return map.GenerateGrid (scr);
 		}
 
-		/// <summary>
-		/// Initializes a new void instance of the <see cref="Maps.Map"/> class. 
-		/// This constructor will generate a 0x0 map, and this value cannot be changed.
-		/// </summary>
-		public Map ()
+		public static Grid GenerateGrid (string mapFile, MapMainScreen scr)
 		{
-			_r = new Random ();
-			_data = new char[0, 0];
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Maps.Map"/> class of a given size
-		/// </summary>
-		/// <param name="size">Size of the map in cells-long</param>
-		public Map (Size size)
-		{
-			_r = new Random ();
-			_data = new char[size.Width, size.Height];
+			var map = new Map (mapFile);
+			return map.GenerateGrid (scr);
 		}
 
 		/// <summary>
@@ -207,47 +231,32 @@ namespace Maps
 		/// <param name="reader">A stream reader</param>
 		public Map (StreamReader reader)
 		{
-			try
+			dataStream = reader;
+			_r = new Random ();
+		}
+
+		Grid readMapIntoGrid (IScreen scr)
+		{
+			var sizeX = int.Parse (dataStream.ReadLine ());
+			var sizeY = int.Parse (dataStream.ReadLine ());
+			var ret = new Grid (sizeX, sizeY, scr);
+
+			var i = 0;
+			var mapSize = sizeX * sizeY;
+			while (i < mapSize)
 			{
-				char [] aceptedChars = { 'W', 'd', 'u', ' ' };
-				var sizeX = int.Parse (reader.ReadLine ());
-				var sizeY = int.Parse (reader.ReadLine ());
-				_data = new char[sizeX, sizeY];
-				_r = new Random ();
-
-				var i = 0;
-				var mapSize = MapSize.Height * MapSize.Width;
-				while (i < mapSize)
-				{
-					var ix = i % MapSize.Height;
-					var iy = i / MapSize.Height;
-					var chr = (char)reader.Read ();
-					if (aceptedChars.Contains (chr))
-					{
-						_data [ix, iy] = chr;
-						i++;
-					}
-				}
-
-				// Leer los flags
-				while (!reader.EndOfStream)
-				{
-					var cLine = reader.ReadLine ();
-					var spl = cLine.Split (':');
-					if (spl.Length > 0 && spl [0] == "Next")
-					{
-						// Establecer aquí el valor de NextMap
-						Debug.Assert (spl.Length == 2);
-					
-						var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
-						NextMap = posMaps [_r.Next (posMaps.Count)];
-					}
+				var ix = i % sizeY;
+				var iy = i / sizeY;
+				var chr = (char)dataStream.Read ();
+				var obj = MakeObject (chr, ret, new Point (ix, iy));
+				if (obj != null)
+				{					
+					ret.AddCellObject (obj);
+					i++;
 				}
 			}
-			catch (Exception ex)
-			{
-				throw new IOException ("No se puede cargar archivo de mapa.", ex);
-			}
+
+			return ret;
 		}
 
 		/// <summary>

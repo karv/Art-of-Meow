@@ -63,6 +63,8 @@ namespace Units
 		/// <value>The grid.</value>
 		public Grid Grid { get; }
 
+		Grid IUnidad.MapGrid { get { return Grid; } }
+
 		/// <summary>
 		/// Gets the orders corresponding this unidad
 		/// </summary>
@@ -144,12 +146,6 @@ namespace Units
 		/// Gets the HP
 		/// </summary>
 		public RecursoHP RecursoHP { get; private set; }
-
-		/// <summary>
-		/// Gets the map grid
-		/// </summary>
-		/// <value>The map grid.</value>
-		public Grid MapGrid { get; set; }
 
 		const string TextureType = "swordman";
 
@@ -282,10 +278,10 @@ namespace Units
 		{
 			var desde = Location;
 			// Intenta mover este objeto; si no puede, intenta atacar.
-			if (!MapGrid.MoveCellObject (this, dir))
+			if (!Grid.MoveCellObject (this, dir))
 			{
 				// Do melee
-				var targetCell = new Cell (MapGrid, Location + dir.AsDirectionalPoint ());
+				var targetCell = new Cell (Grid, Location + dir.AsDirectionalPoint ());
 				var target = targetCell.GetUnidadHere ();
 				if (target == null)
 					return false;
@@ -317,8 +313,8 @@ namespace Units
 		float calcularTiempoMov (Point desde, Point hasta)
 		{
 			var vel = Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
-			var cellOrig = MapGrid.GetCell (desde);
-			var cellDest = MapGrid.GetCell (hasta);
+			var cellOrig = Grid.GetCell (desde);
+			var cellDest = Grid.GetCell (hasta);
 			var peso = (cellOrig.PesoMovimiento () + cellDest.PesoMovimiento ()) / 2;
 
 			if (desde.X != hasta.X && desde.Y != hasta.Y) // Mov inclinado
