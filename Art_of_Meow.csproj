@@ -63,6 +63,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <MonoGameContentReference Include="content.mgcb" />
+    <None Include="Content\*.xnb">
+      <Link>Content\*.xnb</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
