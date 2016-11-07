@@ -195,20 +195,37 @@ namespace Maps
 
 		void makeStairs (Grid grid)
 		{
-			var up = getEmptyCell (grid);
+			//var up = getEmptyCell (grid);
 			// TODO :grid.AddCellObject ();
 //			_data [up.X, up.Y] = 'u';
 			var down = getEmptyCell (grid);
+			var stairDown = new StairsGridBoject ("floor", grid)
+			{
+				UseColor = Color.DarkOrange,
+				Depth = Depths.Foreground,
+				Location = down
+			};
+			grid.AddCellObject (stairDown);
 			// TODO :grid.AddCellObject ();
 //			_data [down.X, down.Y] = 'd';
 		}
 
+		/// <summary>
+		/// Genera un Grid a partir de un reader
+		/// </summary>
+		/// <param name="reader">Un StreamReader con la info del mapa</param>
+		/// <param name="scr">Screen del grid</param>
 		public static Grid GenerateGrid (StreamReader reader, MapMainScreen scr)
 		{
 			var map = new Map (reader);
 			return map.GenerateGrid (scr);
 		}
 
+		/// <summary>
+		/// Genera un Grid a partir de un reader
+		/// </summary>
+		/// <param name="mapFile">Nombre de archivo del mapa</param>
+		/// <param name="scr">Screen del grid</param>
 		public static Grid GenerateGrid (string mapFile, MapMainScreen scr)
 		{
 			var map = new Map (mapFile);
