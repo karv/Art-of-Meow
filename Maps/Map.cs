@@ -9,6 +9,7 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using System.Diagnostics;
 using Screens;
+using Units;
 
 namespace Maps
 {
@@ -81,7 +82,7 @@ namespace Maps
 		{
 			var ret = readMapIntoGrid (scr);
 			makeStairs (ret);
-			getMapOptions ();
+			getMapOptions (ret);
 
 			if (AddFeatures)
 				AddRandomFlavorFeatures (ret);
@@ -90,20 +91,38 @@ namespace Maps
 			return ret;
 		}
 
-		void getMapOptions ()
+		void getMapOptions (Grid grid)
 		{
 			// Leer los flags
 			while (!dataStream.EndOfStream)
 			{
 				var cLine = dataStream.ReadLine ();
 				var spl = cLine.Split (':');
-				if (spl.Length > 0 && spl [0] == "Next")
+				var uFact = new UnidadFactory (grid);
+				var enTeam = new TeamManager (Color.Blue);
+				switch (spl [0])
 				{
-					// Establecer aquí el valor de NextMap
-					Debug.Assert (spl.Length == 2);
+					case "Next": // Establecer aquí el valor de NextMap
+						Debug.Assert (spl.Length == 2);
 
-					var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
-					NextMap = posMaps [_r.Next (posMaps.Count)];
+						var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
+						NextMap = posMaps [_r.Next (posMaps.Count)];
+						break;
+					
+					case "Enemy": // Agregar un enemigo
+						Debug.Assert (spl.Length == 2);
+						var enemy = uFact.MakeEnemy (spl [1].Trim ());
+						enemy.Team = enTeam;
+						enemy.Location = getEmptyCell (grid);
+						grid.AddCellObject (enemy);
+
+						break;
+					default:
+						Debug.WriteLine (
+							"Entrada de opción desconocida {0} en un mapa {1}",
+							spl [0],
+							dataStream);
+						break;
 				}
 			}
 		}

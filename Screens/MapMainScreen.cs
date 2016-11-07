@@ -41,12 +41,6 @@ namespace Screens
 		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
-		// REMOVE poner esto en otra parte. ¿En Grid?
-		/// <summary>
-		/// Number of AI-chasers to add to the grid
-		/// </summary>
-		public const int NumChasers = 5;
-
 		/// <summary>
 		/// Map grid
 		/// </summary>
@@ -92,7 +86,6 @@ namespace Screens
 			Player = new Unidad (GameGrid)
 			{
 				Team = new TeamManager (Color.Red),
-				MapGrid = GameGrid,
 				Location = new Point (
 					GameGrid.GridSize.Width / 2,
 					GameGrid.GridSize.Height / 2)
@@ -141,27 +134,6 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Initializes the AIPlayers
-		/// </summary>
-		void buildChasers ()
-		{
-			var enemyTeam = new TeamManager (Color.Blue);
-			for (int i = 0; i < NumChasers; i++)
-			{
-				var chaser = new Unidad (GameGrid)
-				{
-					Team = enemyTeam,
-					MapGrid = GameGrid,
-					Location = GameGrid.RandomPoint ()
-				};
-				chaser.Inteligencia = new ChaseIntelligence (chaser);
-				chaser.RecursoHP.Max = 3;
-				chaser.RecursoHP.Fill ();
-				AIPlayers.Add (chaser);
-			}
-		}
-
-		/// <summary>
 		/// Initializes the grid, and the rest of the controls
 		/// </summary>
 		public override void Initialize ()
@@ -169,12 +141,8 @@ namespace Screens
 			// REMOVE: ¿Move the Grid initializer ot itself?
 			generateGridSizes ();
 			inicializarJugador ();
-			buildChasers ();
 
 			GameGrid.AddCellObject (Player);
-			foreach (var x in AIPlayers)
-				GameGrid.AddCellObject (x);
-
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.

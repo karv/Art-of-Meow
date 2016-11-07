@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Cells;
 using Cells.CellObjects;
+using System;
 
 namespace Units.Inteligencia
 {
@@ -13,7 +14,7 @@ namespace Units.Inteligencia
 		/// Gets the map grid.
 		/// </summary>
 		/// <value>The map grid.</value>
-		public Grid MapGrid { get { return ControlledUnidad.MapGrid; } }
+		public Grid MapGrid { get { return ControlledUnidad.Grid; } }
 
 		/// <summary>
 		/// Gets the controlled unidad
