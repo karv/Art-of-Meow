@@ -268,8 +268,10 @@ namespace Maps
 				var spl = line.Split (':');
 				if (spl.Length > 0 && spl [0].Trim () == "Tag")
 				{
+					
 					Debug.Assert (spl.Length == 2);
-					return spl [1].Trim () == Tag;
+					if (spl [1].Trim () == Tag)
+						return true;
 				}
 			}
 			return false;
