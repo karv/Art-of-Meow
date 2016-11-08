@@ -11,6 +11,7 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using Screens;
 using Units;
+using Items;
 
 namespace Maps
 {
@@ -115,6 +116,8 @@ namespace Maps
 						var enemy = uFact.MakeEnemy (spl [1].Trim ());
 						enemy.Team = enTeam;
 						enemy.Location = getEmptyCell (grid);
+
+						enemy.Inventory.Add (ItemFactory.CreateItem (ItemType.Potion));
 						grid.AddCellObject (enemy);
 
 						break;

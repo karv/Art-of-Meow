@@ -1,6 +1,6 @@
+using Cells;
 using Cells.CellObjects;
 using Items;
-using Cells;
 
 namespace Items
 {
@@ -24,6 +24,8 @@ namespace Items
 			: base (type.DefaultTextureName, grid)
 		{
 			ItemClass = type;
+			Depth = Depths.Foreground;
+			UseColor = ItemClass.DefaultColor;
 		}
 	}
 }

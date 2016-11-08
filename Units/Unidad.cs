@@ -392,10 +392,10 @@ namespace Units
 			foreach (var it in Inventory.Items)
 			{
 				var obj = new GroundItem (it, Grid);
-
+				obj.Location = Location;
 				// Inicializar objeto y contenido
 				obj.Initialize ();
-				var cont = this.GetScreen ().Content;
+				var cont = Grid.Game.Contenido;
 				obj.AddContent (cont);
 				cont.Load ();
 				obj.InitializeContent (cont);
