@@ -163,7 +163,11 @@ namespace Units.Recursos
 			{
 				Valor += exp;
 				Debug.WriteLine (
-					string.Format ("{0} recibe exp {1}.\nNuevo val: {2}", this, exp, Valor),
+					string.Format (
+						"{0} recibe exp {1}.\nNuevo val: {2}",
+						NombreÚnico,
+						exp,
+						Valor),
 					"Experiencia");
 			}
 
