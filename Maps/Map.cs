@@ -6,12 +6,12 @@ using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Cells.Collision;
+using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended;
 using Screens;
 using Units;
-using Items;
 
 namespace Maps
 {
