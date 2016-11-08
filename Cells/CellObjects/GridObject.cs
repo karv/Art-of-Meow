@@ -124,11 +124,17 @@ namespace Cells.CellObjects
 			UnloadContent ();
 		}
 
+		/// <summary>
+		/// Agrega este objeto al <see cref="Grid"/>
+		/// </summary>
 		public void AddToGrid ()
 		{
 			Grid.AddCellObject (this);
 		}
 
+		/// <summary>
+		/// Elimina este objeto del <see cref="Grid"/>
+		/// </summary>
 		public void RemoveFromGrid ()
 		{
 			Grid.RemoveObject (this);
