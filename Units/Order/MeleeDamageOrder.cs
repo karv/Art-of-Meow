@@ -1,4 +1,5 @@
 using Units.Recursos;
+using System.Diagnostics;
 
 namespace Units.Order
 {
@@ -30,6 +31,20 @@ namespace Units.Order
 				return;
 			var hp = Target.Recursos.GetRecurso (ConstantesRecursos.HP);
 			hp.Valor -= Damage;
+
+			// Recibir exp de kill
+			if (hp.Valor == 0)
+			{
+				var extraExp = Target.GetExperienceValue ();
+				unid.Exp.ExperienciaAcumulada += extraExp;
+				Debug.WriteLine (
+					string.Format (
+						"{0} recibe exp {1} por asesinar a {2}",
+						this,
+						extraExp,
+						Target),
+					"Experience");				
+			}
 
 		}
 

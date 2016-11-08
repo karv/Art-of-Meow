@@ -44,7 +44,7 @@ namespace Units
 				_distribuciónExp [x] /= suma;
 		}
 
-		public bool Autoflush = true;
+		public bool Autoflush;
 
 		public void Flush ()
 		{
