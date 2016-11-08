@@ -45,6 +45,7 @@ namespace Units.Buffs
 			Buffs.Add (buff);
 			buff.Initialize ();
 			AddBuff?.Invoke (this, buff);
+			ListChanged?.Invoke (this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -60,6 +61,7 @@ namespace Units.Buffs
 			buff.Terminating ();
 			buff.Manager = null;
 			Buffs.Remove (buff);
+			ListChanged?.Invoke (this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -94,8 +96,7 @@ namespace Units.Buffs
 		/// <summary>
 		/// Enumera los buffs de un cierto tipo
 		/// </summary>
-		public IEnumerable<T> BuffOfType<T> () 
-			where T : IBuff
+		public IEnumerable<T> BuffOfType<T> ()
 		{
 			return Buffs.OfType<T> ();
 		}
@@ -109,12 +110,25 @@ namespace Units.Buffs
 		/// </summary>
 		public event EventHandler<IBuff> RemoveBuff;
 
+		/// <summary>
+		/// Occurs when the collection changed
+		/// </summary>
+		public event EventHandler ListChanged;
+
+		/// <summary>
+		/// Updates the buffs
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public void Update (float gameTime)
 		{
-			foreach (var buff in Buffs)
+			foreach (var buff in new List<IBuff> ( Buffs))
 				buff.Update (gameTime);
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Buffs.BuffManager"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Buffs.BuffManager"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (

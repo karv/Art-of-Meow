@@ -1,18 +1,28 @@
+using System.Collections.Generic;
+using System.Linq;
+using Items;
+using Units.Order;
 
 namespace Units.Inteligencia
 {
 	/// <summary>
 	/// Permite al jugador interactuar con su unidad.
 	/// </summary>
-	public class HumanIntelligence : IIntelligence, Moggle.Comm.IReceptorTeclado
+	public class HumanIntelligence :
+	IUnidadController,
+	Moggle.Comm.IReceptorTeclado
 	{
-		public readonly Unidad Yo;
+		/// <summary>
+		/// The controlled unidad
+		/// </summary>
+		public readonly Unidad ControlledUnidad;
 
-		void IIntelligence.DoAction ()
+		void IUnidadController.DoAction ()
 		{
+			ControlledUnidad.assertIsIdleCheck ();
 			if (ActionDir != MovementDirectionEnum.NoMov)
 			{
-				Yo.MoveOrMelee (ActionDir);
+				ControlledUnidad.MoveOrMelee (ActionDir);
 				ActionDir = MovementDirectionEnum.NoMov;
 			}
 		}
@@ -60,19 +70,46 @@ namespace Units.Inteligencia
 				case Microsoft.Xna.Framework.Input.Keys.D9:
 					ActionDir = MovementDirectionEnum.UpRight;
 					return true;
+
+				case Microsoft.Xna.Framework.Input.Keys.OemPeriod:
+					// Tomar los objetos
+					var objs = new List<GroundItem> (ControlledUnidad.Grid.GetCell (ControlledUnidad.Location).Objects.OfType<GroundItem> ());
+						
+					foreach (var x in objs)
+					{
+						ControlledUnidad.Inventory.Add (x.ItemClass);
+						x.RemoveFromGrid ();
+					}
+
+					const float baseWaitTime = 0.2f;
+					const float extraWaitTime = 0.07f;
+					var waitTime = baseWaitTime + objs.Count * extraWaitTime;
+					ControlledUnidad.EnqueueOrder (new CooldownOrder (
+						ControlledUnidad,
+						waitTime));
+					return true;
 			}
 			return false;
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Inteligencia.HumanIntelligence"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Inteligencia.HumanIntelligence"/>.</returns>
 		public override string ToString ()
 		{
-			return string.Format ("[HumanIntelligence: Yo={0}]", Yo.Nombre);
+			return string.Format (
+				"[HI|{0}]",
+				ControlledUnidad.Nombre);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Inteligencia.HumanIntelligence"/> class.
+		/// </summary>
+		/// <param name="yo">Controlled unidad</param>
 		public HumanIntelligence (Unidad yo)
 		{
-			Yo = yo;
+			ControlledUnidad = yo;
 		}
 	}
-	
 }

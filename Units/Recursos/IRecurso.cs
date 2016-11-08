@@ -49,6 +49,9 @@ namespace Units.Recursos
 	/// </summary>
 	public interface IParámetroRecurso : IInternalUpdate
 	{
+		/// <summary>
+		/// Gets the <see cref="Recurso"/> that has this parameter
+		/// </summary>
 		IRecurso Recurso { get; }
 
 		/// <summary>

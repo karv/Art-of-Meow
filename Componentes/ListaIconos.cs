@@ -35,7 +35,10 @@ namespace Componentes
 		/// <value>The V space.</value>
 		public int VSpace { get; set; }
 
-		public override IShapeF GetBounds ()
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		protected override IShapeF GetBounds ()
 		{
 			if (Iconos.Count == 0)
 				return RectangleF.Empty;
@@ -48,9 +51,8 @@ namespace Componentes
 		/// <summary>
 		/// Dibuja el control
 		/// </summary>
-		public override void Draw (GameTime gameTime)
+		protected override void Draw (GameTime gameTime)
 		{
-			Screen.Batch.Begin ();
 			var iconTopLeft = new Point (TopLeft.X, TopLeft.Y);
 			foreach (var ic in Iconos)
 			{
@@ -58,7 +60,6 @@ namespace Componentes
 				ic.Draw (Screen.Batch, outputRect);
 				iconTopLeft += new Point (0, IconSize.Height + VSpace);
 			}
-			Screen.Batch.End ();
 		}
 
 		/// <summary>
@@ -68,6 +69,10 @@ namespace Componentes
 		{
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Componentes.ListaIconos"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Componentes.ListaIconos"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (
@@ -76,6 +81,10 @@ namespace Componentes
 				Iconos);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Componentes.ListaIconos"/> class.
+		/// </summary>
+		/// <param name="cont">Container of this control</param>
 		public ListaIconos (IComponentContainerComponent<IControl> cont)
 			: base (cont)
 		{

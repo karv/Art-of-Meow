@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using AoM;
 using Cells.CellObjects;
+using Cells.Collision;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
@@ -12,13 +12,28 @@ using Units;
 
 namespace Cells
 {
+	/// <summary>
+	/// The Griod system
+	/// </summary>
 	public class Grid : DSBC, IComponentContainerComponent<IGridObject>
 	{
+		/// <summary>
+		/// Devuelve o establece el archivo de generador mapa que se usará como próximo nivel
+		/// </summary>
+		public string DownMap { get; set; }
+
+		/// <summary>
+		/// Builds a <see cref="Cell"/> of the current state of a given point
+		/// </summary>
+		/// <param name="p">Grid-wise point of the cell</param>
 		public Cell GetCell (Point p)
 		{
 			return new Cell (this, p);
 		}
 
+		/// <summary>
+		/// Gets the collection of the grid objects
+		/// </summary>
 		public ICollection<IGridObject> Objects
 		{
 			get
@@ -28,39 +43,56 @@ namespace Cells
 		}
 
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		readonly CollisionSystem _collisionSystem;
 
-		const double probZacate = 0.1;
 		readonly Random _r = new Random ();
 
+		/// <summary>
+		/// The size of a cell (Draw)
+		/// </summary>
 		public SizeF CellSize = new SizeF (24, 24);
 
+		/// <summary>
+		/// The time manager.
+		/// </summary>
 		public GameTimeManager TimeManager;
 
-		public Point GridSize { get; }
+		/// <summary>
+		/// Gets the dimentions lenght of the world, in Grid-long
+		/// </summary>
+		public Size GridSize { get; }
 
-		public IUpdateGridObject ObjectoActual { get { return TimeManager.Actual; } }
+		/// <summary>
+		/// Gets the currently active object
+		/// </summary>
+		public IUpdateGridObject CurrentObject { get { return TimeManager.Actual; } }
 
 		/// <summary>
 		/// enumera las celdas de contorno.
 		/// </summary>
 		IEnumerable<Point> contorno ()
 		{
-			for (int i = 0; i < GridSize.X; i++)
+			for (int i = 0; i < GridSize.Width; i++)
 			{
 				yield return (new Point (i, 0));
-				yield return (new Point (i, GridSize.Y - 1));
+				yield return (new Point (i, GridSize.Height - 1));
 			}
-			for (int i = 1; i < GridSize.Y - 1; i++)
+			for (int i = 1; i < GridSize.Height - 1; i++)
 			{
 				yield return (new Point (0, i));
-				yield return (new Point (GridSize.X - 1, i));
+				yield return (new Point (GridSize.Width - 1, i));
 			}
 		}
 
+		/// <summary>
+		/// Gets a random point of a cell inside this grid
+		/// </summary>
 		public Point RandomPoint ()
 		{
 			var size = GridSize;
-			return new Point (1 + _r.Next (size.X - 2), 1 + _r.Next (size.Y - 2));
+			return new Point (
+				1 + _r.Next (size.Width - 2),
+				1 + _r.Next (size.Height - 2));
 		}
 
 		/// <summary>
@@ -74,6 +106,10 @@ namespace Cells
 			Objects.Add (obj);
 		}
 
+		/// <summary>
+		/// Removes an object from the grid
+		/// </summary>
+		/// <param name="obj">Object to remove</param>
 		public void RemoveObject (IGridObject obj)
 		{
 			Objects.Remove (obj);
@@ -88,8 +124,15 @@ namespace Cells
 		/// Posición top left del control.
 		/// </summary>
 		public Point ControlTopLeft = Point.Zero;
+		/// <summary>
+		/// Gets the number of visible cells
+		/// </summary>
 		public Size VisibleCells = new Size (50, 20);
 
+		/// <summary>
+		/// Gets the size of this grid, as a <see cref="IControl"/>
+		/// </summary>
+		/// <value>The size of the control.</value>
 		public Size ControlSize
 		{
 			get
@@ -110,6 +153,10 @@ namespace Cells
 			return new Point (_x, _y);
 		}
 
+		/// <summary>
+		/// Gets the bounds
+		/// </summary>
+		/// <value>The bounds.</value>
 		public RectangleF Bounds
 		{
 			get
@@ -128,7 +175,11 @@ namespace Cells
 			return CellSpotLocation (new Point (x, y));
 		}
 
-		public override void Draw (GameTime gameTime)
+		/// <summary>
+		/// Dibuja el control.
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		protected override void Draw (GameTime gameTime)
 		{
 			//var bat = Screen.
 			//bat.Begin (SpriteSortMode.BackToFront);
@@ -145,20 +196,42 @@ namespace Cells
 					x.Draw (bat, rectOutput);
 				}
 			}
-			bat.End ();
 		}
 
-		public override IShapeF GetBounds ()
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		/// <returns>The bounds.</returns>
+		protected override IShapeF GetBounds ()
 		{
 			return Bounds;
 		}
 
-		protected override void LoadContent (ContentManager manager)
+		/// <summary>
+		/// Agrega el contenido a la biblitoeca
+		/// </summary>
+		protected override void AddContent (Moggle.BibliotecaContenido manager)
 		{
+			base.AddContent (manager);
 			foreach (var x in _objects)
-				x.LoadContent (manager);
+				x.AddContent (manager);
 		}
 
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void InitializeContent (Moggle.BibliotecaContenido manager)
+		{
+			base.InitializeContent (manager);
+			foreach (var x in _objects)
+				x.InitializeContent (manager);
+		}
+
+		/// <summary>
+		/// Update lógico
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
 			TimeManager.ExecuteNext ();
@@ -205,8 +278,15 @@ namespace Cells
 			return new Rectangle (CurrentVisibleTopLeft, VisibleCells);
 		}
 
+		/// <summary>
+		/// The size of the edge.
+		/// Objects outside this area are considered as "centered enough"
+		/// </summary>
 		static Size _edgeSize = new Size (4, 3);
 
+		/// <summary>
+		/// Centers the view on a given object, if it is not centered enough.
+		/// </summary>
 		public void CenterIfNeeded (IGridObject obj)
 		{
 			if (obj == null)
@@ -216,6 +296,14 @@ namespace Cells
 				TryCenterOn (obj.Location);
 		}
 
+		/// <summary>
+		/// Determines if a given point is centered enough
+		/// </summary>
+		/// <returns><c>true</c> if the given point is centered enough; otherwise, <c>false</c>.</returns>
+		/// <param name="p">Grid-based point</param>
+		/// <param name="edge_size">Size of the "not centered" area</param>
+		/// <seealso cref="CenterIfNeeded"/>
+		/// <seealso cref="_edgeSize"/>
 		bool IsInCenter (Point p, Size edge_size)
 		{
 			var edge = GetVisivilityBox ();
@@ -231,15 +319,16 @@ namespace Cells
 		/// Mueve un objeto, considerando colisiones.
 		/// </summary>
 		/// <returns><c>true</c>, if cell object was moved, <c>false</c> otherwise.</returns>
-		/// <param name="objeto">Objeto</param>
-		/// <param name="dir">Dirección</param>
-		public bool MoveCellObject (IGridObject objeto, MovementDirectionEnum dir)
+		/// <param name="objeto">Objeto a mover</param>
+		/// <param name="dir">Dirección de movimiento</param>
+		public bool MoveCellObject (ICollidableGridObject objeto,
+		                            MovementDirectionEnum dir)
 		{
 			var moveDir = dir.AsDirectionalPoint ();
 			var endLoc = objeto.Location + moveDir;
 
 			var destCell = new Cell (this, endLoc);
-			if (!destCell.Collision (objeto))
+			if (_collisionSystem.CanFill (objeto, destCell))
 			{
 				objeto.Location = endLoc;
 				return true;
@@ -271,6 +360,10 @@ namespace Cells
 
 		#endregion
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.Grid"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Cells.Grid"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (
@@ -284,39 +377,18 @@ namespace Cells
 				ControlSize);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.Grid"/> class.
+		/// </summary>
+		/// <param name="xSize">Grid X-size</param>
+		/// <param name="ySize">Grid Y-size</param>
+		/// <param name="scr">Screen where this grid belongs to</param>
 		public Grid (int xSize, int ySize, Moggle.Screens.IScreen scr)
 			: base (scr)
 		{
-			GridSize = new Point (xSize, ySize);
+			_collisionSystem = new CollisionSystem ();
+			GridSize = new Size (xSize, ySize);
 			TimeManager = new GameTimeManager (this);
-			// Inicializar cada celda
-			foreach (var x in contorno ())
-			{
-				var newObj = new GridObject ("brick-wall");
-				newObj.Depth = Depths.Foreground;
-				newObj.CollidePlayer = true;
-				newObj.UseColor = Color.DarkGray;
-				newObj.Location = x;
-				_objects.Add (newObj);
-			}
-
-			for (int i = 0; i < xSize; i++)
-				for (int j = 0; j < ySize; j++)
-				{
-					AddCellObject (new BackgroundObject (
-						new Point (i, j),
-						"floor",
-						this));
-					if (_r.NextDouble () < probZacate)
-					{
-						var newObj = new GridObject ("vanilla-flower");
-						newObj.Location = new Point (i, j);
-						newObj.Depth = Depths.GroundDecoration;
-						newObj.CollidePlayer = false;
-						newObj.UseColor = Color.Green;
-						_objects.Add (newObj);
-					}
-				}
 		}
 	}
 }

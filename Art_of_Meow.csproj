@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -9,6 +10,7 @@
     <AssemblyName>Art_of_Meow</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <StartupObject>AoM.Program</StartupObject>
+    <MonoGamePlatform>DesktopGL</MonoGamePlatform>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,17 +22,19 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Debug\Art_of_Meow.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <PlatformTarget>x86</PlatformTarget>
+    <DocumentationFile>bin\Release\Art_of_Meow.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
@@ -43,18 +47,37 @@
       <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
     </Reference>
     <Reference Include="Controles_Moggle">
-      <HintPath>packages\Moggle.0.7\lib\Controles_Moggle.dll</HintPath>
+      <HintPath>packages\Moggle.0.8.3\lib\Controles_Moggle.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Extended">
-      <HintPath>packages\Moggle.0.7\lib\MonoGame.Extended.dll</HintPath>
+      <HintPath>packages\Moggle.0.8.3\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
     <Reference Include="NVorbis">
-      <HintPath>packages\Moggle.0.7\lib\NVorbis.dll</HintPath>
+      <HintPath>packages\Moggle.0.8.3\lib\NVorbis.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="OpenTK.dll.config" />
+    <MonoGameContentReference Include="content.mgcb" />
+    <None Include="Content\*.xnb">
+      <Link>Content\*.xnb</Link>
+    </None>
+    <None Include="Maps\void.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\base.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\dung00.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\dung01.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\dung02.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -71,14 +94,12 @@
     <Compile Include="Units\Recursos\IRecurso.cs" />
     <Compile Include="Units\Recursos\ManejadorRecursos.cs" />
     <Compile Include="Units\Recursos\RecursoEstático.cs" />
-    <Compile Include="Componentes\DoubleBar.cs" />
     <Compile Include="Units\Recursos\RecursoHP.cs" />
     <Compile Include="GameTimeManager.cs" />
     <Compile Include="Cells\CellObjects\IUpdateGridObject.cs" />
     <Compile Include="Units\Unidad.cs" />
     <Compile Include="Units\Inteligencia\ChaseIntelligence.cs" />
     <Compile Include="Units\Inteligencia\HumanIntelligence.cs" />
-    <Compile Include="Units\Inteligencia\IIntelligence.cs" />
     <Compile Include="Items\Inventory.cs" />
     <Compile Include="Componentes\VanishingString.cs" />
     <Compile Include="Items\IItem.cs" />
@@ -112,6 +133,29 @@
     <Compile Include="Units\Recursos\Recurso.cs" />
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
+    <Compile Include="Screens\InvokeSkillListScreen.cs" />
+    <Compile Include="Units\Skills\ISkill.cs" />
+    <Compile Include="Units\Skills\SkillManager.cs" />
+    <Compile Include="Maps\Map.cs" />
+    <Compile Include="Units\Skills\SelfHealSkill.cs" />
+    <Compile Include="Units\Order\CooldownOrder.cs" />
+    <Compile Include="Units\Order\ExecuteOrder.cs" />
+    <Compile Include="Units\Order\IPrimitiveOrder.cs" />
+    <Compile Include="Units\Order\OrderQueue.cs" />
+    <Compile Include="Units\Order\PrimitiveOrder.cs" />
+    <Compile Include="Units\Order\MeleeDamageOrder.cs" />
+    <Compile Include="Units\TeamManager.cs" />
+    <Compile Include="Items\Declarations\Equipment\FistMeleeEffect.cs" />
+    <Compile Include="Items\Declarations\Equipment\IMeleeEffect.cs" />
+    <Compile Include="Cells\Collision\CollisionSystem.cs" />
+    <Compile Include="Cells\Collision\ICollidableGridObject.cs" />
+    <Compile Include="Cells\Collision\ICollisionRule.cs" />
+    <Compile Include="Cells\Collision\DescriptCollitionRule.cs" />
+    <Compile Include="Componentes\BuffDisplay.cs" />
+    <Compile Include="Units\Inteligencia\IUnidadController.cs" />
+    <Compile Include="Cells\CellObjects\GridWall.cs" />
+    <Compile Include="Units\UnidadFactory.cs" />
+    <Compile Include="Cells\CellObjects\StairsGridObject.cs" />
     <Compile Include="Units\ExpManager.cs" />
     <Compile Include="Units\IExpGiver.cs" />
   </ItemGroup>
@@ -142,5 +186,10 @@
     <Folder Include="Helper\" />
     <Folder Include="Units\Equipment\" />
     <Folder Include="Items\Declarations\Equipment\" />
+    <Folder Include="Units\Skills\" />
+    <Folder Include="Maps\" />
+    <Folder Include="Units\Order\" />
+    <Folder Include="Cells\Collision\" />
+    <Folder Include="Content\" />
   </ItemGroup>
 </Project>
