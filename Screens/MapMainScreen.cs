@@ -17,6 +17,7 @@ using Units.Inteligencia;
 using Units.Recursos;
 using Units.Skills;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Screens
 {
@@ -41,10 +42,39 @@ namespace Screens
 		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
+		Grid _gameGrid;
+
 		/// <summary>
 		/// Map grid
 		/// </summary>
-		public Grid GameGrid;
+		public Grid GameGrid
+		{
+			get
+			{
+				return _gameGrid;
+			}
+			set
+			{
+				Components.Remove (_gameGrid);
+				(_gameGrid as IDisposable)?.Dispose ();
+				_gameGrid = value;
+
+				_gameGrid.Initialize ();
+				Components.Add (_gameGrid);
+
+				// Cargar el posiblemente nuevo contenido
+				AddAllContent ();
+				Content.Load ();
+				InitializeContent (Content);
+
+				// Poner aquí al jugador
+				Player.Location = new Point (
+					_gameGrid.GridSize.Width / 2,
+					_gameGrid.GridSize.Height / 2);
+				Player.Grid = value;
+				_gameGrid.AddCellObject (Player);
+			}
+		}
 
 		/// <summary>
 		/// The human player
@@ -71,25 +101,28 @@ namespace Screens
 		/// </summary>
 		void generateGridSizes ()
 		{
-			int visCellX = (int)(GetDisplayMode.Width / GameGrid.CellSize.Width);
-			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
-			GameGrid.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
-			GameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
+			int visCellX = (int)(GetDisplayMode.Width / _gameGrid.CellSize.Width);
+			int visCellY = (int)(GetDisplayMode.Height / _gameGrid.CellSize.Height);
+			_gameGrid.VisibleCells = new Size (visCellX, visCellY);
+			int ScreenOffsX = GetDisplayMode.Width - (int)(_gameGrid.CellSize.Width * visCellX);
+			_gameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
 		}
 
 		/// <summary>
 		/// Initializes the human player
 		/// </summary>
-		void inicializarJugador ()
+		void inicializarJugador (Unidad player = null)
 		{
-			Player = new Unidad (GameGrid)
-			{
-				Team = new TeamManager (Color.Red),
-				Location = new Point (
-					GameGrid.GridSize.Width / 2,
-					GameGrid.GridSize.Height / 2)
-			};
+			if (player == null)
+				Player = new Unidad (_gameGrid)
+				{
+					Team = new TeamManager (Color.Red),
+					Location = new Point (
+						_gameGrid.GridSize.Width / 2,
+						_gameGrid.GridSize.Height / 2)
+				};
+			else
+				Player = player;
 
 			Player.Inteligencia = new HumanIntelligence (Player);
 			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
@@ -136,18 +169,42 @@ namespace Screens
 		/// <summary>
 		/// Initializes the grid, and the rest of the controls
 		/// </summary>
+		public virtual void Initialize (Unidad jugador)
+		{
+			// REMOVE: ¿Move the Grid initializer ot itself?
+			generateGridSizes ();
+			inicializarJugador (jugador);
+
+			_gameGrid.AddCellObject (Player);
+
+			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
+			// los nuevos objetos.
+			base.Initialize ();
+			_gameGrid.TryCenterOn (Player.Location);
+		}
+
+		/// <summary>
+		/// Initializes the grid, and the rest of the controls
+		/// </summary>
 		public override void Initialize ()
 		{
 			// REMOVE: ¿Move the Grid initializer ot itself?
 			generateGridSizes ();
 			inicializarJugador ();
 
-			GameGrid.AddCellObject (Player);
+			_gameGrid.AddCellObject (Player);
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
-			GameGrid.TryCenterOn (Player.Location);
+			_gameGrid.TryCenterOn (Player.Location);
+		}
+
+		bool _isLeaving;
+
+		public void Dispose ()
+		{
+			_isLeaving = true;
 		}
 
 		/// <summary>
@@ -169,7 +226,7 @@ namespace Screens
 		/// <param name="key">Tecla de la señal</param>
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
-			var pl = GameGrid.CurrentObject as Unidad;
+			var pl = _gameGrid.CurrentObject as Unidad;
 			var currobj = pl?.Inteligencia as IReceptorTeclado;
 			if (currobj != null && currobj.RecibirSeñal (key))
 				return;
@@ -199,7 +256,7 @@ namespace Screens
 					}
 					break;
 				case Keys.C:
-					GameGrid.TryCenterOn (Player.Location);
+					_gameGrid.TryCenterOn (Player.Location);
 					break;
 				case Keys.S:
 					if (Player.Skills.AnyVisible)
@@ -209,10 +266,14 @@ namespace Screens
 					}
 					break;
 			}
-			var playerCell = GameGrid.GetCell (Player.Location);
+			var playerCell = _gameGrid.GetCell (Player.Location);
 			foreach (var x in playerCell.Objects)
+			{
 				(x as IReceptorTeclado)?.RecibirSeñal (keyArg);
-			GameGrid.CenterIfNeeded (Player);
+				if (_isLeaving)
+					return;
+			}
+			_gameGrid.CenterIfNeeded (Player);
 		}
 
 		/// <summary>
@@ -222,7 +283,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GameGrid = Map.GenerateGrid (@"Maps/base.map", this);
+			_gameGrid = Map.GenerateGrid (@"Maps/base.map", this);
 		}
 
 		/// <summary>
@@ -233,7 +294,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			GameGrid = map.GenerateGrid (this);
+			_gameGrid = map.GenerateGrid (this);
 		}
 	}
 }

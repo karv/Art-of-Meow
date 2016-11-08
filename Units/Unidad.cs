@@ -61,7 +61,7 @@ namespace Units
 		/// Gets the grid.
 		/// </summary>
 		/// <value>The grid.</value>
-		public Grid Grid { get; }
+		public Grid Grid { get; set; }
 
 		Grid IUnidad.MapGrid { get { return Grid; } }
 

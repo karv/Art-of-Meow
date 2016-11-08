@@ -1,5 +1,7 @@
-using Moggle.Comm;
 using System.Diagnostics;
+using Moggle.Comm;
+using Screens;
+using Maps;
 
 namespace Cells.CellObjects
 {
@@ -14,6 +16,11 @@ namespace Cells.CellObjects
 		public void Activate ()
 		{
 			Debug.WriteLine ("Stairs!");
+			var scr = (MapMainScreen)Grid.Screen;
+			var newGrid = Map.GenerateGrid (Grid.DownMap, scr);
+			// Mover al jugador al nuevo grid
+
+			scr.GameGrid = newGrid;
 		}
 
 		bool IReceptorTeclado.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)

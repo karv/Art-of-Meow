@@ -79,10 +79,7 @@ namespace Cells
 		/// <param name="location">Grid-wise coordinates of this Cell</param>
 		public Cell (Grid grid, Point location)
 		{
-			Objects = new List<IGridObject> ();
-			foreach (var x in grid.Objects)
-				if (x.Location == location)
-					Objects.Add (x);
+			Objects = new List<IGridObject> (grid.Objects.Where (x => x.Location == location));
 		}
 
 		/// <summary>

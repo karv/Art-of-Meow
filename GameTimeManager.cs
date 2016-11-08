@@ -37,6 +37,7 @@ namespace AoM
 			}
 		}
 
+		public float TimePassed { get; private set; }
 
 		/// <summary>
 		/// Pass the time
@@ -46,6 +47,7 @@ namespace AoM
 		{
 			foreach (var ob in UpdateGridObjects)
 				ob.PassTime (time);
+			TimePassed += time;
 		}
 
 		/// <summary>
@@ -85,10 +87,7 @@ namespace AoM
 		/// </summary>
 		public IUpdateGridObject NextObject ()
 		{
-			IUpdateGridObject ret = null;
-			foreach (var ob in UpdateGridObjects)
-				if (ret == null || ret.NextActionTime > ob.NextActionTime)
-					ret = ob;
+			var ret = UpdateGridObjects.Aggregate ((x, y) => x.NextActionTime < y.NextActionTime ? x : y);
 			return ret;
 		}
 

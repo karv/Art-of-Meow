@@ -60,6 +60,12 @@ namespace Cells.CellObjects
 		{
 		}
 
+
+		public override string ToString ()
+		{
+			return string.Format ("Wall@{0}", Location);
+		}
+
 		/// <summary>
 		/// Gets the cell-based localization.
 		/// </summary>
