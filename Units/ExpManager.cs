@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Units.Recursos;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Units
 {
@@ -48,6 +49,11 @@ namespace Units
 
 		public void Flush ()
 		{
+			Debug.WriteLine (
+				string.Format (
+					"{0} está recibiendo {1} puntos de experiencia de este nivel.",
+					Unidad,
+					ExperienciaAcumulada));
 			if (ExperienciaAcumulada == 0)
 				return;
 			_normalizeDistDict ();
