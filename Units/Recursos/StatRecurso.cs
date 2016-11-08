@@ -172,10 +172,11 @@ namespace Units.Recursos
 				Valor += exp;
 				Debug.WriteLine (
 					string.Format (
-						"{0} recibe exp {1}.\nNuevo val: {2}",
+						"{0}/{3} recibe exp {1}.\nNuevo val: {2}",
 						NombreÚnico,
 						exp,
-						Valor),
+						Valor, 
+						Recurso.NombreÚnico),
 					"Experiencia");
 			}
 
