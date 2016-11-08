@@ -55,12 +55,18 @@ namespace Screens
 			}
 			set
 			{
-				Components.Remove (_gameGrid);
+				if (_gameGrid == null)
+				{
+					_gameGrid = value;
+					return;
+				}
+
+				Components.RemoveAll (z => z is Grid);
 				(_gameGrid as IDisposable)?.Dispose ();
 				_gameGrid = value;
 
 				_gameGrid.Initialize ();
-				Components.Add (_gameGrid);
+				AddComponent (_gameGrid);
 
 				// Cargar el posiblemente nuevo contenido
 				AddAllContent ();
@@ -101,11 +107,11 @@ namespace Screens
 		/// </summary>
 		void generateGridSizes ()
 		{
-			int visCellX = (int)(GetDisplayMode.Width / _gameGrid.CellSize.Width);
-			int visCellY = (int)(GetDisplayMode.Height / _gameGrid.CellSize.Height);
-			_gameGrid.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - (int)(_gameGrid.CellSize.Width * visCellX);
-			_gameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
+			int visCellX = (int)(GetDisplayMode.Width / GameGrid.CellSize.Width);
+			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
+			GameGrid.VisibleCells = new Size (visCellX, visCellY);
+			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
+			GameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
 		}
 
 		/// <summary>
@@ -114,12 +120,12 @@ namespace Screens
 		void inicializarJugador (Unidad player = null)
 		{
 			if (player == null)
-				Player = new Unidad (_gameGrid)
+				Player = new Unidad (GameGrid)
 				{
 					Team = new TeamManager (Color.Red),
 					Location = new Point (
-						_gameGrid.GridSize.Width / 2,
-						_gameGrid.GridSize.Height / 2)
+						GameGrid.GridSize.Width / 2,
+						GameGrid.GridSize.Height / 2)
 				};
 			else
 				Player = player;
@@ -175,12 +181,12 @@ namespace Screens
 			generateGridSizes ();
 			inicializarJugador (jugador);
 
-			_gameGrid.AddCellObject (Player);
+			GameGrid.AddCellObject (Player);
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
-			_gameGrid.TryCenterOn (Player.Location);
+			GameGrid.TryCenterOn (Player.Location);
 		}
 
 		/// <summary>
@@ -192,12 +198,12 @@ namespace Screens
 			generateGridSizes ();
 			inicializarJugador ();
 
-			_gameGrid.AddCellObject (Player);
+			GameGrid.AddCellObject (Player);
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
-			_gameGrid.TryCenterOn (Player.Location);
+			GameGrid.TryCenterOn (Player.Location);
 		}
 
 		bool _isLeaving;
@@ -226,9 +232,9 @@ namespace Screens
 		/// <param name="key">Tecla de la señal</param>
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
-			var pl = _gameGrid.CurrentObject as Unidad;
+			var pl = GameGrid.CurrentObject as Unidad;
 			var currobj = pl?.Inteligencia as IReceptorTeclado;
-			if (currobj != null && currobj.RecibirSeñal (key))
+			if (currobj?.RecibirSeñal (key) ?? false)
 				return;
 			base.MandarSeñal (key);
 		}
@@ -256,7 +262,7 @@ namespace Screens
 					}
 					break;
 				case Keys.C:
-					_gameGrid.TryCenterOn (Player.Location);
+					GameGrid.TryCenterOn (Player.Location);
 					break;
 				case Keys.S:
 					if (Player.Skills.AnyVisible)
@@ -266,14 +272,14 @@ namespace Screens
 					}
 					break;
 			}
-			var playerCell = _gameGrid.GetCell (Player.Location);
+			var playerCell = GameGrid.GetCell (Player.Location);
 			foreach (var x in playerCell.Objects)
 			{
 				(x as IReceptorTeclado)?.RecibirSeñal (keyArg);
 				if (_isLeaving)
 					return;
 			}
-			_gameGrid.CenterIfNeeded (Player);
+			GameGrid.CenterIfNeeded (Player);
 		}
 
 		/// <summary>
@@ -283,7 +289,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			_gameGrid = Map.GenerateGrid (@"Maps/base.map", this);
+			GameGrid = Map.GenerateGrid (@"Maps/base.map", this);
 		}
 
 		/// <summary>
@@ -294,7 +300,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			_gameGrid = map.GenerateGrid (this);
+			GameGrid = map.GenerateGrid (this);
 		}
 	}
 }

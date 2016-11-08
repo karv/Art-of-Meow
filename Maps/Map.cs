@@ -10,6 +10,7 @@ using MonoGame.Extended;
 using System.Diagnostics;
 using Screens;
 using Units;
+using Cells.Collision;
 
 namespace Maps
 {
@@ -186,7 +187,7 @@ namespace Maps
 				ret = new Point (_r.Next (mapSize.Width), _r.Next (mapSize.Height));
 				cell = grid.GetCell (ret);
 			}
-			while (cell.Objects.Count > 1); // REMARK: Siembre hay un gridObject que permite el movimiento
+			while (cell.Objects.Any (z => z is ICollidableGridObject));
 			return ret;
 		}
 
