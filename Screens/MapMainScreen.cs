@@ -17,6 +17,7 @@ using Units.Inteligencia;
 using Units.Recursos;
 using Units.Skills;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace Screens
 {
@@ -41,10 +42,45 @@ namespace Screens
 		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
+		Grid _gameGrid;
+
 		/// <summary>
 		/// Map grid
 		/// </summary>
-		public Grid GameGrid;
+		public Grid GameGrid
+		{
+			get
+			{
+				return _gameGrid;
+			}
+			set
+			{
+				if (_gameGrid == null)
+				{
+					_gameGrid = value;
+					return;
+				}
+
+				Components.RemoveAll (z => z is Grid);
+				(_gameGrid as IDisposable)?.Dispose ();
+				_gameGrid = value;
+
+				_gameGrid.Initialize ();
+				AddComponent (_gameGrid);
+
+				// Cargar el posiblemente nuevo contenido
+				AddAllContent ();
+				Content.Load ();
+				InitializeContent (Content);
+
+				// Poner aquí al jugador
+				Player.Location = new Point (
+					_gameGrid.GridSize.Width / 2,
+					_gameGrid.GridSize.Height / 2);
+				Player.Grid = value;
+				_gameGrid.AddCellObject (Player);
+			}
+		}
 
 		/// <summary>
 		/// The human player
@@ -81,15 +117,19 @@ namespace Screens
 		/// <summary>
 		/// Initializes the human player
 		/// </summary>
-		void inicializarJugador ()
+		void inicializarJugador (Unidad player = null)
 		{
-			Player = new Unidad (GameGrid)
-			{
-				Team = new TeamManager (Color.Red),
-				Location = new Point (
-					GameGrid.GridSize.Width / 2,
-					GameGrid.GridSize.Height / 2)
-			};
+			if (player == null)
+				Player = new Unidad (GameGrid)
+				{
+					Nombre = "Player",
+					Team = new TeamManager (Color.Red),
+					Location = new Point (
+						GameGrid.GridSize.Width / 2,
+						GameGrid.GridSize.Height / 2),
+				};
+			else
+				Player = player;
 
 			Player.Inteligencia = new HumanIntelligence (Player);
 			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
@@ -136,6 +176,23 @@ namespace Screens
 		/// <summary>
 		/// Initializes the grid, and the rest of the controls
 		/// </summary>
+		public virtual void Initialize (Unidad jugador)
+		{
+			// REMOVE: ¿Move the Grid initializer ot itself?
+			generateGridSizes ();
+			inicializarJugador (jugador);
+
+			GameGrid.AddCellObject (Player);
+
+			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
+			// los nuevos objetos.
+			base.Initialize ();
+			GameGrid.TryCenterOn (Player.Location);
+		}
+
+		/// <summary>
+		/// Initializes the grid, and the rest of the controls
+		/// </summary>
 		public override void Initialize ()
 		{
 			// REMOVE: ¿Move the Grid initializer ot itself?
@@ -148,6 +205,13 @@ namespace Screens
 			// los nuevos objetos.
 			base.Initialize ();
 			GameGrid.TryCenterOn (Player.Location);
+		}
+
+		bool _isLeaving;
+
+		public void Dispose ()
+		{
+			_isLeaving = true;
 		}
 
 		/// <summary>
@@ -171,7 +235,7 @@ namespace Screens
 		{
 			var pl = GameGrid.CurrentObject as Unidad;
 			var currobj = pl?.Inteligencia as IReceptorTeclado;
-			if (currobj != null && currobj.RecibirSeñal (key))
+			if (currobj?.RecibirSeñal (key) ?? false)
 				return;
 			base.MandarSeñal (key);
 		}
@@ -208,6 +272,13 @@ namespace Screens
 						scr.Ejecutar ();
 					}
 					break;
+			}
+			var playerCell = GameGrid.GetCell (Player.Location);
+			foreach (var x in playerCell.Objects)
+			{
+				(x as IReceptorTeclado)?.RecibirSeñal (keyArg);
+				if (_isLeaving)
+					return;
 			}
 			GameGrid.CenterIfNeeded (Player);
 		}

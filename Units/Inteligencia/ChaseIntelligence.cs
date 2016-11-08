@@ -44,6 +44,8 @@ namespace Units.Inteligencia
 		{
 			ControlledUnidad.assertIsIdleCheck ();
 			TryUpdateTarget ();
+			if (Target == null)
+				return; // Si no encuentra enemigo, debe ser porque la instancia de mapa se está desechando
 			var dir = ControlledUnidad.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
 				return;

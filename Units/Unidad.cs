@@ -26,7 +26,7 @@ namespace Units
 		/// Gets the name
 		/// </summary>
 		/// <value>The nombre.</value>
-		public string Nombre { get; }
+		public string Nombre { get; set; }
 
 		/// <summary>
 		/// Gets the team's id
@@ -61,7 +61,7 @@ namespace Units
 		/// Gets the grid.
 		/// </summary>
 		/// <value>The grid.</value>
-		public Grid Grid { get; }
+		public Grid Grid { get; set; }
 
 		Grid IUnidad.MapGrid { get { return Grid; } }
 

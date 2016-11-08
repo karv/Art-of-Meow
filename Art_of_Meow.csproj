@@ -149,6 +149,7 @@
     <Compile Include="Units\Inteligencia\IUnidadController.cs" />
     <Compile Include="Cells\CellObjects\GridWall.cs" />
     <Compile Include="Units\UnidadFactory.cs" />
+    <Compile Include="Cells\CellObjects\StairsGridObject.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

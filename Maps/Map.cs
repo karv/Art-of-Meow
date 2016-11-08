@@ -10,6 +10,7 @@ using MonoGame.Extended;
 using System.Diagnostics;
 using Screens;
 using Units;
+using Cells.Collision;
 
 namespace Maps
 {
@@ -146,15 +147,13 @@ namespace Maps
 				case (char)0:
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
-				case 'd': // TODO Escalera abajo, no implementado
-				case 'u': // TODO Escalera arriba, no implementado
 					var newObj = new GridWall ("brick-wall", grid);
 					newObj.Location = p;
 					return newObj;
 				case '\n':
 					return null;
 			}
-			throw new NotImplementedException ("Unknown accepted map symbol " + c);
+			throw new FormatException ("Unknown accepted map symbol " + c);
 		}
 
 		/// <summary>
@@ -188,27 +187,39 @@ namespace Maps
 				ret = new Point (_r.Next (mapSize.Width), _r.Next (mapSize.Height));
 				cell = grid.GetCell (ret);
 			}
-			while (cell.Objects.Count > 1); // REMARK: Siembre hay un gridObject que permite el movimiento
+			while (cell.Objects.Any (z => z is ICollidableGridObject));
 			return ret;
 		}
 
 
 		void makeStairs (Grid grid)
 		{
-			var up = getEmptyCell (grid);
-			// TODO :grid.AddCellObject ();
-//			_data [up.X, up.Y] = 'u';
 			var down = getEmptyCell (grid);
-			// TODO :grid.AddCellObject ();
-//			_data [down.X, down.Y] = 'd';
+			var stairDown = new StairsGridObject ("floor", grid)
+			{
+				UseColor = Color.DarkOrange,
+				Depth = Depths.Foreground,
+				Location = down
+			};
+			grid.AddCellObject (stairDown);
 		}
 
+		/// <summary>
+		/// Genera un Grid a partir de un reader
+		/// </summary>
+		/// <param name="reader">Un StreamReader con la info del mapa</param>
+		/// <param name="scr">Screen del grid</param>
 		public static Grid GenerateGrid (StreamReader reader, MapMainScreen scr)
 		{
 			var map = new Map (reader);
 			return map.GenerateGrid (scr);
 		}
 
+		/// <summary>
+		/// Genera un Grid a partir de un reader
+		/// </summary>
+		/// <param name="mapFile">Nombre de archivo del mapa</param>
+		/// <param name="scr">Screen del grid</param>
 		public static Grid GenerateGrid (string mapFile, MapMainScreen scr)
 		{
 			var map = new Map (mapFile);
@@ -245,8 +256,8 @@ namespace Maps
 			var mapSize = sizeX * sizeY;
 			while (i < mapSize)
 			{
-				var ix = i % sizeY;
-				var iy = i / sizeY;
+				var ix = i % sizeX;
+				var iy = i / sizeX;
 				var chr = (char)dataStream.Read ();
 				var obj = MakeObject (chr, ret, new Point (ix, iy));
 				if (obj != null)
