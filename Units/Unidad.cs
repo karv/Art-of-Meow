@@ -320,14 +320,6 @@ namespace Units
 			if (desde.X != hasta.X && desde.Y != hasta.Y) // Mov inclinado
 				peso *= 1.4f;
 
-			Debug.WriteLine (
-				string.Format (
-					"Peso de movimiento de {0} a {1} por {2} en {3}",
-					desde,
-					hasta,
-					this,
-					peso),
-				"Movimiento");
 			return peso / vel;
 		}
 
