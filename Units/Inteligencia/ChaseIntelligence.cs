@@ -2,6 +2,7 @@
 using Cells;
 using Cells.CellObjects;
 using System;
+using Units.Order;
 
 namespace Units.Inteligencia
 {
@@ -49,7 +50,12 @@ namespace Units.Inteligencia
 			var dir = ControlledUnidad.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
-			ControlledUnidad.MoveOrMelee (dir);
+			if (!ControlledUnidad.MoveOrMelee (dir))
+			{
+				// No se puede moverse ni atacar hacia acá.
+				// Solamente voy a esperar un poco
+				ControlledUnidad.EnqueueOrder (new CooldownOrder (ControlledUnidad, 0.1f));
+			}
 		}
 
 		/// <summary>

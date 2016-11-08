@@ -270,7 +270,7 @@ namespace Units
 		public Point Location { get; set; }
 
 		/// <summary>
-		/// Move or melee to a direction
+		/// Intenta moverse o atacar hacia una dirección
 		/// </summary>
 		/// <returns><c>true</c>, if action was taken, <c>false</c> otherwise.</returns>
 		/// <param name="dir">Direction</param>
