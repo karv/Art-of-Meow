@@ -207,13 +207,6 @@ namespace Screens
 			GameGrid.TryCenterOn (Player.Location);
 		}
 
-		bool _isLeaving;
-
-		public void Dispose ()
-		{
-			_isLeaving = true;
-		}
-
 		/// <summary>
 		/// Rebice señal del teclado
 		/// </summary>
@@ -277,8 +270,6 @@ namespace Screens
 			foreach (var x in playerCell.Objects)
 			{
 				(x as IReceptorTeclado)?.RecibirSeñal (keyArg);
-				if (_isLeaving)
-					return;
 			}
 			GameGrid.CenterIfNeeded (Player);
 		}

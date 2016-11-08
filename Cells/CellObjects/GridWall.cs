@@ -60,7 +60,10 @@ namespace Cells.CellObjects
 		{
 		}
 
-
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.CellObjects.GridWall"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Cells.CellObjects.GridWall"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format ("Wall@{0}", Location);
