@@ -20,7 +20,7 @@ namespace Units
 	/// <summary>
 	/// Game player
 	/// </summary>
-	public class Unidad : IUnidad, IDibujable
+	public class Unidad : IUnidad, IDibujable, IGameComponent
 	{
 		/// <summary>
 		/// Gets the name
@@ -359,23 +359,55 @@ namespace Units
 
 		System.Collections.Generic.IEnumerable<ICollisionRule> ICollidableGridObject.GetCollisionRules ()
 		{
-			yield return new DescriptCollitionRule (z => Habilitado && ((z as IUnidad)?.Habilitado ?? false)); // Does not stack
+			// Does not stack
+			yield return new DescriptCollitionRule (z => Habilitado && ((z as IUnidad)?.Habilitado ?? false));
 		}
 
 		/// <summary>
 		/// Occurs when this unidad is killed.
 		/// </summary>
-		public event EventHandler Killed
+		public event EventHandler Killed;
+
+		void Death (object sender, EventArgs e)
 		{
-			add
-			{
-				RecursoHP.ReachedZero += value;
-			}
-			remove
-			{
-				RecursoHP.ReachedZero -= value;
-			}
+			OnDeath ();
 		}
+
+		/// <summary>
+		/// Ocurre cuando Hp llega a cero.
+		/// Invoca el evento <see cref="Killed"/>.
+		/// Tira todos los objetos del <see cref="Inventory"/>.
+		/// </summary>
+		protected virtual void OnDeath ()
+		{
+			Killed?.Invoke (this, EventArgs.Empty);
+			DropAllItems ();
+		}
+
+		/// <summary>
+		/// Tira todos sus objetos al suelo
+		/// </summary>
+		public void DropAllItems ()
+		{
+			foreach (var it in Inventory.Items)
+			{
+				var obj = new GroundItem (it, Grid);
+
+				// Inicializar objeto y contenido
+				obj.Initialize ();
+				var cont = this.GetScreen ().Content;
+				obj.AddContent (cont);
+				cont.Load ();
+				obj.InitializeContent (cont);
+
+				// Agregar el objeto al grid
+				obj.AddToGrid ();
+			}
+
+			// Eliminar todo del contenido
+			Inventory.Items.Clear ();
+		}
+
 
 		/// <summary>
 		/// Gets the name.
@@ -402,6 +434,7 @@ namespace Units
 			Inventory = new Inventory ();
 			Skills = new Units.Skills.SkillManager (this);
 			inicializarRecursos ();
+			RecursoHP.ReachedZero += Death;
 		}
 
 		void inicializarRecursos ()

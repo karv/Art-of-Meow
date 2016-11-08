@@ -124,6 +124,16 @@ namespace Cells.CellObjects
 			UnloadContent ();
 		}
 
+		public void AddToGrid ()
+		{
+			Grid.AddCellObject (this);
+		}
+
+		public void RemoveFromGrid ()
+		{
+			Grid.RemoveObject (this);
+		}
+
 		/// <summary>
 		/// Gets or sets the cell-based localization.
 		/// </summary>
