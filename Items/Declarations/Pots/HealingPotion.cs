@@ -22,6 +22,9 @@ namespace Items.Declarations.Pots
 		/// <param name="user">The caster</param>
 		void ISkill.Execute (IUnidad user)
 		{
+			// Eliminarme del inventory
+			user.Inventory.Items.Remove (this);
+
 			user.EnqueueOrder (new ExecuteOrder (user, doEffect));
 		}
 

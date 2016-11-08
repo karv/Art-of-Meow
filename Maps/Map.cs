@@ -117,7 +117,7 @@ namespace Maps
 						enemy.Team = enTeam;
 						enemy.Location = getEmptyCell (grid);
 
-						enemy.Inventory.Add (ItemFactory.CreateItem (ItemType.Potion));
+						enemy.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
 						grid.AddCellObject (enemy);
 
 						break;
