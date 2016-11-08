@@ -109,7 +109,7 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <param name="bat">Batch</param>
 		/// <param name="area">Rectángulo de dibujo</param>
-		public void Draw (SpriteBatch bat, Rectangle area)
+		public virtual void Draw (SpriteBatch bat, Rectangle area)
 		{
 			bat.Draw (
 				Texture,
@@ -122,6 +122,16 @@ namespace Cells.CellObjects
 		void IDisposable.Dispose ()
 		{
 			UnloadContent ();
+		}
+
+		public void AddToGrid ()
+		{
+			Grid.AddCellObject (this);
+		}
+
+		public void RemoveFromGrid ()
+		{
+			Grid.RemoveObject (this);
 		}
 
 		/// <summary>

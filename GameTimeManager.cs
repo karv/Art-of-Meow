@@ -48,7 +48,7 @@ namespace AoM
 		/// <param name="time">length of time to pass</param>
 		public void PassTime (float time)
 		{
-			foreach (var ob in UpdateGridObjects)
+			foreach (var ob in new List<IUpdateGridObject> (UpdateGridObjects))
 				ob.PassTime (time);
 			TimePassed += time;
 		}

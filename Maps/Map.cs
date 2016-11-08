@@ -6,6 +6,7 @@ using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Cells.Collision;
+using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Screens;
 using MonoGame.Extended;
@@ -115,6 +116,8 @@ namespace Maps
 						var enemy = uFact.MakeEnemy (spl [1].Trim ());
 						enemy.Team = enTeam;
 						enemy.Location = getEmptyCell (grid);
+
+						enemy.Inventory.Add (ItemFactory.CreateItem (ItemType.Potion));
 						grid.AddCellObject (enemy);
 
 						break;

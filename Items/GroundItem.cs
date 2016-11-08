@@ -1,6 +1,6 @@
+using Cells;
 using Cells.CellObjects;
 using Items;
-using Cells;
 
 namespace Items
 {
@@ -16,6 +16,15 @@ namespace Items
 		public IItem ItemClass { get; }
 
 		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Items.GroundItem"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Items.GroundItem"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format ("Ground {0}@{1}", ItemClass, Location);
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.GroundItem"/> class.
 		/// </summary>
 		/// <param name="type">Item type</param>
@@ -24,6 +33,8 @@ namespace Items
 			: base (type.DefaultTextureName, grid)
 		{
 			ItemClass = type;
+			Depth = Depths.Foreground;
+			UseColor = ItemClass.DefaultColor;
 		}
 	}
 }

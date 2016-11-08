@@ -14,7 +14,7 @@ namespace Items.Declarations.Pots
 			: base ("Healing Potion")
 		{
 			Color = Microsoft.Xna.Framework.Color.Red;
-			TextureName = "potion";
+			TextureName = "heal";
 		}
 	}
 }
