@@ -15,14 +15,10 @@ namespace Items
 		/// <seealso cref="Items.Declarations.Equipment.Sword"/>
 		Sword,
 		/// <summary>
-		/// Temporal, DELETE|REMOVE|ETC
-		/// </summary>
-		HealingSword,
-		/// <summary>
 		/// Potion
 		/// </summary>
 		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
-		Potion
+		HealingPotion
 	}
 
 	/// <summary>
@@ -43,7 +39,7 @@ namespace Items
 				case ItemType.Sword:
 					ret = new Sword ();
 					break;
-				case ItemType.Potion:
+				case ItemType.HealingPotion:
 					ret = new HealingPotion ();
 					break;
 				default:
