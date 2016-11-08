@@ -26,7 +26,7 @@ namespace Units
 		/// Gets the name
 		/// </summary>
 		/// <value>The nombre.</value>
-		public string Nombre { get; }
+		public string Nombre { get; set; }
 
 		/// <summary>
 		/// Gets the team's id

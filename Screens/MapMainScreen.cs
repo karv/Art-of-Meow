@@ -122,10 +122,11 @@ namespace Screens
 			if (player == null)
 				Player = new Unidad (GameGrid)
 				{
+					Nombre = "Player",
 					Team = new TeamManager (Color.Red),
 					Location = new Point (
 						GameGrid.GridSize.Width / 2,
-						GameGrid.GridSize.Height / 2)
+						GameGrid.GridSize.Height / 2),
 				};
 			else
 				Player = player;

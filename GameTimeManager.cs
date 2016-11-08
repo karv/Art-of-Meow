@@ -37,6 +37,9 @@ namespace AoM
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el tiempo que ha pasado en este mapa
+		/// </summary>
 		public float TimePassed { get; private set; }
 
 		/// <summary>
@@ -65,19 +68,9 @@ namespace AoM
 				throw new Exception ("passTime < 0");
 			#endif
 			PassTime (passTime);
-			#if DEBUG
-			if (!Actual.IsReady)
-				Console.WriteLine ();
-			//Debugger.Break ();
-			#endif
-			Debug.WriteLineIf (!Actual.IsReady,
-				"Ejecutando objeto con tiempo de espera positivo",
-				"IUpdateGridObject");
-			foreach (var actuador in UpdateGridObjects)
-			{
-				if (actuador.IsReady)
-					actuador.Execute ();
-			}
+			Debug.Assert (Actual.IsReady);
+			foreach (var actuador in UpdateGridObjects.Where (z => z.IsReady))
+				actuador.Execute ();
 			//Actual.Execute ();
 			return passTime;
 		}
