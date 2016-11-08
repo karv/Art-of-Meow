@@ -82,9 +82,6 @@ namespace Units.Recursos
 		/// </summary>
 		public string NombreÚnico { get; }
 
-		[Obsolete ("Usar tres I-parámetros")] 
-		readonly float [] currMaxNormal = new float[3];
-
 		public IParámetroRecurso ValorP { get; }
 
 		public IParámetroRecurso MaxP { get; }
