@@ -94,13 +94,13 @@ namespace Maps
 
 		void getMapOptions (Grid grid)
 		{
+			var uFact = new UnidadFactory (grid);
+			var enTeam = new TeamManager (Color.Blue);
 			// Leer los flags
 			while (!dataStream.EndOfStream)
 			{
 				var cLine = dataStream.ReadLine ();
 				var spl = cLine.Split (':');
-				var uFact = new UnidadFactory (grid);
-				var enTeam = new TeamManager (Color.Blue);
 				switch (spl [0])
 				{
 					case "Next": // Establecer aquí el valor de NextMap
@@ -117,6 +117,9 @@ namespace Maps
 						enemy.Location = getEmptyCell (grid);
 						grid.AddCellObject (enemy);
 
+						break;
+					case "":
+						// Un fin de línea vacía es nada
 						break;
 					default:
 						Debug.WriteLine (
