@@ -11,6 +11,17 @@ namespace Cells.CellObjects
 		float NextActionTime { get; }
 
 		/// <summary>
+		/// Gets a value indicating whether this object is ready to <see cref="Execute"/>
+		/// </summary>
+		bool IsReady { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="Cells.CellObjects.IUpdateGridObject"/> is enabled.
+		/// </summary>
+		/// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
+		bool Enabled { get; }
+
+		/// <summary>
 		/// Execute this
 		/// </summary>
 		void Execute ();

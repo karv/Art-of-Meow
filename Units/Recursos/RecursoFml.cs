@@ -15,24 +15,36 @@ namespace Units.Recursos
 		/// <value>The fml.</value>
 		public string Fórmula { get { return  Fml.StrFormula; } }
 
+		/// <summary>
+		/// The formula that calculates the value
+		/// </summary>
+		/// <value>The fml.</value>
 		protected Fórmula Fml { get; }
 
 		#region IRecurso implementation
 
 		/// <summary>
-		/// Nombre (debe ser único en el manejador de recursos) del recurso
+		/// Gets the short name
 		/// </summary>
-		/// <value>The nombre único.</value>
+		/// <returns>The short name.</returns>
 		protected override string GetShortName ()
 		{
 			return NombreCorto;
 		}
 
+		/// <summary>
+		/// Gets the detailed name
+		/// </summary>
+		/// <returns>The long name.</returns>
 		protected override string GetLongName ()
 		{
 			return NombreLargo;
 		}
 
+		/// <summary>
+		/// Gets the unique name
+		/// </summary>
+		/// <returns>The unique name.</returns>
 		protected override string GetUniqueName ()
 		{
 			return NombreÚnico;
@@ -69,6 +81,10 @@ namespace Units.Recursos
 
 		#endregion
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoFml"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoFml"/>.</returns>
 		public override string ToString ()
 		{
 			return base.ToString () + string.Format (

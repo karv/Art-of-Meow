@@ -10,20 +10,30 @@ namespace Items
 	/// </summary>
 	public enum ItemType
 	{
+		/// <summary>
+		/// Sword
+		/// </summary>
+		/// <seealso cref="Items.Declarations.Equipment.Sword"/>
 		Sword,
-		Potion,
+		/// <summary>
+		/// Potion
+		/// </summary>
+		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
+		HealingPotion,
 		Leather_Armor,
 		Leather_Cap
 	}
 
 	/// <summary>
-	/// It cab create new items from their type
+	/// This class produces new items from its type
 	/// </summary>
 	public static class ItemFactory
 	{
 		/// <summary>
-		/// Creates an item
+		/// Creates a new item of the given type
 		/// </summary>
+		/// <returns>A newly created item</returns>
+		/// <param name="type">Type of the item</param>
 		public static IItem CreateItem (ItemType type)
 		{
 			IItem ret;
@@ -32,7 +42,7 @@ namespace Items
 				case ItemType.Sword:
 					ret = new Sword ();
 					break;
-				case ItemType.Potion:
+				case ItemType.HealingPotion:
 					ret = new HealingPotion ();
 					break;
 				case ItemType.Leather_Armor:
