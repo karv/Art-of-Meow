@@ -26,6 +26,5 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <value>The grid.</value>
 		Grid Grid { get; }
-
 	}
 }

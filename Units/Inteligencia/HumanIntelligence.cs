@@ -88,5 +88,4 @@ namespace Units.Inteligencia
 			ControlledUnidad = yo;
 		}
 	}
-	
 }

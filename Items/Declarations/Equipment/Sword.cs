@@ -1,9 +1,9 @@
-﻿using Units;
+﻿using System;
+using Moggle;
+using Units;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
-using System;
-using Moggle;
 
 namespace Items.Declarations.Equipment
 {

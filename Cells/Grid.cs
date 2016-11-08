@@ -9,7 +9,6 @@ using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
-using Moggle.Comm;
 
 namespace Cells
 {

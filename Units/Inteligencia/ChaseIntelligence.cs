@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Cells;
 using Cells.CellObjects;
-using System;
 using Units.Order;
 
 namespace Units.Inteligencia

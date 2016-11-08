@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units.Recursos;
-using System.Diagnostics;
 
 namespace Units.Buffs
 {

@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using Cells.CellObjects;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Units;
 

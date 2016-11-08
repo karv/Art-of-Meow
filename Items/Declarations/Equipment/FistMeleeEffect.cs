@@ -1,7 +1,7 @@
 using Items.Declarations.Equipment;
+using Units;
 using Units.Order;
 using Units.Recursos;
-using Units;
 
 namespace Items.Declarations.Equipment
 {

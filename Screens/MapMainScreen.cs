@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Cells;
@@ -6,6 +7,7 @@ using Items;
 using Items.Declarations.Equipment;
 using Maps;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Screens;
@@ -16,8 +18,6 @@ using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 using Units.Skills;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace Screens
 {

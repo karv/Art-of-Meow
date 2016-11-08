@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Units;
 using Moggle.Controles;
+using Units;
 
 namespace Cells.CellObjects
 {

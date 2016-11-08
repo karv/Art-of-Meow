@@ -1,7 +1,7 @@
 using System.Diagnostics;
+using Maps;
 using Moggle.Comm;
 using Screens;
-using Maps;
 
 namespace Cells.CellObjects
 {

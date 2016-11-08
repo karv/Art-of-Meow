@@ -1,7 +1,7 @@
 using System;
+using Cells.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Cells.Collision;
 using Moggle.Controles;
 
 namespace Cells.CellObjects
