@@ -82,9 +82,14 @@ namespace Units.Recursos
 		/// </summary>
 		public string NombreÚnico { get; }
 
+		[Obsolete ("Usar tres I-parámetros")] 
 		readonly float [] currMaxNormal = new float[3];
 
-		IParámetroRecurso ValorP { get; }
+		public IParámetroRecurso ValorP { get; }
+
+		public IParámetroRecurso MaxP { get; }
+
+		public IParámetroRecurso BaseP { get; }
 
 		/// <summary>
 		/// Valor actual del recurso.
@@ -102,11 +107,11 @@ namespace Units.Recursos
 		/// <value>The max.</value>
 		public float Max
 		{ 
-			get { return currMaxNormal [1]; } 
+			get { return MaxP.Valor; } 
 			set
 			{ 
-				currMaxNormal [1] = Math.Min (value, Base); 
-				currMaxNormal [0] = Math.Min (currMaxNormal [0], currMaxNormal [1]);
+				MaxP.Valor = Math.Min (value, Base); 
+				ValorP.Valor = Math.Min (ValorP.Valor, MaxP.Valor);
 			}
 		}
 
@@ -116,12 +121,11 @@ namespace Units.Recursos
 		/// <value>The base.</value>
 		public float Base
 		{ 
-			get { return currMaxNormal [2]; } 
+			get { return BaseP.Valor; } 
 			set
 			{ 
-				currMaxNormal [2] = value;
-				currMaxNormal [1] = Math.Min (value, currMaxNormal [1]); 
-				currMaxNormal [0] = Math.Min (currMaxNormal [0], currMaxNormal [1]);
+				BaseP.Valor = value;
+				Max = Math.Min (value, MaxP.Valor);  // Esto actualiza también Value
 			}
 
 		}
@@ -154,7 +158,11 @@ namespace Units.Recursos
 		{
 			NombreÚnico = nombreÚnico;
 			ValorP = new ValorParám (this, "valor");
+			MaxP = new ValorParám (this, "max");
+			BaseP = new ValorParám (this, "base");
 			Parámetros.Add (ValorP);
+			Parámetros.Add (MaxP);
+			Parámetros.Add (BaseP);
 		}
 
 		public class ValorParám : IParámetroRecurso

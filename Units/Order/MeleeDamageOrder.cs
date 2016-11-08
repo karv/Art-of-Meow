@@ -33,9 +33,9 @@ namespace Units.Order
 			hp.Valor -= Damage;
 
 			// Asignar exp
-			unid.Exp.AddAssignation (dex, 0.1f);
+			unid.Exp.AddAssignation (dex.BaseP, 0.1f);
 			var str = Unidad.Recursos.GetRecurso (ConstantesRecursos.Fuerza) as StatRecurso;
-			unid.Exp.AddAssignation (str, 1f);
+			unid.Exp.AddAssignation (str.BaseP, 1f);
 
 			// Recibir exp de kill
 			if (hp.Valor == 0)
