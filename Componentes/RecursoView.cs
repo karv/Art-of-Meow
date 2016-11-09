@@ -19,6 +19,7 @@ namespace Componentes
 		readonly RetardValue [] _suavizador;
 		readonly IVisibleRecurso [] _recursos;
 		readonly Texture2D [] _texture;
+		Texture2D _contornoTextura;
 
 		readonly int count;
 
@@ -61,6 +62,12 @@ namespace Componentes
 
 		void IComponent.InitializeContent (Moggle.BibliotecaContenido manager)
 		{
+			var textMaker = new Moggle.Textures.SimpleTextures (screen.Device);
+			_contornoTextura = textMaker.OutlineTexture (
+				Size,
+				Color.Black,
+				Color.Transparent);
+
 			for (int i = 0; i < count; i++)
 				_texture [i] = manager.GetContent<Texture2D> (_recursos [i].TextureFill);
 		}
@@ -145,12 +152,13 @@ namespace Componentes
 			var text = _texture [index];
 
 			var deltaRect = new Rectangle (
-				                rect.Location + new Point (0, rect.Height / 2),
+				                rect.Location,
 				                new Point (
 					                (int)(rec.PctValue (ret.VisibleValue) * rect.Width),
-					                rect.Height / 2));
+					                rect.Height));
 
 			batch.Draw (text, deltaRect, rec.FullColor);
+			batch.Draw (_contornoTextura, rect, Color.Black);
 		}
 
 		/// <summary>
@@ -195,7 +203,7 @@ namespace Componentes
 			_suavizador = new RetardValue[count];
 			_texture = new Texture2D[count];
 
-			Size = new Size (64, 12);
+			Size = new Size (64, 8);
 			TopLeft = new Point (3, 3);
 		}
 	}
