@@ -12,42 +12,33 @@ namespace Componentes
 	/// <summary>
 	/// Lists the Recursos
 	/// </summary>
-	public class RecursoView : IComponent, IDrawable, IUpdate
+	public class RecursoView : IControl, IDrawable, IUpdateable
 	{
 		ManejadorRecursos Recursos { get; }
 
 		readonly RetardValue [] _suavizador;
 		readonly IVisibleRecurso [] _recursos;
+		readonly Texture2D [] _texture;
+
+		readonly int count;
 
 		#region IDrawable implementation
 
 		event System.EventHandler<System.EventArgs> IDrawable.DrawOrderChanged
 		{
-			add
-			{
-				throw new System.NotImplementedException ();
-			}
-			remove
-			{
-				throw new System.NotImplementedException ();
-			}
+			add	{}
+			remove {}
 		}
 
 		event System.EventHandler<System.EventArgs> IDrawable.VisibleChanged
 		{
-			add
-			{
-				throw new System.NotImplementedException ();
-			}
-			remove
-			{
-				throw new System.NotImplementedException ();
-			}
+			add	{}
+			remove {}
 		}
 
 		void IDrawable.Draw (GameTime gameTime)
 		{
-			draw (gameTime);
+			draw ();
 		}
 
 		int IDrawable.DrawOrder { get { return 0; } }
@@ -64,10 +55,14 @@ namespace Componentes
 
 		void IComponent.AddContent (Moggle.BibliotecaContenido manager)
 		{
+			foreach (var x in _recursos)
+				manager.AddContent (x.TextureFill);
 		}
 
 		void IComponent.InitializeContent (Moggle.BibliotecaContenido manager)
 		{
+			for (int i = 0; i < count; i++)
+				_texture [i] = manager.GetContent<Texture2D> (_recursos [i].TextureFill);
 		}
 
 		#endregion
@@ -80,7 +75,29 @@ namespace Componentes
 
 		#endregion
 
+		#region Update
+
+		event System.EventHandler<System.EventArgs> IUpdateable.EnabledChanged
+		{
+			add	{}
+			remove {}
+		}
+
+		event System.EventHandler<System.EventArgs> IUpdateable.UpdateOrderChanged
+		{
+			add	{}
+			remove {}
+		}
+
+		bool IUpdateable.Enabled { get { return true; } }
+
+		int IUpdateable.UpdateOrder { get { return 0; } }
+
+		#endregion
+
 		#region IGameComponent implementation
+
+		IComponentContainerComponent<IControl> IControl.Container { get { return screen; } }
 
 		void IGameComponent.Initialize ()
 		{
@@ -88,7 +105,7 @@ namespace Componentes
 				_suavizador [i] = new RetardValue
 				{
 					VisibleValue = _recursos [i].Valor,
-					ChangeSpeed = 0.01f,
+					ChangeSpeed = 0.003f,
 				};
 		}
 
@@ -125,19 +142,19 @@ namespace Componentes
 			var ret = _suavizador [index];
 			var rec = _recursos [index];
 
-			var text = rec.TextureFill;
+			var text = _texture [index];
 
 			var fullRect = new Rectangle (
 				               rect.Location,
 				               new Point (
 					               (int)(rec.PctValue (rec.Valor) * rect.Width),
-					               rect.Height));
+					               rect.Height / 2));
 
 			var deltaRect = new Rectangle (
-				                rect.Location,
+				                rect.Location + new Point (0, rect.Height / 2),
 				                new Point (
 					                (int)(rec.PctValue (ret.VisibleValue) * rect.Width),
-					                rect.Height));
+					                rect.Height / 2));
 
 			batch.Draw (text, fullRect, rec.FullColor);
 			batch.Draw (text, deltaRect, rec.DeltaColor);
@@ -146,14 +163,17 @@ namespace Componentes
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
-		void draw (GameTime gameTime)
+		void draw ()
 		{
 			var iconTopLeft = new Point (TopLeft.X, TopLeft.Y);
 			for (int i = 0; i < _recursos.Length; i++)
 			{
-				var outputRect = new Rectangle (iconTopLeft, Size);
-				draw (screen.Batch, outputRect, i);
-				iconTopLeft += new Point (0, Size.Height + VSpace);
+				if (_recursos [i].Visible)
+				{
+					var outputRect = new Rectangle (iconTopLeft, Size);
+					draw (screen.Batch, outputRect, i);
+					iconTopLeft += new Point (0, Size.Height + VSpace);
+				}
 			}
 		}
 
@@ -178,7 +198,9 @@ namespace Componentes
 			Recursos = recs;
 			Visible = true;
 			_recursos = Recursos.Enumerate ().OfType<IVisibleRecurso> ().ToArray ();
-			_suavizador = new RetardValue[_recursos.Length];
+			count = _recursos.Length;
+			_suavizador = new RetardValue[count];
+			_texture = new Texture2D[count];
 
 			Size = new Size (64, 12);
 			TopLeft = new Point (3, 3);

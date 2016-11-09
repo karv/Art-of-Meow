@@ -1,7 +1,6 @@
-﻿using Units;
-using AoM;
-using Microsoft.Xna.Framework.Graphics;
+﻿using AoM;
 using Microsoft.Xna.Framework;
+using Units;
 
 namespace Units.Recursos
 {
@@ -9,7 +8,7 @@ namespace Units.Recursos
 	{
 		bool Visible { get; }
 
-		Texture2D TextureFill { get; }
+		string TextureFill { get; }
 
 		Color FullColor { get; }
 

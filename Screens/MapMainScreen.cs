@@ -167,6 +167,7 @@ namespace Screens
 			healSkill.Initialize ();
 
 			_recursoView = new RecursoView (this, Player.Recursos);
+			AddComponent (_recursoView);
 		}
 
 		/// <summary>
