@@ -144,20 +144,13 @@ namespace Componentes
 
 			var text = _texture [index];
 
-			var fullRect = new Rectangle (
-				               rect.Location,
-				               new Point (
-					               (int)(rec.PctValue (rec.Valor) * rect.Width),
-					               rect.Height / 2));
-
 			var deltaRect = new Rectangle (
 				                rect.Location + new Point (0, rect.Height / 2),
 				                new Point (
 					                (int)(rec.PctValue (ret.VisibleValue) * rect.Width),
 					                rect.Height / 2));
 
-			batch.Draw (text, fullRect, rec.FullColor);
-			batch.Draw (text, deltaRect, rec.DeltaColor);
+			batch.Draw (text, deltaRect, rec.FullColor);
 		}
 
 		/// <summary>

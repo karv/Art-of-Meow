@@ -12,8 +12,6 @@ namespace Units.Recursos
 
 		Color FullColor { get; }
 
-		Color DeltaColor { get; }
-
 		float PctValue (float value);
 	}
 

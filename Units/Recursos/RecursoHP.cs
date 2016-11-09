@@ -138,8 +138,6 @@ namespace Units.Recursos
 
 		Color IVisibleRecurso.FullColor { get { return Color.Red; } }
 
-		Color IVisibleRecurso.DeltaColor { get { return Color.Yellow; } }
-
 		/// <summary>
 		/// Occurs when value changed.
 		/// </summary>
