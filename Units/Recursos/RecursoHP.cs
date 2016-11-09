@@ -3,6 +3,7 @@ using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using Helper;
 
 namespace Units.Recursos
 {
@@ -19,6 +20,8 @@ namespace Units.Recursos
 		/// The filling color
 		/// </summary>
 		public readonly Color FillColor = Color.Red;
+
+		RetardValue _suavizadorValor;
 
 		/// <summary>
 		/// Dibuja el objeto sobre un rectángulo específico
@@ -84,6 +87,11 @@ namespace Units.Recursos
 
 		float _valor;
 
+		public override void Update (float gameTime)
+		{
+			base.Update (gameTime);
+		}
+
 		/// <summary>
 		/// Gets or sets the current value of HP
 		/// </summary>
@@ -118,6 +126,7 @@ namespace Units.Recursos
 		public void Fill ()
 		{
 			Valor = Max;
+			_suavizadorValor.VisibleValue = Max;
 		}
 
 		/// <summary>
@@ -126,6 +135,7 @@ namespace Units.Recursos
 		public void Empty ()
 		{
 			Valor = 0;
+			_suavizadorValor.VisibleValue = 0;
 		}
 
 		/// <summary>
@@ -161,6 +171,7 @@ namespace Units.Recursos
 		public RecursoHP (IUnidad unidad)
 			: base (unidad)
 		{
+			_suavizadorValor = new RetardValue { ChangeSpeed = 5 };
 		}
 	}
 }

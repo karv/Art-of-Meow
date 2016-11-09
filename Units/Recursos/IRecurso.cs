@@ -1,8 +1,23 @@
 ﻿using Units;
 using AoM;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Units.Recursos
 {
+	public interface IVisibleRecurso : IRecurso
+	{
+		bool Visible { get; }
+
+		Texture2D TextureFill { get; }
+
+		Color FullColor { get; }
+
+		Color DeltaColor { get; }
+
+		float PctValue (float value);
+	}
+
 	/// <summary>
 	/// Un 'stat' de una unidad.
 	/// </summary>
