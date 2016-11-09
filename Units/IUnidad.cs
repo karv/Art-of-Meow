@@ -38,6 +38,9 @@ namespace Units
 		/// <value>The equipment.</value>
 		EquipmentManager Equipment { get; }
 
+		/// <summary>
+		/// Devuelve el manejador de experiencia.
+		/// </summary>
 		ExpManager Exp { get; }
 
 		/// <summary>

@@ -36,6 +36,10 @@ namespace Units.Recursos
 		/// <param name="paramName">Parameter name.</param>
 		IParámetroRecurso ValorParámetro (string paramName);
 
+		/// <summary>
+		/// Enumera los parámetros de este recurso
+		/// </summary>
+		/// <returns>The parameters.</returns>
 		IEnumerable<IParámetroRecurso> EnumerateParameters ();
 
 		/// <summary>
@@ -64,6 +68,10 @@ namespace Units.Recursos
 		/// </summary>
 		float Valor { get; set; }
 
+		/// <summary>
+		/// Recibe experiencia.
+		/// </summary>
+		/// <param name="exp">Cantidad de experiencia recibida</param>
 		void ReceiveExperience (float exp);
 	}
 }

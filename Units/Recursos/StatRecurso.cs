@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using AoM;
 
 namespace Units.Recursos
 {
@@ -82,10 +83,19 @@ namespace Units.Recursos
 		/// </summary>
 		public string NombreÚnico { get; }
 
+		/// <summary>
+		/// Devuelve el parámetro de valor actual
+		/// </summary>
 		public IParámetroRecurso ValorP { get; }
 
+		/// <summary>
+		/// Devuelve el parámetro de máximo actual
+		/// </summary>
 		public IParámetroRecurso MaxP { get; }
 
+		/// <summary>
+		/// Devuelve el parámetro base
+		/// </summary>
 		public IParámetroRecurso BaseP { get; }
 
 		/// <summary>
@@ -162,9 +172,12 @@ namespace Units.Recursos
 			Parámetros.Add (BaseP);
 		}
 
+		/// <summary>
+		/// Representa un parámetro de recurso de un sólo valor
+		/// </summary>
 		public class ValorParám : IParámetroRecurso
 		{
-			public void ReceiveExperience (float exp)
+			void IParámetroRecurso.ReceiveExperience (float exp)
 			{
 				Valor += exp;
 				Debug.WriteLine (
@@ -177,16 +190,27 @@ namespace Units.Recursos
 					"Experiencia");
 			}
 
-			public void Update (float gameTime)
+			void IInternalUpdate.Update (float gameTime)
 			{
 			}
 
+			/// <summary>
+			/// Devuelve el recurso que contiene este parámetro
+			/// </summary>
 			public IRecurso Recurso { get; }
 
+			/// <summary>
+			/// Devuelve el nombre único de este parámetro dentro de <see cref="Recurso"/>
+			/// </summary>
 			public string NombreÚnico { get; }
 
+			/// <summary>
+			/// Devuelve o establece el valor del parámetro
+			/// </summary>
 			public float Valor { get; set; }
 
+			/// <summary>
+			/// </summary>
 			public override string ToString ()
 			{
 				return string.Format (
@@ -196,6 +220,11 @@ namespace Units.Recursos
 					Valor);
 			}
 
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Units.Recursos.StatRecurso.ValorParám"/> class.
+			/// </summary>
+			/// <param name="rec">Recurso</param>
+			/// <param name="nombre">Nombre único</param>
 			public ValorParám (IRecurso rec, string nombre)
 			{
 				Recurso = rec;

@@ -82,6 +82,9 @@ namespace Units
 			Inteligencia.DoAction ();
 		}
 
+		/// <summary>
+		/// Devuelve la experiencia que esta unidad otorga al ser asesinada
+		/// </summary>
 		public float GetExperienceValue ()
 		{
 			// TODO: calcularlo bien.
@@ -141,6 +144,9 @@ namespace Units
 		/// <value>The skills.</value>
 		public Units.Skills.SkillManager Skills { get; }
 
+		/// <summary>
+		/// Devuelve el manejador de experiencia.
+		/// </summary>
 		public ExpManager Exp { get; }
 
 		/// <summary>
