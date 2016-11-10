@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using AoM;
 
 namespace Units.Recursos
 {
@@ -81,7 +83,20 @@ namespace Units.Recursos
 		/// </summary>
 		public string NombreÚnico { get; }
 
-		readonly float [] currMaxNormal = new float[3];
+		/// <summary>
+		/// Devuelve el parámetro de valor actual
+		/// </summary>
+		public IParámetroRecurso ValorP { get; }
+
+		/// <summary>
+		/// Devuelve el parámetro de máximo actual
+		/// </summary>
+		public IParámetroRecurso MaxP { get; }
+
+		/// <summary>
+		/// Devuelve el parámetro base
+		/// </summary>
+		public IParámetroRecurso BaseP { get; }
 
 		/// <summary>
 		/// Valor actual del recurso.
@@ -89,8 +104,8 @@ namespace Units.Recursos
 		/// <value>The valor.</value>
 		public override float Valor
 		{ 
-			get { return currMaxNormal [0]; } 
-			set	{ currMaxNormal [0] = Math.Min (value, Max); }
+			get { return ValorP.Valor; } 
+			set { ValorP.Valor = Math.Min (value, Max); }
 		}
 
 		/// <summary>
@@ -99,11 +114,11 @@ namespace Units.Recursos
 		/// <value>The max.</value>
 		public float Max
 		{ 
-			get { return currMaxNormal [1]; } 
+			get { return MaxP.Valor; } 
 			set
 			{ 
-				currMaxNormal [1] = Math.Min (value, Base); 
-				currMaxNormal [0] = Math.Min (currMaxNormal [0], currMaxNormal [1]);
+				MaxP.Valor = Math.Min (value, Base); 
+				ValorP.Valor = Math.Min (ValorP.Valor, MaxP.Valor);
 			}
 		}
 
@@ -113,12 +128,11 @@ namespace Units.Recursos
 		/// <value>The base.</value>
 		public float Base
 		{ 
-			get { return currMaxNormal [2]; } 
+			get { return BaseP.Valor; } 
 			set
 			{ 
-				currMaxNormal [2] = value;
-				currMaxNormal [1] = Math.Min (value, currMaxNormal [1]); 
-				currMaxNormal [0] = Math.Min (currMaxNormal [0], currMaxNormal [1]);
+				BaseP.Valor = value;
+				Max = Math.Min (value, MaxP.Valor);  // Esto actualiza también Value
 			}
 
 		}
@@ -141,7 +155,7 @@ namespace Units.Recursos
 		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Recursos.StatRecurso"/>.</returns>
 		public override string ToString ()
 		{
-			return base.ToString () + string.Format ("{0}//{1}//{2}", Valor, Max, Base);
+			return base.ToString () + string.Format ("{0}/{1}/{2}", Valor, Max, Base);
 		}
 
 		/// <param name="nombreÚnico">Nombre único.</param>
@@ -150,6 +164,72 @@ namespace Units.Recursos
 			: base (unidad)
 		{
 			NombreÚnico = nombreÚnico;
+			ValorP = new ValorParám (this, "valor");
+			MaxP = new ValorParám (this, "max");
+			BaseP = new ValorParám (this, "base");
+			Parámetros.Add (ValorP);
+			Parámetros.Add (MaxP);
+			Parámetros.Add (BaseP);
+		}
+
+		/// <summary>
+		/// Representa un parámetro de recurso de un sólo valor
+		/// </summary>
+		public class ValorParám : IParámetroRecurso
+		{
+			void IParámetroRecurso.ReceiveExperience (float exp)
+			{
+				Valor += exp;
+				Debug.WriteLine (
+					string.Format (
+						"{0}/{3} recibe exp {1}.\nNuevo val: {2}",
+						NombreÚnico,
+						exp,
+						Valor, 
+						Recurso.NombreÚnico),
+					"Experiencia");
+			}
+
+			void IInternalUpdate.Update (float gameTime)
+			{
+			}
+
+			/// <summary>
+			/// Devuelve el recurso que contiene este parámetro
+			/// </summary>
+			public IRecurso Recurso { get; }
+
+			/// <summary>
+			/// Devuelve el nombre único de este parámetro dentro de <see cref="Recurso"/>
+			/// </summary>
+			public string NombreÚnico { get; }
+
+			/// <summary>
+			/// Devuelve o establece el valor del parámetro
+			/// </summary>
+			public float Valor { get; set; }
+
+			/// <summary>
+			/// </summary>
+			public override string ToString ()
+			{
+				return string.Format (
+					"[ValorParám: Recurso={0}, NombreÚnico={1}, Valor={2}]",
+					Recurso,
+					NombreÚnico,
+					Valor);
+			}
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="Units.Recursos.StatRecurso.ValorParám"/> class.
+			/// </summary>
+			/// <param name="rec">Recurso</param>
+			/// <param name="nombre">Nombre único</param>
+			public ValorParám (IRecurso rec, string nombre)
+			{
+				Recurso = rec;
+				NombreÚnico = nombre;
+			}
 		}
 	}
 }

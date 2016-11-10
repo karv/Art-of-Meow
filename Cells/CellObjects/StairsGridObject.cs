@@ -18,9 +18,11 @@ namespace Cells.CellObjects
 			Debug.WriteLine ("Stairs!");
 			var scr = (MapMainScreen)Grid.Screen;
 			var newGrid = Map.GenerateGrid (Grid.DownMap, scr);
-			// Mover al jugador al nuevo grid
 
 			scr.GameGrid = newGrid;
+
+			// Recibir la experiencia
+			scr.Player.Exp.Flush ();
 		}
 
 		bool IReceptorTeclado.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)

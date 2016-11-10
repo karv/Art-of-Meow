@@ -156,6 +156,8 @@
     <Compile Include="Cells\CellObjects\GridWall.cs" />
     <Compile Include="Units\UnidadFactory.cs" />
     <Compile Include="Cells\CellObjects\StairsGridObject.cs" />
+    <Compile Include="Units\ExpManager.cs" />
+    <Compile Include="Units\IExpGiver.cs" />
     <Compile Include="Helper\RetardValue.cs" />
   </ItemGroup>
   <ProjectExtensions>

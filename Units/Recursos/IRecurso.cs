@@ -1,4 +1,5 @@
-﻿using AoM;
+using System.Collections.Generic;
+using AoM;
 using Microsoft.Xna.Framework;
 using Units;
 
@@ -63,6 +64,12 @@ namespace Units.Recursos
 		IParámetroRecurso ValorParámetro (string paramName);
 
 		/// <summary>
+		/// Enumera los parámetros de este recurso
+		/// </summary>
+		/// <returns>The parameters.</returns>
+		IEnumerable<IParámetroRecurso> EnumerateParameters ();
+
+		/// <summary>
 		/// Unidad que posee este recurso.
 		/// </summary>
 		IUnidad Unidad { get; }
@@ -87,5 +94,11 @@ namespace Units.Recursos
 		/// Valor actual del recurso.
 		/// </summary>
 		float Valor { get; set; }
+
+		/// <summary>
+		/// Recibe experiencia.
+		/// </summary>
+		/// <param name="exp">Cantidad de experiencia recibida</param>
+		void ReceiveExperience (float exp);
 	}
 }

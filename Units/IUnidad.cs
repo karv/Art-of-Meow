@@ -16,7 +16,10 @@ namespace Units
 	/// <summary>
 	/// Represents a unit in the game grid
 	/// </summary>
-	public interface IUnidad : IUpdateGridObject, ICollidableGridObject
+	public interface IUnidad :
+	IUpdateGridObject,
+	ICollidableGridObject,
+	IExpGiver
 	{
 		/// <summary>
 		/// Gets the map grid
@@ -34,6 +37,11 @@ namespace Units
 		/// </summary>
 		/// <value>The equipment.</value>
 		EquipmentManager Equipment { get; }
+
+		/// <summary>
+		/// Devuelve el manejador de experiencia.
+		/// </summary>
+		ExpManager Exp { get; }
 
 		/// <summary>
 		/// Gets the buffs if this unit

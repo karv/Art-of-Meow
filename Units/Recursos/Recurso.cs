@@ -13,6 +13,14 @@ namespace Units.Recursos
 		/// </summary>
 		protected List<IParámetroRecurso> Parámetros;
 
+		/// <summary>
+		/// Enumera los parámetros de este recurso
+		/// </summary>
+		public IEnumerable<IParámetroRecurso> EnumerateParameters ()
+		{
+			return Parámetros;
+		}
+
 		#region IRecurso implementation
 
 		/// <summary>

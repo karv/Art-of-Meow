@@ -83,9 +83,19 @@ namespace Units
 		}
 
 		/// <summary>
+		/// Devuelve la experiencia que esta unidad otorga al ser asesinada
+		/// </summary>
+		public float GetExperienceValue ()
+		{
+			// TODO: calcularlo bien.
+			return 1;
+		}
+
+		/// <summary>
 		/// Pass time
 		/// </summary>
 		/// <param name="time">Time.</param>
+
 		public void PassTime (float time)
 		{
 			PrimitiveOrders.PassTime (time);
@@ -133,6 +143,11 @@ namespace Units
 		/// </summary>
 		/// <value>The skills.</value>
 		public Units.Skills.SkillManager Skills { get; }
+
+		/// <summary>
+		/// Devuelve el manejador de experiencia.
+		/// </summary>
+		public ExpManager Exp { get; }
 
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Units.Unidad"/> is habilitado.
@@ -423,6 +438,7 @@ namespace Units
 			PrimitiveOrders = new OrderQueue ();
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
+			Exp = new ExpManager (this);
 			Inventory = new Inventory ();
 			Skills = new Units.Skills.SkillManager (this);
 			inicializarRecursos ();
