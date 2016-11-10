@@ -5,12 +5,9 @@ using System.IO;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
-using Cells.Collision;
 using Items;
 using Microsoft.Xna.Framework;
-using Moggle.Screens;
 using MonoGame.Extended;
-using Screens;
 using Units;
 
 namespace Maps
@@ -45,38 +42,6 @@ namespace Maps
 		/// </summary>
 		public bool AddFeatures = true;
 
-		/*
-		/// <summary>
-		/// Add bounds to a grid, with a tile represented by a character
-		/// </summary>
-		/// <param name="c">Character representing a <see cref="IGridObject"/></param>
-		/// <param name="grid">The grid where the bounds are suposed to be added</param>
-		public void AddBoundsTo (char c, Grid grid)
-		{
-			foreach (var pt in contorno())
-				grid.AddCellObject (MakeObject (c, grid, pt));
-		}
-
-		/// <summary>
-		/// enumera las celdas de contorno.
-		/// </summary>
-		IEnumerable<Point> contorno ()
-		{
-			int sizeX = MapSize.Width;
-			int sizeY = MapSize.Height;
-			for (int i = 0; i < sizeX; i++)
-			{
-				yield return (new Point (i, 0));
-				yield return (new Point (i, sizeY - 1));
-			}
-			for (int i = 1; i < sizeY - 1; i++)
-			{
-				yield return (new Point (0, i));
-				yield return (new Point (sizeX - 1, i));
-			}
-		}
-
-		*/
 		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
