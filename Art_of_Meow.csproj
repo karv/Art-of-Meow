@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Juego.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Cells\Grid.cs" />
     <Compile Include="Cells\Cell.cs" />
     <Compile Include="Screens\MapMainScreen.cs" />
     <Compile Include="Units\IUnidad.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Helper\RetardValue.cs" />
     <Compile Include="Cells\LogicGrid.cs" />
     <Compile Include="Componentes\GridControl.cs" />
+    <Compile Include="Helper\GameInitializer.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

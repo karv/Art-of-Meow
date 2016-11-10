@@ -140,20 +140,6 @@ namespace Screens
 		/// </summary>
 		void inicializarJugador (Unidad player = null)
 		{
-			if (player == null)
-				Player = new Unidad (GridControl.Grid)
-				{
-					Nombre = "Player",
-					Team = new TeamManager (Color.Red),
-					Location = new Point (
-						Grid.Size.Width / 2,
-						Grid.Size.Height / 2),
-				};
-			else
-				Player = player;
-
-			Player.Inteligencia = new HumanIntelligence (Player);
-			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
 
 			// TEST ing
 
