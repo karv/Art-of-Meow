@@ -166,11 +166,24 @@ namespace Units.Recursos
 			NombreÚnico = nombreÚnico;
 			ValorP = new ValorParám (this, "valor");
 			MaxP = new ValorParám (this, "max");
-			BaseP = new ValorParám (this, "base");
+			var baseP = new ValorParám (this, "base");
+			BaseP = baseP;
 			Parámetros.Add (ValorP);
 			Parámetros.Add (MaxP);
 			Parámetros.Add (BaseP);
+			baseP.ValueMilestoneChanged += baseValueChanged;
 		}
+
+		void baseValueChanged (object sender, EventArgs e)
+		{
+			Debug.WriteLine (string.Format (
+				"Jugador: {2}\t\tstat base {0} changed to {1}.",
+				NombreÚnico,
+				BaseP.Valor,
+				Unidad));
+		}
+
+
 
 		/// <summary>
 		/// Representa un parámetro de recurso de un sólo valor
@@ -204,10 +217,31 @@ namespace Units.Recursos
 			/// </summary>
 			public string NombreÚnico { get; }
 
+			float valor;
+
 			/// <summary>
 			/// Devuelve o establece el valor del parámetro
 			/// </summary>
-			public float Valor { get; set; }
+			public float Valor
+			{
+				get
+				{
+					return valor;
+				}
+				set
+				{
+					var int_before = (int)valor;
+					valor = value;
+					var int_after = (int)valor;
+					if (int_before != int_after)
+						ValueMilestoneChanged?.Invoke (this, EventArgs.Empty);
+				}
+			}
+
+			/// <summary>
+			/// Ocurre al cambiar el valor entero del valor
+			/// </summary>
+			public event EventHandler ValueMilestoneChanged;
 
 			/// <summary>
 			/// </summary>
