@@ -17,7 +17,7 @@ namespace Maps
 {
 	/// <summary>
 	/// Representa un conjunto de características.
-	/// Provee un constructor de <see cref="Cells.Grid"/>
+	/// Provee un constructor de <see cref="Cells.LogicGrid"/>
 	/// </summary>
 	public class Map
 	{
@@ -36,7 +36,7 @@ namespace Maps
 		readonly StreamReader dataStream;
 
 		/// <summary>
-		/// El nombre del archivo de mapa del siguiente nivel para ser pasado al <see cref="Grid"/> generado
+		/// El nombre del archivo de mapa del siguiente nivel para ser pasado al <see cref="LogicGrid"/> generado
 		/// </summary>
 		public string NextMap = @"Maps/base.map";
 

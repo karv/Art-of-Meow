@@ -34,6 +34,10 @@ namespace Cells
 			return new Cell (this, p);
 		}
 
+		/// <summary>
+		/// Devuelve las coordenadas de un punto vacío en el tablero
+		/// </summary>
+		/// <returns>The random empty cell's coords.</returns>
 		public Point GetRandomEmptyCell ()
 		{
 			Point ret;
@@ -105,6 +109,14 @@ namespace Cells
 			Objects.Remove (obj);
 		}
 
+		/// <summary>
+		/// Libera toda suscripción a esta clase, y también invoca <see cref="Dispose"/> a los objetos de este tablero que 
+		/// son <see cref="IDisposable"/>
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.LogicGrid"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Cells.LogicGrid"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Cells.LogicGrid"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Cells.LogicGrid"/> was occupying.</remarks>
 		public void Dispose ()
 		{
 			AddedObject = null;
@@ -138,6 +150,9 @@ namespace Cells
 
 		#endregion
 
+		/// <summary>
+		/// Ocurre al agregar un objeto
+		/// </summary>
 		public event EventHandler<IGridObject> AddedObject;
 
 		/// <summary>
@@ -152,6 +167,10 @@ namespace Cells
 			TimeManager = new GameTimeManager (this);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.LogicGrid"/> class.
+		/// </summary>
+		/// <param name="mapSize">Map size.</param>
 		public LogicGrid (Size mapSize)
 		{
 			_collisionSystem = new CollisionSystem ();

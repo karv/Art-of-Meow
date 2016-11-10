@@ -10,14 +10,20 @@ using MonoGame.Extended.Shapes;
 
 namespace Cells
 {
-
 	/// <summary>
 	/// The Griod system
 	/// </summary>
 	public class GridControl : DSBC, IComponentContainerComponent<IGridObject>
 	{
+		/// <summary>
+		/// Devuelve el tablero lógico
+		/// </summary>
 		public LogicGrid Grid { get; private set; }
 
+		/// <summary>
+		/// Cambia el tablero actual, liberando completamente al anterior e inicializando el nuevo
+		/// </summary>
+		/// <param name="newGrid">Nuevo tablero lógico</param>
 		public void ChangeGrid (LogicGrid newGrid)
 		{
 			Grid.Dispose ();
@@ -292,10 +298,9 @@ namespace Cells
 
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.Grid"/> class.
+		/// Initializes a new instance of the <see cref="Cells.GridControl"/> class.
 		/// </summary>
-		/// <param name="xSize">Grid X-size</param>
-		/// <param name="ySize">Grid Y-size</param>
+		/// <param name="grid">El tablero lógico</param>
 		/// <param name="scr">Screen where this grid belongs to</param>
 		public GridControl (LogicGrid grid, Moggle.Screens.IScreen scr)
 			: base (scr)

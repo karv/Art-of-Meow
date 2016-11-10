@@ -124,6 +124,13 @@ namespace Cells.CellObjects
 			Dispose ();
 		}
 
+		/// <summary>
+		/// Descarga el contenido gráfico
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.CellObjects.GridObject"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Cells.CellObjects.GridObject"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Cells.CellObjects.GridObject"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Cells.CellObjects.GridObject"/> was occupying.</remarks>
 		protected virtual void Dispose ()
 		{
 			UnloadContent ();

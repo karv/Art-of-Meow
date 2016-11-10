@@ -44,6 +44,9 @@ namespace Screens
 		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
+		/// <summary>
+		/// Devuelve el tablero logico.
+		/// </summary>
 		public LogicGrid Grid { get { return _gameGrid.Grid; } }
 
 		GridControl _gameGrid;

@@ -10,7 +10,7 @@ namespace Cells
 	/// <summary>
 	/// A state of a grid generated at some point.
 	/// </summary>
-	/// <remarks>Modify this class won't change the <see cref="Grid"/></remarks>
+	/// <remarks>Modify this class won't change the <see cref="LogicGrid"/></remarks>
 	public class Cell
 	{
 		/// <summary>
