@@ -1,14 +1,18 @@
-﻿using Units.Buffs;
+﻿using System;
 using System.Collections.Generic;
-using Items;
-using System.Linq;
 using System.Diagnostics;
-using System;
-using Microsoft.Xna.Framework.Content;
+using System.Linq;
+using Items;
+using Items.Declarations.Equipment;
+using Moggle;
+using Units.Buffs;
 
 namespace Units.Equipment
 {
-	public sealed class EquipmentManager
+	/// <summary>
+	/// Equipment manager: manages buff and equip/unequip of the equipment of <see cref="IUnidad"/>
+	/// </summary>
+	public class EquipmentManager
 	{
 		/// <summary>
 		/// El poseedor del equipment
@@ -20,6 +24,24 @@ namespace Units.Equipment
 		/// Devuelve el buff que representa el equipment.
 		/// </summary>
 		public EquipBuff EquipBuff { get; private set; }
+
+		/// <summary>
+		/// Enumerates all the equiped <see cref="IEquipment"/> in the corresponging <see cref="IUnidad"/>
+		/// </summary>
+		/// <returns>The equipment.</returns>
+		public IEnumerable<IEquipment> EnumerateEquipment ()
+		{
+			return equipment;
+		}
+
+		/// <summary>
+		/// If any, gets the first melee weapon in equipment; otherwise gets a <see cref="FistMeleeEffect"/> for this Unidad
+		/// </summary>
+		public IMeleeEffect GetMeleeDamageType ()
+		{
+			var melees = equipment.OfType<IMeleeEffect> ();
+			return melees.Any () ? melees.First () : new FistMeleeEffect ();
+		}
 
 		List<IEquipment> equipment { get; }
 
@@ -66,10 +88,22 @@ namespace Units.Equipment
 			return equipment.Count (z => z.Slot == slot);
 		}
 
-		public void LoadContent (ContentManager manager)
+		/// <summary>
+		/// Adds the content of every equipment
+		/// </summary>
+		protected void AddContent (BibliotecaContenido manager)
 		{
 			foreach (var eq in equipment)
-				eq.LoadContent (manager);
+				eq.AddContent (manager);
+		}
+
+		/// <summary>
+		/// Initializes the content of its elements
+		/// </summary>
+		protected void InitializeContent (BibliotecaContenido manager)
+		{
+			foreach (var eq in equipment)
+				eq.InitializeContent (manager);
 		}
 
 		#region Events
@@ -86,6 +120,23 @@ namespace Units.Equipment
 
 		#endregion
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Equipment.EquipmentManager"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Equipment.EquipmentManager"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format (
+				"[EquipmentManager: Owner={0}, EquipBuff={1}, equipment={2}]",
+				Owner,
+				EquipBuff,
+				equipment);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Equipment.EquipmentManager"/> class.
+		/// </summary>
+		/// <param name="owner">Owner.</param>
 		public EquipmentManager (IUnidad owner)
 		{
 			Owner = owner;
@@ -95,6 +146,9 @@ namespace Units.Equipment
 
 		#region Static
 
+		/// <summary>
+		/// Gets a dictionary that assigns every slot the quantity of that kind that can be equiped
+		/// </summary>
 		public static Dictionary<EquipSlot, int> SlotSize;
 
 		static EquipmentManager ()

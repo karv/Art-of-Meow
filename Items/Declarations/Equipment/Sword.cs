@@ -1,107 +1,100 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Units.Buffs;
+using Moggle;
+using Units;
+using Units.Order;
 using Units.Recursos;
+using Units.Skills;
 
 namespace Items.Declarations.Equipment
 {
 	/// <summary>
+	/// Obsolete
+	/// </summary>
+	[ObsoleteAttribute]
+	public class HealingSword : Sword, ISkillEquipment
+	{
+		readonly SelfHealSkill healSkill = new SelfHealSkill ();
+
+		/// <summary>
+		/// Loads the texture
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void AddContent (BibliotecaContenido manager)
+		{
+			base.AddContent (manager);
+			healSkill.AddContent (manager);
+		}
+
+		/// <summary>
+		/// Initializes the content.
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected override void InitializeContent (BibliotecaContenido manager)
+		{
+			base.InitializeContent (manager);
+			healSkill.InitializeContent (manager);
+		}
+
+		System.Collections.Generic.IEnumerable<ISkill> ISkillEquipment.GetEquipmentSkills ()
+		{
+			return new ISkill[] { healSkill };
+		}
+	}
+
+	/// <summary>
 	/// Una espada sin propiedades especiales
 	/// </summary>
-	public class Sword : IEquipment, IBuffGenerating
+	public class Sword : Equipment, IMeleeEffect
 	{
-		public string IconString { get; }
-
-		public Texture Icon { get; protected set; }
-
-		public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, float>> GetDeltaStat ()
-		{
-			yield return new System.Collections.Generic.KeyValuePair<string, float> (
-				ConstantesRecursos.DañoMelee,
-				3);
-		}
-
-		#region IComponent implementation
-
-		public void LoadContent (ContentManager manager)
-		{
-			Icon = manager.Load<Texture2D> (IconString);
-		}
-
-		public void UnloadContent ()
-		{
-			Debug.WriteLineIf (
-				Owner == null,
-				"Disposing equiped item " + this,
-				"Equipment");
-			Owner?.UnequipItem (this);
-		}
-
-		public Moggle.Controles.IComponentContainerComponent<IGameComponent> Container
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
-
-		#endregion
-
-		#region IDisposable implementation
-
-		void IDisposable.Dispose ()
-		{
-			UnloadContent ();
-		}
-
-		#endregion
-
-		#region IGameComponent implementation
-
-		public void Initialize ()
-		{
-		}
-
-		#endregion
-
 		#region IEquipment implementation
 
-		public EquipSlot Slot
-		{
-			get { return EquipSlot.MainHand; }
-		}
-
-		public Units.Equipment.EquipmentManager Owner { get; set; }
-
-		#endregion
-
-		#region IItem implementation
-
-		public string Nombre { get; }
-
-		public string DefaultTextureName
-		{
-			get { return IconString; }
-		}
-
-		public Color DefaultColor
-		{
-			get { return Color.Transparent; }
-		}
+		/// <summary>
+		/// Gets the equipment slot.
+		/// </summary>
+		/// <value>The slot.</value>
+		public override EquipSlot Slot { get { return EquipSlot.MainHand; } }
 
 		#endregion
 
-		protected Sword (string icon)
+		/// <summary>
+		/// Causes melee effect on a target
+		/// </summary>
+		/// <param name="user">The user of the melee move</param>
+		/// <param name="target">Target.</param>
+		public void DoMeleeEffectOn (IUnidad user, IUnidad target)
 		{
-			IconString = icon;
+			var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Fuerza) * 0.125f +
+			             user.Recursos.ValorRecurso (ConstantesRecursos.Destreza) * 0.05f;
+			user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
+			user.EnqueueOrder (new CooldownOrder (
+				user,
+				calcularTiempoMelee ()));
 		}
 
+		float calcularTiempoMelee ()
+		{
+			var dex = UnidadOwner.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
+			return 1 / dex;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Sword"/> class.
+		/// </summary>
+		/// <param name="nombre">Nombre.</param>
+		/// <param name="icon">Icon.</param>
+		protected Sword (string nombre, string icon)
+			: base (nombre)
+		{
+			TextureName = icon;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Sword"/> class.
+		/// </summary>
 		public Sword ()
-			: this (@"Items/katana")
+			: this ("Sword", @"Items/katana")
 		{
+			Color = Microsoft.Xna.Framework.Color.Black;
 		}
 	}
 }

@@ -1,14 +1,25 @@
 ﻿using System.Linq;
 using Cells;
 using Cells.CellObjects;
+using Units.Order;
 
 namespace Units.Inteligencia
 {
-	public class ChaseIntelligence  : IIntelligence
+	/// <summary>
+	/// Unidad's controllers. Chase and attack the human player
+	/// </summary>
+	public class ChaseIntelligence : IUnidadController
 	{
-		public Grid MapGrid { get { return Yo.MapGrid; } }
+		/// <summary>
+		/// Gets the map grid.
+		/// </summary>
+		/// <value>The map grid.</value>
+		public Grid MapGrid { get { return ControlledUnidad.Grid; } }
 
-		public readonly Unidad Yo;
+		/// <summary>
+		/// Gets the controlled unidad
+		/// </summary>
+		public readonly Unidad ControlledUnidad;
 
 		Unidad Target;
 
@@ -19,10 +30,8 @@ namespace Units.Inteligencia
 
 		bool isSelectableAsTarget (IGridObject obj)
 		{
-			var otro = obj as Unidad;
-			if (otro == null)
-				return false;
-			return otro.Equipo != Yo.Equipo;
+			var otro = obj as IUnidad;
+			return otro != null && ControlledUnidad.IsEnemyOf (otro);
 		}
 
 		void TryUpdateTarget ()
@@ -31,19 +40,42 @@ namespace Units.Inteligencia
 				Target = GetTarget ();
 		}
 
-		void IIntelligence.DoAction ()
+		void IUnidadController.DoAction ()
 		{
-			Yo.NextActionTime = 2; // ¿Qué es esto?
+			ControlledUnidad.assertIsIdleCheck ();
 			TryUpdateTarget ();
-			var dir = Yo.Location.GetDirectionTo (Target.Location);
+			if (Target == null)
+				return; // Si no encuentra enemigo, debe ser porque la instancia de mapa se está desechando
+			var dir = ControlledUnidad.Location.GetDirectionTo (Target.Location);
 			if (dir == MovementDirectionEnum.NoMov)
 				return;
-			Yo.MoveOrMelee (dir);
+			if (!ControlledUnidad.MoveOrMelee (dir))
+			{
+				// No se puede moverse ni atacar hacia acá.
+				// Solamente voy a esperar un poco
+				ControlledUnidad.EnqueueOrder (new CooldownOrder (ControlledUnidad, 0.1f));
+			}
 		}
 
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Inteligencia.ChaseIntelligence"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Inteligencia.ChaseIntelligence"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format (
+				"[ChaseIntelligence: Yo={0}, Target={1}]",
+				ControlledUnidad.Nombre,
+				Target.Nombre);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Inteligencia.ChaseIntelligence"/> class.
+		/// </summary>
+		/// <param name="yo">The controlled unidad</param>
 		public ChaseIntelligence (Unidad yo)
 		{
-			Yo = yo;
+			ControlledUnidad = yo;
 		}
 	}
 }

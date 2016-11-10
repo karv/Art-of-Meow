@@ -78,6 +78,19 @@ namespace Helper
 		}
 
 		/// <summary>
+		/// </summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Helper.Timer"/>.
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Helper.Timer"/>.</returns>
+		public override string ToString ()
+		{
+			return string.Format (
+				"[Timer: ConteoInicial={0}, Restante={1}, Habilitado={2}]",
+				ConteoInicial,
+				Restante,
+				Habilitado);
+		}
+
+		/// <summary>
 		/// Ocurre cada vez que se llega a cero.
 		/// </summary>
 		public event EventHandler ConteoCero;

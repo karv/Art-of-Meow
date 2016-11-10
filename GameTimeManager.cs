@@ -4,32 +4,53 @@ using System.Diagnostics;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
-using Microsoft.Xna.Framework.Graphics;
-using Units;
-using Units.Inteligencia;
 
 namespace AoM
 {
+	/// <summary>
+	/// Manager of in-game time
+	/// </summary>
 	public class GameTimeManager
 	{
+		/// <summary>
+		/// Gets the map grid
+		/// </summary>
+		/// <value>The map grid.</value>
 		Grid MapGrid { get; }
 
+		/// <summary>
+		/// Gets the entire collection of objects
+		/// </summary>
 		ICollection<IGridObject> Objects { get { return MapGrid.Objects; } }
 
+		/// <summary>
+		/// Gets the current object
+		/// </summary>
+		/// <value>The actual.</value>
 		public IUpdateGridObject Actual { get; private set; }
 
 		IEnumerable<IUpdateGridObject> UpdateGridObjects
 		{
 			get
 			{
-				return Objects.OfType<IUpdateGridObject> ();
+				return Objects.OfType<IUpdateGridObject> ().Where (z => z.Enabled);
 			}
 		}
 
+		/// <summary>
+		/// Devuelve el tiempo que ha pasado en este mapa
+		/// </summary>
+		public float TimePassed { get; private set; }
+
+		/// <summary>
+		/// Pass the time
+		/// </summary>
+		/// <param name="time">length of time to pass</param>
 		public void PassTime (float time)
 		{
-			foreach (var ob in UpdateGridObjects)
+			foreach (var ob in new List<IUpdateGridObject> (UpdateGridObjects))
 				ob.PassTime (time);
+			TimePassed += time;
 		}
 
 		/// <summary>
@@ -47,22 +68,26 @@ namespace AoM
 				throw new Exception ("passTime < 0");
 			#endif
 			PassTime (passTime);
-			Debug.WriteLineIf (Actual.NextActionTime != 0,
-				"Ejecutando objeto con tiempo de espera positivo",
-				"IUpdateGridObject");
-			Actual.Execute ();
+			Debug.Assert (Actual.IsReady, "Actual was not ready");
+			foreach (var actuador in UpdateGridObjects.Where (z => z.IsReady))
+				actuador.Execute ();
+			//Actual.Execute ();
 			return passTime;
 		}
 
+		/// <summary>
+		/// Gets the object with lower action time
+		/// </summary>
 		public IUpdateGridObject NextObject ()
 		{
-			IUpdateGridObject ret = null;
-			foreach (var ob in UpdateGridObjects)
-				if (ret == null || ret.NextActionTime > ob.NextActionTime)
-					ret = ob;
+			var ret = UpdateGridObjects.Aggregate ((x, y) => x.NextActionTime < y.NextActionTime ? x : y);
 			return ret;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AoM.GameTimeManager"/> class.
+		/// </summary>
+		/// <param name="grid">Grid.</param>
 		public GameTimeManager (Grid grid)
 		{
 			MapGrid = grid;

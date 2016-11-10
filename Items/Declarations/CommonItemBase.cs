@@ -1,49 +1,110 @@
 ﻿using System;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 
 namespace Items.Declarations
 {
+	/// <summary>
+	/// Common implementation for items
+	/// </summary>
 	public abstract class CommonItemBase : IItem
 	{
-		public abstract string Nombre { get; }
+		/// <summary>
+		/// Gets or sets the name of the texture
+		/// </summary>
+		/// <value>The name of the texture.</value>
+		public string TextureName { get; protected set; }
 
-		public abstract string TextureName { get; }
+		Texture2D _texture;
 
-		public Texture2D Texture { get; protected set; }
-
-		public Color Color { get { return GetColor (); } }
-
-		protected abstract Color GetColor ();
-
-		protected virtual void LoadContent (ContentManager manager)
+		/// <summary>
+		/// Gets the texture.
+		/// </summary>
+		/// <remarks>This cannot be set after the object has been initialized, 
+		/// si virtually it is a getter </remarks>
+		public Texture2D Texture
 		{
-			Texture = manager.Load<Texture2D> (TextureName);
+			get{ return _texture; }
+			protected set
+			{
+				if (IsInitialized)
+					throw new InvalidOperationException ("Cannot set texture after initialization.");
+				_texture = value;
+			}
 		}
 
+		/// <summary>
+		/// Gets or sets the color.
+		/// </summary>
+		/// <value>The color.</value>
+		public Color Color { get; set; }
+
+		/// <summary>
+		/// Determines if this item is initialized
+		/// </summary>
+		/// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
+		public bool IsInitialized { get; private set; }
+
+		/// <summary>
+		/// Loads the texture
+		/// </summary>
+		/// <param name="manager">Manager.</param>
+		protected virtual void AddContent (BibliotecaContenido manager)
+		{
+			manager.AddContent (TextureName);
+		}
+
+		/// <summary>
+		/// Assigns the value of <see cref="Texture"/>
+		/// </summary>
+		protected virtual void InitializeContent (BibliotecaContenido manager)
+		{
+			_texture = manager.GetContent<Texture2D> (TextureName);
+		}
+
+		void Moggle.Controles.IComponent.InitializeContent (BibliotecaContenido manager)
+		{
+			InitializeContent (manager);
+		}
+
+
+		/// <summary>
+		/// Unloads the content.
+		/// </summary>
 		protected virtual void UnloadContent ()
 		{
 		}
 
+		/// <summary>
+		/// Initialize this instance.
+		/// </summary>
 		protected virtual void Initialize ()
 		{
+			Debug.WriteLineIf (IsInitialized,
+				string.Format ("Object {0} initialized multiple times.", this), "Init");
+			IsInitialized = true;
+		}
+
+		/// <summary>
+		/// Dibuja el objeto sobre un rectángulo específico
+		/// </summary>
+		/// <param name="bat">Batch</param>
+		/// <param name="rect">Rectángulo de dibujo</param>
+		public void Draw (SpriteBatch bat, Rectangle rect)
+		{
+			bat.Draw (Texture, rect, Color);
 		}
 
 		#region IComponent implementation
 
-		void Moggle.Controles.IComponent.LoadContent (ContentManager manager)
+		void Moggle.Controles.IComponent.AddContent (BibliotecaContenido manager)
 		{
-			LoadContent (manager);
+			AddContent (manager);
 		}
 
-		void Moggle.Controles.IComponent.UnloadContent ()
-		{
-			UnloadContent ();
-		}
 
-		Moggle.Controles.IComponentContainerComponent<IGameComponent> Moggle.Controles.IComponent.Container
-		{ get { return null; } }
 
 		#endregion
 
@@ -67,34 +128,34 @@ namespace Items.Declarations
 
 		#region IItem implementation
 
-		string IItem.Nombre
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		/// <summary>
+		/// Gets the name of the item
+		/// </summary>
+		/// <value>The nombre.</value>
+		public string Nombre { get; }
 
-		string IItem.DefaultTextureName
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		string IItem.DefaultTextureName { get { return TextureName; } }
 
-		Color IItem.DefaultColor
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
+		Color IItem.DefaultColor { get { return Color; } }
 
 		#endregion
 
-		protected CommonItemBase ()
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Items.Declarations.CommonItemBase"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Items.Declarations.CommonItemBase"/>.</returns>
+		public override string ToString ()
 		{
+			return string.Format ("[CommonItemBase: {0}]", Nombre);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.Declarations.CommonItemBase"/> class.
+		/// </summary>
+		/// <param name="nombre">Nombre.</param>
+		protected CommonItemBase (string nombre)
+		{
+			Nombre = nombre;
 		}
 	}
 }
