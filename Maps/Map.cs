@@ -148,9 +148,7 @@ namespace Maps
 					}
 		}
 
-
-
-		void makeStairs (LogicGrid grid)
+		static void makeStairs (LogicGrid grid)
 		{
 			var down = grid.GetRandomEmptyCell ();
 			var stairDown = new StairsGridObject ("floor", grid)
