@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
-using Cells;
 
 namespace Componentes
 {
@@ -295,7 +295,6 @@ namespace Componentes
 		}
 
 		#endregion
-
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GridControl"/> class.

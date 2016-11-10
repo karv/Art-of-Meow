@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cells;
+using Cells.CellObjects;
 using Componentes;
 using Items;
-using Items.Declarations.Equipment;
 using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,7 +19,6 @@ using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 using Units.Skills;
-using Cells.CellObjects;
 
 namespace Screens
 {

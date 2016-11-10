@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Cells;
+using NUnit.Framework;
 using Units.Buffs;
-using Cells;
 
 namespace Test
 {

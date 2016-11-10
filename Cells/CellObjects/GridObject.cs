@@ -87,7 +87,6 @@ namespace Cells.CellObjects
 			return CollidePlayer && collObj is IUnidad;
 		}
 
-
 		/// <summary>
 		/// Agrega su textura a la biblioteca
 		/// </summary>

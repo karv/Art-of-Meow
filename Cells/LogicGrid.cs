@@ -124,7 +124,6 @@ namespace Cells
 				i.Dispose ();
 		}
 
-
 		#region Movimiento
 
 		/// <summary>
