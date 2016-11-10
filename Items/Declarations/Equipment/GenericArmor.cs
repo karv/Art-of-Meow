@@ -1,5 +1,5 @@
-﻿using Units.Buffs;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Units.Buffs;
 
 namespace Items.Declarations.Equipment
 {
@@ -7,7 +7,7 @@ namespace Items.Declarations.Equipment
 	{
 		public Dictionary<string, float> DeltaDict { get; }
 
-		public string TextureNameGeneric { set { TextureName = value; } }
+		public string TextureNameGeneric { get { return TextureName; } set { TextureName = value; } }
 
 		public override EquipSlot Slot { get; }
 

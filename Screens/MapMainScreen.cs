@@ -133,6 +133,8 @@ namespace Screens
 
 			Player.Inteligencia = new HumanIntelligence (Player);
 			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
+			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.LeatherArmor) as IEquipment);
+			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.LeatherCap) as IEquipment);
 
 			// TEST ing
 

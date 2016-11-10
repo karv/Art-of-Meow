@@ -20,8 +20,8 @@ namespace Items
 		/// </summary>
 		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
 		HealingPotion,
-		Leather_Armor,
-		Leather_Cap
+		LeatherArmor,
+		LeatherCap
 	}
 
 	/// <summary>
@@ -45,14 +45,14 @@ namespace Items
 				case ItemType.HealingPotion:
 					ret = new HealingPotion ();
 					break;
-				case ItemType.Leather_Armor:
+				case ItemType.LeatherArmor:
 					ret = new GenericArmor ("Leather Armor", EquipSlot.Body)
 					{
 						Color = Color.OrangeRed,
 						TextureNameGeneric = "Items//body armor"
 					};
 					break;
-				case ItemType.Leather_Cap:
+				case ItemType.LeatherCap:
 					ret = new GenericArmor ("Leather Cap", EquipSlot.Head)
 					{
 						Color = Color.OrangeRed,
