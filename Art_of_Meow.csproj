@@ -159,7 +159,7 @@
     <Compile Include="Units\IExpGiver.cs" />
     <Compile Include="Helper\RetardValue.cs" />
     <Compile Include="Cells\LogicGrid.cs" />
-    <Compile Include="Cells\GridControl.cs" />
+    <Compile Include="Componentes\GridControl.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
