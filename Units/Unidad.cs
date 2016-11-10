@@ -274,9 +274,6 @@ namespace Units
 		/// <see cref="Units.Unidad"/> was occupying.</remarks>
 		public void Dispose ()
 		{
-			if (Grid.Objects.Contains (this))
-				throw new Exception ("Cannot dispose if this unidad is still present in game.");
-			Texture = null;
 		}
 
 		/// <summary>

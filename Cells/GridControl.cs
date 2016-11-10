@@ -29,6 +29,10 @@ namespace Cells
 		{
 			// TODO
 			Initialize ();
+			var cont = Game.Contenido;
+			AddContent (cont);
+			cont.Load ();
+			InitializeContent (cont);
 		}
 
 		ICollection<IGridObject> _objects { get { return Grid.Objects; } }
@@ -111,8 +115,6 @@ namespace Cells
 			{
 				if (IsVisible (x.Location))
 				{
-					if (x.Texture == null)
-						Console.WriteLine ();
 					var rectOutput = new Rectangle (
 						                 CellSpotLocation (x.Location),
 						                 (Size)CellSize);
@@ -158,7 +160,7 @@ namespace Cells
 		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
-			// TimeManager.ExecuteNext ();
+			Grid.TimeManager.ExecuteNext ();
 		}
 
 		/// <summary>
@@ -280,8 +282,8 @@ namespace Cells
 			{
 				// cargar textura
 				var cont = Game.Contenido;
-				cont.Load ();
 				e.AddContent (cont);
+				cont.Load ();
 				e.InitializeContent (cont);
 			}
 		}

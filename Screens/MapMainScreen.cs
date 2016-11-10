@@ -63,9 +63,7 @@ namespace Screens
 				{
 					_gameGrid = value;
 					foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
-					{
 						str.AlActivar += on_stair_down;
-					}
 					return;
 				}
 
@@ -81,12 +79,6 @@ namespace Screens
 				Content.Load ();
 				InitializeContent (Content);
 
-				// Poner aquí al jugador
-				Player.Location = new Point (
-					Grid.Size.Width / 2,
-					Grid.Size.Height / 2);
-				Player.Grid = value.Grid;
-				Grid.AddCellObject (Player);
 			}
 		}
 
@@ -97,6 +89,16 @@ namespace Screens
 
 			// Recibir la experiencia
 			Player.Exp.Flush ();
+
+			// Mover al jugador
+			// Poner aquí al jugador
+			Player.Location = newGrid.GetRandomEmptyCell ();
+			Player.Grid = newGrid;
+
+			foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
+				str.AlActivar += on_stair_down;
+			
+			Grid.AddCellObject (Player);
 		}
 
 		/// <summary>
