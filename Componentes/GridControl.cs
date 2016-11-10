@@ -1,119 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using AoM;
+using Cells;
 using Cells.CellObjects;
-using Cells.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
-using Units;
 
-namespace Cells
+namespace Componentes
 {
 	/// <summary>
 	/// The Griod system
 	/// </summary>
-	public class Grid : DSBC, IComponentContainerComponent<IGridObject>
+	public class GridControl : DSBC, IComponentContainerComponent<IGridObject>
 	{
 		/// <summary>
-		/// Devuelve o establece el archivo de generador mapa que se usará como próximo nivel
+		/// Devuelve el tablero lógico
 		/// </summary>
-		public string DownMap { get; set; }
+		public LogicGrid Grid { get; private set; }
 
 		/// <summary>
-		/// Builds a <see cref="Cell"/> of the current state of a given point
+		/// Cambia el tablero actual, liberando completamente al anterior e inicializando el nuevo
 		/// </summary>
-		/// <param name="p">Grid-wise point of the cell</param>
-		public Cell GetCell (Point p)
+		/// <param name="newGrid">Nuevo tablero lógico</param>
+		public void ChangeGrid (LogicGrid newGrid)
 		{
-			return new Cell (this, p);
+			Grid.Dispose ();
+			Grid = newGrid;
+			reInitialize ();
 		}
 
-		/// <summary>
-		/// Gets the collection of the grid objects
-		/// </summary>
-		public ICollection<IGridObject> Objects
+		void reInitialize ()
 		{
-			get
-			{
-				return _objects;
-			}
+			// TODO
+			Initialize ();
+			var cont = Game.Contenido;
+			AddContent (cont);
+			cont.Load ();
+			InitializeContent (cont);
 		}
 
-		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
-		readonly CollisionSystem _collisionSystem;
-
-		readonly Random _r = new Random ();
+		ICollection<IGridObject> _objects { get { return Grid.Objects; } }
 
 		/// <summary>
 		/// The size of a cell (Draw)
 		/// </summary>
 		public SizeF CellSize = new SizeF (24, 24);
-
-		/// <summary>
-		/// The time manager.
-		/// </summary>
-		public GameTimeManager TimeManager;
-
-		/// <summary>
-		/// Gets the dimentions lenght of the world, in Grid-long
-		/// </summary>
-		public Size GridSize { get; }
-
-		/// <summary>
-		/// Gets the currently active object
-		/// </summary>
-		public IUpdateGridObject CurrentObject { get { return TimeManager.Actual; } }
-
-		/// <summary>
-		/// enumera las celdas de contorno.
-		/// </summary>
-		IEnumerable<Point> contorno ()
-		{
-			for (int i = 0; i < GridSize.Width; i++)
-			{
-				yield return (new Point (i, 0));
-				yield return (new Point (i, GridSize.Height - 1));
-			}
-			for (int i = 1; i < GridSize.Height - 1; i++)
-			{
-				yield return (new Point (0, i));
-				yield return (new Point (GridSize.Width - 1, i));
-			}
-		}
-
-		/// <summary>
-		/// Gets a random point of a cell inside this grid
-		/// </summary>
-		public Point RandomPoint ()
-		{
-			var size = GridSize;
-			return new Point (
-				1 + _r.Next (size.Width - 2),
-				1 + _r.Next (size.Height - 2));
-		}
-
-		/// <summary>
-		/// Agrega un objeto al grid.
-		/// </summary>
-		/// <param name="obj">Object.</param>
-		public void AddCellObject (IGridObject obj)
-		{
-			if (obj == null)
-				throw new ArgumentNullException ("obj");
-			Objects.Add (obj);
-		}
-
-		/// <summary>
-		/// Removes an object from the grid
-		/// </summary>
-		/// <param name="obj">Object to remove</param>
-		public void RemoveObject (IGridObject obj)
-		{
-			Objects.Remove (obj);
-		}
 
 		/// <summary>
 		/// Celda de _data que se muestra en celda visible (0,0)
@@ -188,8 +121,6 @@ namespace Cells
 			{
 				if (IsVisible (x.Location))
 				{
-					if (x.Texture == null)
-						Console.WriteLine ();
 					var rectOutput = new Rectangle (
 						                 CellSpotLocation (x.Location),
 						                 (Size)CellSize);
@@ -197,6 +128,7 @@ namespace Cells
 				}
 			}
 		}
+
 
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
@@ -234,7 +166,7 @@ namespace Cells
 		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
-			TimeManager.ExecuteNext ();
+			Grid.TimeManager.ExecuteNext ();
 		}
 
 		/// <summary>
@@ -244,8 +176,21 @@ namespace Cells
 		public override void Initialize ()
 		{
 			base.Initialize ();
-			foreach (var x in _objects)
-				x.Initialize ();
+			Grid.AddedObject += itemAdded;
+		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="GridControl"/> object.
+		/// Unsusbribe to Grid's events; so it can be collected by GC.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="GridControl"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="GridControl"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="GridControl"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="GridControl"/> was occupying.</remarks>
+		protected override void Dispose ()
+		{
+			Grid.AddedObject -= itemAdded;
+			base.Dispose ();
 		}
 
 		#region Cámara
@@ -313,31 +258,6 @@ namespace Cells
 
 		#endregion
 
-		#region Movimiento
-
-		/// <summary>
-		/// Mueve un objeto, considerando colisiones.
-		/// </summary>
-		/// <returns><c>true</c>, if cell object was moved, <c>false</c> otherwise.</returns>
-		/// <param name="objeto">Objeto a mover</param>
-		/// <param name="dir">Dirección de movimiento</param>
-		public bool MoveCellObject (ICollidableGridObject objeto,
-		                            MovementDirectionEnum dir)
-		{
-			var moveDir = dir.AsDirectionalPoint ();
-			var endLoc = objeto.Location + moveDir;
-
-			var destCell = new Cell (this, endLoc);
-			if (_collisionSystem.CanFill (objeto, destCell))
-			{
-				objeto.Location = endLoc;
-				return true;
-			}
-			return false;
-		}
-
-		#endregion
-
 		#region Component container
 
 		void IComponentContainerComponent<IGridObject>.AddComponent (IGridObject component)
@@ -360,35 +280,31 @@ namespace Cells
 
 		#endregion
 
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.Grid"/>.
-		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Cells.Grid"/>.</returns>
-		public override string ToString ()
+		#region CollectionObserve
+
+		void itemAdded (object sender, IGridObject e)
 		{
-			return string.Format (
-				"[Grid: _objects={0}, CellSize={1}, CurrentVisibleTopLeft={2}, ControlTopLeft={3}, VisibleCells={4}, GridSize={5}, ControlSize={6}]",
-				_objects,
-				CellSize,
-				CurrentVisibleTopLeft,
-				ControlTopLeft,
-				VisibleCells,
-				GridSize,
-				ControlSize);
+			if (e.Texture == null)
+			{
+				// cargar textura
+				var cont = Game.Contenido;
+				e.AddContent (cont);
+				cont.Load ();
+				e.InitializeContent (cont);
+			}
 		}
 
+		#endregion
+
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.Grid"/> class.
+		/// Initializes a new instance of the <see cref="GridControl"/> class.
 		/// </summary>
-		/// <param name="xSize">Grid X-size</param>
-		/// <param name="ySize">Grid Y-size</param>
+		/// <param name="grid">El tablero lógico</param>
 		/// <param name="scr">Screen where this grid belongs to</param>
-		public Grid (int xSize, int ySize, Moggle.Screens.IScreen scr)
+		public GridControl (LogicGrid grid, Moggle.Screens.IScreen scr)
 			: base (scr)
 		{
-			_collisionSystem = new CollisionSystem ();
-			GridSize = new Size (xSize, ySize);
-			TimeManager = new GameTimeManager (this);
+			Grid = grid;
 		}
 	}
 }

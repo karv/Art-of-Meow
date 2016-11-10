@@ -37,7 +37,7 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Grid</param>
-		public GridObject (string texture, Grid grid)
+		public GridObject (string texture, LogicGrid grid)
 		{
 			StringTexture = texture;
 			CollidePlayer = false;
@@ -55,7 +55,7 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Gets the grid
 		/// </summary>
-		public Grid Grid { get; }
+		public LogicGrid Grid { get; }
 
 		/// <summary>
 		/// Gets the container of the control.
@@ -86,7 +86,6 @@ namespace Cells.CellObjects
 		{
 			return CollidePlayer && collObj is IUnidad;
 		}
-
 
 		/// <summary>
 		/// Agrega su textura a la biblioteca
@@ -120,6 +119,18 @@ namespace Cells.CellObjects
 		}
 
 		void IDisposable.Dispose ()
+		{
+			Dispose ();
+		}
+
+		/// <summary>
+		/// Descarga el contenido gráfico
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.CellObjects.GridObject"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Cells.CellObjects.GridObject"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Cells.CellObjects.GridObject"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Cells.CellObjects.GridObject"/> was occupying.</remarks>
+		protected virtual void Dispose ()
 		{
 			UnloadContent ();
 		}

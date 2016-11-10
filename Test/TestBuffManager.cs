@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Cells;
+using NUnit.Framework;
 using Units.Buffs;
-using Cells;
 
 namespace Test
 {
@@ -9,12 +9,12 @@ namespace Test
 	{
 		BuffManager Man;
 		Units.Unidad Unit;
-		Grid GameGrid;
+		LogicGrid GameGrid;
 
 		[SetUp]
 		public void Setup ()
 		{
-			GameGrid = new Grid (0, 0, null);
+			GameGrid = new LogicGrid (0, 0);
 			Unit = new Units.Unidad (GameGrid);
 			Man = new BuffManager (Unit);
 		}
@@ -38,7 +38,7 @@ namespace Test
 		public void Count ()
 		{
 			Hook ();
-			Assert.AreEqual (1, Man.Count);
+			Assert.AreEqual (2, Man.Count); // recordar que equipmentbuff siempre se tiene
 		}
 
 		[Test]

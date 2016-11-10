@@ -16,7 +16,7 @@ namespace AoM
 		/// Gets the map grid
 		/// </summary>
 		/// <value>The map grid.</value>
-		Grid MapGrid { get; }
+		LogicGrid MapGrid { get; }
 
 		/// <summary>
 		/// Gets the entire collection of objects
@@ -88,7 +88,7 @@ namespace AoM
 		/// Initializes a new instance of the <see cref="AoM.GameTimeManager"/> class.
 		/// </summary>
 		/// <param name="grid">Grid.</param>
-		public GameTimeManager (Grid grid)
+		public GameTimeManager (LogicGrid grid)
 		{
 			MapGrid = grid;
 		}
