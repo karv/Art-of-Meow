@@ -2,14 +2,13 @@
 using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Controles;
 
 namespace Units.Recursos
 {
 	/// <summary>
 	/// Maneja el recurso especial HP
 	/// </summary>
-	public class RecursoHP : Recurso, IDibujable
+	public class RecursoHP : Recurso, IVisibleRecurso
 	{
 		/// <summary>
 		/// The color of the background
@@ -127,6 +126,17 @@ namespace Units.Recursos
 		{
 			Valor = 0;
 		}
+
+		float IVisibleRecurso.PctValue (float value)
+		{
+			return value / Max;
+		}
+
+		bool IVisibleRecurso.Visible { get { return true; } }
+
+		string IVisibleRecurso.TextureFill { get { return "pixel"; } }
+
+		Color IVisibleRecurso.FullColor { get { return Color.Red; } }
 
 		/// <summary>
 		/// Occurs when value changed.

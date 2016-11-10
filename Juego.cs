@@ -28,6 +28,21 @@ namespace AoM
 		}
 
 		/// <summary>
+		/// </summary>
+		protected override void Initialize ()
+		{
+			var trs = new Moggle.Textures.SimpleTextures (GraphicsDevice);
+			// Agregar texturas comunes
+			Contenido.AddContent (
+				"pixel",
+				trs.SolidTexture (
+					new MonoGame.Extended.Size (1, 1),
+					Color.White));
+
+			base.Initialize ();
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="AoM.Juego"/> class.
 		/// </summary>
 		public Juego ()
