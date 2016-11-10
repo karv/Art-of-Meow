@@ -49,14 +49,14 @@ namespace Items
 					ret = new GenericArmor ("Leather Armor", EquipSlot.Body)
 					{
 						Color = Color.OrangeRed,
-						TextureNameGeneric = "" // TODO
+						TextureNameGeneric = "Items//body armor"
 					};
 					break;
 				case ItemType.Leather_Cap:
 					ret = new GenericArmor ("Leather Cap", EquipSlot.Head)
 					{
 						Color = Color.OrangeRed,
-						TextureNameGeneric = "" // TODO
+						TextureNameGeneric = "Items//helmet"
 					};
 					break;
 				default:
