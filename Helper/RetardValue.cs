@@ -33,6 +33,11 @@ namespace Helper
 		/// </summary>
 		public float VisibleValue { get; set; }
 
+		/// <summary>
+		/// Actualiza el valor visible
+		/// </summary>
+		/// <param name="gameTime">Tiempo transcurrido</param>
+		/// <param name="realValue">Valor real actual</param>
 		public void UpdateTo (GameTime gameTime, float realValue)
 		{
 			// Creo que es mejor hacer esta comparación, ya que es la más común; 
@@ -52,6 +57,9 @@ namespace Helper
 				VisibleValue + (float)gameTime.ElapsedGameTime.TotalMilliseconds * ChangeSpeed);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Helper.RetardValue"/> class.
+		/// </summary>
 		public RetardValue ()
 		{
 			_chSpeed = 1;
