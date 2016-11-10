@@ -86,17 +86,17 @@ namespace Units.Recursos
 		/// <summary>
 		/// Devuelve el parámetro de valor actual
 		/// </summary>
-		public IParámetroRecurso ValorP { get; }
+		public ValorParám ValorP { get; }
 
 		/// <summary>
 		/// Devuelve el parámetro de máximo actual
 		/// </summary>
-		public IParámetroRecurso MaxP { get; }
+		public ValorParám MaxP { get; }
 
 		/// <summary>
 		/// Devuelve el parámetro base
 		/// </summary>
-		public IParámetroRecurso BaseP { get; }
+		public ValorParám BaseP { get; }
 
 		/// <summary>
 		/// Valor actual del recurso.
@@ -166,12 +166,11 @@ namespace Units.Recursos
 			NombreÚnico = nombreÚnico;
 			ValorP = new ValorParám (this, "valor");
 			MaxP = new ValorParám (this, "max");
-			var baseP = new ValorParám (this, "base");
-			BaseP = baseP;
+			BaseP = new ValorParám (this, "base");
 			Parámetros.Add (ValorP);
 			Parámetros.Add (MaxP);
 			Parámetros.Add (BaseP);
-			baseP.ValueMilestoneChanged += baseValueChanged;
+			BaseP.ValueMilestoneChanged += baseValueChanged;
 		}
 
 		void baseValueChanged (object sender, EventArgs e)
