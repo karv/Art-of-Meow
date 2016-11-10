@@ -13,7 +13,6 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Usa la escalera
 		/// </summary>
-		[Obsolete]
 		void IActivable.Activar ()
 		{
 			Debug.WriteLine ("Stairs");
