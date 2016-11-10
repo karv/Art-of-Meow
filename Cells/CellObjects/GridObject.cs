@@ -37,7 +37,7 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Grid</param>
-		public GridObject (string texture, Grid grid)
+		public GridObject (string texture, LogicGrid grid)
 		{
 			StringTexture = texture;
 			CollidePlayer = false;
@@ -55,7 +55,7 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Gets the grid
 		/// </summary>
-		public Grid Grid { get; }
+		public LogicGrid Grid { get; }
 
 		/// <summary>
 		/// Gets the container of the control.
@@ -120,6 +120,11 @@ namespace Cells.CellObjects
 		}
 
 		void IDisposable.Dispose ()
+		{
+			Dispose ();
+		}
+
+		protected virtual void Dispose ()
 		{
 			UnloadContent ();
 		}

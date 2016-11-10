@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Cells;
 using Componentes;
 using Items;
@@ -18,6 +19,7 @@ using Units.Buffs;
 using Units.Inteligencia;
 using Units.Recursos;
 using Units.Skills;
+using Cells.CellObjects;
 
 namespace Screens
 {
@@ -42,12 +44,14 @@ namespace Screens
 		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
-		Grid _gameGrid;
+		public LogicGrid Grid { get { return _gameGrid.Grid; } }
+
+		GridControl _gameGrid;
 
 		/// <summary>
 		/// Map grid
 		/// </summary>
-		public Grid GameGrid
+		public GridControl GridControl
 		{
 			get
 			{
@@ -58,10 +62,14 @@ namespace Screens
 				if (_gameGrid == null)
 				{
 					_gameGrid = value;
+					foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
+					{
+						str.AlActivar += on_stair_down;
+					}
 					return;
 				}
 
-				Components.RemoveAll (z => z is Grid);
+				Components.RemoveAll (z => z is GridControl);
 				(_gameGrid as IDisposable)?.Dispose ();
 				_gameGrid = value;
 
@@ -75,11 +83,20 @@ namespace Screens
 
 				// Poner aquí al jugador
 				Player.Location = new Point (
-					_gameGrid.GridSize.Width / 2,
-					_gameGrid.GridSize.Height / 2);
-				Player.Grid = value;
-				_gameGrid.AddCellObject (Player);
+					Grid.Size.Width / 2,
+					Grid.Size.Height / 2);
+				Player.Grid = value.Grid;
+				Grid.AddCellObject (Player);
 			}
+		}
+
+		void on_stair_down (object sender, EventArgs e)
+		{
+			var newGrid = Map.GenerateGrid (Grid.DownMap);
+			GridControl.ChangeGrid (newGrid);
+
+			// Recibir la experiencia
+			Player.Exp.Flush ();
 		}
 
 		/// <summary>
@@ -107,11 +124,11 @@ namespace Screens
 		/// </summary>
 		void generateGridSizes ()
 		{
-			int visCellX = (int)(GetDisplayMode.Width / GameGrid.CellSize.Width);
-			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
-			GameGrid.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
-			GameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
+			int visCellX = (int)(GetDisplayMode.Width / GridControl.CellSize.Width);
+			int visCellY = (int)(GetDisplayMode.Height / GridControl.CellSize.Height);
+			GridControl.VisibleCells = new Size (visCellX, visCellY);
+			int ScreenOffsX = GetDisplayMode.Width - (int)(GridControl.CellSize.Width * visCellX);
+			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
 		}
 
 		/// <summary>
@@ -120,13 +137,13 @@ namespace Screens
 		void inicializarJugador (Unidad player = null)
 		{
 			if (player == null)
-				Player = new Unidad (GameGrid)
+				Player = new Unidad (GridControl.Grid)
 				{
 					Nombre = "Player",
 					Team = new TeamManager (Color.Red),
 					Location = new Point (
-						GameGrid.GridSize.Width / 2,
-						GameGrid.GridSize.Height / 2),
+						Grid.Size.Width / 2,
+						Grid.Size.Height / 2),
 				};
 			else
 				Player = player;
@@ -179,12 +196,12 @@ namespace Screens
 			generateGridSizes ();
 			inicializarJugador (jugador);
 
-			GameGrid.AddCellObject (Player);
+			Grid.AddCellObject (Player);
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
-			GameGrid.TryCenterOn (Player.Location);
+			GridControl.TryCenterOn (Player.Location);
 		}
 
 		/// <summary>
@@ -196,12 +213,12 @@ namespace Screens
 			generateGridSizes ();
 			inicializarJugador ();
 
-			GameGrid.AddCellObject (Player);
+			Grid.AddCellObject (Player);
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
-			GameGrid.TryCenterOn (Player.Location);
+			GridControl.TryCenterOn (Player.Location);
 		}
 
 		/// <summary>
@@ -223,7 +240,7 @@ namespace Screens
 		/// <param name="key">Tecla de la señal</param>
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
-			var pl = GameGrid.CurrentObject as Unidad;
+			var pl = Grid.CurrentObject as Unidad;
 			var currobj = pl?.Inteligencia as IReceptorTeclado;
 			if (currobj?.RecibirSeñal (key) ?? false)
 				return;
@@ -253,7 +270,7 @@ namespace Screens
 					}
 					break;
 				case Keys.C:
-					GameGrid.TryCenterOn (Player.Location);
+					GridControl.TryCenterOn (Player.Location);
 					break;
 				case Keys.S:
 					if (Player.Skills.AnyVisible)
@@ -263,12 +280,10 @@ namespace Screens
 					}
 					break;
 			}
-			var playerCell = GameGrid.GetCell (Player.Location);
-			foreach (var x in playerCell.Objects)
-			{
-				(x as IReceptorTeclado)?.RecibirSeñal (keyArg);
-			}
-			GameGrid.CenterIfNeeded (Player);
+			var playerCell = Grid.GetCell (Player.Location);
+			foreach (var x in playerCell.Objects.OfType<IReceptorTeclado> ())
+				x.RecibirSeñal (keyArg);
+			GridControl.CenterIfNeeded (Player);
 		}
 
 		/// <summary>
@@ -278,7 +293,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GameGrid = Map.GenerateGrid (@"Maps/base.map", this);
+			GridControl = new GridControl (Map.GenerateGrid (@"Maps/base.map"), this);
 		}
 
 		/// <summary>
@@ -289,7 +304,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			GameGrid = map.GenerateGrid (this);
+			GridControl = new GridControl (map.GenerateGrid (), this);
 		}
 	}
 }

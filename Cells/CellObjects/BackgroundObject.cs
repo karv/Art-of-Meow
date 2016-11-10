@@ -30,7 +30,7 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Gets the grid.
 		/// </summary>
-		public Grid Grid { get; }
+		public LogicGrid Grid { get; }
 
 		/// <summary>
 		/// Gets the container of the control.
@@ -116,7 +116,7 @@ namespace Cells.CellObjects
 		/// <param name="grid">Grid.</param>
 		public BackgroundObject (Point loc,
 		                         string texture, 
-		                         Grid grid)
+		                         LogicGrid grid)
 		{
 			StringTexture = texture;
 			Location = loc;

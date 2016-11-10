@@ -27,7 +27,7 @@ namespace Units
 		/// <summary>
 		/// Devuelve el tablero de mapa actual
 		/// </summary>
-		public Grid Grid { get; }
+		public LogicGrid Grid { get; }
 
 		/// <summary>
 		/// Construye una unidad dado su tipo
@@ -66,7 +66,7 @@ namespace Units
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Units.UnidadFactory"/> class.
 		/// </summary>
-		public UnidadFactory (Grid grid)
+		public UnidadFactory (LogicGrid grid)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");

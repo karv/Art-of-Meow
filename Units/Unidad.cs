@@ -61,9 +61,9 @@ namespace Units
 		/// Gets the grid.
 		/// </summary>
 		/// <value>The grid.</value>
-		public Grid Grid { get; set; }
+		public LogicGrid Grid { get; set; }
 
-		Grid IUnidad.MapGrid { get { return Grid; } }
+		LogicGrid IUnidad.MapGrid { get { return Grid; } }
 
 		/// <summary>
 		/// Gets the orders corresponding this unidad
@@ -402,10 +402,14 @@ namespace Units
 				obj.Location = Location;
 				// Inicializar objeto y contenido
 				obj.Initialize ();
-				var cont = Grid.Game.Contenido;
-				obj.AddContent (cont);
-				cont.Load ();
-				obj.InitializeContent (cont);
+				// This is now done automatically: 
+
+				/*
+				 * var cont = Grid.Game.Contenido;
+				 * obj.AddContent (cont);
+				 * cont.Load ();
+				 * obj.InitializeContent (cont);
+				 */
 
 				// Agregar el objeto al grid
 				obj.AddToGrid ();
@@ -429,7 +433,7 @@ namespace Units
 		/// </summary>
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Game grid</param>
-		public Unidad (Grid grid, string texture = TextureType)
+		public Unidad (LogicGrid grid, string texture = TextureType)
 		{
 			Grid = grid;
 			Nombre = getNextName ();

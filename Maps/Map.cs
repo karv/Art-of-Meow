@@ -78,11 +78,11 @@ namespace Maps
 
 		*/
 		/// <summary>
-		/// Generates a <see cref="Grid"/>
+		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
-		public Grid GenerateGrid (IScreen scr)
+		public LogicGrid GenerateGrid ()
 		{
-			var ret = readMapIntoGrid (scr);
+			var ret = readMapIntoGrid ();
 			makeStairs (ret);
 			getMapOptions (ret);
 
@@ -93,7 +93,7 @@ namespace Maps
 			return ret;
 		}
 
-		void getMapOptions (Grid grid)
+		void getMapOptions (LogicGrid grid)
 		{
 			var uFact = new UnidadFactory (grid);
 			var enTeam = new TeamManager (Color.Blue);
@@ -115,7 +115,7 @@ namespace Maps
 						Debug.Assert (spl.Length == 2);
 						var enemy = uFact.MakeEnemy (spl [1].Trim ());
 						enemy.Team = enTeam;
-						enemy.Location = getEmptyCell (grid);
+						enemy.Location = grid.GetRandomEmptyCell ();
 
 						enemy.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
 						grid.AddCellObject (enemy);
@@ -141,11 +141,11 @@ namespace Maps
 		/// <param name="c">A <c>char</c> value representing the <see cref="IGridObject"/></param>
 		/// <param name="grid">Grid.</param>
 		/// <param name="p">Location grid-wise of the item to add</param>
-		public IGridObject MakeObject (char c, Grid grid, Point p)
+		public IGridObject MakeObject (char c, LogicGrid grid, Point p)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
-			if (p.X < 0 || p.Y < 0 || p.X >= grid.GridSize.Width || p.Y >= grid.GridSize.Height)
+			if (p.X < 0 || p.Y < 0 || p.X >= grid.Size.Width || p.Y >= grid.Size.Height)
 				throw new Exception ("Point outsite grid bounds");
 			switch (c)
 			{
@@ -166,10 +166,10 @@ namespace Maps
 		/// Adds random flavored features to a grid
 		/// </summary>
 		/// <param name="grid">Grid.</param>
-		public void AddRandomFlavorFeatures (Grid grid)
+		public void AddRandomFlavorFeatures (LogicGrid grid)
 		{
 			const float probZacate = 0.1f;
-			var mapSize = grid.GridSize;
+			var mapSize = grid.Size;
 			for (int ix = 0; ix < mapSize.Width; ix++)
 				for (int iy = 0; iy < mapSize.Height; iy++)
 					if (_r.NextDouble () < probZacate)
@@ -183,24 +183,11 @@ namespace Maps
 					}
 		}
 
-		Point getEmptyCell (Grid grid)
-		{
-			Point ret;
-			var mapSize = grid.GridSize;
-			Cell cell;
-			do
-			{
-				ret = new Point (_r.Next (mapSize.Width), _r.Next (mapSize.Height));
-				cell = grid.GetCell (ret);
-			}
-			while (cell.Objects.Any (z => z is ICollidableGridObject));
-			return ret;
-		}
 
 
-		void makeStairs (Grid grid)
+		void makeStairs (LogicGrid grid)
 		{
-			var down = getEmptyCell (grid);
+			var down = grid.GetRandomEmptyCell ();
 			var stairDown = new StairsGridObject ("floor", grid)
 			{
 				UseColor = Color.DarkOrange,
@@ -214,22 +201,20 @@ namespace Maps
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="reader">Un StreamReader con la info del mapa</param>
-		/// <param name="scr">Screen del grid</param>
-		public static Grid GenerateGrid (StreamReader reader, MapMainScreen scr)
+		public static LogicGrid GenerateGrid (StreamReader reader)
 		{
 			var map = new Map (reader);
-			return map.GenerateGrid (scr);
+			return map.GenerateGrid ();
 		}
 
 		/// <summary>
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="mapFile">Nombre de archivo del mapa</param>
-		/// <param name="scr">Screen del grid</param>
-		public static Grid GenerateGrid (string mapFile, MapMainScreen scr)
+		public static LogicGrid GenerateGrid (string mapFile)
 		{
 			var map = new Map (mapFile);
-			return map.GenerateGrid (scr);
+			return map.GenerateGrid ();
 		}
 
 		/// <summary>
@@ -252,11 +237,11 @@ namespace Maps
 			_r = new Random ();
 		}
 
-		Grid readMapIntoGrid (IScreen scr)
+		LogicGrid readMapIntoGrid ()
 		{
 			var sizeX = int.Parse (dataStream.ReadLine ());
 			var sizeY = int.Parse (dataStream.ReadLine ());
-			var ret = new Grid (sizeX, sizeY, scr);
+			var ret = new LogicGrid (sizeX, sizeY);
 
 			var i = 0;
 			var mapSize = sizeX * sizeY;

@@ -14,7 +14,7 @@ namespace Units.Inteligencia
 		/// Gets the map grid.
 		/// </summary>
 		/// <value>The map grid.</value>
-		public Grid MapGrid { get { return ControlledUnidad.Grid; } }
+		public LogicGrid MapGrid { get { return ControlledUnidad.Grid; } }
 
 		/// <summary>
 		/// Gets the controlled unidad

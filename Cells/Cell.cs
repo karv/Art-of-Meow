@@ -77,7 +77,7 @@ namespace Cells
 		/// </summary>
 		/// <param name="grid">Grid of this <c>Cell</c></param>
 		/// <param name="location">Grid-wise coordinates of this Cell</param>
-		public Cell (Grid grid, Point location)
+		public Cell (LogicGrid grid, Point location)
 		{
 			Objects = new List<IGridObject> (grid.Objects.Where (x => x.Location == location));
 		}

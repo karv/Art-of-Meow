@@ -15,7 +15,7 @@ namespace Cells.CellObjects
 		/// Devuelve el Grid
 		/// </summary>
 		/// <value>The grid.</value>
-		public Grid Grid { get; }
+		public LogicGrid Grid { get; }
 
 		/// <summary>
 		/// Nombre de la textura
@@ -83,7 +83,7 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <param name="stringTexture">Name of the texture</param>
 		/// <param name="grid">Grid.</param>
-		public GridWall (string stringTexture, Grid grid)
+		public GridWall (string stringTexture, LogicGrid grid)
 		{
 			StringTexture = stringTexture;
 			Grid = grid;
