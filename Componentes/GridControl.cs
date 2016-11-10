@@ -180,13 +180,13 @@ namespace Componentes
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Cells.GridControl"/> object.
+		/// Releases all resource used by the <see cref="GridControl"/> object.
 		/// Unsusbribe to Grid's events; so it can be collected by GC.
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.GridControl"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Cells.GridControl"/> in an unusable state. After calling
-		/// <see cref="Dispose"/>, you must release all references to the <see cref="Cells.GridControl"/> so the garbage
-		/// collector can reclaim the memory that the <see cref="Cells.GridControl"/> was occupying.</remarks>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="GridControl"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="GridControl"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="GridControl"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="GridControl"/> was occupying.</remarks>
 		protected override void Dispose ()
 		{
 			Grid.AddedObject -= itemAdded;
@@ -298,7 +298,7 @@ namespace Componentes
 
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.GridControl"/> class.
+		/// Initializes a new instance of the <see cref="GridControl"/> class.
 		/// </summary>
 		/// <param name="grid">El tablero lógico</param>
 		/// <param name="scr">Screen where this grid belongs to</param>
