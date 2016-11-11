@@ -35,7 +35,6 @@ namespace Units.Skills
 		/// <summary>
 		/// Loads the content of each <see cref="ISkill"/>
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		protected void AddContent ()
 		{
 			foreach (var sk in Skills)

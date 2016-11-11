@@ -50,8 +50,8 @@ namespace Items.Declarations.Pots
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Pots.HealingPotion"/> class.
 		/// </summary>
-		public HealingPotion (BibliotecaContenido content)
-			: base ("Healing Potion", content)
+		public HealingPotion ()
+			: base ("Healing Potion")
 		{
 			HealHp = 5f;
 			Color = Microsoft.Xna.Framework.Color.Red;

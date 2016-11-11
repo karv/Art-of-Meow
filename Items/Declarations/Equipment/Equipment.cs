@@ -43,8 +43,8 @@ namespace Items.Declarations.Equipment
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Equipment"/> class.
 		/// </summary>
 		/// <param name="nombre">Name of the equipment.</param>
-		protected Equipment (string nombre, BibliotecaContenido content)
-			: base (nombre, content)
+		protected Equipment (string nombre)
+			: base (nombre)
 		{
 		}
 	}

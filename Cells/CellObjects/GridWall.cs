@@ -1,10 +1,10 @@
 using System;
+using AoM;
 using Cells.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Controles;
 using Moggle;
-using AoM;
+using Moggle.Controles;
 
 namespace Cells.CellObjects
 {
@@ -24,7 +24,10 @@ namespace Cells.CellObjects
 		/// </summary>
 		public readonly string StringTexture;
 
-		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// La profundidad de dibujo.

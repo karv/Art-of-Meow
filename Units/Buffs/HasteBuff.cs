@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using Units.Recursos;
-using Moggle.Screens;
-using Moggle;
 
 namespace Units.Buffs
 {
@@ -47,7 +47,10 @@ namespace Units.Buffs
 			}
 		}
 
-		protected BibliotecaContenido Content { get; }
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets or sets how long the buff lasts
@@ -152,10 +155,9 @@ namespace Units.Buffs
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Units.Buffs.HasteBuff"/> class.
 		/// </summary>
-		public HasteBuff (BibliotecaContenido content)
+		public HasteBuff ()
 		{
 			timer = new Helper.Timer ();
-			Content = content;
 			timer.ConteoCero += timer_countdown;
 		}
 	}

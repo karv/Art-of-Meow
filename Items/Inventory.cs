@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Items;
 using Moggle;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
-using AoM;
 
 namespace Items
 {
@@ -22,7 +22,11 @@ namespace Items
 
 		ICollection<IItem> IInventory.Items { get { return Items; } }
 
-		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		/// <value>The content.</value>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Font to use whe listing items
@@ -67,7 +71,6 @@ namespace Items
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		protected void AddContent ()
 		{
 			//Font = manager.Load <BitmapFont> (FontName);

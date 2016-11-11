@@ -41,8 +41,6 @@ namespace AoM
 					Color.White));
 
 			base.Initialize ();
-
-			ItemFactory.ContentManager = Contenido;
 		}
 
 		/// <summary>

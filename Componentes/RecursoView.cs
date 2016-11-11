@@ -128,6 +128,9 @@ namespace Componentes
 		/// <value>The V space.</value>
 		public int VSpace { get; set; }
 
+		/// <summary>
+		/// Devuelve la <see cref="IScreen"/> a la que pertenece este RecursoView
+		/// </summary>
 		protected IScreen Screen { get; }
 
 		/// <summary>

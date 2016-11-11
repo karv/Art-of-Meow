@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
+using AoM;
 
 namespace Items.Declarations
 {
@@ -19,7 +20,10 @@ namespace Items.Declarations
 
 		Texture2D _texture;
 
-		protected BibliotecaContenido Content { get; }
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets the texture.
@@ -52,7 +56,6 @@ namespace Items.Declarations
 		/// <summary>
 		/// Loads the texture
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		protected virtual void AddContent ()
 		{
 			Content.AddContent (TextureName);
@@ -136,12 +139,9 @@ namespace Items.Declarations
 		/// Initializes a new instance of the <see cref="Items.Declarations.CommonItemBase"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
-		protected CommonItemBase (string nombre, BibliotecaContenido content)
+		protected CommonItemBase (string nombre)
 		{
-			if (content == null)
-				throw new ArgumentNullException ("content");
 			Nombre = nombre;
-			Content = content;
 		}
 	}
 }

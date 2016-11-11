@@ -172,7 +172,7 @@ namespace Screens
 				Posición = new Point (0, 100)
 			};
 
-			var haste = new HasteBuff (Content)
+			var haste = new HasteBuff
 			{
 				SpeedDelta = 10,
 				Duración = 1
@@ -180,10 +180,10 @@ namespace Screens
 			haste.Initialize ();
 			Player.Buffs.Hook (haste);
 			var spd = Player.Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
-			System.Console.WriteLine (spd);
+			Console.WriteLine (spd);
 
 			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
-			var healSkill = new SelfHealSkill (Content);
+			var healSkill = new SelfHealSkill ();
 			Player.Skills.Skills.Add (healSkill);
 			healSkill.Initialize ();
 

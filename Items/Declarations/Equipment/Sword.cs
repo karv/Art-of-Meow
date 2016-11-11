@@ -1,5 +1,4 @@
 ﻿using System;
-using Moggle;
 using Units;
 using Units.Order;
 using Units.Recursos;
@@ -18,7 +17,6 @@ namespace Items.Declarations.Equipment
 		/// <summary>
 		/// Loads the texture
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		protected override void AddContent ()
 		{
 			base.AddContent ();
@@ -28,7 +26,6 @@ namespace Items.Declarations.Equipment
 		/// <summary>
 		/// Initializes the content.
 		/// </summary>
-		/// <param name="manager">Manager.</param>
 		protected override void InitializeContent ()
 		{
 			base.InitializeContent ();
@@ -40,10 +37,11 @@ namespace Items.Declarations.Equipment
 			return new ISkill[] { healSkill };
 		}
 
-		public HealingSword (BibliotecaContenido content)
-			: base (content)
+		/// <summary>
+		/// </summary>
+		public HealingSword ()
 		{
-			healSkill = new SelfHealSkill (Content);
+			healSkill = new SelfHealSkill ();
 		}
 	}
 
@@ -88,8 +86,8 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
 		/// <param name="icon">Icon.</param>
-		protected Sword (string nombre, string icon, BibliotecaContenido content)
-			: base (nombre, content)
+		protected Sword (string nombre, string icon)
+			: base (nombre)
 		{
 			TextureName = icon;
 		}
@@ -97,8 +95,8 @@ namespace Items.Declarations.Equipment
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Sword"/> class.
 		/// </summary>
-		public Sword (BibliotecaContenido content)
-			: this ("Sword", @"Items/katana", content)
+		public Sword ()
+			: this ("Sword", @"Items/katana")
 		{
 			Color = Microsoft.Xna.Framework.Color.Black;
 

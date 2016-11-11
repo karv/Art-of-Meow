@@ -2,6 +2,7 @@
 using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
 using Moggle;
+using AoM;
 
 namespace Items
 {
@@ -27,7 +28,7 @@ namespace Items
 	/// </summary>
 	public static class ItemFactory
 	{
-		public static BibliotecaContenido ContentManager;
+		static BibliotecaContenido contentManager { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Creates a new item of the given type
@@ -40,10 +41,10 @@ namespace Items
 			switch (type)
 			{
 				case ItemType.Sword:
-					ret = new Sword (ContentManager);
+					ret = new Sword ();
 					break;
 				case ItemType.HealingPotion:
-					ret = new HealingPotion (ContentManager);
+					ret = new HealingPotion ();
 					break;
 				default:
 					throw new Exception ();

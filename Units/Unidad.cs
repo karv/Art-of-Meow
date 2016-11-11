@@ -33,7 +33,10 @@ namespace Units
 		/// </summary>
 		public TeamManager Team { get; set; }
 
-		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+		/// <summary>
+		/// Gets the content manager.
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -181,7 +184,6 @@ namespace Units
 		/// <summary>
 		/// Carga el contenido gráfico de la unidad, equipment e inventory
 		/// </summary>
-		/// <param name="content">Content.</param>
 		public void InitializeContent ()
 		{
 			Texture = Content.GetContent<Texture2D> (TextureStr);
@@ -242,7 +244,6 @@ namespace Units
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Unit);
-
 
 			// Barras
 			const int ht = 3;

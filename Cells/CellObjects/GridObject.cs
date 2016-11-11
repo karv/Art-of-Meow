@@ -1,10 +1,10 @@
 ﻿using System;
+using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using Units;
-using Moggle;
-using AoM;
 
 namespace Cells.CellObjects
 {
@@ -24,7 +24,10 @@ namespace Cells.CellObjects
 		/// <value>The color of the use.</value>
 		public Color UseColor { get; set; }
 
-		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets or sets the depth(draw order)
