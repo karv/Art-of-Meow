@@ -78,6 +78,9 @@ namespace Units.Equipment
 			EliminadoEquipment?.Invoke (this, equip);
 			equip.Owner = null;
 			equipment.Remove (equip);
+
+			// Mandar item desequipado a Inventory
+			Owner.Inventory.Items.Add (equip);
 		}
 
 		/// <summary>
