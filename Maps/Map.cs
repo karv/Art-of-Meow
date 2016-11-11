@@ -153,10 +153,8 @@ namespace Maps
 		static void makeStairs (LogicGrid grid)
 		{
 			var down = grid.GetRandomEmptyCell ();
-			var stairDown = new StairsGridObject ("floor", grid)
+			var stairDown = new StairsGridObject (grid)
 			{
-				UseColor = Color.DarkOrange,
-				Depth = Depths.Foreground,
 				Location = down
 			};
 			grid.AddCellObject (stairDown);

@@ -4,6 +4,7 @@ using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
 using Moggle;
+using Microsoft.Xna.Framework;
 
 namespace Cells.CellObjects
 {
@@ -61,14 +62,16 @@ namespace Cells.CellObjects
 		/// </summary>
 		public event EventHandler AlActivar;
 
+		const string textureName = "stairs";
+
 		/// <summary>
 		/// </summary>
-		/// <param name="texture">Texture.</param>
 		/// <param name="grid">Grid.</param>
-		public StairsGridObject (string texture,
-		                         LogicGrid grid)
-			: base (texture, grid)
+		public StairsGridObject (LogicGrid grid)
+			: base (textureName, grid)
 		{
+			UseColor = Color.DarkOrange;
+			Depth = Depths.Foreground;
 		}
 	}
 }
