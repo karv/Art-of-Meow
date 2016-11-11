@@ -23,9 +23,7 @@ namespace Helper
 			{
 				Nombre = "Player",
 				Team = new TeamManager (Color.Red),
-				Location = new Point (
-					grid.Size.Width / 2,
-					grid.Size.Height / 2),
+				Location = grid.GetRandomEmptyCell ()
 			};
 
 			player.Inteligencia = new HumanIntelligence (player);
