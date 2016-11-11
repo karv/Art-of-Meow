@@ -2,7 +2,6 @@
 using Items;
 using Maps;
 using Microsoft.Xna.Framework;
-using Screens;
 using Units;
 using Units.Inteligencia;
 
@@ -18,15 +17,15 @@ namespace Helper
 		/// </summary>
 		public const string FirstMap = @"Maps/base.map";
 
-		static Unidad buildPlayer (Grid grid)
+		static Unidad buildPlayer (LogicGrid grid)
 		{
 			var player = new Unidad (grid)
 			{
 				Nombre = "Player",
 				Team = new TeamManager (Color.Red),
 				Location = new Point (
-					grid.GridSize.Width / 2,
-					grid.GridSize.Height / 2),
+					grid.Size.Width / 2,
+					grid.Size.Height / 2),
 			};
 
 			player.Inteligencia = new HumanIntelligence (player);
@@ -38,12 +37,12 @@ namespace Helper
 		/// <summary>
 		/// Inicializa un nuevo mundo
 		/// </summary>
-		/// <param name="scr">Pantalla</param>
-		/// <param name="player">Player.</param>
-		public static Grid InitializeNewWorld (MapMainScreen scr, out Unidad player)
+		/// <param name="player">El jugador humano generado</param>
+		public static LogicGrid InitializeNewWorld (out Unidad player)
 		{
-			var ret = Map.GenerateGrid (FirstMap, scr);
+			var ret = Map.GenerateGrid (FirstMap);
 			player = buildPlayer (ret);
+			ret.AddCellObject (player);
 			return ret;
 		}
 	}

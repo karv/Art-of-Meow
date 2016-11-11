@@ -82,7 +82,6 @@
   <ItemGroup>
     <Compile Include="Juego.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Cells\Grid.cs" />
     <Compile Include="Cells\Cell.cs" />
     <Compile Include="Screens\MapMainScreen.cs" />
     <Compile Include="Units\IUnidad.cs" />
