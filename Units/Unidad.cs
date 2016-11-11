@@ -34,6 +34,11 @@ namespace Units
 		public TeamManager Team { get; set; }
 
 		/// <summary>
+		/// Gets the content manager.
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+
+		/// <summary>
 		/// Desarga el contenido gráfico.
 		/// </summary>
 		public void UnloadContent ()
@@ -61,9 +66,9 @@ namespace Units
 		/// Gets the grid.
 		/// </summary>
 		/// <value>The grid.</value>
-		public Grid Grid { get; set; }
+		public LogicGrid Grid { get; set; }
 
-		Grid IUnidad.MapGrid { get { return Grid; } }
+		LogicGrid IUnidad.MapGrid { get { return Grid; } }
 
 		/// <summary>
 		/// Gets the orders corresponding this unidad
@@ -179,18 +184,17 @@ namespace Units
 		/// <summary>
 		/// Carga el contenido gráfico de la unidad, equipment e inventory
 		/// </summary>
-		/// <param name="content">Content.</param>
-		public void InitializeContent (BibliotecaContenido content)
+		public void InitializeContent ()
 		{
-			Texture = content.GetContent<Texture2D> (TextureStr);
+			Texture = Content.GetContent<Texture2D> (TextureStr);
 		}
 
 		/// <summary>
 		/// Add its texture to the content
 		/// </summary>
-		public void AddContent (BibliotecaContenido manager)
+		public void AddContent ()
 		{
-			manager.AddContent (TextureStr);
+			Content.AddContent (TextureStr);
 		}
 
 		/// <summary>
@@ -241,7 +245,6 @@ namespace Units
 				SpriteEffects.None,
 				Depths.Unit);
 
-
 			// Barras
 			const int ht = 3;
 			int sepPoint = (int)(area.Width * hpRelativeValue);
@@ -274,9 +277,6 @@ namespace Units
 		/// <see cref="Units.Unidad"/> was occupying.</remarks>
 		public void Dispose ()
 		{
-			if (Grid.Objects.Contains (this))
-				throw new Exception ("Cannot dispose if this unidad is still present in game.");
-			Texture = null;
 		}
 
 		/// <summary>
@@ -402,10 +402,14 @@ namespace Units
 				obj.Location = Location;
 				// Inicializar objeto y contenido
 				obj.Initialize ();
-				var cont = Grid.Game.Contenido;
-				obj.AddContent (cont);
-				cont.Load ();
-				obj.InitializeContent (cont);
+				// This is now done automatically: 
+
+				/*
+				 * var cont = Grid.Game.Contenido;
+				 * obj.AddContent (cont);
+				 * cont.Load ();
+				 * obj.InitializeContent (cont);
+				 */
 
 				// Agregar el objeto al grid
 				obj.AddToGrid ();
@@ -429,7 +433,8 @@ namespace Units
 		/// </summary>
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Game grid</param>
-		public Unidad (Grid grid, string texture = TextureType)
+		public Unidad (LogicGrid grid,
+		               string texture = TextureType)
 		{
 			Grid = grid;
 			Nombre = getNextName ();

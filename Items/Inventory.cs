@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Items;
 using Moggle;
 using Moggle.Controles;
@@ -20,6 +21,12 @@ namespace Items
 		public List<IItem> Items { get; }
 
 		ICollection<IItem> IInventory.Items { get { return Items; } }
+
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		/// <value>The content.</value>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Font to use whe listing items
@@ -64,30 +71,21 @@ namespace Items
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected void AddContent (BibliotecaContenido manager)
+		protected void AddContent ()
 		{
 			//Font = manager.Load <BitmapFont> (FontName);
 
 			foreach (var item in Items)
-				item.AddContent (manager);
+				item.AddContent ();
 		}
 
 		/// <summary>
 		/// Inicialize el contenido de sus items
 		/// </summary>
-		public void InitializeContent (BibliotecaContenido manager)
+		public void InitializeContent ()
 		{
 			foreach (var x in Items)
-				x.InitializeContent (manager);
-		}
-
-		/// <summary>
-		/// Desarga el contenido gráfico.
-		/// </summary>
-		public void UnloadContent ()
-		{
-			Font = null;
+				x.InitializeContent ();
 		}
 
 		/// <summary>
@@ -107,14 +105,9 @@ namespace Items
 			Items.Add (item);
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
-			AddContent (manager);
-		}
-
-		void IDisposable.Dispose ()
-		{
-			UnloadContent ();
+			AddContent ();
 		}
 
 		/// <summary>

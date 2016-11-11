@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Units;
+using Moggle;
 
 namespace Items.Declarations.Equipment
 {
@@ -24,18 +25,6 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		/// <value>The unidad owner.</value>
 		public IUnidad UnidadOwner { get { return Owner.Owner; } }
-
-		/// <summary>
-		/// Unloads the content by unequiping this.
-		/// </summary>
-		protected override void UnloadContent ()
-		{
-			Debug.WriteLineIf (
-				Owner == null,
-				"Disposing equiped item " + this,
-				"Equipment UnloadContent");
-			Owner?.UnequipItem (this);
-		}
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Items.Declarations.Equipment.Equipment"/>.

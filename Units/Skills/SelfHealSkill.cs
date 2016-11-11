@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
 using Units.Order;
@@ -16,6 +15,8 @@ namespace Units.Skills
 
 		const float _heal = 10f;
 		const float _mpCost = 3f;
+
+		static BibliotecaContenido content { get; }
 
 		/// <summary>
 		/// Executes this skill
@@ -64,27 +65,18 @@ namespace Units.Skills
 		/// <summary>
 		/// Loads the icon texture
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		public void AddContent (BibliotecaContenido manager)
+		public void AddContent ()
 		{
-			manager.AddContent (TextureName);
-			InitializeContent (manager);
+			content.AddContent (TextureName);
+			InitializeContent ();
 		}
 
 		/// <summary>
 		/// Carga la textura
 		/// </summary>
-		public void InitializeContent (BibliotecaContenido manager)
+		public void InitializeContent ()
 		{
-			_texture = manager.GetContent<Texture2D> (TextureName);
-		}
-
-		#endregion
-
-		#region IDisposable implementation
-
-		void IDisposable.Dispose ()
-		{
+			_texture = content.GetContent<Texture2D> (TextureName);
 		}
 
 		#endregion

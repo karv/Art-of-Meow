@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Moggle;
 using Moggle.Controles;
 
 namespace Units.Skills
@@ -22,6 +21,15 @@ namespace Units.Skills
 		public List<ISkill> Skills { get; }
 
 		/// <summary>
+		/// Revisa y devuelve si existe un skill que puede ser usado en este momento por la unidad
+		/// </summary>
+		/// <returns><c>true</c>, if usable was anyed, <c>false</c> otherwise.</returns>
+		public bool AnyUsable ()
+		{
+			return (Unidad.EnumerateAllSkills ().Any (z => z.IsVisible (Unidad) && z.IsCastable (Unidad)));
+		}
+
+		/// <summary>
 		/// Gets a value indicating whether this <see cref="Units.Skills.SkillManager"/> has any skill.
 		/// </summary>
 		public bool Any { get { return Skills.Any (); } }
@@ -35,41 +43,29 @@ namespace Units.Skills
 		/// <summary>
 		/// Loads the content of each <see cref="ISkill"/>
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected void AddContent (BibliotecaContenido manager)
+		protected void AddContent ()
 		{
 			foreach (var sk in Skills)
-				sk.AddContent (manager);
+				sk.AddContent ();
 		}
 
 		/// <summary>
 		/// Initializes the content of the skills
 		/// </summary>
-		protected void InitializeContent (BibliotecaContenido manager)
+		protected void InitializeContent ()
 		{
 			foreach (var sk in Skills)
-				sk.InitializeContent (manager);
+				sk.InitializeContent ();
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
-			AddContent (manager);
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Units.Skills.SkillManager"/> object.
-		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Units.Skills.SkillManager"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Units.Skills.SkillManager"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Units.Skills.SkillManager"/> so
-		/// the garbage collector can reclaim the memory that the <see cref="Units.Skills.SkillManager"/> was occupying.</remarks>
-		public void Dispose ()
-		{
+			AddContent ();
 		}
 
 		/// <summary>

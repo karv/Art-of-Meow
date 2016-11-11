@@ -47,13 +47,13 @@
       <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
     </Reference>
     <Reference Include="Controles_Moggle">
-      <HintPath>packages\Moggle.0.8.3\lib\Controles_Moggle.dll</HintPath>
+      <HintPath>packages\Moggle.0.9\lib\Controles_Moggle.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Extended">
-      <HintPath>packages\Moggle.0.8.3\lib\MonoGame.Extended.dll</HintPath>
+      <HintPath>packages\Moggle.0.9\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
     <Reference Include="NVorbis">
-      <HintPath>packages\Moggle.0.8.3\lib\NVorbis.dll</HintPath>
+      <HintPath>packages\Moggle.0.9\lib\NVorbis.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +82,6 @@
   <ItemGroup>
     <Compile Include="Juego.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Cells\Grid.cs" />
     <Compile Include="Cells\Cell.cs" />
     <Compile Include="Screens\MapMainScreen.cs" />
     <Compile Include="Units\IUnidad.cs" />
@@ -159,6 +158,9 @@
     <Compile Include="Units\ExpManager.cs" />
     <Compile Include="Units\IExpGiver.cs" />
     <Compile Include="Helper\RetardValue.cs" />
+    <Compile Include="Cells\LogicGrid.cs" />
+    <Compile Include="Componentes\GridControl.cs" />
+    <Compile Include="Helper\GameInitializer.cs" />
     <Compile Include="Items\Declarations\Equipment\GenericArmor.cs" />
   </ItemGroup>
   <ProjectExtensions>

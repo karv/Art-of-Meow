@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Cells;
+using Cells.CellObjects;
 using Componentes;
-using Items;
-using Items.Declarations.Equipment;
+using Helper;
 using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,10 +15,6 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using Units.Buffs;
-using Units.Inteligencia;
-using Units.Recursos;
-using Units.Skills;
 
 namespace Screens
 {
@@ -42,12 +39,17 @@ namespace Screens
 		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
-		Grid _gameGrid;
+		/// <summary>
+		/// Devuelve el tablero logico.
+		/// </summary>
+		public LogicGrid Grid { get { return _gameGrid.Grid; } }
+
+		GridControl _gameGrid;
 
 		/// <summary>
 		/// Map grid
 		/// </summary>
-		public Grid GameGrid
+		public GridControl GridControl
 		{
 			get
 			{
@@ -58,10 +60,12 @@ namespace Screens
 				if (_gameGrid == null)
 				{
 					_gameGrid = value;
+					foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
+						str.AlActivar += on_stair_down;
 					return;
 				}
 
-				Components.RemoveAll (z => z is Grid);
+				Components.RemoveAll (z => z is GridControl);
 				(_gameGrid as IDisposable)?.Dispose ();
 				_gameGrid = value;
 
@@ -71,15 +75,28 @@ namespace Screens
 				// Cargar el posiblemente nuevo contenido
 				AddAllContent ();
 				Content.Load ();
-				InitializeContent (Content);
+				InitializeContent ();
 
-				// Poner aquí al jugador
-				Player.Location = new Point (
-					_gameGrid.GridSize.Width / 2,
-					_gameGrid.GridSize.Height / 2);
-				Player.Grid = value;
-				_gameGrid.AddCellObject (Player);
 			}
+		}
+
+		void on_stair_down (object sender, EventArgs e)
+		{
+			var newGrid = Map.GenerateGrid (Grid.DownMap);
+			GridControl.ChangeGrid (newGrid);
+
+			// Recibir la experiencia
+			Player.Exp.Flush ();
+
+			// Mover al jugador
+			// Poner aquí al jugador
+			Player.Location = newGrid.GetRandomEmptyCell ();
+			Player.Grid = newGrid;
+
+			foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
+				str.AlActivar += on_stair_down;
+			
+			Grid.AddCellObject (Player);
 		}
 
 		/// <summary>
@@ -107,35 +124,18 @@ namespace Screens
 		/// </summary>
 		void generateGridSizes ()
 		{
-			int visCellX = (int)(GetDisplayMode.Width / GameGrid.CellSize.Width);
-			int visCellY = (int)(GetDisplayMode.Height / GameGrid.CellSize.Height);
-			GameGrid.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - (int)(GameGrid.CellSize.Width * visCellX);
-			GameGrid.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
+			int visCellX = (int)(GetDisplayMode.Width / GridControl.CellSize.Width);
+			int visCellY = (int)(GetDisplayMode.Height / GridControl.CellSize.Height);
+			GridControl.VisibleCells = new Size (visCellX, visCellY);
+			int ScreenOffsX = GetDisplayMode.Width - (int)(GridControl.CellSize.Width * visCellX);
+			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
 		}
 
 		/// <summary>
-		/// Initializes the human player
+		/// Initializes the human player's control
 		/// </summary>
-		void inicializarJugador (Unidad player = null)
+		void inicializarJugador ()
 		{
-			if (player == null)
-				Player = new Unidad (GameGrid)
-				{
-					Nombre = "Player",
-					Team = new TeamManager (Color.Red),
-					Location = new Point (
-						GameGrid.GridSize.Width / 2,
-						GameGrid.GridSize.Height / 2),
-				};
-			else
-				Player = player;
-
-			Player.Inteligencia = new HumanIntelligence (Player);
-			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Sword) as IEquipment);
-			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.LeatherArmor) as IEquipment);
-			Player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.LeatherCap) as IEquipment);
-
 			// TEST ing
 
 			// Observe que esta asignación debe ser antes que el hook
@@ -153,21 +153,6 @@ namespace Screens
 				Posición = new Point (0, 100)
 			};
 
-			var haste = new HasteBuff
-			{
-				SpeedDelta = 10,
-				Duración = 1
-			};
-			haste.Initialize ();
-			Player.Buffs.Hook (haste);
-			var spd = Player.Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
-			System.Console.WriteLine (spd);
-
-			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
-			var healSkill = new SelfHealSkill ();
-			Player.Skills.Skills.Add (healSkill);
-			healSkill.Initialize ();
-
 			_recursoView = new RecursoView (this, Player.Recursos);
 			AddComponent (_recursoView);
 		}
@@ -175,35 +160,19 @@ namespace Screens
 		/// <summary>
 		/// Initializes the grid, and the rest of the controls
 		/// </summary>
-		public virtual void Initialize (Unidad jugador)
-		{
-			// REMOVE: ¿Move the Grid initializer ot itself?
-			generateGridSizes ();
-			inicializarJugador (jugador);
-
-			GameGrid.AddCellObject (Player);
-
-			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
-			// los nuevos objetos.
-			base.Initialize ();
-			GameGrid.TryCenterOn (Player.Location);
-		}
-
-		/// <summary>
-		/// Initializes the grid, and the rest of the controls
-		/// </summary>
 		public override void Initialize ()
 		{
+			var lGrid = GameInitializer.InitializeNewWorld (out Player);
+			GridControl = new GridControl (lGrid, this);
+
+			inicializarJugador ();
 			// REMOVE: ¿Move the Grid initializer ot itself?
 			generateGridSizes ();
-			inicializarJugador ();
-
-			GameGrid.AddCellObject (Player);
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
-			GameGrid.TryCenterOn (Player.Location);
+			GridControl.TryCenterOn (Player.Location);
 		}
 
 		/// <summary>
@@ -225,8 +194,8 @@ namespace Screens
 		/// <param name="key">Tecla de la señal</param>
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
-			var pl = GameGrid.CurrentObject as Unidad;
-			var currobj = pl?.Inteligencia as IReceptorTeclado;
+			var pl = Grid.CurrentObject as Unidad;
+			var currobj = pl?.Inteligencia as IReceptor<KeyboardEventArgs>;
 			if (currobj?.RecibirSeñal (key) ?? false)
 				return;
 			base.MandarSeñal (key);
@@ -248,29 +217,39 @@ namespace Screens
 					Debug.WriteLine (Player.Recursos);
 					break;
 				case Keys.I:
-					if (Player.Inventory.Any ())
+					if (Player.Inventory.Any () || Player.Equipment.EnumerateEquipment ().Any ())
 					{
 						var scr = new EquipmentScreen (this, Player);
 						scr.Ejecutar ();
 					}
 					break;
 				case Keys.C:
-					GameGrid.TryCenterOn (Player.Location);
+					GridControl.TryCenterOn (Player.Location);
 					break;
 				case Keys.S:
-					if (Player.Skills.AnyVisible)
+					if (Player.Skills.AnyUsable ())
 					{
 						var scr = new InvokeSkillListScreen (this, Player);
 						scr.Ejecutar ();
 					}
 					break;
 			}
-			var playerCell = GameGrid.GetCell (Player.Location);
-			foreach (var x in playerCell.Objects)
-			{
-				(x as IReceptorTeclado)?.RecibirSeñal (keyArg);
-			}
-			GameGrid.CenterIfNeeded (Player);
+			var playerCell = Grid.GetCell (Player.Location);
+			foreach (var x in playerCell.Objects.OfType<IReceptor<KeyboardEventArgs>> ())
+				x.RecibirSeñal (keyArg);
+			GridControl.CenterIfNeeded (Player);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Screens.MapMainScreen"/> class.
+		/// </summary>
+		/// <param name="game">Game.</param>
+		/// <param name="map">Map.</param>
+		[Obsolete]
+		MapMainScreen (Moggle.Game game, Map map)
+			: base (game)
+		{
+			GridControl = new GridControl (map.GenerateGrid (), this);
 		}
 
 		/// <summary>
@@ -280,18 +259,6 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GameGrid = Map.GenerateGrid (@"Maps/base.map", this);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Screens.MapMainScreen"/> class.
-		/// </summary>
-		/// <param name="game">Game.</param>
-		/// <param name="map">Map.</param>
-		public MapMainScreen (Moggle.Game game, Map map)
-			: base (game)
-		{
-			GameGrid = map.GenerateGrid (this);
 		}
 	}
 }
