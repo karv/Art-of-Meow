@@ -160,6 +160,7 @@
     <Compile Include="Helper\RetardValue.cs" />
     <Compile Include="Cells\LogicGrid.cs" />
     <Compile Include="Componentes\GridControl.cs" />
+    <Compile Include="Helper\GameInitializer.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
