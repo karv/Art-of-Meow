@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using Debugging;
+using Items;
 
 namespace AoM
 {
 	/// <summary>
-	/// MAin program
+	/// Main program
 	/// </summary>
 	public class Program
 	{
@@ -19,6 +20,7 @@ namespace AoM
 		/// </summary>
 		public static void Main ()
 		{
+			ItemFactory.ContentManager = MyGame.Contenido;
 			var lg = new Logger ("debug.log");
 			Debug.Listeners.Add (lg);
 			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);

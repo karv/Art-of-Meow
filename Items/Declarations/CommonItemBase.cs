@@ -138,6 +138,8 @@ namespace Items.Declarations
 		/// <param name="nombre">Nombre.</param>
 		protected CommonItemBase (string nombre, BibliotecaContenido content)
 		{
+			if (content == null)
+				throw new ArgumentNullException ("content");
 			Nombre = nombre;
 			Content = content;
 		}
