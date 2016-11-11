@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Moggle;
 using Moggle.Controles;
 
 namespace Units.Skills
@@ -20,6 +19,15 @@ namespace Units.Skills
 		/// </summary>
 		/// <value>The skills.</value>
 		public List<ISkill> Skills { get; }
+
+		/// <summary>
+		/// Revisa y devuelve si existe un skill que puede ser usado en este momento por la unidad
+		/// </summary>
+		/// <returns><c>true</c>, if usable was anyed, <c>false</c> otherwise.</returns>
+		public bool AnyUsable ()
+		{
+			return (Unidad.EnumerateAllSkills ().Any (z => z.IsVisible (Unidad) && z.IsCastable (Unidad)));
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Units.Skills.SkillManager"/> has any skill.

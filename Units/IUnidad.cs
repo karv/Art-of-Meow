@@ -104,6 +104,11 @@ namespace Units
 			return u.Inventory.Items.OfType<ISkill> ();
 		}
 
+		/// <summary>
+		/// Enumera absolutamente todos los skills (inc invisibles y no castables)
+		/// de una unidad. 
+		/// Esto incluye skill de unidad, de equipment y de inventory
+		/// </summary>
 		public static IEnumerable<ISkill> EnumerateAllSkills (this IUnidad u)
 		{
 			foreach (var sk in u.Skills.Skills)

@@ -227,7 +227,7 @@ namespace Screens
 					GridControl.TryCenterOn (Player.Location);
 					break;
 				case Keys.S:
-					if (Player.Skills.AnyVisible)
+					if (Player.Skills.AnyUsable ())
 					{
 						var scr = new InvokeSkillListScreen (this, Player);
 						scr.Ejecutar ();
