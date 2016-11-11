@@ -36,40 +36,29 @@ namespace Units.Skills
 		/// Loads the content of each <see cref="ISkill"/>
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected void AddContent (BibliotecaContenido manager)
+		protected void AddContent ()
 		{
 			foreach (var sk in Skills)
-				sk.AddContent (manager);
+				sk.AddContent ();
 		}
 
 		/// <summary>
 		/// Initializes the content of the skills
 		/// </summary>
-		protected void InitializeContent (BibliotecaContenido manager)
+		protected void InitializeContent ()
 		{
 			foreach (var sk in Skills)
-				sk.InitializeContent (manager);
+				sk.InitializeContent ();
 		}
 
-		void IComponent.InitializeContent (BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
+			InitializeContent ();
 		}
 
-		void IComponent.AddContent (BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
-			AddContent (manager);
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Units.Skills.SkillManager"/> object.
-		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Units.Skills.SkillManager"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Units.Skills.SkillManager"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Units.Skills.SkillManager"/> so
-		/// the garbage collector can reclaim the memory that the <see cref="Units.Skills.SkillManager"/> was occupying.</remarks>
-		public void Dispose ()
-		{
+			AddContent ();
 		}
 
 		/// <summary>

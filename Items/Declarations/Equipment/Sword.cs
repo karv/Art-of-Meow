@@ -13,31 +13,37 @@ namespace Items.Declarations.Equipment
 	[ObsoleteAttribute]
 	public class HealingSword : Sword, ISkillEquipment
 	{
-		readonly SelfHealSkill healSkill = new SelfHealSkill ();
+		readonly SelfHealSkill healSkill;
 
 		/// <summary>
 		/// Loads the texture
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			base.AddContent (manager);
-			healSkill.AddContent (manager);
+			base.AddContent ();
+			healSkill.AddContent ();
 		}
 
 		/// <summary>
 		/// Initializes the content.
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
-			base.InitializeContent (manager);
-			healSkill.InitializeContent (manager);
+			base.InitializeContent ();
+			healSkill.InitializeContent ();
 		}
 
 		System.Collections.Generic.IEnumerable<ISkill> ISkillEquipment.GetEquipmentSkills ()
 		{
 			return new ISkill[] { healSkill };
+		}
+
+		public HealingSword (BibliotecaContenido content)
+			: base (content)
+		{
+			healSkill = new SelfHealSkill (Content);
 		}
 	}
 
@@ -82,8 +88,8 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
 		/// <param name="icon">Icon.</param>
-		protected Sword (string nombre, string icon)
-			: base (nombre)
+		protected Sword (string nombre, string icon, BibliotecaContenido content)
+			: base (nombre, content)
 		{
 			TextureName = icon;
 		}
@@ -91,10 +97,11 @@ namespace Items.Declarations.Equipment
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Sword"/> class.
 		/// </summary>
-		public Sword ()
-			: this ("Sword", @"Items/katana")
+		public Sword (BibliotecaContenido content)
+			: this ("Sword", @"Items/katana", content)
 		{
 			Color = Microsoft.Xna.Framework.Color.Black;
+
 		}
 	}
 }

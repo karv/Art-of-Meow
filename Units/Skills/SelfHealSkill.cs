@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle;
 using Units.Order;
 using Units.Recursos;
+using System.Net.Mime;
 
 namespace Units.Skills
 {
@@ -16,6 +17,8 @@ namespace Units.Skills
 
 		const float _heal = 10f;
 		const float _mpCost = 3f;
+
+		public BibliotecaContenido Content { get; }
 
 		/// <summary>
 		/// Executes this skill
@@ -65,26 +68,18 @@ namespace Units.Skills
 		/// Loads the icon texture
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		public void AddContent (BibliotecaContenido manager)
+		public void AddContent ()
 		{
-			manager.AddContent (TextureName);
-			InitializeContent (manager);
+			Content.AddContent (TextureName);
+			InitializeContent ();
 		}
 
 		/// <summary>
 		/// Carga la textura
 		/// </summary>
-		public void InitializeContent (BibliotecaContenido manager)
+		public void InitializeContent ()
 		{
-			_texture = manager.GetContent<Texture2D> (TextureName);
-		}
-
-		#endregion
-
-		#region IDisposable implementation
-
-		void IDisposable.Dispose ()
-		{
+			_texture = Content.GetContent<Texture2D> (TextureName);
 		}
 
 		#endregion
@@ -113,5 +108,10 @@ namespace Units.Skills
 		}
 
 		#endregion
+
+		public SelfHealSkill (BibliotecaContenido content)
+		{
+			Content = content;
+		}
 	}
 }

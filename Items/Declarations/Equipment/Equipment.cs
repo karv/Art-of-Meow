@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Units;
+using Moggle;
 
 namespace Items.Declarations.Equipment
 {
@@ -26,18 +27,6 @@ namespace Items.Declarations.Equipment
 		public IUnidad UnidadOwner { get { return Owner.Owner; } }
 
 		/// <summary>
-		/// Unloads the content by unequiping this.
-		/// </summary>
-		protected override void UnloadContent ()
-		{
-			Debug.WriteLineIf (
-				Owner == null,
-				"Disposing equiped item " + this,
-				"Equipment UnloadContent");
-			Owner?.UnequipItem (this);
-		}
-
-		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Items.Declarations.Equipment.Equipment"/>.
 		/// </summary>
 		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Items.Declarations.Equipment.Equipment"/>.</returns>
@@ -54,8 +43,8 @@ namespace Items.Declarations.Equipment
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Equipment"/> class.
 		/// </summary>
 		/// <param name="nombre">Name of the equipment.</param>
-		protected Equipment (string nombre)
-			: base (nombre)
+		protected Equipment (string nombre, BibliotecaContenido content)
+			: base (nombre, content)
 		{
 		}
 	}

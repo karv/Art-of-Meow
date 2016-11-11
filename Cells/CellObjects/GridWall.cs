@@ -3,6 +3,7 @@ using Cells.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using Moggle;
 
 namespace Cells.CellObjects
 {
@@ -21,6 +22,8 @@ namespace Cells.CellObjects
 		/// Nombre de la textura
 		/// </summary>
 		public readonly string StringTexture;
+
+		protected BibliotecaContenido Content { get; }
 
 		/// <summary>
 		/// La profundidad de dibujo.
@@ -42,14 +45,14 @@ namespace Cells.CellObjects
 			bat.Draw (Texture, destinationRectangle: rect, layerDepth: Depth);
 		}
 
-		void IComponent.AddContent (Moggle.BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
-			manager.AddContent (StringTexture);
+			Content.AddContent (StringTexture);
 		}
 
-		void IComponent.InitializeContent (Moggle.BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			Texture = manager.GetContent<Texture2D> (StringTexture);
+			Texture = Content.GetContent<Texture2D> (StringTexture);
 		}
 
 		void IDisposable.Dispose ()
@@ -83,10 +86,13 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <param name="stringTexture">Name of the texture</param>
 		/// <param name="grid">Grid.</param>
-		public GridWall (string stringTexture, LogicGrid grid)
+		public GridWall (string stringTexture,
+		                 LogicGrid grid,
+		                 BibliotecaContenido content)
 		{
 			StringTexture = stringTexture;
 			Grid = grid;
+			Content = content;
 		}
 	}
 }

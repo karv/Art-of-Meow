@@ -1,6 +1,7 @@
 ﻿using System;
 using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
+using Moggle;
 
 namespace Items
 {
@@ -26,6 +27,8 @@ namespace Items
 	/// </summary>
 	public static class ItemFactory
 	{
+		public static BibliotecaContenido ContentManager;
+
 		/// <summary>
 		/// Creates a new item of the given type
 		/// </summary>
@@ -37,10 +40,10 @@ namespace Items
 			switch (type)
 			{
 				case ItemType.Sword:
-					ret = new Sword ();
+					ret = new Sword (ContentManager);
 					break;
 				case ItemType.HealingPotion:
-					ret = new HealingPotion ();
+					ret = new HealingPotion (ContentManager);
 					break;
 				default:
 					throw new Exception ();

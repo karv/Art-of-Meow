@@ -1,6 +1,7 @@
 using Cells;
 using Cells.CellObjects;
 using Items;
+using Moggle;
 
 namespace Items
 {
@@ -29,8 +30,8 @@ namespace Items
 		/// </summary>
 		/// <param name="type">Item type</param>
 		/// <param name="grid">Grid.</param>
-		public GroundItem (IItem type, LogicGrid grid)
-			: base (type.DefaultTextureName, grid)
+		public GroundItem (IItem type, LogicGrid grid, BibliotecaContenido content)
+			: base (type.DefaultTextureName, grid, content)
 		{
 			ItemClass = type;
 			Depth = Depths.Foreground;

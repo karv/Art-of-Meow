@@ -2,6 +2,7 @@
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
+using Moggle;
 
 namespace Items.Declarations.Pots
 {
@@ -49,8 +50,8 @@ namespace Items.Declarations.Pots
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Pots.HealingPotion"/> class.
 		/// </summary>
-		public HealingPotion ()
-			: base ("Healing Potion")
+		public HealingPotion (BibliotecaContenido content)
+			: base ("Healing Potion", content)
 		{
 			HealHp = 5f;
 			Color = Microsoft.Xna.Framework.Color.Red;

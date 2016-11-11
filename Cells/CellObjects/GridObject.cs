@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units;
+using Moggle;
 
 namespace Cells.CellObjects
 {
@@ -22,6 +23,8 @@ namespace Cells.CellObjects
 		/// <value>The color of the use.</value>
 		public Color UseColor { get; set; }
 
+		protected BibliotecaContenido Content { get; }
+
 		/// <summary>
 		/// Gets or sets the depth(draw order)
 		/// </summary>
@@ -32,17 +35,6 @@ namespace Cells.CellObjects
 		/// </summary>
 		public Texture2D Texture { get; private set; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridObject"/> class.
-		/// </summary>
-		/// <param name="texture">Texture name</param>
-		/// <param name="grid">Grid</param>
-		public GridObject (string texture, LogicGrid grid)
-		{
-			StringTexture = texture;
-			CollidePlayer = false;
-			Grid = grid;
-		}
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -90,17 +82,17 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Agrega su textura a la biblioteca
 		/// </summary>
-		public void AddContent (Moggle.BibliotecaContenido content)
+		public void AddContent ()
 		{
-			content.AddContent (StringTexture);
+			Content.AddContent (StringTexture);
 		}
 
 		/// <summary>
 		/// Carga la textura
 		/// </summary>
-		public void InitializeContent (Moggle.BibliotecaContenido content)
+		public void InitializeContent ()
 		{
-			Texture = content.GetContent<Texture2D> (StringTexture);
+			Texture = Content.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>
@@ -169,6 +161,21 @@ namespace Cells.CellObjects
 				UseColor,
 				CollidePlayer,
 				Location);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridObject"/> class.
+		/// </summary>
+		/// <param name="texture">Texture name</param>
+		/// <param name="grid">Grid</param>
+		public GridObject (string texture,
+		                   LogicGrid grid,
+		                   BibliotecaContenido content)
+		{
+			StringTexture = texture;
+			CollidePlayer = false;
+			Grid = grid;
+			Content = content;
 		}
 	}
 }

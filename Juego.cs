@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Items;
 
 namespace AoM
 {
@@ -40,6 +41,8 @@ namespace AoM
 					Color.White));
 
 			base.Initialize ();
+
+			ItemFactory.ContentManager = Contenido;
 		}
 
 		/// <summary>

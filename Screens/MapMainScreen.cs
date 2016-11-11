@@ -79,14 +79,14 @@ namespace Screens
 				// Cargar el posiblemente nuevo contenido
 				AddAllContent ();
 				Content.Load ();
-				InitializeContent (Content);
+				InitializeContent ();
 
 			}
 		}
 
 		void on_stair_down (object sender, EventArgs e)
 		{
-			var newGrid = Map.GenerateGrid (Grid.DownMap);
+			var newGrid = Map.GenerateGrid (Grid.DownMap, Content);
 			GridControl.ChangeGrid (newGrid);
 
 			// Recibir la experiencia
@@ -141,7 +141,7 @@ namespace Screens
 		void inicializarJugador (Unidad player = null)
 		{
 			if (player == null)
-				Player = new Unidad (GridControl.Grid)
+				Player = new Unidad (GridControl.Grid, Content)
 				{
 					Nombre = "Player",
 					Team = new TeamManager (Color.Red),
@@ -172,7 +172,7 @@ namespace Screens
 				Posición = new Point (0, 100)
 			};
 
-			var haste = new HasteBuff
+			var haste = new HasteBuff (Content)
 			{
 				SpeedDelta = 10,
 				Duración = 1
@@ -183,7 +183,7 @@ namespace Screens
 			System.Console.WriteLine (spd);
 
 			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
-			var healSkill = new SelfHealSkill ();
+			var healSkill = new SelfHealSkill (Content);
 			Player.Skills.Skills.Add (healSkill);
 			healSkill.Initialize ();
 
@@ -245,7 +245,7 @@ namespace Screens
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
 			var pl = Grid.CurrentObject as Unidad;
-			var currobj = pl?.Inteligencia as IReceptorTeclado;
+			var currobj = pl?.Inteligencia as IReceptor<KeyboardEventArgs>;
 			if (currobj?.RecibirSeñal (key) ?? false)
 				return;
 			base.MandarSeñal (key);
@@ -285,7 +285,7 @@ namespace Screens
 					break;
 			}
 			var playerCell = Grid.GetCell (Player.Location);
-			foreach (var x in playerCell.Objects.OfType<IReceptorTeclado> ())
+			foreach (var x in playerCell.Objects.OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (keyArg);
 			GridControl.CenterIfNeeded (Player);
 		}
@@ -297,7 +297,9 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GridControl = new GridControl (Map.GenerateGrid (@"Maps/base.map"), this);
+			GridControl = new GridControl (
+				Map.GenerateGrid (@"Maps/base.map", Content),
+				this);
 		}
 
 		/// <summary>
@@ -308,7 +310,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			GridControl = new GridControl (map.GenerateGrid (), this);
+			GridControl = new GridControl (map.GenerateGrid (Content), this);
 		}
 	}
 }

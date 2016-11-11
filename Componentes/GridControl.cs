@@ -36,9 +36,9 @@ namespace Componentes
 			// TODO
 			Initialize ();
 			var cont = Game.Contenido;
-			AddContent (cont);
+			AddContent ();
 			cont.Load ();
-			InitializeContent (cont);
+			InitializeContent ();
 		}
 
 		ICollection<IGridObject> _objects { get { return Grid.Objects; } }
@@ -142,22 +142,22 @@ namespace Componentes
 		/// <summary>
 		/// Agrega el contenido a la biblitoeca
 		/// </summary>
-		protected override void AddContent (Moggle.BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			base.AddContent (manager);
+			base.AddContent ();
 			foreach (var x in _objects)
-				x.AddContent (manager);
+				x.AddContent ();
 		}
 
 		/// <summary>
 		/// Vincula el contenido a campos de clase
 		/// </summary>
 		/// <param name="manager">Manager.</param>
-		protected override void InitializeContent (Moggle.BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
-			base.InitializeContent (manager);
+			base.InitializeContent ();
 			foreach (var x in _objects)
-				x.InitializeContent (manager);
+				x.InitializeContent ();
 		}
 
 		/// <summary>
@@ -288,9 +288,9 @@ namespace Componentes
 			{
 				// cargar textura
 				var cont = Game.Contenido;
-				e.AddContent (cont);
+				e.AddContent ();
 				cont.Load ();
-				e.InitializeContent (cont);
+				e.InitializeContent ();
 			}
 		}
 

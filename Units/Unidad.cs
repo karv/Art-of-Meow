@@ -33,6 +33,8 @@ namespace Units
 		/// </summary>
 		public TeamManager Team { get; set; }
 
+		public BibliotecaContenido Content { get; }
+
 		/// <summary>
 		/// Desarga el contenido gráfico.
 		/// </summary>
@@ -180,17 +182,17 @@ namespace Units
 		/// Carga el contenido gráfico de la unidad, equipment e inventory
 		/// </summary>
 		/// <param name="content">Content.</param>
-		public void InitializeContent (BibliotecaContenido content)
+		public void InitializeContent ()
 		{
-			Texture = content.GetContent<Texture2D> (TextureStr);
+			Texture = Content.GetContent<Texture2D> (TextureStr);
 		}
 
 		/// <summary>
 		/// Add its texture to the content
 		/// </summary>
-		public void AddContent (BibliotecaContenido manager)
+		public void AddContent ()
 		{
-			manager.AddContent (TextureStr);
+			Content.AddContent (TextureStr);
 		}
 
 		/// <summary>
@@ -395,7 +397,7 @@ namespace Units
 		{
 			foreach (var it in Inventory.Items)
 			{
-				var obj = new GroundItem (it, Grid);
+				var obj = new GroundItem (it, Grid, Content);
 				obj.Location = Location;
 				// Inicializar objeto y contenido
 				obj.Initialize ();
@@ -430,9 +432,12 @@ namespace Units
 		/// </summary>
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Game grid</param>
-		public Unidad (LogicGrid grid, string texture = TextureType)
+		public Unidad (LogicGrid grid,
+		               BibliotecaContenido content,
+		               string texture = TextureType)
 		{
 			Grid = grid;
+			Content = content;
 			Nombre = getNextName ();
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);
@@ -440,7 +445,7 @@ namespace Units
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
 			Exp = new ExpManager (this);
-			Inventory = new Inventory ();
+			Inventory = new Inventory (content);
 			Skills = new Units.Skills.SkillManager (this);
 			inicializarRecursos ();
 			RecursoHP.ReachedZero += Death;

@@ -32,6 +32,8 @@ namespace Cells.CellObjects
 		/// </summary>
 		public LogicGrid Grid { get; }
 
+		protected BibliotecaContenido Content { get; }
+
 		/// <summary>
 		/// Gets the container of the control.
 		///  This could be the Screen or Game itself.
@@ -44,18 +46,18 @@ namespace Cells.CellObjects
 		/// Carga el contenido gráfico.
 		/// </summary>
 		/// <param name="content">Content.</param>
-		public void AddContent (BibliotecaContenido content)
+		public void AddContent ()
 		{
-			content.AddContent (StringTexture);
+			Content.AddContent (StringTexture);
 		}
 
 		/// <summary>
 		/// Asigna textura el manager
 		/// </summary>
 		/// <param name="manager">Biblioteca de contenido</param>
-		public void InitializeContent (BibliotecaContenido manager)
+		public void InitializeContent ()
 		{
-			Texture = manager.GetContent<Texture2D> (StringTexture);
+			Texture = Content.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>
@@ -116,11 +118,13 @@ namespace Cells.CellObjects
 		/// <param name="grid">Grid.</param>
 		public BackgroundObject (Point loc,
 		                         string texture, 
-		                         LogicGrid grid)
+		                         LogicGrid grid,
+		                         BibliotecaContenido content)
 		{
 			StringTexture = texture;
 			Location = loc;
 			Grid = grid;
+			Content = content;
 		}
 	}
 }

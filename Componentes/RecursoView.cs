@@ -54,30 +54,22 @@ namespace Componentes
 
 		#region IComponent implementation
 
-		void IComponent.AddContent (Moggle.BibliotecaContenido manager)
+		void IComponent.AddContent ()
 		{
 			foreach (var x in _recursos)
-				manager.AddContent (x.TextureFill);
+				Screen.Content.AddContent (x.TextureFill);
 		}
 
-		void IComponent.InitializeContent (Moggle.BibliotecaContenido manager)
+		void IComponent.InitializeContent ()
 		{
-			var textMaker = new Moggle.Textures.SimpleTextures (screen.Device);
+			var textMaker = new Moggle.Textures.SimpleTextures (Screen.Device);
 			_contornoTextura = textMaker.OutlineTexture (
 				Size,
 				Color.Black,
 				Color.Transparent);
 
 			for (int i = 0; i < count; i++)
-				_texture [i] = manager.GetContent<Texture2D> (_recursos [i].TextureFill);
-		}
-
-		#endregion
-
-		#region IDisposable implementation
-
-		void System.IDisposable.Dispose ()
-		{
+				_texture [i] = Screen.Content.GetContent<Texture2D> (_recursos [i].TextureFill);
 		}
 
 		#endregion
@@ -104,7 +96,7 @@ namespace Componentes
 
 		#region IGameComponent implementation
 
-		IComponentContainerComponent<IControl> IControl.Container { get { return screen; } }
+		IComponentContainerComponent<IControl> IControl.Container { get { return Screen; } }
 
 		void IGameComponent.Initialize ()
 		{
@@ -136,7 +128,7 @@ namespace Componentes
 		/// <value>The V space.</value>
 		public int VSpace { get; set; }
 
-		IScreen screen { get; }
+		protected IScreen Screen { get; }
 
 		/// <summary>
 		/// Dibuja el objeto sobre un rectángulo específico
@@ -172,7 +164,7 @@ namespace Componentes
 				if (_recursos [i].Visible)
 				{
 					var outputRect = new Rectangle (iconTopLeft, Size);
-					draw (screen.Batch, outputRect, i);
+					draw (Screen.Batch, outputRect, i);
 					iconTopLeft += new Point (0, Size.Height + VSpace);
 				}
 			}
@@ -195,7 +187,7 @@ namespace Componentes
 		public RecursoView (Screen scr,
 		                    ManejadorRecursos recs)
 		{
-			screen = scr;
+			Screen = scr;
 			Recursos = recs;
 			Visible = true;
 			_recursos = Recursos.Enumerate ().OfType<IVisibleRecurso> ().ToArray ();

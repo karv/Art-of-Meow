@@ -9,6 +9,7 @@ using Items;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
+using Moggle;
 
 namespace Maps
 {
@@ -45,22 +46,22 @@ namespace Maps
 		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
-		public LogicGrid GenerateGrid ()
+		public LogicGrid GenerateGrid (BibliotecaContenido content)
 		{
-			var ret = readMapIntoGrid ();
-			makeStairs (ret);
-			getMapOptions (ret);
+			var ret = readMapIntoGrid (content);
+			makeStairs (ret, content);
+			getMapOptions (ret, content);
 
 			if (AddFeatures)
-				AddRandomFlavorFeatures (ret);
+				AddRandomFlavorFeatures (ret, content);
 			
 			ret.DownMap = NextMap; // Establecer el mapa del siguiente nivel
 			return ret;
 		}
 
-		void getMapOptions (LogicGrid grid)
+		void getMapOptions (LogicGrid grid, BibliotecaContenido content)
 		{
-			var uFact = new UnidadFactory (grid);
+			var uFact = new UnidadFactory (grid, content);
 			var enTeam = new TeamManager (Color.Blue);
 			// Leer los flags
 			while (!dataStream.EndOfStream)
@@ -106,7 +107,10 @@ namespace Maps
 		/// <param name="c">A <c>char</c> value representing the <see cref="IGridObject"/></param>
 		/// <param name="grid">Grid.</param>
 		/// <param name="p">Location grid-wise of the item to add</param>
-		public IGridObject MakeObject (char c, LogicGrid grid, Point p)
+		public IGridObject MakeObject (char c,
+		                               LogicGrid grid,
+		                               Point p,
+		                               BibliotecaContenido content)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
@@ -116,9 +120,9 @@ namespace Maps
 			{
 				case ' ':
 				case (char)0:
-					return new BackgroundObject (p, "floor", grid);
+					return new BackgroundObject (p, "floor", grid, content);
 				case 'W':
-					var newObj = new GridWall ("brick-wall", grid);
+					var newObj = new GridWall ("brick-wall", grid, content);
 					newObj.Location = p;
 					return newObj;
 				case '\n':
@@ -131,7 +135,8 @@ namespace Maps
 		/// Adds random flavored features to a grid
 		/// </summary>
 		/// <param name="grid">Grid.</param>
-		public void AddRandomFlavorFeatures (LogicGrid grid)
+		public void AddRandomFlavorFeatures (LogicGrid grid,
+		                                     BibliotecaContenido content)
 		{
 			const float probZacate = 0.1f;
 			var mapSize = grid.Size;
@@ -139,7 +144,7 @@ namespace Maps
 				for (int iy = 0; iy < mapSize.Height; iy++)
 					if (_r.NextDouble () < probZacate)
 					{
-						var newObj = new GridObject ("vanilla-flower", grid);
+						var newObj = new GridObject ("vanilla-flower", grid, content);
 						newObj.Location = new Point (ix, iy);
 						newObj.Depth = Depths.GroundDecoration;
 						newObj.CollidePlayer = false;
@@ -148,10 +153,10 @@ namespace Maps
 					}
 		}
 
-		static void makeStairs (LogicGrid grid)
+		static void makeStairs (LogicGrid grid, BibliotecaContenido content)
 		{
 			var down = grid.GetRandomEmptyCell ();
-			var stairDown = new StairsGridObject ("floor", grid)
+			var stairDown = new StairsGridObject ("floor", grid, content)
 			{
 				UseColor = Color.DarkOrange,
 				Depth = Depths.Foreground,
@@ -164,20 +169,22 @@ namespace Maps
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="reader">Un StreamReader con la info del mapa</param>
-		public static LogicGrid GenerateGrid (StreamReader reader)
+		public static LogicGrid GenerateGrid (StreamReader reader,
+		                                      BibliotecaContenido content)
 		{
 			var map = new Map (reader);
-			return map.GenerateGrid ();
+			return map.GenerateGrid (content);
 		}
 
 		/// <summary>
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="mapFile">Nombre de archivo del mapa</param>
-		public static LogicGrid GenerateGrid (string mapFile)
+		public static LogicGrid GenerateGrid (string mapFile,
+		                                      BibliotecaContenido content)
 		{
 			var map = new Map (mapFile);
-			return map.GenerateGrid ();
+			return map.GenerateGrid (content);
 		}
 
 		/// <summary>
@@ -200,7 +207,7 @@ namespace Maps
 			_r = new Random ();
 		}
 
-		LogicGrid readMapIntoGrid ()
+		LogicGrid readMapIntoGrid (BibliotecaContenido content)
 		{
 			var sizeX = int.Parse (dataStream.ReadLine ());
 			var sizeY = int.Parse (dataStream.ReadLine ());
@@ -213,7 +220,7 @@ namespace Maps
 				var ix = i % sizeX;
 				var iy = i / sizeX;
 				var chr = (char)dataStream.Read ();
-				var obj = MakeObject (chr, ret, new Point (ix, iy));
+				var obj = MakeObject (chr, ret, new Point (ix, iy), content);
 				if (obj != null)
 				{					
 					ret.AddCellObject (obj);
