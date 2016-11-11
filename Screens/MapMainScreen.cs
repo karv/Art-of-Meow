@@ -5,7 +5,7 @@ using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Componentes;
-using Items;
+using Helper;
 using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,10 +15,6 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using Units.Buffs;
-using Units.Inteligencia;
-using Units.Recursos;
-using Units.Skills;
 
 namespace Screens
 {
@@ -136,11 +132,10 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Initializes the human player
+		/// Initializes the human player's control
 		/// </summary>
-		void inicializarJugador (Unidad player = null)
+		void inicializarJugador ()
 		{
-
 			// TEST ing
 
 			// Observe que esta asignación debe ser antes que el hook
@@ -158,21 +153,6 @@ namespace Screens
 				Posición = new Point (0, 100)
 			};
 
-			var haste = new HasteBuff
-			{
-				SpeedDelta = 10,
-				Duración = 1
-			};
-			haste.Initialize ();
-			Player.Buffs.Hook (haste);
-			var spd = Player.Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
-			Console.WriteLine (spd);
-
-			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
-			var healSkill = new SelfHealSkill ();
-			Player.Skills.Skills.Add (healSkill);
-			healSkill.Initialize ();
-
 			_recursoView = new RecursoView (this, Player.Recursos);
 			AddComponent (_recursoView);
 		}
@@ -180,30 +160,14 @@ namespace Screens
 		/// <summary>
 		/// Initializes the grid, and the rest of the controls
 		/// </summary>
-		public virtual void Initialize (Unidad jugador)
-		{
-			// REMOVE: ¿Move the Grid initializer ot itself?
-			generateGridSizes ();
-			inicializarJugador (jugador);
-
-			Grid.AddCellObject (Player);
-
-			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
-			// los nuevos objetos.
-			base.Initialize ();
-			GridControl.TryCenterOn (Player.Location);
-		}
-
-		/// <summary>
-		/// Initializes the grid, and the rest of the controls
-		/// </summary>
 		public override void Initialize ()
 		{
+			var lGrid = GameInitializer.InitializeNewWorld (out Player);
+			GridControl = new GridControl (lGrid, this);
+
+			inicializarJugador ();
 			// REMOVE: ¿Move the Grid initializer ot itself?
 			generateGridSizes ();
-			inicializarJugador ();
-
-			Grid.AddCellObject (Player);
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
@@ -280,23 +244,21 @@ namespace Screens
 		/// Initializes a new instance of the <see cref="Screens.MapMainScreen"/> class.
 		/// </summary>
 		/// <param name="game">Game.</param>
-		public MapMainScreen (Moggle.Game game)
+		/// <param name="map">Map.</param>
+		[Obsolete]
+		MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			GridControl = new GridControl (
-				Map.GenerateGrid (@"Maps/base.map"),
-				this);
+			GridControl = new GridControl (map.GenerateGrid (), this);
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Screens.MapMainScreen"/> class.
 		/// </summary>
 		/// <param name="game">Game.</param>
-		/// <param name="map">Map.</param>
-		public MapMainScreen (Moggle.Game game, Map map)
+		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GridControl = new GridControl (map.GenerateGrid (), this);
 		}
 	}
 }
