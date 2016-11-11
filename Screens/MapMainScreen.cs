@@ -217,7 +217,7 @@ namespace Screens
 					Debug.WriteLine (Player.Recursos);
 					break;
 				case Keys.I:
-					if (Player.Inventory.Any ())
+					if (Player.Inventory.Any () || Player.Equipment.EnumerateEquipment ().Any ())
 					{
 						var scr = new EquipmentScreen (this, Player);
 						scr.Ejecutar ();
