@@ -1,6 +1,8 @@
 ﻿using System;
 using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
+using Moggle;
+using AoM;
 
 namespace Items
 {
@@ -26,6 +28,8 @@ namespace Items
 	/// </summary>
 	public static class ItemFactory
 	{
+		static BibliotecaContenido contentManager { get { return Program.MyGame.Contenido; } }
+
 		/// <summary>
 		/// Creates a new item of the given type
 		/// </summary>

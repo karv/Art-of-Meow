@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
+using AoM;
 
 namespace Items.Declarations
 {
@@ -18,6 +19,11 @@ namespace Items.Declarations
 		public string TextureName { get; protected set; }
 
 		Texture2D _texture;
+
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets the texture.
@@ -50,31 +56,22 @@ namespace Items.Declarations
 		/// <summary>
 		/// Loads the texture
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected virtual void AddContent (BibliotecaContenido manager)
+		protected virtual void AddContent ()
 		{
-			manager.AddContent (TextureName);
+			Content.AddContent (TextureName);
 		}
 
 		/// <summary>
 		/// Assigns the value of <see cref="Texture"/>
 		/// </summary>
-		protected virtual void InitializeContent (BibliotecaContenido manager)
+		protected virtual void InitializeContent ()
 		{
-			_texture = manager.GetContent<Texture2D> (TextureName);
+			_texture = Content.GetContent<Texture2D> (TextureName);
 		}
 
-		void Moggle.Controles.IComponent.InitializeContent (BibliotecaContenido manager)
+		void Moggle.Controles.IComponent.InitializeContent ()
 		{
-			InitializeContent (manager);
-		}
-
-
-		/// <summary>
-		/// Unloads the content.
-		/// </summary>
-		protected virtual void UnloadContent ()
-		{
+			InitializeContent ();
 		}
 
 		/// <summary>
@@ -99,20 +96,9 @@ namespace Items.Declarations
 
 		#region IComponent implementation
 
-		void Moggle.Controles.IComponent.AddContent (BibliotecaContenido manager)
+		void Moggle.Controles.IComponent.AddContent ()
 		{
-			AddContent (manager);
-		}
-
-
-
-		#endregion
-
-		#region IDisposable implementation
-
-		void IDisposable.Dispose ()
-		{
-			UnloadContent ();
+			AddContent ();
 		}
 
 		#endregion

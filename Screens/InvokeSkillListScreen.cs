@@ -67,12 +67,11 @@ namespace Screens
 		/// <remarks>It does not clear the state of the list</remarks>
 		void buildSkillList ()
 		{
-			var cnt = Juego.Contenido;
 			// generar skills propios
 
 			foreach (var sk in Unidad.EnumerateAllSkills ())
 			{
-				sk.AddContent (cnt);
+				sk.AddContent ();
 				Contenedor.Add (sk);
 			}
 		}

@@ -2,13 +2,15 @@ using System;
 using System.Diagnostics;
 using Moggle.Comm;
 using Moggle.Controles;
+using MonoGame.Extended.InputListeners;
+using Moggle;
 
 namespace Cells.CellObjects
 {
 	/// <summary>
 	/// Escaleras como objeto de Grid
 	/// </summary>
-	public class StairsGridObject : GridObject, IReceptorTeclado, IActivable
+	public class StairsGridObject : GridObject, IReceptor<KeyboardEventArgs>, IActivable
 	{
 		/// <summary>
 		/// Usa la escalera
@@ -19,7 +21,7 @@ namespace Cells.CellObjects
 			_AlActivar (EventArgs.Empty);
 		}
 
-		bool IReceptorTeclado.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
 		{
 			if (key.Character == ',' || key.Character == '>')
 			{
@@ -63,7 +65,8 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <param name="texture">Texture.</param>
 		/// <param name="grid">Grid.</param>
-		public StairsGridObject (string texture, LogicGrid grid)
+		public StairsGridObject (string texture,
+		                         LogicGrid grid)
 			: base (texture, grid)
 		{
 		}

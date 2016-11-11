@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Items;
 using Units.Order;
+using MonoGame.Extended.InputListeners;
 
 namespace Units.Inteligencia
 {
@@ -10,7 +11,7 @@ namespace Units.Inteligencia
 	/// </summary>
 	public class HumanIntelligence :
 	IUnidadController,
-	Moggle.Comm.IReceptorTeclado
+	Moggle.Comm.IReceptor<KeyboardEventArgs>
 	{
 		/// <summary>
 		/// The controlled unidad
@@ -29,7 +30,7 @@ namespace Units.Inteligencia
 
 		MovementDirectionEnum ActionDir;
 
-		bool Moggle.Comm.IReceptorTeclado.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs keyArg)
+		bool Moggle.Comm.IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs keyArg)
 		{
 			var key = keyArg.Key;
 			switch (key)

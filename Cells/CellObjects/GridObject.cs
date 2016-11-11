@@ -1,6 +1,8 @@
 ﻿using System;
+using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using Units;
 
@@ -23,6 +25,11 @@ namespace Cells.CellObjects
 		public Color UseColor { get; set; }
 
 		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+
+		/// <summary>
 		/// Gets or sets the depth(draw order)
 		/// </summary>
 		public float Depth { get; set; }
@@ -32,17 +39,6 @@ namespace Cells.CellObjects
 		/// </summary>
 		public Texture2D Texture { get; private set; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridObject"/> class.
-		/// </summary>
-		/// <param name="texture">Texture name</param>
-		/// <param name="grid">Grid</param>
-		public GridObject (string texture, LogicGrid grid)
-		{
-			StringTexture = texture;
-			CollidePlayer = false;
-			Grid = grid;
-		}
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -90,17 +86,17 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Agrega su textura a la biblioteca
 		/// </summary>
-		public void AddContent (Moggle.BibliotecaContenido content)
+		public void AddContent ()
 		{
-			content.AddContent (StringTexture);
+			Content.AddContent (StringTexture);
 		}
 
 		/// <summary>
 		/// Carga la textura
 		/// </summary>
-		public void InitializeContent (Moggle.BibliotecaContenido content)
+		public void InitializeContent ()
 		{
-			Texture = content.GetContent<Texture2D> (StringTexture);
+			Texture = Content.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>
@@ -169,6 +165,19 @@ namespace Cells.CellObjects
 				UseColor,
 				CollidePlayer,
 				Location);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridObject"/> class.
+		/// </summary>
+		/// <param name="texture">Texture name</param>
+		/// <param name="grid">Grid</param>
+		public GridObject (string texture,
+		                   LogicGrid grid)
+		{
+			StringTexture = texture;
+			CollidePlayer = false;
+			Grid = grid;
 		}
 	}
 }

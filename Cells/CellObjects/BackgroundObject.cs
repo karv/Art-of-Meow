@@ -1,4 +1,5 @@
 ﻿using System;
+using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
@@ -33,6 +34,11 @@ namespace Cells.CellObjects
 		public LogicGrid Grid { get; }
 
 		/// <summary>
+		/// Gets the content manager.
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+
+		/// <summary>
 		/// Gets the container of the control.
 		///  This could be the Screen or Game itself.
 		/// </summary>
@@ -43,19 +49,17 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		/// <param name="content">Content.</param>
-		public void AddContent (BibliotecaContenido content)
+		public void AddContent ()
 		{
-			content.AddContent (StringTexture);
+			Content.AddContent (StringTexture);
 		}
 
 		/// <summary>
 		/// Asigna textura el manager
 		/// </summary>
-		/// <param name="manager">Biblioteca de contenido</param>
-		public void InitializeContent (BibliotecaContenido manager)
+		public void InitializeContent ()
 		{
-			Texture = manager.GetContent<Texture2D> (StringTexture);
+			Texture = Content.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>

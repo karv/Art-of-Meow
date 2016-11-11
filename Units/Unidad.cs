@@ -34,6 +34,11 @@ namespace Units
 		public TeamManager Team { get; set; }
 
 		/// <summary>
+		/// Gets the content manager.
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+
+		/// <summary>
 		/// Desarga el contenido gráfico.
 		/// </summary>
 		public void UnloadContent ()
@@ -179,18 +184,17 @@ namespace Units
 		/// <summary>
 		/// Carga el contenido gráfico de la unidad, equipment e inventory
 		/// </summary>
-		/// <param name="content">Content.</param>
-		public void InitializeContent (BibliotecaContenido content)
+		public void InitializeContent ()
 		{
-			Texture = content.GetContent<Texture2D> (TextureStr);
+			Texture = Content.GetContent<Texture2D> (TextureStr);
 		}
 
 		/// <summary>
 		/// Add its texture to the content
 		/// </summary>
-		public void AddContent (BibliotecaContenido manager)
+		public void AddContent ()
 		{
-			manager.AddContent (TextureStr);
+			Content.AddContent (TextureStr);
 		}
 
 		/// <summary>
@@ -240,7 +244,6 @@ namespace Units
 				0, Vector2.Zero,
 				SpriteEffects.None,
 				Depths.Unit);
-
 
 			// Barras
 			const int ht = 3;
@@ -430,7 +433,8 @@ namespace Units
 		/// </summary>
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Game grid</param>
-		public Unidad (LogicGrid grid, string texture = TextureType)
+		public Unidad (LogicGrid grid,
+		               string texture = TextureType)
 		{
 			Grid = grid;
 			Nombre = getNextName ();

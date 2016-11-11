@@ -79,7 +79,7 @@ namespace Screens
 				// Cargar el posiblemente nuevo contenido
 				AddAllContent ();
 				Content.Load ();
-				InitializeContent (Content);
+				InitializeContent ();
 
 			}
 		}
@@ -180,7 +180,7 @@ namespace Screens
 			haste.Initialize ();
 			Player.Buffs.Hook (haste);
 			var spd = Player.Recursos.ValorRecurso (ConstantesRecursos.Velocidad);
-			System.Console.WriteLine (spd);
+			Console.WriteLine (spd);
 
 			Player.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
 			var healSkill = new SelfHealSkill ();
@@ -245,7 +245,7 @@ namespace Screens
 		public override void MandarSeñal (KeyboardEventArgs key)
 		{
 			var pl = Grid.CurrentObject as Unidad;
-			var currobj = pl?.Inteligencia as IReceptorTeclado;
+			var currobj = pl?.Inteligencia as IReceptor<KeyboardEventArgs>;
 			if (currobj?.RecibirSeñal (key) ?? false)
 				return;
 			base.MandarSeñal (key);
@@ -285,7 +285,7 @@ namespace Screens
 					break;
 			}
 			var playerCell = Grid.GetCell (Player.Location);
-			foreach (var x in playerCell.Objects.OfType<IReceptorTeclado> ())
+			foreach (var x in playerCell.Objects.OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (keyArg);
 			GridControl.CenterIfNeeded (Player);
 		}
@@ -297,7 +297,9 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
-			GridControl = new GridControl (Map.GenerateGrid (@"Maps/base.map"), this);
+			GridControl = new GridControl (
+				Map.GenerateGrid (@"Maps/base.map"),
+				this);
 		}
 
 		/// <summary>

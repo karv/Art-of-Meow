@@ -1,10 +1,9 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
-using Microsoft.Xna.Framework;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
-using Moggle;
 
 namespace Componentes
 {
@@ -184,16 +183,15 @@ namespace Componentes
 		/// <summary>
 		/// Loads the font
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			manager.AddContent ("fonts");
+			Screen.Content.AddContent ("fonts");
 		}
 
 		/// <summary>
 		/// Carga el valor de <see cref="Font"/>
 		/// </summary>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
 			Font = Screen.Content.GetContent<BitmapFont> ("fonts");
 		}

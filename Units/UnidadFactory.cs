@@ -1,5 +1,7 @@
 ﻿using System;
+using AoM;
 using Cells;
+using Moggle;
 
 namespace Units
 {
@@ -30,6 +32,11 @@ namespace Units
 		public LogicGrid Grid { get; }
 
 		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+
+		/// <summary>
 		/// Construye una unidad dado su tipo
 		/// </summary>
 		/// <param name="enemyType">Tipo de unidad</param>
@@ -38,10 +45,11 @@ namespace Units
 			switch (enemyType)
 			{
 				case EnemyType.Imp:
-					var ret = new Unidad (Grid, "swordman");
+					var ret = new Unidad (Grid);
 					ret.RecursoHP.Max = 1;
 					ret.RecursoHP.Fill ();
 					ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
+					ret.Nombre = "Imp";
 					return ret;
 				default:
 					throw new NotImplementedException ("Enemy type " + enemyType + " not implemented");

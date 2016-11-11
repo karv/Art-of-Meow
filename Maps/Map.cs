@@ -9,6 +9,7 @@ using Items;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
+using Moggle;
 
 namespace Maps
 {
@@ -106,7 +107,9 @@ namespace Maps
 		/// <param name="c">A <c>char</c> value representing the <see cref="IGridObject"/></param>
 		/// <param name="grid">Grid.</param>
 		/// <param name="p">Location grid-wise of the item to add</param>
-		public IGridObject MakeObject (char c, LogicGrid grid, Point p)
+		public IGridObject MakeObject (char c,
+		                               LogicGrid grid,
+		                               Point p)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");

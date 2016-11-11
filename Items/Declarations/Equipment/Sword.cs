@@ -1,5 +1,4 @@
 ﻿using System;
-using Moggle;
 using Units;
 using Units.Order;
 using Units.Recursos;
@@ -13,31 +12,36 @@ namespace Items.Declarations.Equipment
 	[ObsoleteAttribute]
 	public class HealingSword : Sword, ISkillEquipment
 	{
-		readonly SelfHealSkill healSkill = new SelfHealSkill ();
+		readonly SelfHealSkill healSkill;
 
 		/// <summary>
 		/// Loads the texture
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected override void AddContent (BibliotecaContenido manager)
+		protected override void AddContent ()
 		{
-			base.AddContent (manager);
-			healSkill.AddContent (manager);
+			base.AddContent ();
+			healSkill.AddContent ();
 		}
 
 		/// <summary>
 		/// Initializes the content.
 		/// </summary>
-		/// <param name="manager">Manager.</param>
-		protected override void InitializeContent (BibliotecaContenido manager)
+		protected override void InitializeContent ()
 		{
-			base.InitializeContent (manager);
-			healSkill.InitializeContent (manager);
+			base.InitializeContent ();
+			healSkill.InitializeContent ();
 		}
 
 		System.Collections.Generic.IEnumerable<ISkill> ISkillEquipment.GetEquipmentSkills ()
 		{
 			return new ISkill[] { healSkill };
+		}
+
+		/// <summary>
+		/// </summary>
+		public HealingSword ()
+		{
+			healSkill = new SelfHealSkill ();
 		}
 	}
 
@@ -95,6 +99,7 @@ namespace Items.Declarations.Equipment
 			: this ("Sword", @"Items/katana")
 		{
 			Color = Microsoft.Xna.Framework.Color.Black;
+
 		}
 	}
 }

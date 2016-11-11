@@ -5,7 +5,7 @@ using Debugging;
 namespace AoM
 {
 	/// <summary>
-	/// MAin program
+	/// Main program
 	/// </summary>
 	public class Program
 	{

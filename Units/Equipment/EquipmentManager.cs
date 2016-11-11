@@ -94,7 +94,7 @@ namespace Units.Equipment
 		protected void AddContent (BibliotecaContenido manager)
 		{
 			foreach (var eq in equipment)
-				eq.AddContent (manager);
+				eq.AddContent ();
 		}
 
 		/// <summary>
@@ -103,7 +103,7 @@ namespace Units.Equipment
 		protected void InitializeContent (BibliotecaContenido manager)
 		{
 			foreach (var eq in equipment)
-				eq.InitializeContent (manager);
+				eq.InitializeContent ();
 		}
 
 		#region Events
