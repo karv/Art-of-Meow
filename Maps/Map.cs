@@ -46,22 +46,22 @@ namespace Maps
 		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
-		public LogicGrid GenerateGrid (BibliotecaContenido content)
+		public LogicGrid GenerateGrid ()
 		{
-			var ret = readMapIntoGrid (content);
-			makeStairs (ret, content);
-			getMapOptions (ret, content);
+			var ret = readMapIntoGrid ();
+			makeStairs (ret);
+			getMapOptions (ret);
 
 			if (AddFeatures)
-				AddRandomFlavorFeatures (ret, content);
+				AddRandomFlavorFeatures (ret);
 			
 			ret.DownMap = NextMap; // Establecer el mapa del siguiente nivel
 			return ret;
 		}
 
-		void getMapOptions (LogicGrid grid, BibliotecaContenido content)
+		void getMapOptions (LogicGrid grid)
 		{
-			var uFact = new UnidadFactory (grid, content);
+			var uFact = new UnidadFactory (grid);
 			var enTeam = new TeamManager (Color.Blue);
 			// Leer los flags
 			while (!dataStream.EndOfStream)
@@ -109,8 +109,7 @@ namespace Maps
 		/// <param name="p">Location grid-wise of the item to add</param>
 		public IGridObject MakeObject (char c,
 		                               LogicGrid grid,
-		                               Point p,
-		                               BibliotecaContenido content)
+		                               Point p)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
@@ -120,9 +119,9 @@ namespace Maps
 			{
 				case ' ':
 				case (char)0:
-					return new BackgroundObject (p, "floor", grid, content);
+					return new BackgroundObject (p, "floor", grid);
 				case 'W':
-					var newObj = new GridWall ("brick-wall", grid, content);
+					var newObj = new GridWall ("brick-wall", grid);
 					newObj.Location = p;
 					return newObj;
 				case '\n':
@@ -135,8 +134,7 @@ namespace Maps
 		/// Adds random flavored features to a grid
 		/// </summary>
 		/// <param name="grid">Grid.</param>
-		public void AddRandomFlavorFeatures (LogicGrid grid,
-		                                     BibliotecaContenido content)
+		public void AddRandomFlavorFeatures (LogicGrid grid)
 		{
 			const float probZacate = 0.1f;
 			var mapSize = grid.Size;
@@ -144,7 +142,7 @@ namespace Maps
 				for (int iy = 0; iy < mapSize.Height; iy++)
 					if (_r.NextDouble () < probZacate)
 					{
-						var newObj = new GridObject ("vanilla-flower", grid, content);
+						var newObj = new GridObject ("vanilla-flower", grid);
 						newObj.Location = new Point (ix, iy);
 						newObj.Depth = Depths.GroundDecoration;
 						newObj.CollidePlayer = false;
@@ -153,10 +151,10 @@ namespace Maps
 					}
 		}
 
-		static void makeStairs (LogicGrid grid, BibliotecaContenido content)
+		static void makeStairs (LogicGrid grid)
 		{
 			var down = grid.GetRandomEmptyCell ();
-			var stairDown = new StairsGridObject ("floor", grid, content)
+			var stairDown = new StairsGridObject ("floor", grid)
 			{
 				UseColor = Color.DarkOrange,
 				Depth = Depths.Foreground,
@@ -169,22 +167,20 @@ namespace Maps
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="reader">Un StreamReader con la info del mapa</param>
-		public static LogicGrid GenerateGrid (StreamReader reader,
-		                                      BibliotecaContenido content)
+		public static LogicGrid GenerateGrid (StreamReader reader)
 		{
 			var map = new Map (reader);
-			return map.GenerateGrid (content);
+			return map.GenerateGrid ();
 		}
 
 		/// <summary>
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="mapFile">Nombre de archivo del mapa</param>
-		public static LogicGrid GenerateGrid (string mapFile,
-		                                      BibliotecaContenido content)
+		public static LogicGrid GenerateGrid (string mapFile)
 		{
 			var map = new Map (mapFile);
-			return map.GenerateGrid (content);
+			return map.GenerateGrid ();
 		}
 
 		/// <summary>
@@ -207,7 +203,7 @@ namespace Maps
 			_r = new Random ();
 		}
 
-		LogicGrid readMapIntoGrid (BibliotecaContenido content)
+		LogicGrid readMapIntoGrid ()
 		{
 			var sizeX = int.Parse (dataStream.ReadLine ());
 			var sizeY = int.Parse (dataStream.ReadLine ());
@@ -220,7 +216,7 @@ namespace Maps
 				var ix = i % sizeX;
 				var iy = i / sizeX;
 				var chr = (char)dataStream.Read ();
-				var obj = MakeObject (chr, ret, new Point (ix, iy), content);
+				var obj = MakeObject (chr, ret, new Point (ix, iy));
 				if (obj != null)
 				{					
 					ret.AddCellObject (obj);

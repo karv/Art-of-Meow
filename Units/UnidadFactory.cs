@@ -1,6 +1,7 @@
 ﻿using System;
 using Cells;
 using Moggle;
+using AoM;
 
 namespace Units
 {
@@ -30,7 +31,7 @@ namespace Units
 		/// </summary>
 		public LogicGrid Grid { get; }
 
-		protected BibliotecaContenido Content { get; }
+		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Construye una unidad dado su tipo
@@ -41,7 +42,7 @@ namespace Units
 			switch (enemyType)
 			{
 				case EnemyType.Imp:
-					var ret = new Unidad (Grid, Content, "swordman");
+					var ret = new Unidad (Grid, "swordman");
 					ret.RecursoHP.Max = 1;
 					ret.RecursoHP.Fill ();
 					ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
@@ -69,12 +70,11 @@ namespace Units
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Units.UnidadFactory"/> class.
 		/// </summary>
-		public UnidadFactory (LogicGrid grid, BibliotecaContenido content)
+		public UnidadFactory (LogicGrid grid)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
 			Grid = grid;
-			Content = content;
 		}
 	}
 }

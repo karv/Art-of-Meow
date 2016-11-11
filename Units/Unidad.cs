@@ -33,7 +33,7 @@ namespace Units
 		/// </summary>
 		public TeamManager Team { get; set; }
 
-		public BibliotecaContenido Content { get; }
+		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -397,7 +397,7 @@ namespace Units
 		{
 			foreach (var it in Inventory.Items)
 			{
-				var obj = new GroundItem (it, Grid, Content);
+				var obj = new GroundItem (it, Grid);
 				obj.Location = Location;
 				// Inicializar objeto y contenido
 				obj.Initialize ();
@@ -433,11 +433,9 @@ namespace Units
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Game grid</param>
 		public Unidad (LogicGrid grid,
-		               BibliotecaContenido content,
 		               string texture = TextureType)
 		{
 			Grid = grid;
-			Content = content;
 			Nombre = getNextName ();
 			TextureStr = texture;
 			Recursos = new ManejadorRecursos (this);
@@ -445,7 +443,7 @@ namespace Units
 			Equipment = new EquipmentManager (this);
 			Buffs = new BuffManager (this);
 			Exp = new ExpManager (this);
-			Inventory = new Inventory (content);
+			Inventory = new Inventory ();
 			Skills = new Units.Skills.SkillManager (this);
 			inicializarRecursos ();
 			RecursoHP.ReachedZero += Death;

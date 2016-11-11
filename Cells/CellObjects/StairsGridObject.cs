@@ -66,9 +66,8 @@ namespace Cells.CellObjects
 		/// <param name="texture">Texture.</param>
 		/// <param name="grid">Grid.</param>
 		public StairsGridObject (string texture,
-		                         LogicGrid grid,
-		                         BibliotecaContenido content)
-			: base (texture, grid, content)
+		                         LogicGrid grid)
+			: base (texture, grid)
 		{
 		}
 	}

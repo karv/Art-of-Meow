@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle;
+using AoM;
 
 namespace Cells.CellObjects
 {
@@ -23,7 +24,7 @@ namespace Cells.CellObjects
 		/// </summary>
 		public readonly string StringTexture;
 
-		protected BibliotecaContenido Content { get; }
+		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// La profundidad de dibujo.
@@ -87,12 +88,10 @@ namespace Cells.CellObjects
 		/// <param name="stringTexture">Name of the texture</param>
 		/// <param name="grid">Grid.</param>
 		public GridWall (string stringTexture,
-		                 LogicGrid grid,
-		                 BibliotecaContenido content)
+		                 LogicGrid grid)
 		{
 			StringTexture = stringTexture;
 			Grid = grid;
-			Content = content;
 		}
 	}
 }

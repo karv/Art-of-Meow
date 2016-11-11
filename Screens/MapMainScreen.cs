@@ -86,7 +86,7 @@ namespace Screens
 
 		void on_stair_down (object sender, EventArgs e)
 		{
-			var newGrid = Map.GenerateGrid (Grid.DownMap, Content);
+			var newGrid = Map.GenerateGrid (Grid.DownMap);
 			GridControl.ChangeGrid (newGrid);
 
 			// Recibir la experiencia
@@ -141,7 +141,7 @@ namespace Screens
 		void inicializarJugador (Unidad player = null)
 		{
 			if (player == null)
-				Player = new Unidad (GridControl.Grid, Content)
+				Player = new Unidad (GridControl.Grid)
 				{
 					Nombre = "Player",
 					Team = new TeamManager (Color.Red),
@@ -298,7 +298,7 @@ namespace Screens
 			: base (game)
 		{
 			GridControl = new GridControl (
-				Map.GenerateGrid (@"Maps/base.map", Content),
+				Map.GenerateGrid (@"Maps/base.map"),
 				this);
 		}
 
@@ -310,7 +310,7 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			GridControl = new GridControl (map.GenerateGrid (Content), this);
+			GridControl = new GridControl (map.GenerateGrid (), this);
 		}
 	}
 }

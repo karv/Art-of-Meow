@@ -5,6 +5,7 @@ using Items;
 using Moggle;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
+using AoM;
 
 namespace Items
 {
@@ -21,7 +22,7 @@ namespace Items
 
 		ICollection<IItem> IInventory.Items { get { return Items; } }
 
-		protected BibliotecaContenido Content { get; }
+		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Font to use whe listing items
@@ -133,10 +134,9 @@ namespace Items
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Inventory"/> class.
 		/// </summary>
-		public Inventory (BibliotecaContenido manager)
+		public Inventory ()
 		{
 			Items = new List<IItem> ();
-			Content = manager;
 		}
 	}
 }

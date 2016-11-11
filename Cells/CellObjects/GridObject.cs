@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units;
 using Moggle;
+using AoM;
 
 namespace Cells.CellObjects
 {
@@ -23,7 +24,7 @@ namespace Cells.CellObjects
 		/// <value>The color of the use.</value>
 		public Color UseColor { get; set; }
 
-		protected BibliotecaContenido Content { get; }
+		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets or sets the depth(draw order)
@@ -169,13 +170,11 @@ namespace Cells.CellObjects
 		/// <param name="texture">Texture name</param>
 		/// <param name="grid">Grid</param>
 		public GridObject (string texture,
-		                   LogicGrid grid,
-		                   BibliotecaContenido content)
+		                   LogicGrid grid)
 		{
 			StringTexture = texture;
 			CollidePlayer = false;
 			Grid = grid;
-			Content = content;
 		}
 	}
 }

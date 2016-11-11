@@ -30,8 +30,8 @@ namespace Items
 		/// </summary>
 		/// <param name="type">Item type</param>
 		/// <param name="grid">Grid.</param>
-		public GroundItem (IItem type, LogicGrid grid, BibliotecaContenido content)
-			: base (type.DefaultTextureName, grid, content)
+		public GroundItem (IItem type, LogicGrid grid)
+			: base (type.DefaultTextureName, grid)
 		{
 			ItemClass = type;
 			Depth = Depths.Foreground;

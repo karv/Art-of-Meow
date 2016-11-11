@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
+using AoM;
+using System.Net.NetworkInformation;
 
 namespace Cells.CellObjects
 {
@@ -32,7 +34,7 @@ namespace Cells.CellObjects
 		/// </summary>
 		public LogicGrid Grid { get; }
 
-		protected BibliotecaContenido Content { get; }
+		protected BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets the container of the control.
@@ -118,13 +120,11 @@ namespace Cells.CellObjects
 		/// <param name="grid">Grid.</param>
 		public BackgroundObject (Point loc,
 		                         string texture, 
-		                         LogicGrid grid,
-		                         BibliotecaContenido content)
+		                         LogicGrid grid)
 		{
 			StringTexture = texture;
 			Location = loc;
 			Grid = grid;
-			Content = content;
 		}
 	}
 }
