@@ -83,7 +83,6 @@ namespace Maps
 						enemy.Team = enTeam;
 						enemy.Location = grid.GetRandomEmptyCell ();
 
-						enemy.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
 						grid.AddCellObject (enemy);
 
 						break;

@@ -161,6 +161,7 @@
     <Compile Include="Cells\LogicGrid.cs" />
     <Compile Include="Componentes\GridControl.cs" />
     <Compile Include="Helper\GameInitializer.cs" />
+    <Compile Include="Items\Declarations\Equipment\GenericArmor.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
