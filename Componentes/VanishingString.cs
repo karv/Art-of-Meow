@@ -215,19 +215,6 @@ namespace Componentes
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="Componentes.VanishingString"/> object.
-		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Componentes.VanishingString"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Componentes.VanishingString"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Componentes.VanishingString"/> so
-		/// the garbage collector can reclaim the memory that the <see cref="Componentes.VanishingString"/> was occupying.</remarks>
-		protected override void Dispose ()
-		{
-			Font = null;
-			base.Dispose ();
-		}
-
-		/// <summary>
 		/// Update lógico
 		/// </summary>
 		/// <param name="gameTime">Game time.</param>

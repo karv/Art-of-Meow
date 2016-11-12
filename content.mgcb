@@ -158,8 +158,30 @@
 /processorParam:TextureFormat=Color
 /build:Content/Fonts/small_0.tga
 
+#begin Content/Fonts/damage_0.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=0,0,0,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Content/Fonts/damage_0.tga
+
+#begin Content/damage.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Content/damage.fnt
+
 #begin Content/Fonts/small.fnt
 /importer:BitmapFontImporter
 /processor:BitmapFontProcessor
 /build:Content/Fonts/small.fnt
+
+#begin Content/Fonts/damage.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Content/Fonts/damage.fnt
 

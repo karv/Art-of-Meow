@@ -57,14 +57,14 @@ namespace Componentes
 			}
 		}
 
-		const string damageFont = "Fonts//small";
+		const string damageFont = "Fonts//damage";
 
 		void hp_damage_done_event (object sender, float e)
 		{
+			const int milisecsDuration = 3000;
 			var rec = sender as IRecurso;
 			var unid = rec.Unidad;
 			var delta = rec.Valor - e;
-			const int milisecsDuration = 3000;
 			var str = new VanishingString (
 				          Screen,
 				          delta.ToString (),
@@ -77,6 +77,8 @@ namespace Componentes
 			};
 			((IComponent)str).InitializeContent ();
 			((IComponent)str).Initialize ();
+
+			// La posición ya que cargue el contenido
 			str.Centro = CellSpotLocation (unid.Location).ToVector2 ();
 			Screen.AddComponent (str);
 		}
