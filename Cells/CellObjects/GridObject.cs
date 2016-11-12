@@ -1,6 +1,8 @@
 ﻿using System;
+using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle;
 using Moggle.Controles;
 using Units;
 
@@ -23,6 +25,11 @@ namespace Cells.CellObjects
 		public Color UseColor { get; set; }
 
 		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+
+		/// <summary>
 		/// Gets or sets the depth(draw order)
 		/// </summary>
 		public float Depth { get; set; }
@@ -32,17 +39,6 @@ namespace Cells.CellObjects
 		/// </summary>
 		public Texture2D Texture { get; private set; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridObject"/> class.
-		/// </summary>
-		/// <param name="texture">Texture name</param>
-		/// <param name="grid">Grid</param>
-		public GridObject (string texture, Grid grid)
-		{
-			StringTexture = texture;
-			CollidePlayer = false;
-			Grid = grid;
-		}
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -55,7 +51,7 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Gets the grid
 		/// </summary>
-		public Grid Grid { get; }
+		public LogicGrid Grid { get; }
 
 		/// <summary>
 		/// Gets the container of the control.
@@ -87,21 +83,20 @@ namespace Cells.CellObjects
 			return CollidePlayer && collObj is IUnidad;
 		}
 
-
 		/// <summary>
 		/// Agrega su textura a la biblioteca
 		/// </summary>
-		public void AddContent (Moggle.BibliotecaContenido content)
+		public void AddContent ()
 		{
-			content.AddContent (StringTexture);
+			Content.AddContent (StringTexture);
 		}
 
 		/// <summary>
 		/// Carga la textura
 		/// </summary>
-		public void InitializeContent (Moggle.BibliotecaContenido content)
+		public void InitializeContent ()
 		{
-			Texture = content.GetContent<Texture2D> (StringTexture);
+			Texture = Content.GetContent<Texture2D> (StringTexture);
 		}
 
 		/// <summary>
@@ -120,6 +115,18 @@ namespace Cells.CellObjects
 		}
 
 		void IDisposable.Dispose ()
+		{
+			Dispose ();
+		}
+
+		/// <summary>
+		/// Descarga el contenido gráfico
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.CellObjects.GridObject"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Cells.CellObjects.GridObject"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Cells.CellObjects.GridObject"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Cells.CellObjects.GridObject"/> was occupying.</remarks>
+		protected virtual void Dispose ()
 		{
 			UnloadContent ();
 		}
@@ -158,6 +165,19 @@ namespace Cells.CellObjects
 				UseColor,
 				CollidePlayer,
 				Location);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridObject"/> class.
+		/// </summary>
+		/// <param name="texture">Texture name</param>
+		/// <param name="grid">Grid</param>
+		public GridObject (string texture,
+		                   LogicGrid grid)
+		{
+			StringTexture = texture;
+			CollidePlayer = false;
+			Grid = grid;
 		}
 	}
 }

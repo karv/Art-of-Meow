@@ -1,11 +1,14 @@
 ﻿using System;
+using AoM;
 using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
+using Microsoft.Xna.Framework;
+using Moggle;
 
 namespace Items
 {
 	/// <summary>
-	/// Gets the type of an item
+	/// Tipo de objeto
 	/// </summary>
 	public enum ItemType
 	{
@@ -18,7 +21,15 @@ namespace Items
 		/// Potion
 		/// </summary>
 		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
-		HealingPotion
+		HealingPotion,
+		/// <summary>
+		/// Armadura de cuero
+		/// </summary>
+		LeatherArmor,
+		/// <summary>
+		/// Casco de cuero
+		/// </summary>
+		LeatherCap
 	}
 
 	/// <summary>
@@ -26,6 +37,8 @@ namespace Items
 	/// </summary>
 	public static class ItemFactory
 	{
+		static BibliotecaContenido contentManager { get { return Program.MyGame.Contenido; } }
+
 		/// <summary>
 		/// Creates a new item of the given type
 		/// </summary>
@@ -41,6 +54,20 @@ namespace Items
 					break;
 				case ItemType.HealingPotion:
 					ret = new HealingPotion ();
+					break;
+				case ItemType.LeatherArmor:
+					ret = new GenericArmor ("Leather Armor", EquipSlot.Body)
+					{
+						Color = Color.OrangeRed,
+						TextureNameGeneric = "Items//body armor"
+					};
+					break;
+				case ItemType.LeatherCap:
+					ret = new GenericArmor ("Leather Cap", EquipSlot.Head)
+					{
+						Color = Color.OrangeRed,
+						TextureNameGeneric = "Items//helmet"
+					};
 					break;
 				default:
 					throw new Exception ();

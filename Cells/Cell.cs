@@ -10,7 +10,7 @@ namespace Cells
 	/// <summary>
 	/// A state of a grid generated at some point.
 	/// </summary>
-	/// <remarks>Modify this class won't change the <see cref="Grid"/></remarks>
+	/// <remarks>Modify this class won't change the <see cref="LogicGrid"/></remarks>
 	public class Cell
 	{
 		/// <summary>
@@ -77,7 +77,7 @@ namespace Cells
 		/// </summary>
 		/// <param name="grid">Grid of this <c>Cell</c></param>
 		/// <param name="location">Grid-wise coordinates of this Cell</param>
-		public Cell (Grid grid, Point location)
+		public Cell (LogicGrid grid, Point location)
 		{
 			Objects = new List<IGridObject> (grid.Objects.Where (x => x.Location == location));
 		}

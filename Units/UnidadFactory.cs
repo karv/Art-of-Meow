@@ -1,5 +1,8 @@
 ﻿using System;
+using AoM;
 using Cells;
+using Moggle;
+using Items;
 
 namespace Units
 {
@@ -27,7 +30,14 @@ namespace Units
 		/// <summary>
 		/// Devuelve el tablero de mapa actual
 		/// </summary>
-		public Grid Grid { get; }
+		public LogicGrid Grid { get; }
+
+		/// <summary>
+		/// Gets the content manager
+		/// </summary>
+		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
+
+		static Random r = new Random ();
 
 		/// <summary>
 		/// Construye una unidad dado su tipo
@@ -38,10 +48,20 @@ namespace Units
 			switch (enemyType)
 			{
 				case EnemyType.Imp:
-					var ret = new Unidad (Grid, "swordman");
+					var ret = new Unidad (Grid);
 					ret.RecursoHP.Max = 1;
 					ret.RecursoHP.Fill ();
 					ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
+					ret.Nombre = "Imp";
+
+					// Drops
+					if (r.NextDouble () < 0.2)
+						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherCap));
+					if (r.NextDouble () < 0.1)
+						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherArmor));
+					if (r.NextDouble () < 0.4)
+						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
+					
 					return ret;
 				default:
 					throw new NotImplementedException ("Enemy type " + enemyType + " not implemented");
@@ -66,7 +86,7 @@ namespace Units
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Units.UnidadFactory"/> class.
 		/// </summary>
-		public UnidadFactory (Grid grid)
+		public UnidadFactory (LogicGrid grid)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");

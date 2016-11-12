@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
@@ -24,7 +23,7 @@ namespace Units
 		/// <summary>
 		/// Gets the map grid
 		/// </summary>
-		Grid MapGrid { get; }
+		LogicGrid MapGrid { get; }
 
 		/// <summary>
 		/// Gets the resources of this unit
@@ -80,15 +79,6 @@ namespace Units
 
 	static class UnidadImplementation
 	{
-		/// <summary>
-		/// Muere esta unidad.
-		/// </summary>
-		[Obsolete ("El encargado de esto es Grid.")]
-		public static void Die (this IUnidad u)
-		{
-			u.MapGrid.RemoveObject (u);
-		}
-
 		public static void EnqueueOrder (this IUnidad unid,
 		                                 IEnumerable<IPrimitiveOrder> orders)
 		{
@@ -114,6 +104,11 @@ namespace Units
 			return u.Inventory.Items.OfType<ISkill> ();
 		}
 
+		/// <summary>
+		/// Enumera absolutamente todos los skills (inc invisibles y no castables)
+		/// de una unidad. 
+		/// Esto incluye skill de unidad, de equipment y de inventory
+		/// </summary>
 		public static IEnumerable<ISkill> EnumerateAllSkills (this IUnidad u)
 		{
 			foreach (var sk in u.Skills.Skills)

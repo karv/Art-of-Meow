@@ -1,47 +1,77 @@
+using System;
 using System.Diagnostics;
-using Maps;
 using Moggle.Comm;
-using Screens;
+using Moggle.Controles;
+using MonoGame.Extended.InputListeners;
+using Moggle;
+using Microsoft.Xna.Framework;
 
 namespace Cells.CellObjects
 {
 	/// <summary>
 	/// Escaleras como objeto de Grid
 	/// </summary>
-	public class StairsGridObject : GridObject, IReceptorTeclado
+	public class StairsGridObject : GridObject, IReceptor<KeyboardEventArgs>, IActivable
 	{
 		/// <summary>
 		/// Usa la escalera
 		/// </summary>
-		public void Activate ()
+		void IActivable.Activar ()
 		{
-			Debug.WriteLine ("Stairs!");
-			var scr = (MapMainScreen)Grid.Screen;
-			var newGrid = Map.GenerateGrid (Grid.DownMap, scr);
-
-			scr.GameGrid = newGrid;
-
-			// Recibir la experiencia
-			scr.Player.Exp.Flush ();
+			Debug.WriteLine ("Stairs");
+			_AlActivar (EventArgs.Empty);
 		}
 
-		bool IReceptorTeclado.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
 		{
 			if (key.Character == ',' || key.Character == '>')
 			{
-				Activate ();
+				Debug.WriteLine ("Stairs");
+				_AlActivar (EventArgs.Empty);
 				return true;
 			}
 			return false;
 		}
 
 		/// <summary>
+		/// Descarga el contenido gráfico.
+		/// Elimina todas las suscripciones a todos los eventos de esta clase
 		/// </summary>
-		/// <param name="texture">Texture.</param>
-		/// <param name="grid">Grid.</param>
-		public StairsGridObject (string texture, Grid grid)
-			: base (texture, grid)
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.CellObjects.StairsGridObject"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Cells.CellObjects.StairsGridObject"/> in an unusable state.
+		/// After calling <see cref="Dispose"/>, you must release all references to the
+		/// <see cref="Cells.CellObjects.StairsGridObject"/> so the garbage collector can reclaim the memory that the
+		/// <see cref="Cells.CellObjects.StairsGridObject"/> was occupying.</remarks>
+		protected override void Dispose ()
 		{
+			base.Dispose ();
+			AlActivar = null;
+		}
+
+		/// <summary>
+		/// Invoca el evento <see cref="AlActivar"/>
+		/// </summary>
+		/// <param name="e">argumentos del evento</param>
+		protected virtual void _AlActivar (EventArgs e)
+		{
+			AlActivar?.Invoke (this, e);
+		}
+
+		/// <summary>
+		/// Ocurre cuando se activa.
+		/// </summary>
+		public event EventHandler AlActivar;
+
+		const string textureName = "stairs";
+
+		/// <summary>
+		/// </summary>
+		/// <param name="grid">Grid.</param>
+		public StairsGridObject (LogicGrid grid)
+			: base (textureName, grid)
+		{
+			UseColor = Color.DarkOrange;
+			Depth = Depths.Foreground;
 		}
 	}
 }

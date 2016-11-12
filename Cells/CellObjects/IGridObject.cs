@@ -25,6 +25,6 @@ namespace Cells.CellObjects
 		/// Gets the containing <see cref="Grid"/>
 		/// </summary>
 		/// <value>The grid.</value>
-		Grid Grid { get; }
+		LogicGrid Grid { get; }
 	}
 }

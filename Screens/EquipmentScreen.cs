@@ -59,9 +59,9 @@ namespace Screens
 		void cargarContenido ()
 		{
 			foreach (var x in Unidad.Inventory.Items)
-				x.AddContent (Content);
+				x.AddContent ();
 			foreach (var x in Unidad.Equipment.EnumerateEquipment ())
-				x.AddContent (Content);
+				x.AddContent ();
 		}
 
 		void buildEquipmentList ()
