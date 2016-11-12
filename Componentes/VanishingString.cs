@@ -195,8 +195,7 @@ namespace Componentes
 		/// <param name="gameTime">Game time.</param>
 		protected override void Draw (GameTime gameTime)
 		{
-			if (Font != null)
-				Screen.Batch.DrawString (Font, Texto, TopLeft, ColorActual);
+			Screen.Batch.DrawString (Font, Texto, TopLeft, ColorActual);
 		}
 
 		/// <summary>

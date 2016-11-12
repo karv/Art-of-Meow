@@ -45,14 +45,16 @@ namespace Componentes
 			AddContent ();
 			cont.Load ();
 			InitializeContent ();
+		}
 
+		void suscribtions ()
+		{
 			// Suscribirse a las unidades
 			foreach (var x in AIPlayers)
 			{
 				var hpRec = x.Recursos.GetRecurso (ConstantesRecursos.HP) as RecursoHP;
 				hpRec.ValorChanged += hp_damage_done_event;
 			}
-
 		}
 
 		const string damageFont = "Fonts//small";
@@ -62,10 +64,11 @@ namespace Componentes
 			var rec = sender as IRecurso;
 			var unid = rec.Unidad;
 			var delta = rec.Valor - e;
+			const int milisecsDuration = 3000;
 			var str = new VanishingString (
 				          Screen,
 				          delta.ToString (),
-				          TimeSpan.FromMilliseconds (1000))
+				          TimeSpan.FromMilliseconds (milisecsDuration))
 			{
 				ColorInicial = Color.Green,
 				ColorFinal = Color.Transparent,
@@ -221,6 +224,7 @@ namespace Componentes
 		{
 			base.Initialize ();
 			Grid.AddedObject += itemAdded;
+			suscribtions ();
 		}
 
 		/// <summary>
