@@ -15,6 +15,7 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
+using Units.Recursos;
 
 namespace Screens
 {
@@ -172,6 +173,7 @@ namespace Screens
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
 			base.Initialize ();
+
 			GridControl.TryCenterOn (Player.Location);
 		}
 
