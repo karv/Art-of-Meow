@@ -1,26 +1,33 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
-using Moggle;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
 using Screens;
 using Units;
+using Microsoft.Xna.Framework;
 
 namespace Helper
 {
+	/// <summary>
+	/// Ayuda con las teclas rápidas especiales en <see cref="Screens.MapMainScreen"/>
+	/// </summary>
 	public class PlayerKeyListener : IReceptor<KeyboardEventArgs>, IComponent
 	{
 		Unidad HumanPlayer { get { return ManagerScreen.Player; } }
 
-		public MapMainScreen ManagerScreen { get; }
+		MapMainScreen ManagerScreen { get; }
 
-		Game Juego { get { return ManagerScreen.Juego; } }
+		Moggle.Game Juego { get { return ManagerScreen.Juego; } }
 
 
 		#region IReceptor implementation
 
+		/// <summary>
+		/// Rebice señal de un tipo dado
+		/// </summary>
+		/// <param name="keyArg">Señal de tecla</param>
 		public bool RecibirSeñal (KeyboardEventArgs keyArg)
 		{
 			var key = keyArg.Key;
@@ -59,11 +66,11 @@ namespace Helper
 		
 		#region IComponent implementation
 
-		public void AddContent ()
+		void IComponent.AddContent ()
 		{
 		}
 
-		public void InitializeContent ()
+		void IComponent.InitializeContent ()
 		{
 		}
 
@@ -71,13 +78,15 @@ namespace Helper
 
 		#region IGameComponent implementation
 
-		public void Initialize ()
+		void IGameComponent.Initialize ()
 		{
 		}
 
 		#endregion
 
-		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Helper.PlayerKeyListener"/> class.
+		/// </summary>
 		public PlayerKeyListener (MapMainScreen scr)
 		{
 			ManagerScreen = scr;
