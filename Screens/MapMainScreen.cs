@@ -39,6 +39,8 @@ namespace Screens
 		/// </summary>
 		public BuffDisplay _playerHooks { get; private set; }
 
+		PlayerKeyListener SpecialKeyListener;
+
 		/// <summary>
 		/// Devuelve el tablero logico.
 		/// </summary>
@@ -173,6 +175,8 @@ namespace Screens
 			// los nuevos objetos.
 			base.Initialize ();
 			GridControl.TryCenterOn (Player.Location);
+
+			SpecialKeyListener = new PlayerKeyListener (this);
 		}
 
 		/// <summary>
@@ -206,34 +210,11 @@ namespace Screens
 		/// </summary>
 		protected void TeclaPresionada (KeyboardEventArgs keyArg)
 		{
+			if (SpecialKeyListener.RecibirSeñal (keyArg))
+				return;
+			
 			var key = keyArg.Key;
 
-			switch (key)
-			{
-				case Keys.Escape:
-					Juego.Exit ();
-					break;
-				case Keys.Tab:
-					Debug.WriteLine (Player.Recursos);
-					break;
-				case Keys.I:
-					if (Player.Inventory.Any () || Player.Equipment.EnumerateEquipment ().Any ())
-					{
-						var scr = new EquipmentScreen (this, Player);
-						scr.Ejecutar ();
-					}
-					break;
-				case Keys.C:
-					GridControl.TryCenterOn (Player.Location);
-					break;
-				case Keys.S:
-					if (Player.Skills.AnyUsable ())
-					{
-						var scr = new InvokeSkillListScreen (this, Player);
-						scr.Ejecutar ();
-					}
-					break;
-			}
 			var playerCell = Grid.GetCell (Player.Location);
 			foreach (var x in playerCell.Objects.OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (keyArg);

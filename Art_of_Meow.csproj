@@ -162,6 +162,7 @@
     <Compile Include="Componentes\GridControl.cs" />
     <Compile Include="Helper\GameInitializer.cs" />
     <Compile Include="Items\Declarations\Equipment\GenericArmor.cs" />
+    <Compile Include="Helper\PlayerKeyListener.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
