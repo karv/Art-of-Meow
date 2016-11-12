@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
@@ -7,6 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
+using System.Runtime.InteropServices;
+using Units;
+using System.Threading;
+using Units.Inteligencia;
+using Units.Recursos;
 
 namespace Componentes
 {
@@ -39,6 +45,43 @@ namespace Componentes
 			AddContent ();
 			cont.Load ();
 			InitializeContent ();
+
+			// Suscribirse a las unidades
+			foreach (var x in AIPlayers)
+			{
+				var hpRec = x.Recursos.GetRecurso (ConstantesRecursos.HP) as RecursoHP;
+				hpRec.ValorChanged += hp_damage_done_event;
+			}
+
+		}
+
+		const string damageFont = "Fonts//small";
+
+		void hp_damage_done_event (object sender, float e)
+		{
+			var rec = sender as IRecurso;
+			var unid = rec.Unidad;
+			var delta = rec.Valor - e;
+			var str = new VanishingString (
+				          Screen,
+				          delta.ToString (),
+				          TimeSpan.FromMilliseconds (1000))
+			{
+				ColorInicial = Color.Green,
+				ColorFinal = Color.Transparent,
+				FontName = damageFont,
+				Velocidad = new Vector2 (0, -1),
+			};
+			((IComponent)str).InitializeContent ();
+			((IComponent)str).Initialize ();
+			str.Centro = CellSpotLocation (unid.Location).ToVector2 ();
+			Screen.AddComponent (str);
+		}
+
+
+		IEnumerable<Unidad> AIPlayers
+		{ 
+			get { return _objects.OfType<Unidad> ().Where (z => !(z.Inteligencia is HumanIntelligence)); }
 		}
 
 		ICollection<IGridObject> _objects { get { return Grid.Objects; } }
@@ -147,6 +190,8 @@ namespace Componentes
 			base.AddContent ();
 			foreach (var x in _objects)
 				x.AddContent ();
+
+			Screen.Content.AddContent (damageFont);
 		}
 
 		/// <summary>

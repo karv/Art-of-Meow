@@ -49,7 +49,7 @@ namespace Componentes
 			set
 			{
 				if (Font != null)
-					throw new InvalidOperationException ("Cannot change font name after content is loaded.");
+					throw new InvalidOperationException ("FontName cannot be changed after initialization.");
 				_fontName = value;
 			}
 		}
