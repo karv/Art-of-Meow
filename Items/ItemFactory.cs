@@ -22,7 +22,13 @@ namespace Items
 		/// </summary>
 		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
 		HealingPotion,
+		/// <summary>
+		/// Armadura de cuero
+		/// </summary>
 		LeatherArmor,
+		/// <summary>
+		/// Casco de cuero
+		/// </summary>
 		LeatherCap
 	}
 
