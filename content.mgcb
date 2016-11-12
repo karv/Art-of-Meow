@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:MonoGame.Extended.0.6.0.0/lib/MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -144,4 +145,21 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Content/stairs.png
+
+#begin Content/Fonts/small_0.tga
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Content/Fonts/small_0.tga
+
+#begin Content/Fonts/small.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Content/Fonts/small.fnt
 
