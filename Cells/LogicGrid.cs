@@ -14,14 +14,12 @@ namespace Cells
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
 	/// </summary>
-	public class LogicGrid : IComponent, IUpdateable
+	public class LogicGrid : IComponent, IUpdate
 	{
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
 		readonly CollisionSystem _collisionSystem;
 
 		readonly Random _r = new Random ();
-
-		#region Componente
 
 		#region IComponent implementation
 
@@ -35,54 +33,14 @@ namespace Cells
 			throw new NotImplementedException ();
 		}
 
+		#endregion
+
 		#region IUpdateable implementation
 
-		event EventHandler<EventArgs> IUpdateable.EnabledChanged
-		{
-			add
-			{
-				throw new NotImplementedException ();
-			}
-			remove
-			{
-				throw new NotImplementedException ();
-			}
-		}
-
-		event EventHandler<EventArgs> IUpdateable.UpdateOrderChanged
-		{
-			add
-			{
-				throw new NotImplementedException ();
-			}
-			remove
-			{
-				throw new NotImplementedException ();
-			}
-		}
-
-		void IUpdateable.Update (GameTime gameTime)
+		public void Update (GameTime gameTime)
 		{
 			TimeManager.ExecuteNext ();
 		}
-
-		bool IUpdateable.Enabled
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
-
-		int IUpdateable.UpdateOrder
-		{
-			get
-			{
-				throw new NotImplementedException ();
-			}
-		}
-
-		#endregion
 
 		#endregion
 
@@ -92,8 +50,6 @@ namespace Cells
 		{
 			throw new NotImplementedException ();
 		}
-
-		#endregion
 
 		#endregion
 

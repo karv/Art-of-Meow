@@ -4,6 +4,7 @@ using Items.Declarations.Equipment;
 using Items.Declarations.Pots;
 using Microsoft.Xna.Framework;
 using Moggle;
+using Items.Declarations.Equipment.Skills;
 
 namespace Items
 {
@@ -17,6 +18,7 @@ namespace Items
 		/// </summary>
 		/// <seealso cref="Items.Declarations.Equipment.Sword"/>
 		Sword,
+		Bow,
 		/// <summary>
 		/// Potion
 		/// </summary>
@@ -51,6 +53,11 @@ namespace Items
 			{
 				case ItemType.Sword:
 					ret = new Sword ();
+					break;
+				case ItemType.Bow:
+					ret = new GenericSkillListEquipment (
+						"Arco",
+						new Units.Skills.ISkill[] { new RangedDamage () });
 					break;
 				case ItemType.HealingPotion:
 					ret = new HealingPotion ();

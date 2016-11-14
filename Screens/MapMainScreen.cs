@@ -81,10 +81,18 @@ namespace Screens
 			}
 		}
 
+		LogicGrid CurrentGrid;
+
+		void changeGrid (LogicGrid newGrid)
+		{
+			GridControl.ChangeGrid (newGrid);
+			CurrentGrid = newGrid;
+		}
+
 		void on_stair_down (object sender, EventArgs e)
 		{
 			var newGrid = Map.GenerateGrid (Grid.DownMap);
-			GridControl.ChangeGrid (newGrid);
+			changeGrid (newGrid);
 
 			// Recibir la experiencia
 			Player.Exp.Flush ();
@@ -113,6 +121,12 @@ namespace Screens
 			Batch.Begin (SpriteSortMode.BackToFront);
 			EntreBatches (gameTime);
 			Batch.End ();
+		}
+
+		public override void Update (GameTime gameTime)
+		{
+			base.Update (gameTime);
+			CurrentGrid?.Update (gameTime);
 		}
 
 		/// <summary>
@@ -163,8 +177,8 @@ namespace Screens
 		/// </summary>
 		public override void Initialize ()
 		{
-			var lGrid = GameInitializer.InitializeNewWorld (out Player);
-			GridControl = new GridControl (lGrid, this);
+			CurrentGrid = GameInitializer.InitializeNewWorld (out Player);
+			GridControl = new GridControl (CurrentGrid, this);
 
 			inicializarJugador ();
 			// REMOVE: ¿Move the Grid initializer ot itself?
