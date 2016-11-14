@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units.Skills;
-using System.Threading;
 using Screens;
 using System.Diagnostics;
+using System;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -21,9 +21,12 @@ namespace Items.Declarations.Equipment.Skills
 		/// <param name="user">Usuario</param>
 		public void Execute (Units.IUnidad user)
 		{
+			//var scr = Program.MyGame.CurrentScreen as Moggle.Screens.DialScreen;
+			//scr?.Salir ();
 			var executionScreen = new SelectTargetScreen (Program.MyGame, user.Grid);
 			executionScreen.AlTerminar += delegate
 			{
+				Executed?.Invoke (this, EventArgs.Empty);
 				Debugger.Break ();
 			};
 			executionScreen.Ejecutar ();
@@ -49,6 +52,8 @@ namespace Items.Declarations.Equipment.Skills
 		{
 			return true;
 		}
+
+		public event EventHandler Executed;
 
 		#region Contenido
 

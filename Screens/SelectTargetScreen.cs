@@ -9,6 +9,7 @@ using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 using AoM;
+using MonoGame.Extended;
 
 namespace Screens
 {
@@ -42,9 +43,11 @@ namespace Screens
 
 			// Dibujar el seleccionado
 			var bat = Screen.Batch;
+			var loc = CellSpotLocation (CursorPosition);
+			var rectOut = new Rectangle (loc, (Size)CellSize);
 			bat.Draw (
 				pixel,
-				CellSpotLocation (CursorPosition).ToVector2 (),
+				rectOut,
 				CursorColor);
 		}
 
@@ -97,6 +100,16 @@ namespace Screens
 		public Keys LeftKey = Keys.Left;
 		public Keys RightKey = Keys.Right;
 
+		public override void Draw (GameTime gameTime)
+		{
+			base.Draw (gameTime);
+		}
+
+		public override void Update (GameTime gameTime)
+		{
+			base.Update (gameTime);
+		}
+
 		public override bool RecibirSeñal (KeyboardEventArgs key)
 		{
 			if (key.Key == UpKey)
@@ -119,7 +132,10 @@ namespace Screens
 				GridSelector.CursorPosition += new Point (1, 0);
 				return true;
 			}
-			return base.RecibirSeñal (key);
+			// No mandar señal al otro diálogo que me invocó
+			// return base.RecibirSeñal (key);
+
+			// TODO Necesito poder recuoerar todos los screens
 		}
 
 		public SelectTargetScreen (Juego game, LogicGrid grid)

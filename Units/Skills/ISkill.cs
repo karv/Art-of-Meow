@@ -1,4 +1,5 @@
 using Moggle.Controles;
+using System;
 
 namespace Units.Skills
 {
@@ -26,5 +27,10 @@ namespace Units.Skills
 		/// <returns><c>true</c> if this instance is visible by the specified user; otherwise, <c>false</c></returns>
 		/// <param name="user">User</param>
 		bool IsVisible (IUnidad user);
+
+		/// <summary>
+		/// Occurs when the eexecution finishes completly
+		/// </summary>
+		event EventHandler Executed;
 	}
 }

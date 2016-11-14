@@ -1,8 +1,8 @@
-﻿using Units;
+﻿using System;
+using Units;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
-using Moggle;
 
 namespace Items.Declarations.Pots
 {
@@ -27,6 +27,7 @@ namespace Items.Declarations.Pots
 			user.Inventory.Items.Remove (this);
 
 			user.EnqueueOrder (new ExecuteOrder (user, doEffect));
+			Executed?.Invoke (this, EventArgs.Empty);
 		}
 
 		void doEffect (IUnidad target)
@@ -46,6 +47,8 @@ namespace Items.Declarations.Pots
 			// return true, si el objeto no está en el inventario no aparecerá
 			return true;
 		}
+
+		public event System.EventHandler Executed;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Pots.HealingPotion"/> class.

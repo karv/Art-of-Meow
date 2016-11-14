@@ -97,7 +97,10 @@ namespace Screens
 		{
 			_selección = Contenedor.FocusedItem;
 			_selección.Execute (Unidad);
-			Salir ();
+			_selección.Executed += delegate
+			{
+				Salir ();
+			};
 		}
 
 		/// <summary>
