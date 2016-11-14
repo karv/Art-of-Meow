@@ -28,10 +28,12 @@ namespace Items.Declarations.Equipment
 		/// <param name="nombre">Nombre.</param>
 		/// <param name="invokedSkill">Invoked skill list.</param>
 		public GenericSkillListEquipment (string nombre,
-		                                  IEnumerable<ISkill> invokedSkill)
+		                                  IEnumerable<ISkill> invokedSkill, 
+		                                  EquipSlot slot)
 			: base (nombre)
 		{
 			InvokedSkills = invokedSkill;
+			Slot = slot;
 		}
 	}
 }

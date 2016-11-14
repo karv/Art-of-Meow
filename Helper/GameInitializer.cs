@@ -29,8 +29,6 @@ namespace Helper
 			player.Inteligencia = new HumanIntelligence (player);
 			player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Bow) as IEquipment);
 
-
-
 			return player;
 		}
 

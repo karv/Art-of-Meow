@@ -57,7 +57,9 @@ namespace Items
 				case ItemType.Bow:
 					ret = new GenericSkillListEquipment (
 						"Arco",
-						new Units.Skills.ISkill[] { new RangedDamage () });
+						// TODO: Buscar icono
+						new Units.Skills.ISkill[] { new RangedDamage { TextureName = "pixel" } },
+						EquipSlot.MainHand);
 					break;
 				case ItemType.HealingPotion:
 					ret = new HealingPotion ();
