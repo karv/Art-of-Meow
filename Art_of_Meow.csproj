@@ -162,6 +162,8 @@
     <Compile Include="Componentes\GridControl.cs" />
     <Compile Include="Helper\GameInitializer.cs" />
     <Compile Include="Items\Declarations\Equipment\GenericArmor.cs" />
+    <Compile Include="Items\Declarations\Equipment\GenericSkillListEquipment.cs" />
+    <Compile Include="Items\Declarations\Equipment\Skills\RangedSkill.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -195,5 +197,6 @@
     <Folder Include="Units\Order\" />
     <Folder Include="Cells\Collision\" />
     <Folder Include="Content\" />
+    <Folder Include="Items\Declarations\Equipment\Skills\" />
   </ItemGroup>
 </Project>
