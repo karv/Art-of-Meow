@@ -262,13 +262,13 @@ namespace Componentes
 		/// <param name="p">Dirección de celda.</param>
 		public bool IsVisible (Point p)
 		{
-			return GetVisivilityBox ().Contains (p);
+			return GetVisibilityBox ().Contains (p);
 		}
 
 		/// <summary>
 		/// Gets a rectangle representing the edges (mod grid) of the view
 		/// </summary>
-		public Rectangle GetVisivilityBox ()
+		public Rectangle GetVisibilityBox ()
 		{
 			return new Rectangle (CurrentVisibleTopLeft, VisibleCells);
 		}
@@ -301,7 +301,7 @@ namespace Componentes
 		/// <seealso cref="_edgeSize"/>
 		bool IsInCenter (Point p, Size edge_size)
 		{
-			var edge = GetVisivilityBox ();
+			var edge = GetVisibilityBox ();
 			edge.Inflate (-edge_size.Width, -edge_size.Height);
 			return edge.Contains (p);
 		}
