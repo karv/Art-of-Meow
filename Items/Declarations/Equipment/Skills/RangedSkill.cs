@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units.Skills;
+using System.Threading;
+using Screens;
+using System.Diagnostics;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -18,6 +21,13 @@ namespace Items.Declarations.Equipment.Skills
 		/// <param name="user">Usuario</param>
 		public void Execute (Units.IUnidad user)
 		{
+			var executionScreen = new SelectTargetScreen (Program.MyGame, user.Grid);
+			executionScreen.AlTerminar += delegate
+			{
+				Debugger.Break ();
+			};
+			executionScreen.Ejecutar ();
+
 			// TODO: Seleccionar target
 		}
 

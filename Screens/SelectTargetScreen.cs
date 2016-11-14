@@ -8,6 +8,7 @@ using System;
 using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
+using AoM;
 
 namespace Screens
 {
@@ -121,8 +122,8 @@ namespace Screens
 			return base.RecibirSeñal (key);
 		}
 
-		public SelectTargetScreen (IScreen baseScreen, LogicGrid grid)
-			: base (baseScreen.Juego, baseScreen)
+		public SelectTargetScreen (Juego game, LogicGrid grid)
+			: base (game)
 		{
 			Grid = grid;
 			GridSelector = new SelectableGridControl (Grid, this);
