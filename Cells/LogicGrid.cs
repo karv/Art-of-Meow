@@ -7,18 +7,95 @@ using Cells.Collision;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
+using Moggle.Controles;
 
 namespace Cells
 {
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
 	/// </summary>
-	public class LogicGrid
+	public class LogicGrid : IComponent, IUpdateable
 	{
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
 		readonly CollisionSystem _collisionSystem;
 
 		readonly Random _r = new Random ();
+
+		#region Componente
+
+		#region IComponent implementation
+
+		void IComponent.AddContent ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		void IComponent.InitializeContent ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		#region IUpdateable implementation
+
+		event EventHandler<EventArgs> IUpdateable.EnabledChanged
+		{
+			add
+			{
+				throw new NotImplementedException ();
+			}
+			remove
+			{
+				throw new NotImplementedException ();
+			}
+		}
+
+		event EventHandler<EventArgs> IUpdateable.UpdateOrderChanged
+		{
+			add
+			{
+				throw new NotImplementedException ();
+			}
+			remove
+			{
+				throw new NotImplementedException ();
+			}
+		}
+
+		void IUpdateable.Update (GameTime gameTime)
+		{
+			TimeManager.ExecuteNext ();
+		}
+
+		bool IUpdateable.Enabled
+		{
+			get
+			{
+				throw new NotImplementedException ();
+			}
+		}
+
+		int IUpdateable.UpdateOrder
+		{
+			get
+			{
+				throw new NotImplementedException ();
+			}
+		}
+
+		#endregion
+
+		#endregion
+
+		#region IGameComponent implementation
+
+		void IGameComponent.Initialize ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
+
+		#endregion
 
 		/// <summary>
 		/// Devuelve o establece el archivo de generador mapa que se usará como próximo nivel
