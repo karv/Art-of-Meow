@@ -15,7 +15,6 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using Units.Recursos;
 
 namespace Screens
 {
@@ -223,7 +222,8 @@ namespace Screens
 					if (Player.Inventory.Any () || Player.Equipment.EnumerateEquipment ().Any ())
 					{
 						var scr = new EquipmentScreen (this, Player);
-						Juego.ScreenManager.ActiveThread.Stack (scr);
+						scr.Execute (ScreenExt.DialogOpt);
+						//Juego.ScreenManager.ActiveThread.Stack (scr);
 					}
 					break;
 				case Keys.C:
@@ -233,7 +233,8 @@ namespace Screens
 					if (Player.Skills.AnyUsable ())
 					{
 						var scr = new InvokeSkillListScreen (Juego, Player);
-						Juego.ScreenManager.ActiveThread.Stack (scr);
+						scr.Execute (ScreenExt.DialogOpt);
+						//Juego.ScreenManager.ActiveThread.Stack (scr);
 					}
 					break;
 			}
@@ -262,6 +263,47 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
+		}
+	}
+
+	public static class ScreenExt
+	{
+		public static readonly ScreenThread.ScreenStackOptions DialogOpt;
+		public static readonly ScreenThread.ScreenStackOptions NewScreen;
+
+		public static void Execute (this Screen scr,
+		                            ScreenThread thread,
+		                            ScreenThread.ScreenStackOptions opt)
+		{
+			scr.Prepare ();
+			thread.Stack (scr, opt);
+		}
+
+		public static void Execute (this Screen scr,
+		                            ScreenThreadManager threadMan,
+		                            ScreenThread.ScreenStackOptions opt)
+		{
+			Execute (scr, threadMan.ActiveThread, opt);
+		}
+
+		public static void Execute (this Screen scr,
+		                            ScreenThread.ScreenStackOptions opt)
+		{
+			Execute (scr, scr.Juego.ScreenManager, opt);
+		}
+
+		static ScreenExt ()
+		{
+			DialogOpt = new ScreenThread.ScreenStackOptions
+			{
+				ActualizaBase = false,
+				DibujaBase = false
+			};
+			NewScreen = new ScreenThread.ScreenStackOptions
+			{
+				ActualizaBase = false,
+				DibujaBase = false
+			};
 		}
 	}
 }

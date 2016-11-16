@@ -92,6 +92,11 @@ namespace Screens
 			return base.RecibirSeñal (data);
 		}
 
+		public override void Draw ()
+		{
+			base.Draw ();
+		}
+
 		void AlSeleccionarSkill (object sender, EventArgs e)
 		{
 			_selección = Contenedor.FocusedItem;
