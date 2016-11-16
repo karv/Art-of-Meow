@@ -41,7 +41,7 @@ namespace Items.Declarations.Equipment.Skills
 		/// </summary>
 		protected virtual void DoEffect (Units.IUnidad user, Point targetPoint)
 		{
-			var targ = user.Grid.GetCell (targetPoint).GetUnidadHere ();
+			var targ = user.Grid.GetCell (targetPoint).GetAliveUnidadHere ();
 			DoEffect (user, targ);
 		}
 
