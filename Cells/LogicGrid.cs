@@ -145,6 +145,11 @@ namespace Cells
 			Objects.Remove (obj);
 		}
 
+		/// <summary>
+		/// Devuelve el punto más próximo a otro punto dado, que satisface un predicado
+		/// </summary>
+		/// <param name="selector">Predicado de selección</param>
+		/// <param name="anchor">Punto base</param>
 		public Point ClosestCellThat (Predicate<Cell> selector, Point anchor)
 		{
 			var pRet = Point.Zero; // Valor default
@@ -163,6 +168,11 @@ namespace Cells
 			return pRet;
 		}
 
+		/// <summary>
+		/// Devuelve el enemigo más próximo a una unidad
+		/// </summary>
+		/// <returns>The closest enemy.</returns>
+		/// <param name="unid">Unid.</param>
 		public Point GetClosestEnemy (IUnidad unid)
 		{
 			Predicate<Cell> selector = delegate(Cell obj)

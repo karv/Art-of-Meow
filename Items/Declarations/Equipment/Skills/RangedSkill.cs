@@ -40,6 +40,7 @@ namespace Items.Declarations.Equipment.Skills
 				var targ = user.Grid.GetCell (targetPoint.Value).GetAliveUnidadHere ();
 				if (targ != null)
 					DoEffect (user, targ);
+				Executed?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
