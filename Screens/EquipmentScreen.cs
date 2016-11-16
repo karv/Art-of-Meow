@@ -12,7 +12,7 @@ namespace Screens
 	/// <summary>
 	/// This screen allows the user to change the equipment of a <see cref="IUnidad"/>
 	/// </summary>
-	public class EquipmentScreen : DialScreen
+	public class EquipmentScreen : Screen
 	{
 		/// <summary>
 		/// The inventory of the <see cref="IUnidad"/>
@@ -41,16 +41,15 @@ namespace Screens
 		/// <summary>
 		/// Color de fondo. <see cref="Color.DarkGray"/>
 		/// </summary>
-		public override Color BgColor { get { return Color.DarkGray; } }
+		public override Color? BgColor { get { return Color.DarkGray; } }
+
 
 		/// <summary>
-		/// Initializes its controls,
-		/// reloads the equipment list,
-		/// marks the equiped items
+		/// Inicializa los subcomponentes y actualiza los equipment del usuario
 		/// </summary>
-		public override void Initialize ()
+		protected override void DoInitialization ()
 		{
-			base.Initialize ();
+			base.DoInitialization ();
 			//cargarContenido ();
 			buildEquipmentList ();
 			rebuildSelection ();
@@ -87,19 +86,19 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Always draw screen base
-		/// </summary>
-		public override bool DibujarBase{ get { return true; } }
-
-		/// <summary>
 		/// Rebice señal del teclado.
 		/// <c>Esc</c> leaves this screen
 		/// </summary>
-		public override bool RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		public override bool RecibirSeñal (System.Tuple<MonoGame.Extended.InputListeners.KeyboardEventArgs, ScreenThread> data)
 		{
+			var key = data.Item1;
+
 			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
-				Salir ();
-			return base.RecibirSeñal (key);
+			{
+				Juego.ScreenManager.ActiveThread.TerminateLast ();
+				return true;
+			}			
+			return base.RecibirSeñal (data);
 		}
 
 
@@ -131,8 +130,7 @@ namespace Screens
 		/// <param name="baseScreen">Base screen.</param>
 		/// <param name="unid">Unidad</param>
 		public EquipmentScreen (IScreen baseScreen, IUnidad unid)
-			: base (baseScreen.Juego,
-			        baseScreen)
+			: base (baseScreen.Juego)
 		{
 			Unidad = unid;
 			Contenedor = new ContenedorSelección<IItem> (this)

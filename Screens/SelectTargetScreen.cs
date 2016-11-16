@@ -1,15 +1,13 @@
-﻿using Cells;
+﻿using System;
+using AoM;
+using Cells;
 using Componentes;
-using Moggle.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Net.Mime;
-using System;
-using MonoGame.Extended.InputListeners;
 using Microsoft.Xna.Framework.Input;
-using System.Threading;
-using AoM;
+using Moggle.Screens;
 using MonoGame.Extended;
+using MonoGame.Extended.InputListeners;
 
 namespace Screens
 {
@@ -37,9 +35,9 @@ namespace Screens
 
 		Texture2D pixel;
 
-		protected override void Draw (GameTime gameTime)
+		protected override void Draw ()
 		{
-			base.Draw (gameTime);
+			base.Draw ();
 
 			// Dibujar el seleccionado
 			var bat = Screen.Batch;
@@ -78,18 +76,15 @@ namespace Screens
 		}
 	}
 
-	public class SelectTargetScreen : DialScreen
+	public class SelectTargetScreen : Screen
 	{
-		// No dibujar base, hay que dibujar otro tipo-GridControl más apropiado
-		public override bool DibujarBase { get { return false; } }
-
 		public LogicGrid Grid { get; }
 
 		public SelectableGridControl GridSelector { get; }
 
-		public override void Initialize ()
+		protected override void DoInitialization ()
 		{
-			base.Initialize ();
+			base.DoInitialization ();
 
 			// Poner a GridSelector donde debe
 			// TODO?
@@ -100,18 +95,9 @@ namespace Screens
 		public Keys LeftKey = Keys.Left;
 		public Keys RightKey = Keys.Right;
 
-		public override void Draw (GameTime gameTime)
+		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
-			base.Draw (gameTime);
-		}
-
-		public override void Update (GameTime gameTime)
-		{
-			base.Update (gameTime);
-		}
-
-		public override bool RecibirSeñal (KeyboardEventArgs key)
-		{
+			var key = data.Item1;
 			if (key.Key == UpKey)
 			{
 				GridSelector.CursorPosition += new Point (0, -1);
@@ -134,8 +120,8 @@ namespace Screens
 			}
 			// No mandar señal al otro diálogo que me invocó
 			// return base.RecibirSeñal (key);
-
-			// TODO Necesito poder recuoerar todos los screens
+			return base.RecibirSeñal (data);
+			// TODO Necesito poder recuperar todos los screens
 		}
 
 		public SelectTargetScreen (Juego game, LogicGrid grid)

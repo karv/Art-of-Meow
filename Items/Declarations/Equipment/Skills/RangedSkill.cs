@@ -24,12 +24,17 @@ namespace Items.Declarations.Equipment.Skills
 			//var scr = Program.MyGame.CurrentScreen as Moggle.Screens.DialScreen;
 			//scr?.Salir ();
 			var executionScreen = new SelectTargetScreen (Program.MyGame, user.Grid);
-			executionScreen.AlTerminar += delegate
+			Program.MyGame.ScreenManager.ActiveThread.TerminateLast (); // Terminar la de selección de skill
+			Program.MyGame.ScreenManager.ActiveThread.Terminated += delegate(object sender,
+			                                                                 Moggle.Screens.IScreen e)
 			{
-				Executed?.Invoke (this, EventArgs.Empty);
-				Debugger.Break ();
+				if (executionScreen.Equals (e))
+				{
+					Executed?.Invoke (this, EventArgs.Empty);
+					Debugger.Break ();
+				}
 			};
-			executionScreen.Ejecutar ();
+			executionScreen.Execute (ScreenExt.DialogOpt);
 
 			// TODO: Seleccionar target
 		}
