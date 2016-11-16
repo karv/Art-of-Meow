@@ -297,7 +297,7 @@ namespace Units
 			{
 				// Do melee
 				var targetCell = new Cell (Grid, Location + dir.AsDirectionalPoint ());
-				var target = targetCell.GetUnidadHere ();
+				var target = targetCell.GetAliveUnidadHere ();
 				if (target == null)
 					return false;
 

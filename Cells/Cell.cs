@@ -65,6 +65,14 @@ namespace Cells
 		}
 
 		/// <summary>
+		/// Devuelve la unidad vida que está aquí (o null)
+		/// </summary>
+		public IUnidad GetAliveUnidadHere ()
+		{
+			return Objects.OfType<IUnidad> ().FirstOrDefault (z => z.Habilitado);
+		}
+
+		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Cells.Cell"/>.
 		/// </summary>
 		public override string ToString ()
