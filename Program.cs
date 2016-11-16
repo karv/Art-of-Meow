@@ -21,7 +21,8 @@ namespace AoM
 		{
 			var lg = new Logger ("debug.log");
 			Debug.Listeners.Add (lg);
-			MyGame.CurrentScreen = new Screens.MapMainScreen (MyGame);
+			var MapThread = MyGame.ScreenManager.AddNewThread ();
+			MapThread.Stack (new Screens.MapMainScreen (MyGame));
 			MyGame.Run ();
 			lg.WriteInAll ("=== End of log ===");
 			lg.Close ();

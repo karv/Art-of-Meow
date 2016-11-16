@@ -28,7 +28,7 @@ namespace Screens
 		/// Color de fondo
 		/// </summary>
 		/// <value>The color of the background.</value>
-		public override Color BgColor { get { return Color.DarkBlue; } }
+		public override Color? BgColor { get { return Color.DarkBlue; } }
 
 		/// <summary>
 		/// Resource view manager
@@ -108,10 +108,10 @@ namespace Screens
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
-		public override void Draw (GameTime gameTime)
+		public override void Draw ()
 		{
 			Batch.Begin (SpriteSortMode.BackToFront);
-			EntreBatches (gameTime);
+			EntreBatches ();
 			Batch.End ();
 		}
 
@@ -159,9 +159,9 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Initializes the grid, and the rest of the controls
+		/// Realiza la inicialización
 		/// </summary>
-		public override void Initialize ()
+		protected override void DoInitialization ()
 		{
 			var lGrid = GameInitializer.InitializeNewWorld (out Player);
 			GridControl = new GridControl (lGrid, this);
@@ -172,7 +172,7 @@ namespace Screens
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
-			base.Initialize ();
+			base.DoInitialization ();
 
 			GridControl.TryCenterOn (Player.Location);
 		}
@@ -182,11 +182,12 @@ namespace Screens
 		/// </summary>
 		/// <returns>true</returns>
 		/// <c>false</c>
-		/// <param name="key">Señal tecla</param>
-		public override bool RecibirSeñal (KeyboardEventArgs key)
+		/// <param name="data">Señal tecla</param>
+		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
+			var key = data.Item1;
 			TeclaPresionada (key);
-			base.RecibirSeñal (key);
+			base.RecibirSeñal (data);
 			return true;
 		}
 
@@ -222,7 +223,7 @@ namespace Screens
 					if (Player.Inventory.Any () || Player.Equipment.EnumerateEquipment ().Any ())
 					{
 						var scr = new EquipmentScreen (this, Player);
-						scr.Ejecutar ();
+						Juego.ScreenManager.ActiveThread.Stack (scr);
 					}
 					break;
 				case Keys.C:
@@ -231,8 +232,8 @@ namespace Screens
 				case Keys.S:
 					if (Player.Skills.AnyUsable ())
 					{
-						var scr = new InvokeSkillListScreen (this, Player);
-						scr.Ejecutar ();
+						var scr = new InvokeSkillListScreen (Juego, Player);
+						Juego.ScreenManager.ActiveThread.Stack (scr);
 					}
 					break;
 			}
