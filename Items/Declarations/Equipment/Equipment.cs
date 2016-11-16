@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using Units;
-using Moggle;
 
 namespace Items.Declarations.Equipment
 {

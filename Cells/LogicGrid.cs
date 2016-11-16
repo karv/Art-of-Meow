@@ -7,18 +7,51 @@ using Cells.Collision;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
+using Moggle.Controles;
 
 namespace Cells
 {
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
 	/// </summary>
-	public class LogicGrid
+	public class LogicGrid : IComponent, IUpdate
 	{
 		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
 		readonly CollisionSystem _collisionSystem;
 
 		readonly Random _r = new Random ();
+
+		#region IComponent implementation
+
+		void IComponent.AddContent ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		void IComponent.InitializeContent ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
+
+		#region IUpdateable implementation
+
+		public void Update (GameTime gameTime)
+		{
+			TimeManager.ExecuteNext ();
+		}
+
+		#endregion
+
+		#region IGameComponent implementation
+
+		void IGameComponent.Initialize ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
 
 		/// <summary>
 		/// Devuelve o establece el archivo de generador mapa que se usará como próximo nivel

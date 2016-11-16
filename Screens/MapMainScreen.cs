@@ -15,6 +15,7 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
+using System.IO;
 
 namespace Screens
 {
@@ -27,7 +28,7 @@ namespace Screens
 		/// Color de fondo
 		/// </summary>
 		/// <value>The color of the background.</value>
-		public override Color BgColor { get { return Color.DarkBlue; } }
+		public override Color? BgColor { get { return Color.DarkBlue; } }
 
 		/// <summary>
 		/// Resource view manager
@@ -82,10 +83,18 @@ namespace Screens
 			}
 		}
 
+		LogicGrid CurrentGrid;
+
+		void changeGrid (LogicGrid newGrid)
+		{
+			GridControl.ChangeGrid (newGrid);
+			CurrentGrid = newGrid;
+		}
+
 		void on_stair_down (object sender, EventArgs e)
 		{
 			var newGrid = Map.GenerateGrid (Grid.DownMap);
-			GridControl.ChangeGrid (newGrid);
+			changeGrid (newGrid);
 
 			// Recibir la experiencia
 			Player.Exp.Flush ();
@@ -109,11 +118,17 @@ namespace Screens
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
-		public override void Draw (GameTime gameTime)
+		public override void Draw ()
 		{
 			Batch.Begin (SpriteSortMode.BackToFront);
-			EntreBatches (gameTime);
+			EntreBatches ();
 			Batch.End ();
+		}
+
+		public override void Update (GameTime gameTime, ScreenThread currentThread)
+		{
+			base.Update (gameTime, currentThread);
+			CurrentGrid?.Update (gameTime);
 		}
 
 		/// <summary>
@@ -138,9 +153,6 @@ namespace Screens
 		/// </summary>
 		void inicializarJugador ()
 		{
-			// TEST ing
-
-			// Observe que esta asignación debe ser antes que el hook
 			_playerHooks = new BuffDisplay (this, Player)
 			{
 				MargenInterno = new Moggle.Controles.MargenType
@@ -160,12 +172,12 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Initializes the grid, and the rest of the controls
+		/// Realiza la inicialización
 		/// </summary>
-		public override void Initialize ()
+		protected override void DoInitialization ()
 		{
-			var lGrid = GameInitializer.InitializeNewWorld (out Player);
-			GridControl = new GridControl (lGrid, this);
+			CurrentGrid = GameInitializer.InitializeNewWorld (out Player);
+			GridControl = new GridControl (CurrentGrid, this);
 
 			inicializarJugador ();
 			// REMOVE: ¿Move the Grid initializer ot itself?
@@ -173,7 +185,8 @@ namespace Screens
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
-			base.Initialize ();
+			base.DoInitialization ();
+
 			GridControl.TryCenterOn (Player.Location);
 
 			SpecialKeyListener = new PlayerKeyListener (this);
@@ -184,11 +197,12 @@ namespace Screens
 		/// </summary>
 		/// <returns>true</returns>
 		/// <c>false</c>
-		/// <param name="key">Señal tecla</param>
-		public override bool RecibirSeñal (KeyboardEventArgs key)
+		/// <param name="data">Señal tecla</param>
+		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
+			var key = data.Item1;
 			TeclaPresionada (key);
-			base.RecibirSeñal (key);
+			base.RecibirSeñal (data);
 			return true;
 		}
 
@@ -240,6 +254,65 @@ namespace Screens
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
+		}
+	}
+
+	/// <summary>
+	/// Extensiones de Screen
+	/// </summary>
+	public static class ScreenExt
+	{
+		/// <summary>
+		/// Opciones tipo Dialo
+		/// </summary>
+		public static readonly ScreenThread.ScreenStackOptions DialogOpt;
+		/// <summary>
+		/// Opciones default
+		/// </summary>
+		public static readonly ScreenThread.ScreenStackOptions NewScreen;
+
+		/// <summary>
+		/// Ejecuta un screen
+		/// </summary>
+		public static void Execute (this Screen scr,
+		                            ScreenThread thread,
+		                            ScreenThread.ScreenStackOptions opt)
+		{
+			scr.Prepare ();
+			thread.Stack (scr, opt);
+		}
+
+		/// <summary>
+		/// Ejecuta un screen
+		/// </summary>
+		public static void Execute (this Screen scr,
+		                            ScreenThreadManager threadMan,
+		                            ScreenThread.ScreenStackOptions opt)
+		{
+			Execute (scr, threadMan.ActiveThread, opt);
+		}
+
+		/// <summary>
+		/// Ejecuta un screen
+		/// </summary>
+		public static void Execute (this Screen scr,
+		                            ScreenThread.ScreenStackOptions opt)
+		{
+			Execute (scr, scr.Juego.ScreenManager, opt);
+		}
+
+		static ScreenExt ()
+		{
+			DialogOpt = new ScreenThread.ScreenStackOptions
+			{
+				ActualizaBase = false,
+				DibujaBase = true
+			};
+			NewScreen = new ScreenThread.ScreenStackOptions
+			{
+				ActualizaBase = false,
+				DibujaBase = false
+			};
 		}
 	}
 }

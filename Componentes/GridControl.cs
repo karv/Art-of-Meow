@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
@@ -7,6 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
+using System.Runtime.InteropServices;
+using Units;
+using System.Threading;
+using Units.Inteligencia;
+using Units.Recursos;
 
 namespace Componentes
 {
@@ -39,6 +45,48 @@ namespace Componentes
 			AddContent ();
 			cont.Load ();
 			InitializeContent ();
+		}
+
+		void suscribtions ()
+		{
+			// Suscribirse a las unidades
+			foreach (var x in AIPlayers)
+			{
+				var hpRec = x.Recursos.GetRecurso (ConstantesRecursos.HP) as RecursoHP;
+				hpRec.ValorChanged += hp_damage_done_event;
+			}
+		}
+
+		const string damageFont = "Fonts//damage";
+
+		void hp_damage_done_event (object sender, float e)
+		{
+			const int milisecsDuration = 3000;
+			var rec = sender as IRecurso;
+			var unid = rec.Unidad;
+			var delta = rec.Valor - e;
+			var str = new VanishingString (
+				          Screen,
+				          delta.ToString (),
+				          TimeSpan.FromMilliseconds (milisecsDuration))
+			{
+				ColorInicial = Color.Green,
+				ColorFinal = Color.Transparent,
+				FontName = damageFont,
+				Velocidad = new Vector2 (0, -1),
+			};
+			((IComponent)str).InitializeContent ();
+			((IComponent)str).Initialize ();
+
+			// La posición ya que cargue el contenido
+			str.Centro = CellSpotLocation (unid.Location).ToVector2 ();
+			Screen.AddComponent (str);
+		}
+
+
+		IEnumerable<Unidad> AIPlayers
+		{ 
+			get { return _objects.OfType<Unidad> ().Where (z => !(z.Inteligencia is HumanIntelligence)); }
 		}
 
 		ICollection<IGridObject> _objects { get { return Grid.Objects; } }
@@ -111,8 +159,7 @@ namespace Componentes
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		protected override void Draw (GameTime gameTime)
+		protected override void Draw ()
 		{
 			//var bat = Screen.
 			//bat.Begin (SpriteSortMode.BackToFront);
@@ -147,6 +194,8 @@ namespace Componentes
 			base.AddContent ();
 			foreach (var x in _objects)
 				x.AddContent ();
+
+			Screen.Content.AddContent (damageFont);
 		}
 
 		/// <summary>
@@ -165,7 +214,6 @@ namespace Componentes
 		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
-			Grid.TimeManager.ExecuteNext ();
 		}
 
 		/// <summary>
@@ -176,6 +224,7 @@ namespace Componentes
 		{
 			base.Initialize ();
 			Grid.AddedObject += itemAdded;
+			suscribtions ();
 		}
 
 		/// <summary>
@@ -211,13 +260,13 @@ namespace Componentes
 		/// <param name="p">Dirección de celda.</param>
 		public bool IsVisible (Point p)
 		{
-			return GetVisivilityBox ().Contains (p);
+			return GetVisibilityBox ().Contains (p);
 		}
 
 		/// <summary>
 		/// Gets a rectangle representing the edges (mod grid) of the view
 		/// </summary>
-		public Rectangle GetVisivilityBox ()
+		public Rectangle GetVisibilityBox ()
 		{
 			return new Rectangle (CurrentVisibleTopLeft, VisibleCells);
 		}
@@ -250,7 +299,7 @@ namespace Componentes
 		/// <seealso cref="_edgeSize"/>
 		bool IsInCenter (Point p, Size edge_size)
 		{
-			var edge = GetVisivilityBox ();
+			var edge = GetVisibilityBox ();
 			edge.Inflate (-edge_size.Width, -edge_size.Height);
 			return edge.Contains (p);
 		}

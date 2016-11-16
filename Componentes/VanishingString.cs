@@ -35,6 +35,25 @@ namespace Componentes
 		string _texto;
 		Vector2 topLeft;
 
+		string _fontName;
+
+		/// <summary>
+		/// Gets or sets the name of the font.
+		/// </summary>
+		public string FontName
+		{
+			get
+			{
+				return _fontName;
+			}
+			set
+			{
+				if (Font != null)
+					throw new InvalidOperationException ("FontName cannot be changed after initialization.");
+				_fontName = value;
+			}
+		}
+
 		/// <summary>
 		/// Velocidad de este control.
 		/// </summary>
@@ -173,11 +192,9 @@ namespace Componentes
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		protected override void Draw (GameTime gameTime)
+		protected override void Draw ()
 		{
-			if (Font != null)
-				Screen.Batch.DrawString (Font, Texto, TopLeft, ColorActual);
+			Screen.Batch.DrawString (Font, Texto, TopLeft, ColorActual);
 		}
 
 		/// <summary>
@@ -185,7 +202,7 @@ namespace Componentes
 		/// </summary>
 		protected override void AddContent ()
 		{
-			Screen.Content.AddContent ("fonts");
+			Screen.Content.AddContent (FontName);
 		}
 
 		/// <summary>
@@ -193,20 +210,7 @@ namespace Componentes
 		/// </summary>
 		protected override void InitializeContent ()
 		{
-			Font = Screen.Content.GetContent<BitmapFont> ("fonts");
-		}
-
-		/// <summary>
-		/// Releases all resource used by the <see cref="Componentes.VanishingString"/> object.
-		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Componentes.VanishingString"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Componentes.VanishingString"/> in an unusable state. After
-		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Componentes.VanishingString"/> so
-		/// the garbage collector can reclaim the memory that the <see cref="Componentes.VanishingString"/> was occupying.</remarks>
-		protected override void Dispose ()
-		{
-			Font = null;
-			base.Dispose ();
+			Font = Screen.Content.GetContent<BitmapFont> (FontName);
 		}
 
 		/// <summary>

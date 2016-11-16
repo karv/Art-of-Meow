@@ -92,8 +92,14 @@ namespace Units.Recursos
 			get { return _valor; }
 			set
 			{
-				ValorChanged?.Invoke (this, EventArgs.Empty);
+				var before = _valor;
 				_valor = Math.Min (Math.Max (value, 0), Max);
+
+				// Si no hay cambio, regresar inmediatamente
+				if (_valor == before)
+					return;
+				ValorChanged?.Invoke (this, before);
+
 				if (_valor == Max)
 					ReachedMax?.Invoke (this, EventArgs.Empty);
 				if (_valor == 0)
@@ -139,9 +145,10 @@ namespace Units.Recursos
 		Color IVisibleRecurso.FullColor { get { return Color.Red; } }
 
 		/// <summary>
-		/// Occurs when value changed.
+		/// Ocurre cuando su valor cambia,
+		/// su argumento dice su valor antes del cambio
 		/// </summary>
-		public event EventHandler ValorChanged;
+		public event EventHandler<float> ValorChanged;
 		/// <summary>
 		/// Occurs when reached zero.
 		/// </summary>

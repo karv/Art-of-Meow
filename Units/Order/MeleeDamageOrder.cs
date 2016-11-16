@@ -48,7 +48,7 @@ namespace Units.Order
 						this,
 						extraExp,
 						Target),
-					"Experience");				
+					"Experience");
 			}
 
 		}

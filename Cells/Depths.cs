@@ -28,5 +28,11 @@ namespace Cells
 		/// The controls layer
 		/// </summary>
 		public const float Gui = 0;
+
+		#region GuiSkillIcon
+
+		public const float SkillIcon = 0.05f;
+
+		#endregion
 	}
 }

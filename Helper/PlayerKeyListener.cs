@@ -44,7 +44,7 @@ namespace Helper
 					if (HumanPlayer.Inventory.Any () || HumanPlayer.Equipment.EnumerateEquipment ().Any ())
 					{
 						var scr = new EquipmentScreen (ManagerScreen, HumanPlayer);
-						scr.Ejecutar ();
+						scr.Execute (ScreenExt.DialogOpt);
 					}
 					break;
 				case Keys.C:
@@ -53,8 +53,8 @@ namespace Helper
 				case Keys.S:
 					if (HumanPlayer.Skills.AnyUsable ())
 					{
-						var scr = new InvokeSkillListScreen (ManagerScreen, HumanPlayer);
-						scr.Ejecutar ();
+						var scr = new InvokeSkillListScreen (Juego, HumanPlayer);
+						scr.Execute (ScreenExt.DialogOpt);
 					}
 					break;
 			}

@@ -3,19 +3,39 @@ using Units.Buffs;
 
 namespace Items.Declarations.Equipment
 {
+	/// <summary>
+	/// Armadura equipable genérica.
+	/// Puede cambiar los stats asignando un diccionario
+	/// </summary>
 	public class GenericArmor : Equipment, IBuffGenerating
 	{
-		public Dictionary<string, float> DeltaDict { get; }
+		/// <summary>
+		/// Diccionario que contiene los cambios en los stats (por nombre único) en quien lo lleva puesto
+		/// </summary>
+		/// <value>The delta dict.</value>
+		protected Dictionary<string, float> DeltaDict { get; }
 
+		/// <summary>
+		/// Devuelve o establece el nombre de la textura a usar
+		/// </summary>
 		public string TextureNameGeneric { get { return TextureName; } set { TextureName = value; } }
 
+		/// <summary>
+		/// Slot que ocupa esta armadura
+		/// </summary>
 		public override EquipSlot Slot { get; }
 
-		public IEnumerable<KeyValuePair<string, float>> GetDeltaStat ()
+
+		IEnumerable<KeyValuePair<string, float>> IBuffGenerating.GetDeltaStat ()
 		{
 			return DeltaDict;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.GenericArmor"/> class.
+		/// </summary>
+		/// <param name="nombre">Nombre</param>
+		/// <param name="slot">Slot</param>
 		public GenericArmor (string nombre, EquipSlot slot)
 			: base (nombre)
 		{

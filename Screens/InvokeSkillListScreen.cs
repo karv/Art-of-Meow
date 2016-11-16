@@ -4,13 +4,14 @@ using Moggle.Controles;
 using Moggle.Screens;
 using Units;
 using Units.Skills;
+using AoM;
 
 namespace Screens
 {
 	/// <summary>
 	/// This <see cref="Screen"/> lets the user pick a skill to use
 	/// </summary>
-	public class InvokeSkillListScreen : DialScreen
+	public class InvokeSkillListScreen : Screen
 	{
 		/// <summary>
 		/// Gets a value indicating whether the user has selected a <see cref="ISkill"/> or not.
@@ -49,16 +50,15 @@ namespace Screens
 		/// Gets the background color.
 		/// <see cref="Color.DarkGray"/>
 		/// </summary>
-		public override Color BgColor { get { return Color.DarkGray; } }
+		public override Color? BgColor { get { return Color.DarkGray; } }
 
 		/// <summary>
 		/// Initializes the controls and builds the skill list
 		/// </summary>
-		public override void Initialize ()
+		protected override void DoInitialization ()
 		{
 			buildSkillList ();
-			base.Initialize ();
-
+			base.DoInitialization ();
 		}
 
 		/// <summary>
@@ -77,48 +77,36 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Always draw base screen
-		/// </summary>
-		public override bool DibujarBase { get { return true; } }
-
-		/// <summary>
 		/// Rebice señal del teclado.
 		/// <c>Esc</c> to leave
 		/// </summary>
-		/// <param name="key">Señal tecla</param>
-		public override bool RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		/// <param name="data">Señal tecla</param>
+		public override bool RecibirSeñal (Tuple<MonoGame.Extended.InputListeners.KeyboardEventArgs, ScreenThread> data)
 		{
+			var key = data.Item1;
 			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
-				Salir ();
-			return base.RecibirSeñal (key);
+			{
+				Juego.ScreenManager.ActiveThread.TerminateLast ();
+				return true;
+			}
+			return base.RecibirSeñal (data);
 		}
 
 		void AlSeleccionarSkill (object sender, EventArgs e)
 		{
 			_selección = Contenedor.FocusedItem;
 			_selección.Execute (Unidad);
-			Salir ();
-		}
-
-		/// <summary>
-		/// Se sale de este diálogo.
-		/// Libera todo los recursos usados.
-		/// </summary>
-		public override void Salir ()
-		{
-			base.Salir ();
-			// This line should be auto-handled by the garbage collector
+			//Juego.ScreenManager.ActiveThread.TerminateLast ();
 			Contenedor.Activado -= AlSeleccionarSkill;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Screens.InvokeSkillListScreen"/> class.
 		/// </summary>
-		/// <param name="baseScreen">Base screen</param>
+		/// <param name="gm">Game instance</param>
 		/// <param name="unid">Unidad</param>
-		public InvokeSkillListScreen (IScreen baseScreen, IUnidad unid)
-			: base (baseScreen.Juego,
-			        baseScreen)
+		public InvokeSkillListScreen (Moggle.Game gm, IUnidad unid)
+			: base (gm)
 		{
 			Unidad = unid;
 			Contenedor = new ContenedorSelección<ISkill> (this)
