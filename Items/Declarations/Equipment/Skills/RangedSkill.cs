@@ -40,18 +40,34 @@ namespace Items.Declarations.Equipment.Skills
 				var targ = user.Grid.GetCell (targetPoint.Value).GetAliveUnidadHere ();
 				if (targ != null)
 					DoEffect (user, targ);
+				
+				// Se invoca Execute aunque no haga nada
 				Executed?.Invoke (this, EventArgs.Empty);
 			}
 		}
 
 		static void DoEffect (Units.IUnidad user, Units.IUnidad target)
 		{
-			// TODO
+			var cert = user.Recursos.GetRecurso (ConstantesRecursos.CertezaRango).Valor;
+			var eva = target.Recursos.GetRecurso (ConstantesRecursos.CertezaRango).Valor;
+			var pctHit = eva < cert ? 0.8 : 0.5;
 			var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Destreza) * 0.35f;
-			user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
+			var _r = new Random ();
+			if (_r.NextDouble () < pctHit)
+				user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
+			
 			user.EnqueueOrder (new CooldownOrder (
 				user,
 				1f / user.Recursos.ValorRecurso (ConstantesRecursos.Destreza)));
+
+			// Asignación de stats
+			user.Exp.AddAssignation (
+				user.Recursos.GetRecurso (ConstantesRecursos.CertezaRango),
+				0.1f);
+
+			target.Exp.AddAssignation (
+				target.Recursos.GetRecurso (ConstantesRecursos.EvasiónRango),
+				0.1f);
 		}
 
 		/// <summary>

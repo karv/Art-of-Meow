@@ -35,6 +35,13 @@ namespace Units.Recursos
 		/// Magic points
 		/// </summary>
 		public const string MP = "mp";
-
+		/// <summary>
+		/// Certeza de ataques de rango
+		/// </summary>
+		public const string CertezaRango = "range_prec";
+		/// <summary>
+		/// Evasión de ataques de rango
+		/// </summary>
+		public const string EvasiónRango = "range_eva";
 	}
 }
