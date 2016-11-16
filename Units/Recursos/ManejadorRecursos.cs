@@ -57,7 +57,12 @@ namespace Units.Recursos
 		/// <param name="nombre">Nombre del recurso</param>
 		public IRecurso GetRecurso (string nombre)
 		{
-			return _data [nombre];
+			IRecurso ret;
+			if (_data.TryGetValue (nombre, out ret))
+				return ret;
+			ret = new StatRecurso (nombre, Unidad);
+			_data.Add (nombre, ret);
+			return ret;
 		}
 
 		/// <summary>
