@@ -8,30 +8,47 @@ namespace Helper
 {
 	public sealed class SelectorController
 	{
-		public void Execute (LogicGrid grid, bool terminateLast = false)
-		{
-			var executionScreen = new SelectTargetScreen (Program.MyGame, grid);
+		public LogicGrid Grid { get; }
 
-			if (terminateLast)
+		public bool TerminateLastScreen { get; set; }
+
+		public SelectTargetScreen SelectorScreen { get; }
+
+		public Point CurrentSelectionPoint
+		{
+			get{ return SelectorScreen.GridSelector.CursorPosition; }
+			set{ SelectorScreen.GridSelector.CursorPosition = value; }
+		}
+
+
+		public void Execute ()
+		{
+			if (TerminateLastScreen)
 				Program.MyGame.ScreenManager.ActiveThread.TerminateLast ();
 			
-			executionScreen.Selected += (sender, e) => Selected?.Invoke (executionScreen.GridSelector.CursorPosition);	
+			SelectorScreen.Selected += (sender, e) => Selected?.Invoke (SelectorScreen.GridSelector.CursorPosition);	
 			
-			executionScreen.Execute (ScreenExt.DialogOpt);
+			SelectorScreen.Execute (ScreenExt.DialogOpt);
 		}
 
 		public Action <Point?> Selected { get; }
 
 		public static void Run (LogicGrid grid,
 		                        Action<Point?> onSelect,
+		                        Point startingGridCursor,
 		                        bool terminateLast = false)
 		{
-			var newRun = new SelectorController (onSelect);
-			newRun.Execute (grid, terminateLast);
+			var newRun = new SelectorController (onSelect, grid);
+			newRun.TerminateLastScreen = terminateLast;
+			newRun.CurrentSelectionPoint = startingGridCursor;
+			newRun.Execute ();
 		}
 
-		public SelectorController (Action<Point?> onSelect)
+		public SelectorController (Action<Point?> onSelect, LogicGrid grid)
 		{
+			Grid = grid;
+			SelectorScreen = new SelectTargetScreen (Program.MyGame, Grid);
+			TerminateLastScreen = false;
 			Selected = onSelect;
 		}
 	}

@@ -145,6 +145,35 @@ namespace Cells
 			Objects.Remove (obj);
 		}
 
+		public Point ClosestCellThat (Predicate<Cell> selector, Point anchor)
+		{
+			var pRet = Point.Zero; // Valor default
+			for (int ix = 0; ix < Size.Width; ix++)
+				for (int iy = 0; iy < Size.Height; iy++)
+				{
+					var cpoint = new Point (ix, iy);
+					var cell = GetCell (cpoint);
+					if (Helper.Geometry.SquaredEucludeanDistance (anchor, cpoint) < Helper.Geometry.SquaredEucludeanDistance (
+						    anchor,
+						    pRet) &&
+					    selector (cell))
+						pRet = cpoint;
+				}
+
+			return pRet;
+		}
+
+		public Point GetClosestEnemy (IUnidad unid)
+		{
+			Predicate<Cell> selector = delegate(Cell obj)
+			{
+				var unitInCell = obj.GetAliveUnidadHere ();
+				return unitInCell != null && !unid.Team.Equals (unitInCell.Team);
+			};
+			return ClosestCellThat (selector, unid.Location);
+			
+		}
+
 		/// <summary>
 		/// Libera toda suscripción a esta clase, y también invoca <see cref="Dispose"/> a los objetos de este tablero que 
 		/// son <see cref="IDisposable"/>

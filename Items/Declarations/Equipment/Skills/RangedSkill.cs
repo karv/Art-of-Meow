@@ -22,7 +22,12 @@ namespace Items.Declarations.Equipment.Skills
 		/// <param name="user">Usuario</param>
 		public void Execute (Units.IUnidad user)
 		{
-			SelectorController.Run (user.Grid, z => DoEffect (user, z), true);
+			// Calcular la posisicón inicial del cursor: la del enemigo más cercano
+			SelectorController.Run (
+				user.Grid,
+				z => DoEffect (user, z),
+				user.Grid.GetClosestEnemy (user),
+				true);
 		}
 
 		/// <summary>
