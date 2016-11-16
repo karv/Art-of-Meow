@@ -136,9 +136,6 @@ namespace Screens
 		/// </summary>
 		void inicializarJugador ()
 		{
-			// TEST ing
-
-			// Observe que esta asignación debe ser antes que el hook
 			_playerHooks = new BuffDisplay (this, Player)
 			{
 				MargenInterno = new Moggle.Controles.MargenType
@@ -266,11 +263,23 @@ namespace Screens
 		}
 	}
 
+	/// <summary>
+	/// Extensiones de Screen
+	/// </summary>
 	public static class ScreenExt
 	{
+		/// <summary>
+		/// Opciones tipo Dialo
+		/// </summary>
 		public static readonly ScreenThread.ScreenStackOptions DialogOpt;
+		/// <summary>
+		/// Opciones default
+		/// </summary>
 		public static readonly ScreenThread.ScreenStackOptions NewScreen;
 
+		/// <summary>
+		/// Ejecuta un screen
+		/// </summary>
 		public static void Execute (this Screen scr,
 		                            ScreenThread thread,
 		                            ScreenThread.ScreenStackOptions opt)
@@ -279,6 +288,9 @@ namespace Screens
 			thread.Stack (scr, opt);
 		}
 
+		/// <summary>
+		/// Ejecuta un screen
+		/// </summary>
 		public static void Execute (this Screen scr,
 		                            ScreenThreadManager threadMan,
 		                            ScreenThread.ScreenStackOptions opt)
@@ -286,6 +298,9 @@ namespace Screens
 			Execute (scr, threadMan.ActiveThread, opt);
 		}
 
+		/// <summary>
+		/// Ejecuta un screen
+		/// </summary>
 		public static void Execute (this Screen scr,
 		                            ScreenThread.ScreenStackOptions opt)
 		{

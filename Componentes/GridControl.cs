@@ -159,7 +159,6 @@ namespace Componentes
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
-		/// <param name="gameTime">Game time.</param>
 		protected override void Draw ()
 		{
 			//var bat = Screen.

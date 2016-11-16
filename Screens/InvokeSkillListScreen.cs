@@ -80,7 +80,7 @@ namespace Screens
 		/// Rebice señal del teclado.
 		/// <c>Esc</c> to leave
 		/// </summary>
-		/// <param name="key">Señal tecla</param>
+		/// <param name="data">Señal tecla</param>
 		public override bool RecibirSeñal (Tuple<MonoGame.Extended.InputListeners.KeyboardEventArgs, ScreenThread> data)
 		{
 			var key = data.Item1;
@@ -90,11 +90,6 @@ namespace Screens
 				return true;
 			}
 			return base.RecibirSeñal (data);
-		}
-
-		public override void Draw ()
-		{
-			base.Draw ();
 		}
 
 		void AlSeleccionarSkill (object sender, EventArgs e)
