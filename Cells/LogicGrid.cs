@@ -37,6 +37,9 @@ namespace Cells
 
 		#region IUpdateable implementation
 
+		/// <summary>
+		/// Update the specified gameTime.
+		/// </summary>
 		public void Update (GameTime gameTime)
 		{
 			TimeManager.ExecuteNext ();

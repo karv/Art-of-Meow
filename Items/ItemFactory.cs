@@ -18,6 +18,9 @@ namespace Items
 		/// </summary>
 		/// <seealso cref="Items.Declarations.Equipment.Sword"/>
 		Sword,
+		/// <summary>
+		/// Un arco
+		/// </summary>
 		Bow,
 		/// <summary>
 		/// Potion

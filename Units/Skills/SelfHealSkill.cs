@@ -56,7 +56,10 @@ namespace Units.Skills
 			return true;
 		}
 
-		public event System.EventHandler Executed;
+		/// <summary>
+		/// Occurs when the eexecution finishes completly
+		/// </summary>
+		public event EventHandler Executed;
 
 		#endregion
 

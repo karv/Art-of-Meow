@@ -1,5 +1,3 @@
-using System;
-
 
 namespace Cells
 {
@@ -31,6 +29,9 @@ namespace Cells
 
 		#region GuiSkillIcon
 
+		/// <summary>
+		/// Un icono en el GUI
+		/// </summary>
 		public const float SkillIcon = 0.05f;
 
 		#endregion

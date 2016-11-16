@@ -36,6 +36,9 @@ namespace Items.Declarations.Equipment.Skills
 			// TODO: Seleccionar target
 		}
 
+		/// <summary>
+		/// Causa el efecto en un punto
+		/// </summary>
 		protected virtual void DoEffect (Units.IUnidad user, Point targetPoint)
 		{
 			var targ = user.Grid.GetCell (targetPoint).GetUnidadHere ();
@@ -71,6 +74,9 @@ namespace Items.Declarations.Equipment.Skills
 			return true;
 		}
 
+		/// <summary>
+		/// Occurs when the eexecution finishes completly
+		/// </summary>
 		public event EventHandler Executed;
 
 		#region Contenido

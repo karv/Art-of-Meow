@@ -48,7 +48,10 @@ namespace Items.Declarations.Pots
 			return true;
 		}
 
-		public event System.EventHandler Executed;
+		/// <summary>
+		/// Ocurre cuando se termina la ejecución
+		/// </summary>
+		public event EventHandler Executed;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Pots.HealingPotion"/> class.

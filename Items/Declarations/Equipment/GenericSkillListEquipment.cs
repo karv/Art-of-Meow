@@ -27,6 +27,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
 		/// <param name="invokedSkill">Invoked skill list.</param>
+		/// <param name="slot">Slot</param>
 		public GenericSkillListEquipment (string nombre,
 		                                  IEnumerable<ISkill> invokedSkill, 
 		                                  EquipSlot slot)
