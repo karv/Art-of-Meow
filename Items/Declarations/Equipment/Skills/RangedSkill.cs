@@ -1,13 +1,13 @@
-﻿using AoM;
+﻿using System;
+using AoM;
 using Cells;
+using Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
-using Units.Skills;
-using Screens;
-using System;
 using Units.Order;
 using Units.Recursos;
+using Units.Skills;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -22,27 +22,20 @@ namespace Items.Declarations.Equipment.Skills
 		/// <param name="user">Usuario</param>
 		public void Execute (Units.IUnidad user)
 		{
-			//var scr = Program.MyGame.CurrentScreen as Moggle.Screens.DialScreen;
-			//scr?.Salir ();
-			var executionScreen = new SelectTargetScreen (Program.MyGame, user.Grid);
-			Program.MyGame.ScreenManager.ActiveThread.TerminateLast (); // Terminar la de selección de skill
-			executionScreen.Selected += delegate
-			{
-				DoEffect (user, executionScreen.GridSelector.CursorPosition);
-				Executed?.Invoke (this, EventArgs.Empty);
-			};
-			executionScreen.Execute (ScreenExt.DialogOpt);
-
-			// TODO: Seleccionar target
+			SelectorController.Run (user.Grid, z => DoEffect (user, z), true);
 		}
 
 		/// <summary>
 		/// Causa el efecto en un punto
 		/// </summary>
-		protected virtual void DoEffect (Units.IUnidad user, Point targetPoint)
+		protected virtual void DoEffect (Units.IUnidad user, Point? targetPoint)
 		{
-			var targ = user.Grid.GetCell (targetPoint).GetAliveUnidadHere ();
-			DoEffect (user, targ);
+			if (targetPoint.HasValue)
+			{
+				var targ = user.Grid.GetCell (targetPoint.Value).GetAliveUnidadHere ();
+				if (targ != null)
+					DoEffect (user, targ);
+			}
 		}
 
 		static void DoEffect (Units.IUnidad user, Units.IUnidad target)
