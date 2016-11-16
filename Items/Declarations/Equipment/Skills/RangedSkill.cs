@@ -5,8 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Units.Skills;
 using Screens;
-using System.Diagnostics;
 using System;
+using Units.Order;
+using Units.Recursos;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -25,18 +26,30 @@ namespace Items.Declarations.Equipment.Skills
 			//scr?.Salir ();
 			var executionScreen = new SelectTargetScreen (Program.MyGame, user.Grid);
 			Program.MyGame.ScreenManager.ActiveThread.TerminateLast (); // Terminar la de selección de skill
-			Program.MyGame.ScreenManager.ActiveThread.Terminated += delegate(object sender,
-			                                                                 Moggle.Screens.IScreen e)
+			executionScreen.Selected += delegate
 			{
-				if (executionScreen.Equals (e))
-				{
-					Executed?.Invoke (this, EventArgs.Empty);
-					Debugger.Break ();
-				}
+				DoEffect (user, executionScreen.GridSelector.CursorPosition);
+				Executed?.Invoke (this, EventArgs.Empty);
 			};
 			executionScreen.Execute (ScreenExt.DialogOpt);
 
 			// TODO: Seleccionar target
+		}
+
+		protected virtual void DoEffect (Units.IUnidad user, Point targetPoint)
+		{
+			var targ = user.Grid.GetCell (targetPoint).GetUnidadHere ();
+			DoEffect (user, targ);
+		}
+
+		static void DoEffect (Units.IUnidad user, Units.IUnidad target)
+		{
+			// TODO
+			var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Destreza) * 0.35f;
+			user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
+			user.EnqueueOrder (new CooldownOrder (
+				user,
+				1f / user.Recursos.ValorRecurso (ConstantesRecursos.Destreza)));
 		}
 
 		/// <summary>

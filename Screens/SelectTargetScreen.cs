@@ -90,10 +90,13 @@ namespace Screens
 			// TODO?
 		}
 
+		public event EventHandler Selected;
+
 		public Keys UpKey = Keys.Up;
 		public Keys DownKey = Keys.Down;
 		public Keys LeftKey = Keys.Left;
 		public Keys RightKey = Keys.Right;
+		public Keys SelectKey = Keys.Enter;
 
 		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
@@ -116,6 +119,12 @@ namespace Screens
 			if (key.Key == RightKey)
 			{
 				GridSelector.CursorPosition += new Point (1, 0);
+				return true;
+			}
+			if (key.Key == SelectKey)
+			{
+				Selected?.Invoke (this, EventArgs.Empty);
+				data.Item2.TerminateLast ();
 				return true;
 			}
 			// No mandar señal al otro diálogo que me invocó
