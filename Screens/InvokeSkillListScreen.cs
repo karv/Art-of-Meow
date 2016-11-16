@@ -96,7 +96,8 @@ namespace Screens
 		{
 			_selección = Contenedor.FocusedItem;
 			_selección.Execute (Unidad);
-			Juego.ScreenManager.ActiveThread.TerminateLast ();
+			//Juego.ScreenManager.ActiveThread.TerminateLast ();
+			Contenedor.Activado -= AlSeleccionarSkill;
 		}
 
 		/// <summary>

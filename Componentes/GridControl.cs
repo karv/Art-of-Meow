@@ -214,7 +214,6 @@ namespace Componentes
 		/// <param name="gameTime">Game time.</param>
 		public override void Update (GameTime gameTime)
 		{
-			Grid.TimeManager.ExecuteNext ();
 		}
 
 		/// <summary>

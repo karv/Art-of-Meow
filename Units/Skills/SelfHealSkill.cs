@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle;
 using Units.Order;
 using Units.Recursos;
+using System;
 
 namespace Units.Skills
 {
@@ -25,6 +26,7 @@ namespace Units.Skills
 		public void Execute (IUnidad user)
 		{
 			user.EnqueueOrder (new ExecuteOrder (user, doEffect));
+			Executed?.Invoke (this, EventArgs.Empty);
 		}
 
 		static void doEffect (IUnidad target)
@@ -53,6 +55,8 @@ namespace Units.Skills
 		{
 			return true;
 		}
+
+		public event System.EventHandler Executed;
 
 		#endregion
 
