@@ -297,7 +297,7 @@ namespace Screens
 			DialogOpt = new ScreenThread.ScreenStackOptions
 			{
 				ActualizaBase = false,
-				DibujaBase = false
+				DibujaBase = true
 			};
 			NewScreen = new ScreenThread.ScreenStackOptions
 			{
