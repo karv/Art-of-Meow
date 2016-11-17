@@ -1,10 +1,11 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
+using AoM;
+using Microsoft.Xna.Framework;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
-using Moggle;
-using Microsoft.Xna.Framework;
 
 namespace Cells.CellObjects
 {
@@ -22,9 +23,9 @@ namespace Cells.CellObjects
 			_AlActivar (EventArgs.Empty);
 		}
 
-		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (MonoGame.Extended.InputListeners.KeyboardEventArgs key)
+		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs key)
 		{
-			if (key.Character == ',' || key.Character == '>')
+			if (GlobalKeys.Stairs.Contains (key.Key))
 			{
 				Debug.WriteLine ("Stairs");
 				_AlActivar (EventArgs.Empty);
