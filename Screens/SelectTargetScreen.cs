@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AoM;
 using Cells;
 using Componentes;
@@ -155,33 +156,38 @@ namespace Screens
 		/// <param name="data">Señal recibida</param>
 		public override bool RecibirSeñal (Tuple<KeyboardEventArgs, ScreenThread> data)
 		{
-			var key = data.Item1;
-			if (key.Key == UpKey)
+			var key = data.Item1.Key;
+			if (GlobalKeys.SelectUp.Contains (key))
 			{
 				GridSelector.CursorPosition += new Point (0, -1);
 				return true;
 			}
-			if (key.Key == DownKey)
+			if (GlobalKeys.SelectDownKey.Contains (key))
 			{
 				GridSelector.CursorPosition += new Point (0, 1);
 				return true;
 			}
-			if (key.Key == LeftKey)
+			if (GlobalKeys.SelectLeft.Contains (key))
 			{
 				GridSelector.CursorPosition += new Point (-1, 0);
 				return true;
 			}
-			if (key.Key == RightKey)
+			if (GlobalKeys.SelectRight.Contains (key))
 			{
 				GridSelector.CursorPosition += new Point (1, 0);
 				return true;
 			}
-			if (key.Key == SelectKey)
+			if (GlobalKeys.Accept.Contains (key))
 			{
 				Selected?.Invoke (this, EventArgs.Empty);
 				data.Item2.TerminateLast ();
 				return true;
 			}
+			if (GlobalKeys.Cancel.Contains (key))
+			{
+				// TODO
+			}
+				
 			// No mandar señal al otro diálogo que me invocó
 			// return base.RecibirSeñal (key);
 			return base.RecibirSeñal (data);

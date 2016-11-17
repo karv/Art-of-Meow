@@ -133,7 +133,7 @@ namespace Screens
 				BgColor = Color.LightBlue * 0.5f,
 				SelectionEnabled = false,
 
-				DownKey = GlobalKeys.SelectMovDownKey [0],
+				DownKey = GlobalKeys.SelectDownKey [0],
 				UpKey = GlobalKeys.SelectUp [0],
 				LeftKey = GlobalKeys.SelectLeft [0],
 				RightKey = GlobalKeys.SelectRight [0],

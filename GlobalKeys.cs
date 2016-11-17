@@ -98,7 +98,7 @@ namespace AoM
 		/// <summary>
 		/// Seleccionar abajo
 		/// </summary>
-		public static Keys [] SelectMovDownKey = { Keys.Down };
+		public static Keys [] SelectDownKey = { Keys.Down };
 		/// <summary>
 		/// Seleccionar izquierda
 		/// </summary>
