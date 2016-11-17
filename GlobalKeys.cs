@@ -107,9 +107,13 @@ namespace AoM
 		/// Seleccionar derecha
 		/// </summary>
 		public static Keys [] SelectRight = { Keys.Right };
-
+		/// <summary>
+		/// Aceptar
+		/// </summary>
 		public static Keys [] Accept = { Keys.Enter };
-
+		/// <summary>
+		/// Cancelar
+		/// </summary>
 		public static Keys [] Cancel = { Keys.Escape };
 
 		#endregion
