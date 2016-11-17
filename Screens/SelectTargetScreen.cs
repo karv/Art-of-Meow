@@ -185,7 +185,7 @@ namespace Screens
 			}
 			if (GlobalKeys.Cancel.Contains (key))
 			{
-				// TODO
+				data.Item2.TerminateLast ();
 			}
 				
 			// No mandar señal al otro diálogo que me invocó
