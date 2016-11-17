@@ -169,6 +169,7 @@
     <Compile Include="Helper\SelectorController.cs" />
     <Compile Include="Helper\Geometry.cs" />
     <Compile Include="GlobalKeys.cs" />
+    <Compile Include="Units\Recursos\RecursoEquilibro.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

@@ -43,5 +43,7 @@ namespace Units.Recursos
 		/// Evasión de ataques de rango
 		/// </summary>
 		public const string EvasiónRango = "range_eva";
+
+		public const string Equilibrio = "equilibrio";
 	}
 }
