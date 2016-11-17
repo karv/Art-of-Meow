@@ -62,7 +62,9 @@ namespace Items
 						"Arco",
 						// TODO: Buscar icono
 						new Units.Skills.ISkill[] { new RangedDamage { TextureName = "pixel" } },
-						EquipSlot.MainHand);
+						EquipSlot.MainHand, 
+						"pixel"
+					);
 					break;
 				case ItemType.HealingPotion:
 					ret = new HealingPotion ();

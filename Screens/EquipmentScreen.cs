@@ -64,6 +64,15 @@ namespace Screens
 				x.AddContent ();
 		}
 
+		/// <summary>
+		/// Cargar contenido de cada control incluido.
+		/// </summary>
+		public override void AddAllContent ()
+		{
+			base.AddAllContent ();
+			cargarContenido ();
+		}
+
 		void buildEquipmentList ()
 		{
 			selectableEquipment = new List<IItem> ();
