@@ -94,7 +94,7 @@ namespace Componentes
 		/// <summary>
 		/// The size of a cell (Draw)
 		/// </summary>
-		public SizeF CellSize = new SizeF (24, 24);
+		public Size CellSize = new Size (24, 24);
 
 		/// <summary>
 		/// Celda de _data que se muestra en celda visible (0,0)
@@ -118,8 +118,8 @@ namespace Componentes
 		{
 			get
 			{
-				return new Size ((int)(VisibleCells.Width * CellSize.Width),
-					(int)(VisibleCells.Height * CellSize.Height));
+				return new Size (VisibleCells.Width * CellSize.Width,
+					VisibleCells.Height * CellSize.Height);
 			}
 		}
 
@@ -129,8 +129,8 @@ namespace Componentes
 		/// <param name="p">coordenadas del spot</param>
 		public Point CellSpotLocation (Point p)
 		{
-			var _x = (int)(ControlTopLeft.X + CellSize.Width * (p.X - CurrentVisibleTopLeft.X));
-			var _y = (int)(ControlTopLeft.Y + CellSize.Height * (p.Y - CurrentVisibleTopLeft.Y));
+			var _x = ControlTopLeft.X + CellSize.Width * (p.X - CurrentVisibleTopLeft.X);
+			var _y = ControlTopLeft.Y + CellSize.Height * (p.Y - CurrentVisibleTopLeft.Y);
 			return new Point (_x, _y);
 		}
 
@@ -168,9 +168,7 @@ namespace Componentes
 			{
 				if (IsVisible (x.Location))
 				{
-					var rectOutput = new Rectangle (
-						                 CellSpotLocation (x.Location),
-						                 (Size)CellSize);
+					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
 					x.Draw (bat, rectOutput);
 				}
 			}

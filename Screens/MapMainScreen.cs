@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
@@ -145,10 +144,10 @@ namespace Screens
 		/// </summary>
 		void generateGridSizes ()
 		{
-			int visCellX = (int)(GetDisplayMode.Width / GridControl.CellSize.Width);
-			int visCellY = (int)(GetDisplayMode.Height / GridControl.CellSize.Height);
+			int visCellX = GetDisplayMode.Width / GridControl.CellSize.Width;
+			int visCellY = GetDisplayMode.Height / GridControl.CellSize.Height;
 			GridControl.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - (int)(GridControl.CellSize.Width * visCellX);
+			int ScreenOffsX = GetDisplayMode.Width - (GridControl.CellSize.Width * visCellX);
 			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
 		}
 
@@ -184,7 +183,6 @@ namespace Screens
 			GridControl = new GridControl (CurrentGrid, this);
 
 			inicializarJugador ();
-			// REMOVE: ¿Move the Grid initializer ot itself?
 			generateGridSizes ();
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán

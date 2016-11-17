@@ -57,7 +57,7 @@ namespace Screens
 			// Dibujar el seleccionado
 			var bat = Screen.Batch;
 			var loc = CellSpotLocation (CursorPosition);
-			var rectOut = new Rectangle (loc, (Size)CellSize);
+			var rectOut = new Rectangle (loc, CellSize);
 			bat.Draw (
 				pixel,
 				rectOut,
