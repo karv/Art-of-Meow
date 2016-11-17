@@ -1,9 +1,43 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Units.Recursos
 {
-	public class RecursoEquilibro : Recurso
+	public class RecursoEquilibro : Recurso, IVisibleRecurso
 	{
+		#region Visibilidad
+
+		float IVisibleRecurso.PctValue (float value)
+		{
+			return value;
+		}
+
+		bool IVisibleRecurso.Visible
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		string IVisibleRecurso.TextureFill
+		{
+			get
+			{
+				return "pixel";
+			}
+		}
+
+		Color IVisibleRecurso.FullColor
+		{
+			get
+			{
+				return Color.Blue;
+			}
+		}
+
+		#endregion
+
 		protected override string GetLongName ()
 		{
 			return "Equilibro";
