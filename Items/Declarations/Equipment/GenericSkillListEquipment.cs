@@ -28,13 +28,28 @@ namespace Items.Declarations.Equipment
 		/// <param name="nombre">Nombre.</param>
 		/// <param name="invokedSkill">Invoked skill list.</param>
 		/// <param name="slot">Slot</param>
+		/// <param name="textureName">Texture</param>
 		public GenericSkillListEquipment (string nombre,
 		                                  IEnumerable<ISkill> invokedSkill, 
-		                                  EquipSlot slot)
+		                                  EquipSlot slot,
+		                                  string textureName)
 			: base (nombre)
 		{
 			InvokedSkills = invokedSkill;
 			Slot = slot;
+			TextureName = textureName;
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="nombre">Nombre.</param>
+		/// <param name="invokedSkill">Invoked skill list.</param>
+		/// <param name="slot">Slot</param>
+		public GenericSkillListEquipment (string nombre,
+		                                  IEnumerable<ISkill> invokedSkill, 
+		                                  EquipSlot slot)
+			: this (nombre, invokedSkill, slot, nombre)
+		{
 		}
 	}
 }
