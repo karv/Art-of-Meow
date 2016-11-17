@@ -94,7 +94,7 @@ namespace AoM
 		/// <summary>
 		/// Seleccionar arriba
 		/// </summary>
-		public static Keys [] SelectUpKey = { Keys.Up };
+		public static Keys [] SelectUp = { Keys.Up };
 		/// <summary>
 		/// Seleccionar abajo
 		/// </summary>
@@ -102,11 +102,15 @@ namespace AoM
 		/// <summary>
 		/// Seleccionar izquierda
 		/// </summary>
-		public static Keys [] SelectMovLeftKey = { Keys.Left };
+		public static Keys [] SelectLeft = { Keys.Left };
 		/// <summary>
 		/// Seleccionar derecha
 		/// </summary>
-		public static Keys [] SelectMovRightKey = { Keys.Right };
+		public static Keys [] SelectRight = { Keys.Right };
+
+		public static Keys [] Accept = { Keys.Enter };
+
+		public static Keys [] Cancel = { Keys.Escape };
 
 		#endregion
 	}

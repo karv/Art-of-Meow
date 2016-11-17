@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
@@ -6,6 +7,7 @@ using Moggle.Screens;
 using Units;
 using Units.Equipment;
 using Units.Skills;
+using AoM;
 
 namespace Screens
 {
@@ -42,7 +44,6 @@ namespace Screens
 		/// Color de fondo. <see cref="Color.DarkGray"/>
 		/// </summary>
 		public override Color? BgColor { get { return Color.DarkGray; } }
-
 
 		/// <summary>
 		/// Inicializa los subcomponentes y actualiza los equipment del usuario
@@ -93,14 +94,13 @@ namespace Screens
 		{
 			var key = data.Item1;
 
-			if (key.Key == Microsoft.Xna.Framework.Input.Keys.Escape)
+			if (GlobalKeys.Cancel.Contains (key.Key))
 			{
 				Juego.ScreenManager.ActiveThread.TerminateLast ();
 				return true;
 			}			
 			return base.RecibirSeñal (data);
 		}
-
 
 		void Contenedor_cambio_selección (object sender, System.EventArgs e)
 		{
@@ -155,7 +155,13 @@ namespace Screens
 				},
 				GridSize = new MonoGame.Extended.Size (15, 15),
 				BgColor = Color.LightBlue * 0.5f,
-				SelectionEnabled = true
+				SelectionEnabled = true,
+
+				DownKey = GlobalKeys.SelectMovDownKey [0],
+				UpKey = GlobalKeys.SelectUp [0],
+				LeftKey = GlobalKeys.SelectLeft [0],
+				RightKey = GlobalKeys.SelectRight [0],
+				EnterKey = GlobalKeys.Accept [0],
 			};
 
 			AddComponent (Contenedor);
