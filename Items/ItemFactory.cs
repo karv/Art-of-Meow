@@ -1,10 +1,10 @@
 ﻿using System;
 using AoM;
 using Items.Declarations.Equipment;
+using Items.Declarations.Equipment.Skills;
 using Items.Declarations.Pots;
 using Microsoft.Xna.Framework;
 using Moggle;
-using Items.Declarations.Equipment.Skills;
 
 namespace Items
 {
@@ -61,9 +61,9 @@ namespace Items
 					ret = new GenericSkillListEquipment (
 						"Arco",
 						// TODO: Buscar icono
-						new Units.Skills.ISkill[] { new RangedDamage { TextureName = "pixel" } },
+						new Units.Skills.ISkill[] { new RangedDamage { TextureName = "Items//bow_orange" } },
 						EquipSlot.MainHand, 
-						"pixel"
+						"Items//bow_orange"
 					);
 					break;
 				case ItemType.HealingPotion:
