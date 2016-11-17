@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Items;
-using Units.Order;
 using MonoGame.Extended.InputListeners;
+using Units.Order;
 
 namespace Units.Inteligencia
 {
@@ -33,62 +34,56 @@ namespace Units.Inteligencia
 		bool Moggle.Comm.IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs keyArg)
 		{
 			var key = keyArg.Key;
-			switch (key)
+			if (GlobalKeys.MovUpKey.Contains (key))
 			{
-				case Microsoft.Xna.Framework.Input.Keys.Down:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad2:
-				case Microsoft.Xna.Framework.Input.Keys.K:
-					ActionDir = MovementDirectionEnum.Down;
-					return true;
-				case Microsoft.Xna.Framework.Input.Keys.Right:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad6:
-				case Microsoft.Xna.Framework.Input.Keys.O:
-					ActionDir = MovementDirectionEnum.Right;
-					return true;
-				case Microsoft.Xna.Framework.Input.Keys.Up:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad8:
-				case Microsoft.Xna.Framework.Input.Keys.D8:
-					ActionDir = MovementDirectionEnum.Up;
-					return true;
-				case Microsoft.Xna.Framework.Input.Keys.Left:
-				case Microsoft.Xna.Framework.Input.Keys.NumPad4:
-				case Microsoft.Xna.Framework.Input.Keys.U:
-					ActionDir = MovementDirectionEnum.Left;
-					return true;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad1:
-				case Microsoft.Xna.Framework.Input.Keys.J:
-					ActionDir = MovementDirectionEnum.DownLeft;
-					return true;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad3:
-				case Microsoft.Xna.Framework.Input.Keys.L:
-					ActionDir = MovementDirectionEnum.DownRight;
-					return true;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad7:
-				case Microsoft.Xna.Framework.Input.Keys.D7:
-					ActionDir = MovementDirectionEnum.UpLeft;
-					return true;
-				case Microsoft.Xna.Framework.Input.Keys.NumPad9:
-				case Microsoft.Xna.Framework.Input.Keys.D9:
-					ActionDir = MovementDirectionEnum.UpRight;
-					return true;
+				ActionDir = MovementDirectionEnum.Up;
+			}
+			else if (GlobalKeys.MovDownKey.Contains (key))
+			{
+				ActionDir = MovementDirectionEnum.Down;
+			}
+			else if (GlobalKeys.MovLeftKey.Contains (key))
+			{
+				ActionDir = MovementDirectionEnum.Left;
+			}
+			else if (GlobalKeys.MovRightKey.Contains (key))
+			{
+				ActionDir = MovementDirectionEnum.Right;
+			}
+			else if (GlobalKeys.MovUpLeftKey.Contains (key))
+			{
+				ActionDir = MovementDirectionEnum.UpLeft;
+			}
+			else if (GlobalKeys.MovUpRightKey.Contains (key))
+			{
+				ActionDir = MovementDirectionEnum.UpRight;
+			}
+			else if (GlobalKeys.MovDownLeftKey.Contains (key))
+			{
+				ActionDir = MovementDirectionEnum.DownLeft;
+			}
+			else if (GlobalKeys.MovDownRightKey.Contains (key))
+			{
+				ActionDir = MovementDirectionEnum.DownRight;
+			}
+			else if (GlobalKeys.PickupDroppedItems.Contains (key))
+			{
+				// Tomar los objetos
+				var objs = new List<GroundItem> (ControlledUnidad.Grid.GetCell (ControlledUnidad.Location).Objects.OfType<GroundItem> ());
 
-				case Microsoft.Xna.Framework.Input.Keys.OemPeriod:
-					// Tomar los objetos
-					var objs = new List<GroundItem> (ControlledUnidad.Grid.GetCell (ControlledUnidad.Location).Objects.OfType<GroundItem> ());
-						
-					foreach (var x in objs)
-					{
-						ControlledUnidad.Inventory.Add (x.ItemClass);
-						x.RemoveFromGrid ();
-					}
+				foreach (var x in objs)
+				{
+					ControlledUnidad.Inventory.Add (x.ItemClass);
+					x.RemoveFromGrid ();
+				}
 
-					const float baseWaitTime = 0.2f;
-					const float extraWaitTime = 0.07f;
-					var waitTime = baseWaitTime + objs.Count * extraWaitTime;
-					ControlledUnidad.EnqueueOrder (new CooldownOrder (
-						ControlledUnidad,
-						waitTime));
-					return true;
+				const float baseWaitTime = 0.2f;
+				const float extraWaitTime = 0.07f;
+				var waitTime = baseWaitTime + objs.Count * extraWaitTime;
+				ControlledUnidad.EnqueueOrder (new CooldownOrder (
+					ControlledUnidad,
+					waitTime));
+				return true;
 			}
 			return false;
 		}

@@ -7,6 +7,7 @@ using MonoGame.Extended.InputListeners;
 using Screens;
 using Units;
 using Microsoft.Xna.Framework;
+using AoM;
 
 namespace Helper
 {
@@ -21,7 +22,6 @@ namespace Helper
 
 		Moggle.Game Juego { get { return ManagerScreen.Juego; } }
 
-
 		#region IReceptor implementation
 
 		/// <summary>
@@ -32,38 +32,46 @@ namespace Helper
 		{
 			var key = keyArg.Key;
 
-			switch (key)
+			if (GlobalKeys.GameExit.Contains (key))
 			{
-				case Keys.Escape:
-					Juego.Exit ();
-					break;
-				case Keys.Tab:
-					Debug.WriteLine (HumanPlayer.Recursos);
-					break;
-				case Keys.I:
-					if (HumanPlayer.Inventory.Any () || HumanPlayer.Equipment.EnumerateEquipment ().Any ())
-					{
-						var scr = new EquipmentScreen (ManagerScreen, HumanPlayer);
-						scr.Execute (ScreenExt.DialogOpt);
-					}
-					break;
-				case Keys.C:
-					ManagerScreen.GridControl.TryCenterOn (HumanPlayer.Location);
-					break;
-				case Keys.S:
-					if (HumanPlayer.Skills.AnyUsable ())
-					{
-						var scr = new InvokeSkillListScreen (Juego, HumanPlayer);
-						scr.Execute (ScreenExt.DialogOpt);
-					}
-					break;
+				Juego.Exit ();
+				return true;
+			}
+			#if DEBUG
+			if (GlobalKeys.PrintRec.Contains (key))
+			{
+				Debug.WriteLine (HumanPlayer.Recursos);
+				return true;
+			}
+			#endif 
+			if (GlobalKeys.OpenWindowInventory.Contains (key))
+			{
+				if (HumanPlayer.Inventory.Any () || HumanPlayer.Equipment.EnumerateEquipment ().Any ())
+				{
+					var scr = new EquipmentScreen (ManagerScreen, HumanPlayer);
+					scr.Execute (ScreenExt.DialogOpt);
+				}
+				return true;
+			}
+			if (GlobalKeys.Center.Contains (key))
+			{
+				ManagerScreen.GridControl.TryCenterOn (HumanPlayer.Location);
+				return true;
+			}
+			if (GlobalKeys.OpenWindowSkills.Contains (key))
+			{
+				if (HumanPlayer.Skills.AnyUsable ())
+				{
+					var scr = new InvokeSkillListScreen (Juego, HumanPlayer);
+					scr.Execute (ScreenExt.DialogOpt);
+				}
+				return true;
 			}
 			return false;
 		}
 
 		#endregion
 
-		
 		#region IComponent implementation
 
 		void IComponent.AddContent ()
