@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework;
 
 namespace Units.Recursos
 {
+	/// <summary>
+	/// Recurso equilibro
+	/// </summary>
 	public class RecursoEquilibro : Recurso, IVisibleRecurso
 	{
 		#region Visibilidad
@@ -38,21 +41,37 @@ namespace Units.Recursos
 
 		#endregion
 
+		/// <summary>
+		/// Gets the detailed name
+		/// </summary>
+		/// <returns>The long name.</returns>
 		protected override string GetLongName ()
 		{
 			return "Equilibro";
 		}
 
+		/// <summary>
+		/// Gets the short name
+		/// </summary>
+		/// <returns>The short name.</returns>
 		protected override string GetShortName ()
 		{
 			return "Eq";
 		}
 
+		/// <summary>
+		/// Gets the unique name
+		/// </summary>
+		/// <returns>The unique name.</returns>
 		protected override string GetUniqueName ()
 		{
 			return ConstantesRecursos.Equilibrio;
 		}
 
+		/// <summary>
+		/// Updates the object
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
 		public override void Update (float gameTime)
 		{
 			base.Update (gameTime);
@@ -65,6 +84,9 @@ namespace Units.Recursos
 			Valor = Math.Min (1, ubValue);
 		}
 
+		/// <summary>
+		/// Valor actual del recurso.
+		/// </summary>
 		public override float Valor
 		{
 			get
@@ -77,6 +99,10 @@ namespace Units.Recursos
 			}
 		}
 
+		/// <summary>
+		/// El valor de la regeneración
+		/// </summary>
+		/// <value>The regen.</value>
 		public float Regen
 		{ 
 			get { return _regen.Valor; }
@@ -86,6 +112,9 @@ namespace Units.Recursos
 		readonly RegenParam _regen;
 		readonly StatRecurso.ValorParám _valor;
 
+		/// <summary>
+		/// </summary>
+		/// <param name="unidad">Unidad.</param>
 		public RecursoEquilibro (IUnidad unidad)
 			: base (unidad)
 		{
