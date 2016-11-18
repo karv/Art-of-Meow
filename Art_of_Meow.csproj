@@ -171,6 +171,7 @@
     <Compile Include="Units\Recursos\RecursoEquilibro.cs" />
     <Compile Include="Helper\HitDamageCalculator.cs" />
     <Compile Include="Componentes\VanishingLabel.cs" />
+    <Compile Include="Skills\IEffect.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -205,5 +206,6 @@
     <Folder Include="Cells\Collision\" />
     <Folder Include="Content\" />
     <Folder Include="Items\Declarations\Equipment\Skills\" />
+    <Folder Include="Skills\" />
   </ItemGroup>
 </Project>
