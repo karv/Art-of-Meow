@@ -482,6 +482,12 @@ namespace Units
 				Max = 10,
 				Valor = 10
 			});
+
+			Recursos.Add (new RecursoEquilibro (this)
+			{
+				Regen = 1,
+				Valor = 1
+			});
 		}
 
 		static int nextId;
