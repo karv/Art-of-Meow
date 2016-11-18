@@ -65,7 +65,7 @@ namespace Componentes
 			var rec = sender as IRecurso;
 			var unid = rec.Unidad;
 			var delta = rec.Valor - e;
-			var str = new VanishingString (
+			var str = new VanishingLabel (
 				          Screen,
 				          delta.ToString (),
 				          TimeSpan.FromMilliseconds (milisecsDuration))

@@ -7,21 +7,18 @@ using MonoGame.Extended.Shapes;
 
 namespace Componentes
 {
-	// TODO:; No almacenar Bounds como campo, recalcularlo cada vez que se requiera
-	// TODO: rename VanishingLabel
-	// TEST
 	/// <summary>
 	/// Vanishing string.
 	/// </summary>
-	public class VanishingString : DSBC
+	public class VanishingLabel : DSBC
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Componentes.VanishingString"/> class.
+		/// Initializes a new instance of the <see cref="Componentes.VanishingLabel"/> class.
 		/// </summary>
 		/// <param name="screen">Screen.</param>
 		/// <param name="texto">Texto.</param>
 		/// <param name="duración">Duración.</param>
-		public VanishingString (IScreen screen, string texto, TimeSpan duración)
+		public VanishingLabel (IScreen screen, string texto, TimeSpan duración)
 			: base (screen)
 		{
 			_texto = texto;
@@ -248,9 +245,9 @@ namespace Componentes
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents the current <see cref="Componentes.VanishingString"/>.
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Componentes.VanishingLabel"/>.
 		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Componentes.VanishingString"/>.</returns>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Componentes.VanishingLabel"/>.</returns>
 		public override string ToString ()
 		{
 			return string.Format (

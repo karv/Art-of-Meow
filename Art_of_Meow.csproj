@@ -100,7 +100,6 @@
     <Compile Include="Units\Inteligencia\ChaseIntelligence.cs" />
     <Compile Include="Units\Inteligencia\HumanIntelligence.cs" />
     <Compile Include="Items\Inventory.cs" />
-    <Compile Include="Componentes\VanishingString.cs" />
     <Compile Include="Items\IItem.cs" />
     <Compile Include="Items\IInventory.cs" />
     <Compile Include="Items\GroundItem.cs" />
@@ -171,6 +170,7 @@
     <Compile Include="GlobalKeys.cs" />
     <Compile Include="Units\Recursos\RecursoEquilibro.cs" />
     <Compile Include="Helper\HitDamageCalculator.cs" />
+    <Compile Include="Componentes\VanishingLabel.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
