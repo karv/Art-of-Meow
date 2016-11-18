@@ -61,7 +61,7 @@ namespace Units.Recursos
 
 		void doRegen (float gameTime)
 		{
-			var ubValue = Regen * gameTime + Valor;
+			var ubValue = Regen * gameTime / 3 + Valor;
 			Valor = Math.Min (1, ubValue);
 		}
 
