@@ -39,7 +39,6 @@ namespace Componentes
 
 		void reInitialize ()
 		{
-			// TODO
 			Initialize ();
 			var cont = Game.Contenido;
 			AddContent ();

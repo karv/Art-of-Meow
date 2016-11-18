@@ -191,7 +191,6 @@ namespace Screens
 			// No mandar señal al otro diálogo que me invocó
 			// return base.RecibirSeñal (key);
 			return base.RecibirSeñal (data);
-			// TODO Necesito poder recuperar todos los screens
 		}
 
 		/// <summary>

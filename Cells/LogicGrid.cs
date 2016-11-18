@@ -25,12 +25,10 @@ namespace Cells
 
 		void IComponent.AddContent ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		void IComponent.InitializeContent ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		#endregion
@@ -51,7 +49,6 @@ namespace Cells
 
 		void IGameComponent.Initialize ()
 		{
-			throw new NotImplementedException ();
 		}
 
 		#endregion

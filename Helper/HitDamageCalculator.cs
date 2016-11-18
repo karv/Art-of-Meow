@@ -20,7 +20,7 @@ namespace Helper
 		public static double GetPctHit (float attHit, float defEva, float equilibrio)
 		{
 			var rate = attHit * Math.Pow (equilibrio, 2) / defEva;
-			return Math.Min (1, rate); // TODO
+			return Math.Min (1, rate);
 		}
 
 		/// <summary>

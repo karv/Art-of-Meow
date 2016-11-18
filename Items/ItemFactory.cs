@@ -60,7 +60,6 @@ namespace Items
 				case ItemType.Bow:
 					ret = new GenericSkillListEquipment (
 						"Arco",
-						// TODO: Buscar icono
 						new Units.Skills.ISkill[] { new RangedDamage { TextureName = "Items//bow_orange" } },
 						EquipSlot.MainHand, 
 						"Items//bow_orange"
