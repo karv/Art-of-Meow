@@ -8,6 +8,7 @@ using Moggle.Controles;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
+using Skills;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -28,6 +29,13 @@ namespace Items.Declarations.Equipment.Skills
 				z => DoEffect (user, z),
 				user.Grid.GetClosestEnemy (user),
 				true);
+		}
+
+		public SkillInstance GetInstance (Units.IUnidad user)
+		{
+			var ret = new SkillInstance (this, user);
+
+			throw new NotImplementedException ();
 		}
 
 		/// <summary>

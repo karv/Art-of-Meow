@@ -95,7 +95,8 @@ namespace Screens
 		void AlSeleccionarSkill (object sender, EventArgs e)
 		{
 			_selección = Contenedor.FocusedItem;
-			_selección.Execute (Unidad);
+			var instance = _selección.GetInstance (Unidad);
+			instance.Execute ();
 			//Juego.ScreenManager.ActiveThread.TerminateLast ();
 			Contenedor.Activado -= AlSeleccionarSkill;
 		}

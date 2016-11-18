@@ -3,6 +3,7 @@ using Units;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
+using Skills;
 
 namespace Items.Declarations.Pots
 {
@@ -18,22 +19,25 @@ namespace Items.Declarations.Pots
 		protected virtual float HealHp { get; set; }
 
 		/// <summary>
-		/// Executes this skill
+		/// Gets the instance.
 		/// </summary>
-		/// <param name="user">The caster</param>
-		void ISkill.Execute (IUnidad user)
+		/// <returns>The instance.</returns>
+		/// <param name="user">User.</param>
+		SkillInstance ISkill.GetInstance (IUnidad user)
 		{
-			// Eliminarme del inventory
-			user.Inventory.Items.Remove (this);
+			var ret = new SkillInstance (this, user);
+			ret.AddEffect (new RemoveItemEffect (user, user, this));
+			ret.AddEffect (new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp));
 
-			user.EnqueueOrder (new ExecuteOrder (user, doEffect));
-			Executed?.Invoke (this, EventArgs.Empty);
+			return ret;
+			//user.EnqueueOrder (new ExecuteOrder (user, doEffect));
+			//Executed?.Invoke (this, EventArgs.Empty);
 		}
 
 		void doEffect (IUnidad target)
 		{
-			var hpRec = target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			hpRec.Valor += HealHp;
+			//var hpRec = target.Recursos.GetRecurso (ConstantesRecursos.HP);
+			//hpRec.Valor += HealHp;
 		}
 
 		bool ISkill.IsCastable (IUnidad user)

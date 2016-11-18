@@ -10,6 +10,7 @@ using Units.Order;
 using Units.Recursos;
 using Units.Skills;
 using System;
+using Skills;
 
 namespace Units
 {
@@ -19,7 +20,9 @@ namespace Units
 	public interface IUnidad :
 	IUpdateGridObject,
 	ICollidableGridObject,
-	IExpGiver
+	IExpGiver,
+	IEffectAgent,
+	ITarget
 	{
 		/// <summary>
 		/// Gets the map grid

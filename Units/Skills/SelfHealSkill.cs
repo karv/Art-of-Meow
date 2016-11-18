@@ -4,6 +4,7 @@ using Moggle;
 using Units.Order;
 using Units.Recursos;
 using System;
+using Skills;
 
 namespace Units.Skills
 {
@@ -18,6 +19,18 @@ namespace Units.Skills
 		const float _mpCost = 3f;
 
 		static BibliotecaContenido content { get; }
+
+		public SkillInstance GetInstance (IUnidad user)
+		{
+			var ret = new SkillInstance (this, user);
+			ret.AddEffect (new ChangeRecurso (
+				user,
+				user,
+				ConstantesRecursos.MP,
+				_mpCost));
+			ret.AddEffect (new ChangeRecurso (user, user, ConstantesRecursos.HP, _heal));
+			return ret;
+		}
 
 		/// <summary>
 		/// Executes this skill

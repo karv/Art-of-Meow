@@ -1,5 +1,7 @@
 using Moggle.Controles;
 using System;
+using System.Collections.Generic;
+using Skills;
 
 namespace Units.Skills
 {
@@ -9,10 +11,10 @@ namespace Units.Skills
 	public interface ISkill : IDibujable, IComponent
 	{
 		/// <summary>
-		/// Executes this <see cref="ISkill"/>
+		/// Build a skill instance
 		/// </summary>
-		/// <param name="user">The caster</param>
-		void Execute (IUnidad user);
+		/// <param name="user">Caster</param>
+		SkillInstance GetInstance (IUnidad user);
 
 		/// <summary>
 		/// Determines whether this skill is castable by the specified user.

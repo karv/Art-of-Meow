@@ -1,8 +1,11 @@
+using System.Linq;
 using AoM;
 using Cells;
 using Microsoft.Xna.Framework;
 using Screens;
 using System;
+using Skills;
+using System.Collections.Generic;
 
 namespace Helper
 {
@@ -38,12 +41,23 @@ namespace Helper
 			set{ SelectorScreen.GridSelector.CursorPosition = value; }
 		}
 
+		public Cell SelectedCell ()
+		{
+			return Grid.GetCell (CurrentSelectionPoint);
+		}
+
+		/*
 		/// <summary>
 		/// La acción que se realizará después de seleccionar.
 		/// El argumento es el punto de selección (o <c>null</c> si cancela)
 		/// </summary>
 		public Action <Point?> Selected { get; }
+		*/
 
+		public Predicate<ITarget> AcceptingTargets = z => true;
+		public Func<ITarget, IEffect> EffectMaker;
+
+		protected SkillInstance Instance { get; }
 
 		/// <summary>
 		/// Executa la selección
@@ -53,10 +67,26 @@ namespace Helper
 			if (TerminateLastScreen)
 				Program.MyGame.ScreenManager.ActiveThread.TerminateLast ();
 			
-			SelectorScreen.Selected += (sender, e) => Selected?.Invoke (SelectorScreen.GridSelector.CursorPosition);	
+			SelectorScreen.Selected += (sender, e) => 
+				Response?.Invoke (this, EventArgs.Empty);
 			
 			SelectorScreen.Execute (ScreenExt.DialogOpt);
 		}
+
+		List<IEffect> _currentEffects = new List<IEffect> ();
+
+		void rebuildEffects ()
+		{
+			_currentEffects.Clear ();
+			var selCell = SelectedCell ();
+			foreach (var c in selCell.Objects.Where (z => AcceptingTargets(z)))
+			{
+				var newEffect = EffectMaker (c);
+				_currentEffects.Add (newEffect);
+			}
+		}
+
+		public event EventHandler Response;
 
 		/// <summary>
 		/// Ejecuta un selector con los parámetros dados
@@ -65,6 +95,7 @@ namespace Helper
 		/// <param name="onSelect">Acción al seleccionar</param>
 		/// <param name="startingGridCursor">Posición inicual del cursor</param>
 		/// <param name="terminateLast"></param>
+		[Obsolete]
 		public static void Run (LogicGrid grid,
 		                        Action<Point?> onSelect,
 		                        Point startingGridCursor,
@@ -86,7 +117,6 @@ namespace Helper
 			Grid = grid;
 			SelectorScreen = new SelectTargetScreen (Program.MyGame, Grid);
 			TerminateLastScreen = false;
-			Selected = onSelect;
 		}
 	}
 }
