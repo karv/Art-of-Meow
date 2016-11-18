@@ -170,6 +170,7 @@
     <Compile Include="Helper\Geometry.cs" />
     <Compile Include="GlobalKeys.cs" />
     <Compile Include="Units\Recursos\RecursoEquilibro.cs" />
+    <Compile Include="Helper\HitDamageCalculator.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

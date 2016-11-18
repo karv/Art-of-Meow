@@ -17,8 +17,18 @@ namespace Items.Declarations.Equipment
 		/// <param name="target">Target.</param>
 		public void DoMeleeEffectOn (IUnidad user, IUnidad target)
 		{
-			var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Fuerza) / 8;
-			user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
+			var pct = Helper.HitDamageCalculator.GetPctHit (
+				          user,
+				          target,
+				          ConstantesRecursos.Destreza,
+				          ConstantesRecursos.Destreza);
+			var eq = user.Recursos.GetRecurso (ConstantesRecursos.Equilibrio);
+			eq.Valor /= 2;
+			if (Helper.HitDamageCalculator.Hit (pct))
+			{
+				var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Fuerza) / 8;
+				user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
+			}
 			user.EnqueueOrder (new CooldownOrder (user, calcularTiempoMelee (user)));
 		}
 
