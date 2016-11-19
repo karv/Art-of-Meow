@@ -172,6 +172,7 @@
     <Compile Include="Helper\HitDamageCalculator.cs" />
     <Compile Include="Componentes\VanishingLabel.cs" />
     <Compile Include="Skills\IEffect.cs" />
+    <Compile Include="Screens\WaitResponseScreen.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

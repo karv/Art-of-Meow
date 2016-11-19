@@ -32,6 +32,8 @@ namespace Skills
 	{
 		IEffectAgent Agent { get; }
 
+		double Chance { get; }
+
 		/// <summary>
 		/// Runs the effect
 		/// </summary>
@@ -86,6 +88,8 @@ namespace Skills
 				throw new Exception ("Cannot execute effect");
 		}
 
+		public double Chance { get; set; }
+
 		/// <summary>
 		/// Whose inventory gonna lose the item.
 		/// </summary>
@@ -115,6 +119,8 @@ namespace Skills
 
 	public class ChangeRecurso : ITargetEffect
 	{
+		public double Chance { get; set; }
+
 		public void Execute ()
 		{
 			if (Parámetro == null)

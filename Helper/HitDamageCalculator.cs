@@ -44,6 +44,18 @@ namespace Helper
 				att.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor);
 		}
 
+		public static float Damage (IUnidad att,
+		                            IUnidad def,
+		                            string attDmgRecurso,
+		                            string defDefRecurso)
+		{
+			var attHit = att.Recursos.GetRecurso (attDmgRecurso).Valor;
+			var defEva = def.Recursos.GetRecurso (defDefRecurso).Valor;
+
+			// TODO: Calcular bien (esta es la misma fórmula que se usa en melee)
+			return attHit * 0.35f;
+		}
+
 		/// <summary>
 		/// Decide si un evento aleatorio es cierto
 		/// </summary>

@@ -55,9 +55,11 @@ namespace Helper
 		*/
 
 		public Predicate<ITarget> AcceptingTargets = z => true;
-		public Func<ITarget, IEffect> EffectMaker;
+		public Func<ITarget, IEffect []> EffectMaker;
 
 		protected SkillInstance Instance { get; }
+
+		public bool IsResponse { get; protected set; }
 
 		/// <summary>
 		/// Executa la selección
@@ -67,8 +69,11 @@ namespace Helper
 			if (TerminateLastScreen)
 				Program.MyGame.ScreenManager.ActiveThread.TerminateLast ();
 			
-			SelectorScreen.Selected += (sender, e) => 
+			SelectorScreen.Response += delegate
+			{
+				IsResponse = true;
 				Response?.Invoke (this, EventArgs.Empty);
+			};
 			
 			SelectorScreen.Execute (ScreenExt.DialogOpt);
 		}
@@ -82,7 +87,8 @@ namespace Helper
 			foreach (var c in selCell.Objects.Where (z => AcceptingTargets(z)))
 			{
 				var newEffect = EffectMaker (c);
-				_currentEffects.Add (newEffect);
+				foreach (var ef in newEffect)
+					_currentEffects.Add (ef);
 			}
 		}
 
@@ -101,7 +107,7 @@ namespace Helper
 		                        Point startingGridCursor,
 		                        bool terminateLast = false)
 		{
-			var newRun = new SelectorController (onSelect, grid);
+			var newRun = new SelectorController (grid);
 			newRun.TerminateLastScreen = terminateLast;
 			newRun.CurrentSelectionPoint = startingGridCursor;
 			newRun.Execute ();
@@ -112,7 +118,7 @@ namespace Helper
 		/// </summary>
 		/// <param name="onSelect">Acción al seleccionar</param>
 		/// <param name="grid">Grid.</param>
-		public SelectorController (Action<Point?> onSelect, LogicGrid grid)
+		public SelectorController (LogicGrid grid)
 		{
 			Grid = grid;
 			SelectorScreen = new SelectTargetScreen (Program.MyGame, Grid);

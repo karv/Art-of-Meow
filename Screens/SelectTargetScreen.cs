@@ -110,7 +110,7 @@ namespace Screens
 	/// <summary>
 	/// Pantalla de selección de target
 	/// </summary>
-	public class SelectTargetScreen : Screen
+	public class SelectTargetScreen : Screen, IResponseScreen<Point>
 	{
 		/// <summary>
 		/// Grid lógico
@@ -127,7 +127,7 @@ namespace Screens
 		/// <summary>
 		/// Ocurre cuando hay selección
 		/// </summary>
-		public event EventHandler Selected;
+		public event EventHandler<Point> Response;
 
 		/// <summary>
 		/// Tecla de movimiento de cursor: arriba
@@ -179,7 +179,7 @@ namespace Screens
 			}
 			if (GlobalKeys.Accept.Contains (key))
 			{
-				Selected?.Invoke (this, EventArgs.Empty);
+				Response?.Invoke (this, this.GridSelector.CursorPosition);
 				data.Item2.TerminateLast ();
 				return true;
 			}

@@ -9,6 +9,9 @@ using Units.Order;
 using Units.Recursos;
 using Units.Skills;
 using Skills;
+using Units;
+using System.Threading;
+using Screens;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -31,11 +34,37 @@ namespace Items.Declarations.Equipment.Skills
 				true);
 		}
 
+		static IEffect[] effectMaker (IUnidad user, IUnidad target)
+		{
+			var chance = HitDamageCalculator.GetPctHit (
+				             user,
+				             target,
+				             ConstantesRecursos.CertezaRango,
+				             ConstantesRecursos.EvasiónRango);
+			var dmg = HitDamageCalculator.Damage (
+				          user,
+				          target,
+				          ConstantesRecursos.Fuerza,
+				          ConstantesRecursos.Fuerza);
+			var ret = new ChangeRecurso (user, target, ConstantesRecursos.HP, dmg)
+			{ Chance = chance };
+			return new IEffect[] { ret };
+		}
+
+		public SkillInstance ReturnInstance;
+
 		public SkillInstance GetInstance (Units.IUnidad user)
 		{
-			var ret = new SkillInstance (this, user);
+			WaitResponseScreen<Point, object> fakeScreen;
+			fakeScreen = new WaitResponseScreen<Point, object> ();
 
-			throw new NotImplementedException ();
+			fakeScreen.AddRequestArgument (
+				new SelectTargetScreen (Program.MyGame, user.Grid), 
+				z => user.Grid.GetCell (z).GetAliveUnidadHere ());
+
+			fakeScreen.Response += (sender, e) => ReturnInstance = e [0] as SkillInstance;
+
+			return null;
 		}
 
 		/// <summary>
