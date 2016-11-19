@@ -14,7 +14,9 @@ namespace Units.Skills
 		/// Build a skill instance
 		/// </summary>
 		/// <param name="user">Caster</param>
-		SkillInstance GetInstance (IUnidad user);
+		void GetInstance (IUnidad user);
+
+		SkillInstance LastGeneratedInstance { get; }
 
 		/// <summary>
 		/// Determines whether this skill is castable by the specified user.

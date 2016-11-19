@@ -10,7 +10,6 @@ using Units.Recursos;
 using Units.Skills;
 using Skills;
 using Units;
-using System.Threading;
 using Screens;
 
 namespace Items.Declarations.Equipment.Skills
@@ -51,9 +50,9 @@ namespace Items.Declarations.Equipment.Skills
 			return new IEffect[] { ret };
 		}
 
-		public SkillInstance ReturnInstance;
+		public SkillInstance LastGeneratedInstance { get; protected set; }
 
-		public SkillInstance GetInstance (Units.IUnidad user)
+		public void GetInstance (IUnidad user)
 		{
 			WaitResponseScreen<Point, object> fakeScreen;
 			fakeScreen = new WaitResponseScreen<Point, object> ();
@@ -62,9 +61,12 @@ namespace Items.Declarations.Equipment.Skills
 				new SelectTargetScreen (Program.MyGame, user.Grid), 
 				z => user.Grid.GetCell (z).GetAliveUnidadHere ());
 
-			fakeScreen.Response += (sender, e) => ReturnInstance = e [0] as SkillInstance;
+			fakeScreen.Response += delegate(object sender, object [] e)
+			{
+				LastGeneratedInstance = e [0] as SkillInstance;
+			};
 
-			return null;
+			fakeScreen.Run ();
 		}
 
 		/// <summary>

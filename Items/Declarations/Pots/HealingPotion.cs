@@ -18,20 +18,20 @@ namespace Items.Declarations.Pots
 		/// </summary>
 		protected virtual float HealHp { get; set; }
 
+		public SkillInstance LastGeneratedInstance { get; protected set; }
+
 		/// <summary>
 		/// Gets the instance.
 		/// </summary>
 		/// <returns>The instance.</returns>
 		/// <param name="user">User.</param>
-		SkillInstance ISkill.GetInstance (IUnidad user)
+		void ISkill.GetInstance (IUnidad user)
 		{
-			var ret = new SkillInstance (this, user);
-			ret.AddEffect (new RemoveItemEffect (user, user, this));
-			ret.AddEffect (new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp));
+			LastGeneratedInstance = new SkillInstance (this, user);
+			LastGeneratedInstance.AddEffect (new RemoveItemEffect (user, user, this));
+			LastGeneratedInstance.AddEffect (
+				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp));
 
-			return ret;
-			//user.EnqueueOrder (new ExecuteOrder (user, doEffect));
-			//Executed?.Invoke (this, EventArgs.Empty);
 		}
 
 		void doEffect (IUnidad target)

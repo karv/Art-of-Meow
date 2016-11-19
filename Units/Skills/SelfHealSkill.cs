@@ -20,7 +20,9 @@ namespace Units.Skills
 
 		static BibliotecaContenido content { get; }
 
-		public SkillInstance GetInstance (IUnidad user)
+		public SkillInstance LastGeneratedInstance { get; protected set; }
+
+		public void GetInstance (IUnidad user)
 		{
 			var ret = new SkillInstance (this, user);
 			ret.AddEffect (new ChangeRecurso (
@@ -29,7 +31,7 @@ namespace Units.Skills
 				ConstantesRecursos.MP,
 				_mpCost));
 			ret.AddEffect (new ChangeRecurso (user, user, ConstantesRecursos.HP, _heal));
-			return ret;
+			LastGeneratedInstance = ret;
 		}
 
 		/// <summary>

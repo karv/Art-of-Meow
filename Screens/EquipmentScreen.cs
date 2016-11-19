@@ -132,8 +132,8 @@ namespace Screens
 			var itemSkill = item as ISkill;
 			if (itemSkill?.IsCastable (Unidad) ?? false)
 			{
-				var skillInstance = itemSkill.GetInstance (Equipment.Owner);
-				skillInstance.Execute ();
+				itemSkill.GetInstance (Equipment.Owner);
+				itemSkill.LastGeneratedInstance.Execute ();
 			}
 		}
 

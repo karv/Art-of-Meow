@@ -33,7 +33,7 @@ namespace Screens
 
 		public void Run ()
 		{
-			
+			ScreenExt.Execute (this, new ScreenThread.ScreenStackOptions ());
 		}
 
 		int _currentScreen;

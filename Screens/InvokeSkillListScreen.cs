@@ -5,6 +5,7 @@ using Moggle.Screens;
 using Units;
 using Units.Skills;
 using AoM;
+using Skills;
 
 namespace Screens
 {
@@ -20,6 +21,7 @@ namespace Screens
 		public bool HaySelección { get { return _selección != null; } }
 
 		ISkill _selección;
+		SkillInstance _skillInstance;
 
 		/// <summary>
 		/// Gets the selected <see cref="ISkill"/>
@@ -95,10 +97,25 @@ namespace Screens
 		void AlSeleccionarSkill (object sender, EventArgs e)
 		{
 			_selección = Contenedor.FocusedItem;
-			var instance = _selección.GetInstance (Unidad);
-			instance.Execute ();
-			//Juego.ScreenManager.ActiveThread.TerminateLast ();
 			Contenedor.Activado -= AlSeleccionarSkill;
+		}
+
+		public override void Update (GameTime gameTime, ScreenThread currentThread)
+		{
+			base.Update (gameTime, currentThread);
+			if (_skillInstance == null)
+			{
+				if (_selección != null)
+				{
+					_selección.GetInstance (Unidad);
+					_skillInstance = _selección.LastGeneratedInstance;
+				}
+			}
+			else
+			{
+				_skillInstance.Execute ();
+				currentThread.TerminateLast ();
+			}
 		}
 
 		/// <summary>
