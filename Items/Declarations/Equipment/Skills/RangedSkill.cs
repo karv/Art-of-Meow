@@ -45,7 +45,7 @@ namespace Items.Declarations.Equipment.Skills
 				          target,
 				          ConstantesRecursos.Fuerza,
 				          ConstantesRecursos.Fuerza);
-			var ret = new ChangeRecurso (user, target, ConstantesRecursos.HP, dmg)
+			var ret = new ChangeRecurso (user, target, ConstantesRecursos.HP, -dmg)
 			{ Chance = chance };
 			return new IEffect[] { ret };
 		}
@@ -57,13 +57,22 @@ namespace Items.Declarations.Equipment.Skills
 			WaitResponseScreen<Point, object> fakeScreen;
 			fakeScreen = new WaitResponseScreen<Point, object> ();
 
+			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
+			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
+
 			fakeScreen.AddRequestArgument (
-				new SelectTargetScreen (Program.MyGame, user.Grid), 
+				selScr, 
 				z => user.Grid.GetCell (z).GetAliveUnidadHere ());
 
 			fakeScreen.Response += delegate(object sender, object [] e)
 			{
-				LastGeneratedInstance = e [0] as SkillInstance;
+				var tg = e [0] as IUnidad; // target
+				LastGeneratedInstance = new SkillInstance (this, tg);
+				var effs = effectMaker (user, tg);
+				foreach (var eff in effs)
+					LastGeneratedInstance.AddEffect (eff);
+
+				LastGeneratedInstance.Execute ();
 			};
 
 			fakeScreen.Run ();

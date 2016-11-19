@@ -33,13 +33,13 @@ namespace Screens
 
 		public void Run ()
 		{
-			ScreenExt.Execute (this, new ScreenThread.ScreenStackOptions ());
+			Data = new T[_invocationList.Count];
+			this.Execute (new ScreenThread.ScreenStackOptions ());
+			_invocationList [0].Execute (new ScreenThread.ScreenStackOptions ());
 		}
 
 		int _currentScreen;
 		public T [] Data;
-
-		public Action UpdateAction;
 
 		#region IScreen implementation
 
@@ -51,7 +51,7 @@ namespace Screens
 		public void Update (Microsoft.Xna.Framework.GameTime gameTime,
 		                    ScreenThread currentThread)
 		{
-			UpdateAction.Invoke ();
+			//UpdateAction.Invoke ();
 		}
 
 		public Microsoft.Xna.Framework.Color? BgColor { get { return null; } }
@@ -60,7 +60,7 @@ namespace Screens
 		{
 			get
 			{
-				throw new NotImplementedException ();
+				return Juego.Contenido;
 			}
 		}
 
@@ -190,9 +190,5 @@ namespace Screens
 		public IComponentContainerComponent<IControl> Container { get { return Juego; } }
 
 		#endregion
-
-		public WaitResponseScreen ()
-		{
-		}
 	}
 }
