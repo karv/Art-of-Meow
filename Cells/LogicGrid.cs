@@ -121,22 +121,20 @@ namespace Cells
 				ret = new Point (_r.Next (Size.Width), _r.Next (Size.Height));
 				cell = GetCell (ret);
 			}
-			while (cell.Objects.Any (z => z is ICollidableGridObject));
+			while (cell.EnumerateObjects ().Any (z => z is ICollidableGridObject));
 			return ret;
 		}
 
 		/// <summary>
 		/// Gets the collection of the grid objects
 		/// </summary>
-		public ICollection<IGridObject> Objects
+		public IEnumerable<IGridObject> Objects
 		{
 			get
 			{
-				var ret = new List<IGridObject> ();
 				foreach (var cell in _cells)
-					foreach (var gi in cell.Objects)
-						ret.Add (gi);
-				return ret;
+					foreach (var gi in cell.EnumerateObjects ().ToArray ())
+						yield return gi;
 			}
 		}
 

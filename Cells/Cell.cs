@@ -27,7 +27,12 @@ namespace Cells
 		/// <summary>
 		/// Gets the list of <see cref="IGridObject"/> in this cell
 		/// </summary>
-		public List<IGridObject> Objects { get; }
+		protected List<IGridObject> Objects { get; }
+
+		public IEnumerable<IGridObject> EnumerateObjects ()
+		{
+			return Objects;
+		}
 
 		public bool Remove (IGridObject obj)
 		{

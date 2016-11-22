@@ -17,7 +17,7 @@ namespace Componentes
 	/// <summary>
 	/// The Griod system
 	/// </summary>
-	public class GridControl : DSBC, IComponentContainerComponent<IGridObject>
+	public class GridControl : DSBC
 	{
 		/// <summary>
 		/// Devuelve el tablero lógico
@@ -86,7 +86,7 @@ namespace Componentes
 			get { return _objects.OfType<Unidad> ().Where (z => !(z.Inteligencia is HumanIntelligence)); }
 		}
 
-		ICollection<IGridObject> _objects { get { return Grid.Objects; } }
+		IEnumerable<IGridObject> _objects { get { return Grid.Objects; } }
 
 		/// <summary>
 		/// The size of a cell (Draw)
@@ -316,28 +316,6 @@ namespace Componentes
 			var edge = GetVisibilityBox ();
 			edge.Inflate (-edge_size.Width, -edge_size.Height);
 			return edge.Contains (p);
-		}
-
-		#endregion
-
-		#region Component container
-
-		void IComponentContainerComponent<IGridObject>.AddComponent (IGridObject component)
-		{
-			_objects.Add (component);
-		}
-
-		bool IComponentContainerComponent<IGridObject>.RemoveComponent (IGridObject component)
-		{
-			return _objects.Remove (component);
-		}
-
-		IEnumerable<IGridObject> IComponentContainerComponent<IGridObject>.Components
-		{
-			get
-			{
-				return _objects;
-			}
 		}
 
 		#endregion
