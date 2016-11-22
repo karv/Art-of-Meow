@@ -182,7 +182,7 @@ namespace Componentes
 			{
 				// TODO: ¿Dibujar los Cells y no los Objects?
 				if (IsVisible (x.Location) && // Si está dentro del área
-				    (CameraUnidad == null || IsVisibleFrom (VisibilityPoint, x.Location)))	// y es visible
+				    (CameraUnidad == null || Grid.IsVisibleFrom (VisibilityPoint, x.Location)))	// y es visible
 				{
 					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
 					x.Draw (bat, rectOutput);
@@ -190,22 +190,6 @@ namespace Componentes
 			}
 		}
 
-		/// <summary>
-		/// Determina si un punto (en grid) es visible desde otro punto
-		/// </summary>
-		/// <param name="source">Source.</param>
-		/// <param name="target">Target.</param>
-		public bool IsVisibleFrom (Point source, Point target)
-		{
-			var line = Geometry.EnumerateLine (source, target);
-			foreach (var x in line)
-			{
-				var pCell = Grid.GetCell (x);
-				if (pCell.BlocksVisibility ())
-					return false;
-			}
-			return true;
-		}
 
 
 		/// <summary>
