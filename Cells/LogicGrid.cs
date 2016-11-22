@@ -88,7 +88,7 @@ namespace Cells
 		/// <param name="p">Grid-wise point of the cell</param>
 		public Cell GetCell (Point p)
 		{
-			return new Cell (this, p);
+			return this [p];
 		}
 
 		/// <summary>
@@ -174,7 +174,8 @@ namespace Cells
 		{
 			if (obj == null)
 				throw new ArgumentNullException ("obj");
-			this [obj.Location].Add (obj);
+			var cell = this [obj.Location];
+			cell.Add (obj);
 			AddedObject?.Invoke (this, obj);
 		}
 
@@ -255,7 +256,7 @@ namespace Cells
 			var moveDir = dir.AsDirectionalPoint ();
 			var endLoc = objeto.Location + moveDir;
 
-			var destCell = new Cell (this, endLoc);
+			var destCell = this [endLoc];
 			if (_collisionSystem.CanFill (objeto, destCell))
 			{
 				objeto.Location = endLoc;
@@ -271,6 +272,10 @@ namespace Cells
 		/// </summary>
 		public event EventHandler<IGridObject> AddedObject;
 
+		void initializeCells ()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.LogicGrid"/> class.
 		/// </summary>
@@ -280,7 +285,10 @@ namespace Cells
 		{
 			_collisionSystem = new CollisionSystem ();
 			Size = new Size (xSize, ySize);
-			_cells = new Cell[xSize, ySize];
+			_cells = new Cell[Size.Width, Size.Height];
+			for (int ix = 0; ix < Size.Width; ix++)
+				for (int iy = 0; iy < Size.Height; iy++)
+					_cells [ix, iy] = new Cell (new Point (ix, iy));
 			TimeManager = new GameTimeManager (this);
 		}
 
@@ -289,11 +297,8 @@ namespace Cells
 		/// </summary>
 		/// <param name="mapSize">Map size.</param>
 		public LogicGrid (Size mapSize)
+			: this (mapSize.Height, mapSize.Height)
 		{
-			_collisionSystem = new CollisionSystem ();
-			Size = mapSize;
-			_cells = new Cell[Size.Width, Size.Height];
-			TimeManager = new GameTimeManager (this);
 		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using Units;
+using Moggle.Controles;
 
 namespace Cells
 {
@@ -11,7 +12,7 @@ namespace Cells
 	/// A state of a grid generated at some point.
 	/// </summary>
 	/// <remarks>Modify this class won't change the <see cref="LogicGrid"/></remarks>
-	public class Cell
+	public class Cell : IDibujable
 	{
 		/// <summary>
 		/// Devuelve un valor determinando si este grid bloquea visibilidad.
@@ -73,6 +74,13 @@ namespace Cells
 			return false;
 		}
 
+		public void Draw (Microsoft.Xna.Framework.Graphics.SpriteBatch bat,
+		                  Rectangle rect)
+		{
+			foreach (var obj in Objects)
+				obj.Draw (bat, rect);
+		}
+
 
 		/// <summary>
 		/// Gets the first objects satisfacing a predicate
@@ -113,18 +121,10 @@ namespace Cells
 		/// </summary>
 		/// <param name="grid">Grid of this <c>Cell</c></param>
 		/// <param name="location">Grid-wise coordinates of this Cell</param>
-		public Cell (LogicGrid grid, Point location)
+		public Cell (Point location)
 		{
-			Objects = new List<IGridObject> (grid.Objects.Where (x => x.Location == location));
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
-		/// </summary>
-		/// <param name="objs">Collection of objects</param>
-		protected Cell (IEnumerable<IGridObject> objs)
-		{
-			Objects = new List<IGridObject> (objs);
+			Location = location;
+			Objects = new List<IGridObject> ();
 		}
 	}
 }

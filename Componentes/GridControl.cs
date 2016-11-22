@@ -178,14 +178,20 @@ namespace Componentes
 			//var bat = Screen.
 			//bat.Begin (SpriteSortMode.BackToFront);
 			var bat = Screen.Batch;
-			foreach (var x in _objects)
+
+			var box = GetVisibilityBox ();
+			for (int ix = box.Left; ix <= box.Right; ix++)
 			{
-				// TODO: ¿Dibujar los Cells y no los Objects?
-				if (IsVisible (x.Location) && // Si está dentro del área
-				    (CameraUnidad == null || Grid.IsVisibleFrom (VisibilityPoint, x.Location)))	// y es visible
+				for (int iy = box.Top; iy <= box.Bottom; iy++)
 				{
-					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
-					x.Draw (bat, rectOutput);
+					var p = new Point (ix, iy);
+					if (IsVisible (p) && // Si está dentro del área
+					    (CameraUnidad == null ||
+					    Grid.IsVisibleFrom (VisibilityPoint, p)))	// y es visible
+					{
+						var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
+						Grid [p].Draw (bat, rectOutput);
+					}
 				}
 			}
 		}

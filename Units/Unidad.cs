@@ -296,7 +296,7 @@ namespace Units
 			if (!Grid.MoveCellObject (this, dir))
 			{
 				// Do melee
-				var targetCell = new Cell (Grid, Location + dir.AsDirectionalPoint ());
+				var targetCell = Grid [Location + dir.AsDirectionalPoint ()];
 				var target = targetCell.GetAliveUnidadHere ();
 				if (target == null)
 					return false;
