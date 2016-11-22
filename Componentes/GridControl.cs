@@ -185,8 +185,7 @@ namespace Componentes
 				for (int iy = box.Top; iy <= box.Bottom; iy++)
 				{
 					var p = new Point (ix, iy);
-					if (IsVisible (p) && // Si está dentro del área
-					    (CameraUnidad == null ||
+					if ((CameraUnidad == null ||
 					    Grid.IsVisibleFrom (VisibilityPoint, p)))	// y es visible
 					{
 						var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
