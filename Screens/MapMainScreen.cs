@@ -184,11 +184,12 @@ namespace Screens
 			GridControl = new GridControl (CurrentGrid, this);
 
 			inicializarJugador ();
+
+			base.DoInitialization ();
 			generateGridSizes ();
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.
-			base.DoInitialization ();
 
 			GridControl.TryCenterOn (Player.Location);
 
@@ -233,7 +234,7 @@ namespace Screens
 			var key = keyArg.Key;
 
 			var playerCell = Grid.GetCell (Player.Location);
-			foreach (var x in playerCell.Objects.OfType<IReceptor<KeyboardEventArgs>> ())
+			foreach (var x in playerCell.EnumerateObjects ().OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (keyArg);
 			GridControl.CenterIfNeeded (Player);
 		}

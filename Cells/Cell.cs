@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
+using Moggle.Controles;
 using Units;
 
 namespace Cells
@@ -11,7 +12,7 @@ namespace Cells
 	/// A state of a grid generated at some point.
 	/// </summary>
 	/// <remarks>Modify this class won't change the <see cref="LogicGrid"/></remarks>
-	public class Cell
+	public class Cell : IDibujable
 	{
 		/// <summary>
 		/// Devuelve un valor determinando si este grid bloquea visibilidad.
@@ -21,10 +22,35 @@ namespace Cells
 			return Objects.OfType<GridWall> ().Any ();
 		}
 
+		public Point Location { get; }
+
 		/// <summary>
 		/// Gets the list of <see cref="IGridObject"/> in this cell
 		/// </summary>
-		public List<IGridObject> Objects { get; }
+		protected List<IGridObject> Objects { get; }
+
+		public IEnumerable<IGridObject> EnumerateObjects ()
+		{
+			return Objects;
+		}
+
+		public bool Remove (IGridObject obj)
+		{
+			if (obj == null)
+				throw new ArgumentNullException ("obj");
+			if (Location != obj.Location)
+				throw new InvalidOperationException ();
+			return Objects.Remove (obj);
+		}
+
+		public void Add (IGridObject obj)
+		{
+			if (obj == null)
+				throw new ArgumentNullException ("obj");
+			if (Location != obj.Location)
+				throw new InvalidOperationException ();
+			Objects.Add (obj);
+		}
 
 		/// <summary>
 		/// Devuelve el peso de movimiento
@@ -51,6 +77,13 @@ namespace Cells
 					return true;
 
 			return false;
+		}
+
+		public void Draw (Microsoft.Xna.Framework.Graphics.SpriteBatch bat,
+		                  Rectangle rect)
+		{
+			foreach (var obj in Objects)
+				obj.Draw (bat, rect);
 		}
 
 
@@ -93,18 +126,10 @@ namespace Cells
 		/// </summary>
 		/// <param name="grid">Grid of this <c>Cell</c></param>
 		/// <param name="location">Grid-wise coordinates of this Cell</param>
-		public Cell (LogicGrid grid, Point location)
+		public Cell (Point location)
 		{
-			Objects = new List<IGridObject> (grid.Objects.Where (x => x.Location == location));
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
-		/// </summary>
-		/// <param name="objs">Collection of objects</param>
-		protected Cell (IEnumerable<IGridObject> objs)
-		{
-			Objects = new List<IGridObject> (objs);
+			Location = location;
+			Objects = new List<IGridObject> ();
 		}
 	}
 }

@@ -8,20 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
-using System.Runtime.InteropServices;
 using Units;
-using System.Threading;
 using Units.Inteligencia;
 using Units.Recursos;
-using System.Diagnostics;
-using Helper;
 
 namespace Componentes
 {
 	/// <summary>
 	/// The Griod system
 	/// </summary>
-	public class GridControl : DSBC, IComponentContainerComponent<IGridObject>
+	public class GridControl : DSBC
 	{
 		/// <summary>
 		/// Devuelve el tablero lógico
@@ -90,7 +86,7 @@ namespace Componentes
 			get { return _objects.OfType<Unidad> ().Where (z => !(z.Inteligencia is HumanIntelligence)); }
 		}
 
-		ICollection<IGridObject> _objects { get { return Grid.Objects; } }
+		IEnumerable<IGridObject> _objects { get { return Grid.Objects; } }
 
 		/// <summary>
 		/// The size of a cell (Draw)
@@ -178,19 +174,22 @@ namespace Componentes
 			//var bat = Screen.
 			//bat.Begin (SpriteSortMode.BackToFront);
 			var bat = Screen.Batch;
-			foreach (var x in _objects)
+
+			var box = GetVisibilityBox ();
+			for (int ix = box.Left; ix <= box.Right; ix++)
 			{
-				// TODO: ¿Dibujar los Cells y no los Objects?
-				if (IsVisible (x.Location) && // Si está dentro del área
-				    (CameraUnidad == null || Grid.IsVisibleFrom (VisibilityPoint, x.Location)))	// y es visible
+				for (int iy = box.Top; iy <= box.Bottom; iy++)
 				{
-					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
-					x.Draw (bat, rectOutput);
+					var p = new Point (ix, iy);
+					if ((CameraUnidad == null ||
+					    Grid.IsVisibleFrom (VisibilityPoint, p)))
+					{
+						var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
+						Grid [p].Draw (bat, rectOutput);
+					}
 				}
 			}
 		}
-
-
 
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
@@ -317,28 +316,6 @@ namespace Componentes
 			var edge = GetVisibilityBox ();
 			edge.Inflate (-edge_size.Width, -edge_size.Height);
 			return edge.Contains (p);
-		}
-
-		#endregion
-
-		#region Component container
-
-		void IComponentContainerComponent<IGridObject>.AddComponent (IGridObject component)
-		{
-			_objects.Add (component);
-		}
-
-		bool IComponentContainerComponent<IGridObject>.RemoveComponent (IGridObject component)
-		{
-			return _objects.Remove (component);
-		}
-
-		IEnumerable<IGridObject> IComponentContainerComponent<IGridObject>.Components
-		{
-			get
-			{
-				return _objects;
-			}
 		}
 
 		#endregion

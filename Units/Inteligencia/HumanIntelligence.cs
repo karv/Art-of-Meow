@@ -69,7 +69,7 @@ namespace Units.Inteligencia
 			else if (GlobalKeys.PickupDroppedItems.Contains (key))
 			{
 				// Tomar los objetos
-				var objs = new List<GroundItem> (ControlledUnidad.Grid.GetCell (ControlledUnidad.Location).Objects.OfType<GroundItem> ());
+				var objs = new List<GroundItem> (ControlledUnidad.Grid.GetCell (ControlledUnidad.Location).EnumerateObjects ().OfType<GroundItem> ());
 
 				foreach (var x in objs)
 				{
