@@ -157,8 +157,14 @@ namespace Componentes
 			return CellSpotLocation (new Point (x, y));
 		}
 
+		/// <summary>
+		/// Devuelve o establece la unidad que debe de seguir el control
+		/// </summary>
 		public IUnidad CameraUnidad { get; set; }
 
+		/// <summary>
+		/// Devuelve el punto de visibilidad (ie, la localización de <see cref="CameraUnidad"/>
+		/// </summary>
 		public Point VisibilityPoint
 		{ 
 			get{ return CameraUnidad.Location; }
@@ -175,8 +181,8 @@ namespace Componentes
 			foreach (var x in _objects)
 			{
 				// TODO: ¿Dibujar los Cells y no los Objects?
-				if (IsVisible (x.Location) &&
-				    IsVisibleFrom (VisibilityPoint, x.Location)) // Si está dentro del área
+				if (IsVisible (x.Location) && // Si está dentro del área
+				    (CameraUnidad == null || IsVisibleFrom (VisibilityPoint, x.Location)))	// y es visible
 				{
 					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
 					x.Draw (bat, rectOutput);
@@ -184,6 +190,11 @@ namespace Componentes
 			}
 		}
 
+		/// <summary>
+		/// Determina si un punto (en grid) es visible desde otro punto
+		/// </summary>
+		/// <param name="source">Source.</param>
+		/// <param name="target">Target.</param>
 		public bool IsVisibleFrom (Point source, Point target)
 		{
 			var line = Geometry.EnumerateLine (source, target);

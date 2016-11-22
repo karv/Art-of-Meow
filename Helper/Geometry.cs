@@ -25,8 +25,15 @@ namespace Helper
 		/// <returns>Una sucesión de puntos</returns>
 		/// <param name="origin">Punto inicial</param>
 		/// <param name="final">Punto final</param>
-		public static IEnumerable<Point> EnumerateLine (Point origin, Point final)
+		/// <param name="includeFinalPoint">Si debe incluir punto inicial</param>
+		/// <param name="includeInitialPoint">Si debe incluir punto final</param>
+		public static IEnumerable<Point> EnumerateLine (Point origin,
+		                                                Point final,
+		                                                bool includeInitialPoint = false,
+		                                                bool includeFinalPoint = false)
 		{
+			if (includeInitialPoint)
+				yield return origin;
 			while (origin != final)
 			{
 				var dir = (final - origin).ToVector2 ();
@@ -41,7 +48,14 @@ namespace Helper
 				else if (dir.X < -sqrt_2)
 					origin = new Point (origin.X - 1, origin.Y);
 
-				yield return origin;
+				if (origin != final)
+					yield return origin;
+				else
+				{
+					if (includeFinalPoint)
+						yield return final;
+					yield break;
+				}
 			}
 		}
 	}
