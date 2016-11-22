@@ -4,11 +4,11 @@ using System.Linq;
 using AoM;
 using Cells.CellObjects;
 using Cells.Collision;
+using Helper;
 using Microsoft.Xna.Framework;
+using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
-using Moggle.Controles;
-using Helper;
 
 namespace Cells
 {
@@ -17,7 +17,30 @@ namespace Cells
 	/// </summary>
 	public class LogicGrid : IComponent, IUpdate
 	{
-		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		//readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		readonly Cell [,] _cells;
+
+		/// <summary>
+		/// Gets the <see cref="Cell"/> at a specified grid-point
+		/// </summary>
+		/// <param name="ix">x-index</param>
+		/// <param name="iy">y-index</param>
+		public Cell this [int ix, int iy]
+		{
+			get
+			{
+				return _cells [ix, iy];
+			}
+		}
+
+		public Cell this [Point p]
+		{
+			get
+			{
+				return _cells [p.X, p.Y];
+			}
+		}
+
 		readonly CollisionSystem _collisionSystem;
 
 		readonly Random _r = new Random ();
@@ -109,7 +132,11 @@ namespace Cells
 		{
 			get
 			{
-				return _objects;
+				var ret = new List<IGridObject> ();
+				foreach (var cell in _cells)
+					foreach (var gi in cell.Objects)
+						ret.Add (gi);
+				return ret;
 			}
 		}
 
@@ -147,7 +174,7 @@ namespace Cells
 		{
 			if (obj == null)
 				throw new ArgumentNullException ("obj");
-			Objects.Add (obj);
+			this [obj.Location].Add (obj);
 			AddedObject?.Invoke (this, obj);
 		}
 
@@ -157,7 +184,7 @@ namespace Cells
 		/// <param name="obj">Object to remove</param>
 		public void RemoveObject (IGridObject obj)
 		{
-			Objects.Remove (obj);
+			this [obj.Location].Remove (obj);
 		}
 
 		/// <summary>
@@ -210,7 +237,7 @@ namespace Cells
 		public void Dispose ()
 		{
 			AddedObject = null;
-			foreach (var i in _objects.OfType<IDisposable> ())
+			foreach (var i in Objects.OfType<IDisposable> ())
 				i.Dispose ();
 		}
 
@@ -253,6 +280,7 @@ namespace Cells
 		{
 			_collisionSystem = new CollisionSystem ();
 			Size = new Size (xSize, ySize);
+			_cells = new Cell[xSize, ySize];
 			TimeManager = new GameTimeManager (this);
 		}
 
@@ -264,6 +292,7 @@ namespace Cells
 		{
 			_collisionSystem = new CollisionSystem ();
 			Size = mapSize;
+			_cells = new Cell[Size.Width, Size.Height];
 			TimeManager = new GameTimeManager (this);
 		}
 	}

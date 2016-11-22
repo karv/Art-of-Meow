@@ -21,10 +21,30 @@ namespace Cells
 			return Objects.OfType<GridWall> ().Any ();
 		}
 
+		public Point Location { get; }
+
 		/// <summary>
 		/// Gets the list of <see cref="IGridObject"/> in this cell
 		/// </summary>
 		public List<IGridObject> Objects { get; }
+
+		public bool Remove (IGridObject obj)
+		{
+			if (obj == null)
+				throw new ArgumentNullException ("obj");
+			if (Location != obj.Location)
+				throw new InvalidOperationException ();
+			return Objects.Remove (obj);
+		}
+
+		public void Add (IGridObject obj)
+		{
+			if (obj == null)
+				throw new ArgumentNullException ("obj");
+			if (Location != obj.Location)
+				throw new InvalidOperationException ();
+			Objects.Add (obj);
+		}
 
 		/// <summary>
 		/// Devuelve el peso de movimiento
