@@ -259,7 +259,9 @@ namespace Cells
 			var destCell = this [endLoc];
 			if (_collisionSystem.CanFill (objeto, destCell))
 			{
+				this [objeto.Location].Remove (objeto);
 				objeto.Location = endLoc;
+				this [objeto.Location].Add (objeto);
 				return true;
 			}
 			return false;
