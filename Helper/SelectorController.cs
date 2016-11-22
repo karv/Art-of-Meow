@@ -1,8 +1,8 @@
+using System;
 using AoM;
 using Cells;
 using Microsoft.Xna.Framework;
 using Screens;
-using System;
 using Units;
 
 namespace Helper
@@ -63,6 +63,7 @@ namespace Helper
 		/// Ejecuta un selector con los parámetros dados
 		/// </summary>
 		/// <param name="grid">Grid.</param>
+		/// <param name = "camera"></param>
 		/// <param name="onSelect">Acción al seleccionar</param>
 		/// <param name="startingGridCursor">Posición inicual del cursor</param>
 		/// <param name="terminateLast"></param>
@@ -83,6 +84,7 @@ namespace Helper
 		/// </summary>
 		/// <param name="onSelect">Acción al seleccionar</param>
 		/// <param name="grid">Grid.</param>
+		/// <param name = "camera"></param>
 		public SelectorController (Action<Point?> onSelect,
 		                           LogicGrid grid,
 		                           IUnidad camera)

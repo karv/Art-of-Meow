@@ -8,13 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
-using System.Runtime.InteropServices;
 using Units;
-using System.Threading;
 using Units.Inteligencia;
 using Units.Recursos;
-using System.Diagnostics;
-using Helper;
 
 namespace Componentes
 {
