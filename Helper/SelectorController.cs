@@ -3,6 +3,7 @@ using Cells;
 using Microsoft.Xna.Framework;
 using Screens;
 using System;
+using Units;
 
 namespace Helper
 {
@@ -66,11 +67,12 @@ namespace Helper
 		/// <param name="startingGridCursor">Posición inicual del cursor</param>
 		/// <param name="terminateLast"></param>
 		public static void Run (LogicGrid grid,
+		                        IUnidad camera,
 		                        Action<Point?> onSelect,
 		                        Point startingGridCursor,
 		                        bool terminateLast = false)
 		{
-			var newRun = new SelectorController (onSelect, grid);
+			var newRun = new SelectorController (onSelect, grid, camera);
 			newRun.TerminateLastScreen = terminateLast;
 			newRun.CurrentSelectionPoint = startingGridCursor;
 			newRun.Execute ();
@@ -81,10 +83,13 @@ namespace Helper
 		/// </summary>
 		/// <param name="onSelect">Acción al seleccionar</param>
 		/// <param name="grid">Grid.</param>
-		public SelectorController (Action<Point?> onSelect, LogicGrid grid)
+		public SelectorController (Action<Point?> onSelect,
+		                           LogicGrid grid,
+		                           IUnidad camera)
 		{
 			Grid = grid;
 			SelectorScreen = new SelectTargetScreen (Program.MyGame, Grid);
+			SelectorScreen.GridSelector.CameraUnidad = camera;
 			TerminateLastScreen = false;
 			Selected = onSelect;
 		}

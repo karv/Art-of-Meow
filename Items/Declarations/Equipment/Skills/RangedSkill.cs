@@ -25,6 +25,7 @@ namespace Items.Declarations.Equipment.Skills
 			// Calcular la posisicón inicial del cursor: la del enemigo más cercano
 			SelectorController.Run (
 				user.Grid,
+				user,
 				z => DoEffect (user, z),
 				user.Grid.GetClosestEnemy (user),
 				true);

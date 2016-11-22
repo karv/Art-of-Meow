@@ -186,7 +186,7 @@ namespace Componentes
 				{
 					var p = new Point (ix, iy);
 					if ((CameraUnidad == null ||
-					    Grid.IsVisibleFrom (VisibilityPoint, p)))	// y es visible
+					    Grid.IsVisibleFrom (VisibilityPoint, p)))
 					{
 						var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
 						Grid [p].Draw (bat, rectOutput);
@@ -194,8 +194,6 @@ namespace Componentes
 				}
 			}
 		}
-
-
 
 		/// <summary>
 		/// Devuelve el límite gráfico del control.
