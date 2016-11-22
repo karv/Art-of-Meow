@@ -13,6 +13,8 @@ using Units;
 using System.Threading;
 using Units.Inteligencia;
 using Units.Recursos;
+using System.Diagnostics;
+using Helper;
 
 namespace Componentes
 {
@@ -155,6 +157,13 @@ namespace Componentes
 			return CellSpotLocation (new Point (x, y));
 		}
 
+		public IUnidad CameraUnidad { get; set; }
+
+		public Point VisibilityPoint
+		{ 
+			get{ return CameraUnidad.Location; }
+		}
+
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
@@ -165,12 +174,26 @@ namespace Componentes
 			var bat = Screen.Batch;
 			foreach (var x in _objects)
 			{
-				if (IsVisible (x.Location))
+				// TODO: ¿Dibujar los Cells y no los Objects?
+				if (IsVisible (x.Location) &&
+				    IsVisibleFrom (VisibilityPoint, x.Location)) // Si está dentro del área
 				{
 					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
 					x.Draw (bat, rectOutput);
 				}
 			}
+		}
+
+		public bool IsVisibleFrom (Point source, Point target)
+		{
+			var line = Geometry.EnumerateLine (source, target);
+			foreach (var x in line)
+			{
+				var pCell = Grid.GetCell (x);
+				if (pCell.BlocksVisibility ())
+					return false;
+			}
+			return true;
 		}
 
 
