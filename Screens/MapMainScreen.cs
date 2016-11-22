@@ -183,9 +183,9 @@ namespace Screens
 			CurrentGrid = GameInitializer.InitializeNewWorld (out Player);
 			GridControl = new GridControl (CurrentGrid, this);
 
-			base.DoInitialization ();
-
 			inicializarJugador ();
+
+			base.DoInitialization ();
 			generateGridSizes ();
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
