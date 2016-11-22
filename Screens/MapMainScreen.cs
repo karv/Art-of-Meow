@@ -61,6 +61,7 @@ namespace Screens
 				if (_gameGrid == null)
 				{
 					_gameGrid = value;
+					_gameGrid.CameraUnidad = Player;
 					foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
 						str.AlActivar += on_stair_down;
 					return;

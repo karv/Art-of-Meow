@@ -13,6 +13,8 @@ using Units;
 using System.Threading;
 using Units.Inteligencia;
 using Units.Recursos;
+using System.Diagnostics;
+using Helper;
 
 namespace Componentes
 {
@@ -156,6 +158,19 @@ namespace Componentes
 		}
 
 		/// <summary>
+		/// Devuelve o establece la unidad que debe de seguir el control
+		/// </summary>
+		public IUnidad CameraUnidad { get; set; }
+
+		/// <summary>
+		/// Devuelve el punto de visibilidad (ie, la localización de <see cref="CameraUnidad"/>
+		/// </summary>
+		public Point VisibilityPoint
+		{ 
+			get{ return CameraUnidad.Location; }
+		}
+
+		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
 		protected override void Draw ()
@@ -165,13 +180,16 @@ namespace Componentes
 			var bat = Screen.Batch;
 			foreach (var x in _objects)
 			{
-				if (IsVisible (x.Location))
+				// TODO: ¿Dibujar los Cells y no los Objects?
+				if (IsVisible (x.Location) && // Si está dentro del área
+				    (CameraUnidad == null || Grid.IsVisibleFrom (VisibilityPoint, x.Location)))	// y es visible
 				{
 					var rectOutput = new Rectangle (CellSpotLocation (x.Location), CellSize);
 					x.Draw (bat, rectOutput);
 				}
 			}
 		}
+
 
 
 		/// <summary>

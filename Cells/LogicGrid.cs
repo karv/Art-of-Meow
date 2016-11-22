@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
 using Moggle.Controles;
+using Helper;
 
 namespace Cells
 {
@@ -65,6 +66,23 @@ namespace Cells
 		public Cell GetCell (Point p)
 		{
 			return new Cell (this, p);
+		}
+
+		/// <summary>
+		/// Determina si un punto (en grid) es visible desde otro punto
+		/// </summary>
+		/// <param name="source">Source.</param>
+		/// <param name="target">Target.</param>
+		public bool IsVisibleFrom (Point source, Point target)
+		{
+			var line = Geometry.EnumerateLine (source, target);
+			foreach (var x in line)
+			{
+				var pCell = GetCell (x);
+				if (pCell.BlocksVisibility ())
+					return false;
+			}
+			return true;
 		}
 
 		/// <summary>

@@ -14,6 +14,14 @@ namespace Cells
 	public class Cell
 	{
 		/// <summary>
+		/// Devuelve un valor determinando si este grid bloquea visibilidad.
+		/// </summary>
+		public bool BlocksVisibility ()
+		{
+			return Objects.OfType<GridWall> ().Any ();
+		}
+
+		/// <summary>
 		/// Gets the list of <see cref="IGridObject"/> in this cell
 		/// </summary>
 		public List<IGridObject> Objects { get; }
