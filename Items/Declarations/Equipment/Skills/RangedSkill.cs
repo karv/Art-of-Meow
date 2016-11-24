@@ -73,7 +73,8 @@ namespace Items.Declarations.Equipment.Skills
 
 			dialSer.HayRespuesta += delegate(object sender, object [] e)
 			{
-				var tg = e [0] as IUnidad; // target
+				var pt = (Point)e [0];
+				var tg = user.Grid [pt].GetAliveUnidadHere ();
 				LastGeneratedInstance = new SkillInstance (this, tg);
 				var effs = effectMaker (user, tg);
 				foreach (var eff in effs)
