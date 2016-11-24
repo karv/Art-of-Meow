@@ -36,6 +36,11 @@ namespace Helper
 		                                string attHitRecurso,
 		                                string defEvaRecurso)
 		{
+			if (def == null)
+				throw new ArgumentNullException ("def");
+			if (att == null)
+				throw new ArgumentNullException ("att");
+			
 			var attHit = att.Recursos.GetRecurso (attHitRecurso).Valor;
 			var defEva = def.Recursos.GetRecurso (defEvaRecurso).Valor;
 			return GetPctHit (
@@ -49,6 +54,11 @@ namespace Helper
 		                            string attDmgRecurso,
 		                            string defDefRecurso)
 		{
+			if (def == null)
+				throw new ArgumentNullException ("def");
+			if (att == null)
+				throw new ArgumentNullException ("att");
+			
 			var attHit = att.Recursos.GetRecurso (attDmgRecurso).Valor;
 			var defEva = def.Recursos.GetRecurso (defDefRecurso).Valor;
 

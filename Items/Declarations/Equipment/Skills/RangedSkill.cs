@@ -36,6 +36,11 @@ namespace Items.Declarations.Equipment.Skills
 
 		static IEffect[] effectMaker (IUnidad user, IUnidad target)
 		{
+			if (target == null)
+				throw new ArgumentNullException ("target");
+			if (user == null)
+				throw new ArgumentNullException ("user");
+			
 			var chance = HitDamageCalculator.GetPctHit (
 				             user,
 				             target,
