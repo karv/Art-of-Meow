@@ -14,7 +14,7 @@ namespace Cells.Collision
 		/// <param name="cell">Cell where to fit</param>
 		public bool CanFill (ICollidableGridObject obj, Cell cell)
 		{
-			foreach (var colObj in cell.Objects.OfType<ICollidableGridObject> ())
+			foreach (var colObj in cell.EnumerateObjects ().OfType<ICollidableGridObject> ())
 			{
 				foreach (var rule in obj.GetCollisionRules ())
 				{

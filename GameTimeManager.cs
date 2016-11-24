@@ -21,7 +21,7 @@ namespace AoM
 		/// <summary>
 		/// Gets the entire collection of objects
 		/// </summary>
-		ICollection<IGridObject> Objects { get { return MapGrid.Objects; } }
+		IEnumerable<IGridObject> Objects { get { return MapGrid.Objects; } }
 
 		/// <summary>
 		/// Gets the current object

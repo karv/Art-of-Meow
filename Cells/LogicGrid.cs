@@ -4,10 +4,11 @@ using System.Linq;
 using AoM;
 using Cells.CellObjects;
 using Cells.Collision;
+using Helper;
 using Microsoft.Xna.Framework;
+using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
-using Moggle.Controles;
 
 namespace Cells
 {
@@ -16,7 +17,33 @@ namespace Cells
 	/// </summary>
 	public class LogicGrid : IComponent, IUpdate
 	{
-		readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		//readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		readonly Cell [,] _cells;
+
+		/// <summary>
+		/// Gets the <see cref="Cell"/> at a specified grid-point
+		/// </summary>
+		/// <param name="ix">x-index</param>
+		/// <param name="iy">y-index</param>
+		public Cell this [int ix, int iy]
+		{
+			get
+			{
+				return _cells [ix, iy];
+			}
+		}
+
+		/// <summary>
+		/// Devuelve la celda que el corresponde a una posición dada sus coordenadas
+		/// </summary>
+		public Cell this [Point p]
+		{
+			get
+			{
+				return _cells [p.X, p.Y];
+			}
+		}
+
 		readonly CollisionSystem _collisionSystem;
 
 		readonly Random _r = new Random ();
@@ -64,7 +91,24 @@ namespace Cells
 		/// <param name="p">Grid-wise point of the cell</param>
 		public Cell GetCell (Point p)
 		{
-			return new Cell (this, p);
+			return this [p];
+		}
+
+		/// <summary>
+		/// Determina si un punto (en grid) es visible desde otro punto
+		/// </summary>
+		/// <param name="source">Source.</param>
+		/// <param name="target">Target.</param>
+		public bool IsVisibleFrom (Point source, Point target)
+		{
+			var line = Geometry.EnumerateLine (source, target);
+			foreach (var x in line)
+			{
+				var pCell = GetCell (x);
+				if (pCell.BlocksVisibility ())
+					return false;
+			}
+			return true;
 		}
 
 		/// <summary>
@@ -80,18 +124,20 @@ namespace Cells
 				ret = new Point (_r.Next (Size.Width), _r.Next (Size.Height));
 				cell = GetCell (ret);
 			}
-			while (cell.Objects.Any (z => z is ICollidableGridObject));
+			while (cell.EnumerateObjects ().Any (z => z is ICollidableGridObject));
 			return ret;
 		}
 
 		/// <summary>
 		/// Gets the collection of the grid objects
 		/// </summary>
-		public ICollection<IGridObject> Objects
+		public IEnumerable<IGridObject> Objects
 		{
 			get
 			{
-				return _objects;
+				foreach (var cell in _cells)
+					foreach (var gi in cell.EnumerateObjects ().ToArray ())
+						yield return gi;
 			}
 		}
 
@@ -129,7 +175,8 @@ namespace Cells
 		{
 			if (obj == null)
 				throw new ArgumentNullException ("obj");
-			Objects.Add (obj);
+			var cell = this [obj.Location];
+			cell.Add (obj);
 			AddedObject?.Invoke (this, obj);
 		}
 
@@ -139,7 +186,7 @@ namespace Cells
 		/// <param name="obj">Object to remove</param>
 		public void RemoveObject (IGridObject obj)
 		{
-			Objects.Remove (obj);
+			this [obj.Location].Remove (obj);
 		}
 
 		/// <summary>
@@ -192,7 +239,7 @@ namespace Cells
 		public void Dispose ()
 		{
 			AddedObject = null;
-			foreach (var i in _objects.OfType<IDisposable> ())
+			foreach (var i in Objects.OfType<IDisposable> ())
 				i.Dispose ();
 		}
 
@@ -210,10 +257,12 @@ namespace Cells
 			var moveDir = dir.AsDirectionalPoint ();
 			var endLoc = objeto.Location + moveDir;
 
-			var destCell = new Cell (this, endLoc);
+			var destCell = this [endLoc];
 			if (_collisionSystem.CanFill (objeto, destCell))
 			{
+				this [objeto.Location].Remove (objeto);
 				objeto.Location = endLoc;
+				this [objeto.Location].Add (objeto);
 				return true;
 			}
 			return false;
@@ -226,6 +275,10 @@ namespace Cells
 		/// </summary>
 		public event EventHandler<IGridObject> AddedObject;
 
+		void initializeCells ()
+		{
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.LogicGrid"/> class.
 		/// </summary>
@@ -235,6 +288,10 @@ namespace Cells
 		{
 			_collisionSystem = new CollisionSystem ();
 			Size = new Size (xSize, ySize);
+			_cells = new Cell[Size.Width, Size.Height];
+			for (int ix = 0; ix < Size.Width; ix++)
+				for (int iy = 0; iy < Size.Height; iy++)
+					_cells [ix, iy] = new Cell (new Point (ix, iy));
 			TimeManager = new GameTimeManager (this);
 		}
 
@@ -243,10 +300,8 @@ namespace Cells
 		/// </summary>
 		/// <param name="mapSize">Map size.</param>
 		public LogicGrid (Size mapSize)
+			: this (mapSize.Height, mapSize.Height)
 		{
-			_collisionSystem = new CollisionSystem ();
-			Size = mapSize;
-			TimeManager = new GameTimeManager (this);
 		}
 	}
 }

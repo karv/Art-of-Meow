@@ -6,6 +6,7 @@ using Screens;
 using System;
 using Skills;
 using System.Collections.Generic;
+using Units;
 
 namespace Helper
 {
@@ -84,7 +85,7 @@ namespace Helper
 		{
 			_currentEffects.Clear ();
 			var selCell = SelectedCell ();
-			foreach (var c in selCell.Objects.Where (z => AcceptingTargets(z)))
+			foreach (var c in selCell.EnumerateObjects ().Where (z => AcceptingTargets(z)))
 			{
 				var newEffect = EffectMaker (c);
 				foreach (var ef in newEffect)
@@ -98,16 +99,17 @@ namespace Helper
 		/// Ejecuta un selector con los parámetros dados
 		/// </summary>
 		/// <param name="grid">Grid.</param>
+		/// <param name = "camera"></param>
 		/// <param name="onSelect">Acción al seleccionar</param>
 		/// <param name="startingGridCursor">Posición inicual del cursor</param>
 		/// <param name="terminateLast"></param>
 		[Obsolete]
 		public static void Run (LogicGrid grid,
-		                        Action<Point?> onSelect,
+		                        IUnidad camera,
 		                        Point startingGridCursor,
 		                        bool terminateLast = false)
 		{
-			var newRun = new SelectorController (grid);
+			var newRun = new SelectorController (grid, camera);
 			newRun.TerminateLastScreen = terminateLast;
 			newRun.CurrentSelectionPoint = startingGridCursor;
 			newRun.Execute ();
@@ -116,12 +118,13 @@ namespace Helper
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Helper.SelectorController"/> class.
 		/// </summary>
-		/// <param name="onSelect">Acción al seleccionar</param>
+		/// <param name="camera">Unidad que persigue la cámara</param>
 		/// <param name="grid">Grid.</param>
-		public SelectorController (LogicGrid grid)
+		public SelectorController (LogicGrid grid, IUnidad camera)
 		{
 			Grid = grid;
 			SelectorScreen = new SelectTargetScreen (Program.MyGame, Grid);
+			SelectorScreen.GridSelector.CameraUnidad = camera;
 			TerminateLastScreen = false;
 		}
 	}
