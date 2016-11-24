@@ -6,11 +6,13 @@ using System.Collections.Generic;
 
 namespace Screens
 {
+	[Obsolete]
 	public interface IResponseScreen<TResp> : IScreen
 	{
 		event EventHandler<TResp> Response;
 	}
 
+	[Obsolete]
 	public class WaitResponseScreen<TInp, T> : IResponseScreen<T[]>
 	{
 		List<IResponseScreen<TInp>> _invocationList = new List<IResponseScreen<TInp>> ();

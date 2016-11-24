@@ -7,12 +7,14 @@ using System;
 using Skills;
 using System.Collections.Generic;
 using Units;
+using Moggle.Screens.Dials;
 
 namespace Helper
 {
 	/// <summary>
 	/// Provee métodos para ayudar en la selección de un punto en un <see cref="LogicGrid"/>
 	/// </summary>
+	[Obsolete]
 	public sealed class SelectorController
 	{
 		/// <summary>
@@ -70,7 +72,7 @@ namespace Helper
 			if (TerminateLastScreen)
 				Program.MyGame.ScreenManager.ActiveThread.TerminateLast ();
 			
-			SelectorScreen.Response += delegate
+			SelectorScreen.HayRespuesta += delegate
 			{
 				IsResponse = true;
 				Response?.Invoke (this, EventArgs.Empty);
@@ -100,7 +102,6 @@ namespace Helper
 		/// </summary>
 		/// <param name="grid">Grid.</param>
 		/// <param name = "camera"></param>
-		/// <param name="onSelect">Acción al seleccionar</param>
 		/// <param name="startingGridCursor">Posición inicual del cursor</param>
 		/// <param name="terminateLast"></param>
 		[Obsolete]

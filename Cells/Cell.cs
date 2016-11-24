@@ -143,6 +143,8 @@ namespace Cells
 			return string.Format ("[Cell: Objects={0}]", Objects);
 		}
 
+		public static Cell EmptyCell { get; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
 		/// </summary>
@@ -151,6 +153,11 @@ namespace Cells
 		{
 			Location = location;
 			Objects = new List<IGridObject> ();
+		}
+
+		static Cell ()
+		{
+			EmptyCell = new Cell (Point.Zero);
 		}
 	}
 }

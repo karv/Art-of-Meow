@@ -24,7 +24,7 @@ namespace Items.Declarations.Equipment.Skills
 		/// </summary>
 		/// <param name="user">Usuario</param>
 		public void Execute (Units.IUnidad user)
-		{
+		{	
 			// Calcular la posisicón inicial del cursor: la del enemigo más cercano
 			SelectorController.Run (
 				user.Grid,
@@ -53,19 +53,20 @@ namespace Items.Declarations.Equipment.Skills
 
 		public SkillInstance LastGeneratedInstance { get; protected set; }
 
+		/// <summary>
+		/// Build a skill instance
+		/// </summary>
+		/// <param name="user">Caster</param>
 		public void GetInstance (IUnidad user)
 		{
-			WaitResponseScreen<Point, object> fakeScreen;
-			fakeScreen = new WaitResponseScreen<Point, object> ();
+			var dialSer = new Moggle.Screens.Dials.ScreenDialSerial ();
 
 			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
 			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
 
-			fakeScreen.AddRequestArgument (
-				selScr, 
-				z => user.Grid.GetCell (z).GetAliveUnidadHere ());
+			dialSer.AddRequest (selScr);
 
-			fakeScreen.Response += delegate(object sender, object [] e)
+			dialSer.HayRespuesta += delegate(object sender, object [] e)
 			{
 				var tg = e [0] as IUnidad; // target
 				LastGeneratedInstance = new SkillInstance (this, tg);
@@ -76,7 +77,11 @@ namespace Items.Declarations.Equipment.Skills
 				LastGeneratedInstance.Execute ();
 			};
 
-			fakeScreen.Run ();
+			selScr.HayRespuesta += (sender, e) => Executed?.Invoke (
+				this,
+				EventArgs.Empty);
+
+			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);
 		}
 
 		/// <summary>

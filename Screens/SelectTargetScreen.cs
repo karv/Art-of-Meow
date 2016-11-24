@@ -110,8 +110,18 @@ namespace Screens
 	/// <summary>
 	/// Pantalla de selección de target
 	/// </summary>
-	public class SelectTargetScreen : Screen, IResponseScreen<Point>
+	public class SelectTargetScreen : Screen, Moggle.Screens.Dials.IRespScreen
 	{
+		public override void Update (GameTime gameTime, ScreenThread currentThread)
+		{
+			base.Update (gameTime, currentThread);
+		}
+
+		public override void Draw ()
+		{
+			base.Draw ();
+		}
+
 		/// <summary>
 		/// Grid lógico
 		/// </summary>
@@ -127,7 +137,7 @@ namespace Screens
 		/// <summary>
 		/// Ocurre cuando hay selección
 		/// </summary>
-		public event EventHandler<Point> Response;
+		public event EventHandler<object> HayRespuesta;
 
 		/// <summary>
 		/// Tecla de movimiento de cursor: arriba
@@ -179,7 +189,7 @@ namespace Screens
 			}
 			if (GlobalKeys.Accept.Contains (key))
 			{
-				Response?.Invoke (this, this.GridSelector.CursorPosition);
+				HayRespuesta?.Invoke (this, this.GridSelector.CursorPosition);
 				data.Item2.TerminateLast ();
 				return true;
 			}
