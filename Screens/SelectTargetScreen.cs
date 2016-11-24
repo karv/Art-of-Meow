@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Screens;
-using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 
 namespace Screens

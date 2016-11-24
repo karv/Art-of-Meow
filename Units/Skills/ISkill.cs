@@ -1,6 +1,4 @@
 using Moggle.Controles;
-using System;
-using System.Collections.Generic;
 using Skills;
 
 namespace Units.Skills

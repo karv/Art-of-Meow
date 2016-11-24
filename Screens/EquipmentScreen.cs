@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
@@ -7,8 +8,6 @@ using Moggle.Screens;
 using Units;
 using Units.Equipment;
 using Units.Skills;
-using AoM;
-using Units.Buffs;
 
 namespace Screens
 {
