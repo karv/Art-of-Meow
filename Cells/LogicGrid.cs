@@ -33,6 +33,9 @@ namespace Cells
 			}
 		}
 
+		/// <summary>
+		/// Devuelve la celda que el corresponde a una posición dada sus coordenadas
+		/// </summary>
 		public Cell this [Point p]
 		{
 			get

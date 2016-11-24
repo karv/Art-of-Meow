@@ -22,6 +22,10 @@ namespace Cells
 			return Objects.OfType<GridWall> ().Any ();
 		}
 
+		/// <summary>
+		/// Devuelve la posición de esta cenda en <see cref="LogicGrid"/>
+		/// </summary>
+		/// <value>The location.</value>
 		public Point Location { get; }
 
 		/// <summary>
@@ -29,11 +33,20 @@ namespace Cells
 		/// </summary>
 		protected List<IGridObject> Objects { get; }
 
+		/// <summary>
+		/// Devuelve una enumeración de los <see cref="IGridObject"/> de esta celda
+		/// </summary>
+		/// <returns>The objects.</returns>
 		public IEnumerable<IGridObject> EnumerateObjects ()
 		{
 			return Objects;
 		}
 
+		/// <summary>
+		/// Elimina un objeto de la celda
+		/// </summary>
+		/// <returns><c>true</c> si se eliminó el objeto.</returns>
+		/// <param name="obj">OBjeto a eliminar</param>
 		public bool Remove (IGridObject obj)
 		{
 			if (obj == null)
@@ -43,6 +56,10 @@ namespace Cells
 			return Objects.Remove (obj);
 		}
 
+		/// <summary>
+		/// Agrega un objeto a la celda
+		/// </summary>
+		/// <param name="obj">Objeto a agregar</param>
 		public void Add (IGridObject obj)
 		{
 			if (obj == null)
@@ -79,6 +96,11 @@ namespace Cells
 			return false;
 		}
 
+		/// <summary>
+		/// Dibuja esta celda sobre una área dada
+		/// </summary>
+		/// <param name="bat">Batch</param>
+		/// <param name="rect">Rectángulo de dibujo</param>
 		public void Draw (Microsoft.Xna.Framework.Graphics.SpriteBatch bat,
 		                  Rectangle rect)
 		{
@@ -124,7 +146,6 @@ namespace Cells
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
 		/// </summary>
-		/// <param name="grid">Grid of this <c>Cell</c></param>
 		/// <param name="location">Grid-wise coordinates of this Cell</param>
 		public Cell (Point location)
 		{
