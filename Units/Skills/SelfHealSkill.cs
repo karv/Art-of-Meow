@@ -20,8 +20,16 @@ namespace Units.Skills
 
 		static BibliotecaContenido content { get; }
 
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
+		/// <value>The last generated instance.</value>
 		public SkillInstance LastGeneratedInstance { get; protected set; }
 
+		/// <summary>
+		/// Build a skill instance, and should be set in <see cref="LastGeneratedInstance"/>
+		/// </summary>
+		/// <param name="user">User of the skill</param>
 		public void GetInstance (IUnidad user)
 		{
 			var ret = new SkillInstance (this, user);

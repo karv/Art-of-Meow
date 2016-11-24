@@ -143,6 +143,9 @@ namespace Cells
 			return string.Format ("[Cell: Objects={0}]", Objects);
 		}
 
+		/// <summary>
+		/// Una celda virtual
+		/// </summary>
 		public static Cell EmptyCell { get; }
 
 		/// <summary>

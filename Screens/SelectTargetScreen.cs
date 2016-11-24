@@ -112,16 +112,6 @@ namespace Screens
 	/// </summary>
 	public class SelectTargetScreen : Screen, Moggle.Screens.Dials.IRespScreen
 	{
-		public override void Update (GameTime gameTime, ScreenThread currentThread)
-		{
-			base.Update (gameTime, currentThread);
-		}
-
-		public override void Draw ()
-		{
-			base.Draw ();
-		}
-
 		/// <summary>
 		/// Grid lógico
 		/// </summary>

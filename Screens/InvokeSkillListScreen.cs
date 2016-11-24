@@ -100,6 +100,11 @@ namespace Screens
 			Contenedor.Activado -= AlSeleccionarSkill;
 		}
 
+		/// <summary>
+		/// Ciclo de la lógica
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		/// <param name="currentThread">Current thread.</param>
 		public override void Update (GameTime gameTime, ScreenThread currentThread)
 		{
 			base.Update (gameTime, currentThread);

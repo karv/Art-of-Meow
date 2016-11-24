@@ -165,7 +165,6 @@
     <Compile Include="Items\Declarations\Equipment\Skills\RangedSkill.cs" />
     <Compile Include="Screens\SelectTargetScreen.cs" />
     <Compile Include="Helper\PlayerKeyListener.cs" />
-    <Compile Include="Helper\SelectorController.cs" />
     <Compile Include="Helper\Geometry.cs" />
     <Compile Include="GlobalKeys.cs" />
     <Compile Include="Units\Recursos\RecursoEquilibro.cs" />

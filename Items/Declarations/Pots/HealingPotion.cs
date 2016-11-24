@@ -18,6 +18,10 @@ namespace Items.Declarations.Pots
 		/// </summary>
 		protected virtual float HealHp { get; set; }
 
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
+		/// <value>The last generated instance.</value>
 		public SkillInstance LastGeneratedInstance { get; protected set; }
 
 		/// <summary>

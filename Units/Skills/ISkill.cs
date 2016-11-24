@@ -13,9 +13,16 @@ namespace Units.Skills
 		/// <summary>
 		/// Build a skill instance
 		/// </summary>
-		/// <param name="user">Caster</param>
+		/// <remarks>
+		/// Must prepare the value of the getter <see cref="LastGeneratedInstance"/>
+		/// </remarks>
+		/// <param name="user">User of the skill</param>
 		void GetInstance (IUnidad user);
 
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
+		/// <value>The last generated instance.</value>
 		SkillInstance LastGeneratedInstance { get; }
 
 		/// <summary>

@@ -19,21 +19,6 @@ namespace Items.Declarations.Equipment.Skills
 	/// </summary>
 	public class RangedDamage : ISkill
 	{
-		/// <summary>
-		/// Ejecuta
-		/// </summary>
-		/// <param name="user">Usuario</param>
-		public void Execute (Units.IUnidad user)
-		{	
-			// Calcular la posisicón inicial del cursor: la del enemigo más cercano
-			SelectorController.Run (
-				user.Grid,
-				user,
-				//z => DoEffect (user, z),
-				user.Grid.GetClosestEnemy (user),
-				true);
-		}
-
 		static IEffect[] effectMaker (IUnidad user, IUnidad target)
 		{
 			if (target == null)
@@ -56,6 +41,10 @@ namespace Items.Declarations.Equipment.Skills
 			return new IEffect[] { ret };
 		}
 
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
+		/// <value>The last generated instance.</value>
 		public SkillInstance LastGeneratedInstance { get; protected set; }
 
 		/// <summary>

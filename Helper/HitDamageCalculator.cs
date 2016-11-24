@@ -49,6 +49,13 @@ namespace Helper
 				att.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor);
 		}
 
+		/// <summary>
+		/// Devuelve el daño que se debe de producir en habilidades con un sólo atributo de ataque y de defensa
+		/// </summary>
+		/// <param name="att">Atacante</param>
+		/// <param name="def">Defensor</param>
+		/// <param name="attDmgRecurso">Nombre del recurso de habilidad de ataque</param>
+		/// <param name="defDefRecurso">Nombre del recurso de habilidad de defensa</param>
 		public static float Damage (IUnidad att,
 		                            IUnidad def,
 		                            string attDmgRecurso,
