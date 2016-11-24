@@ -1,6 +1,4 @@
-﻿using System;
-using Units;
-using Units.Order;
+﻿using Units;
 using Units.Recursos;
 using Units.Skills;
 using Skills;
@@ -36,6 +34,8 @@ namespace Items.Declarations.Pots
 			LastGeneratedInstance.AddEffect (
 				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp));
 
+
+
 		}
 
 		void doEffect (IUnidad target)
@@ -55,11 +55,6 @@ namespace Items.Declarations.Pots
 			// return true, si el objeto no está en el inventario no aparecerá
 			return true;
 		}
-
-		/// <summary>
-		/// Ocurre cuando se termina la ejecución
-		/// </summary>
-		public event EventHandler Executed;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Pots.HealingPotion"/> class.
