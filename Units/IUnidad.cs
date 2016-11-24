@@ -4,12 +4,12 @@ using Cells;
 using Cells.CellObjects;
 using Cells.Collision;
 using Items;
+using Skills;
 using Units.Buffs;
 using Units.Equipment;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
-using System;
 
 namespace Units
 {
@@ -19,7 +19,9 @@ namespace Units
 	public interface IUnidad :
 	IUpdateGridObject,
 	ICollidableGridObject,
-	IExpGiver
+	IExpGiver,
+	IEffectAgent,
+	ITarget
 	{
 		/// <summary>
 		/// Gets the map grid

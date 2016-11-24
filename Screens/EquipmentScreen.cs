@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Items;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
@@ -7,7 +8,6 @@ using Moggle.Screens;
 using Units;
 using Units.Equipment;
 using Units.Skills;
-using AoM;
 
 namespace Screens
 {
@@ -114,10 +114,11 @@ namespace Screens
 		void Contenedor_cambio_selección (object sender, System.EventArgs e)
 		{
 			var item = Contenedor.FocusedItem;
-			// Si es equipment, se lo (des)equipa
+
 			var itemEquip = item as IEquipment;
 			if (itemEquip != null)
 			{
+				// Si es equipment, se lo (des)equipa
 				if (Equals (itemEquip.Owner, Equipment))
 					Equipment.UnequipItem (itemEquip);
 				else
@@ -125,11 +126,13 @@ namespace Screens
 				rebuildSelection ();
 				return;
 			}
+
 			// Si es skill
 			var itemSkill = item as ISkill;
 			if (itemSkill?.IsCastable (Unidad) ?? false)
 			{
-				itemSkill.Execute (Equipment.Owner);
+				itemSkill.GetInstance (Equipment.Owner);
+				itemSkill.LastGeneratedInstance.Execute ();
 			}
 		}
 

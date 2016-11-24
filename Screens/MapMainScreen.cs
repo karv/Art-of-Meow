@@ -278,18 +278,21 @@ namespace Screens
 		/// <summary>
 		/// Ejecuta un screen
 		/// </summary>
-		public static void Execute (this Screen scr,
+		public static void Execute (this IScreen scr,
 		                            ScreenThread thread,
 		                            ScreenThread.ScreenStackOptions opt)
 		{
-			scr.Prepare ();
+			scr.Initialize ();
+			scr.AddContent ();
+			scr.Content.Load ();
+			scr.InitializeContent ();
 			thread.Stack (scr, opt);
 		}
 
 		/// <summary>
 		/// Ejecuta un screen
 		/// </summary>
-		public static void Execute (this Screen scr,
+		public static void Execute (this IScreen scr,
 		                            ScreenThreadManager threadMan,
 		                            ScreenThread.ScreenStackOptions opt)
 		{
@@ -299,7 +302,7 @@ namespace Screens
 		/// <summary>
 		/// Ejecuta un screen
 		/// </summary>
-		public static void Execute (this Screen scr,
+		public static void Execute (this IScreen scr,
 		                            ScreenThread.ScreenStackOptions opt)
 		{
 			Execute (scr, scr.Juego.ScreenManager, opt);

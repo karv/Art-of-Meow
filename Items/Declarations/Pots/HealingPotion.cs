@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Skills;
 using Units;
-using Units.Order;
 using Units.Recursos;
 using Units.Skills;
 
@@ -18,22 +17,31 @@ namespace Items.Declarations.Pots
 		protected virtual float HealHp { get; set; }
 
 		/// <summary>
-		/// Executes this skill
+		/// Devuelve la última instancia generada.
 		/// </summary>
-		/// <param name="user">The caster</param>
-		void ISkill.Execute (IUnidad user)
-		{
-			// Eliminarme del inventory
-			user.Inventory.Items.Remove (this);
+		/// <value>The last generated instance.</value>
+		public SkillInstance LastGeneratedInstance { get; protected set; }
 
-			user.EnqueueOrder (new ExecuteOrder (user, doEffect));
-			Executed?.Invoke (this, EventArgs.Empty);
+		/// <summary>
+		/// Gets the instance.
+		/// </summary>
+		/// <returns>The instance.</returns>
+		/// <param name="user">User.</param>
+		void ISkill.GetInstance (IUnidad user)
+		{
+			LastGeneratedInstance = new SkillInstance (this, user);
+			LastGeneratedInstance.AddEffect (new RemoveItemEffect (user, user, this));
+			LastGeneratedInstance.AddEffect (
+				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp));
+
+
+
 		}
 
 		void doEffect (IUnidad target)
 		{
-			var hpRec = target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			hpRec.Valor += HealHp;
+			//var hpRec = target.Recursos.GetRecurso (ConstantesRecursos.HP);
+			//hpRec.Valor += HealHp;
 		}
 
 		bool ISkill.IsCastable (IUnidad user)
@@ -47,11 +55,6 @@ namespace Items.Declarations.Pots
 			// return true, si el objeto no está en el inventario no aparecerá
 			return true;
 		}
-
-		/// <summary>
-		/// Ocurre cuando se termina la ejecución
-		/// </summary>
-		public event EventHandler Executed;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Pots.HealingPotion"/> class.

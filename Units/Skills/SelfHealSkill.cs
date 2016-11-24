@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
+using Skills;
 using Units.Order;
 using Units.Recursos;
-using System;
 
 namespace Units.Skills
 {
@@ -18,6 +19,28 @@ namespace Units.Skills
 		const float _mpCost = 3f;
 
 		static BibliotecaContenido content { get; }
+
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
+		/// <value>The last generated instance.</value>
+		public SkillInstance LastGeneratedInstance { get; protected set; }
+
+		/// <summary>
+		/// Build a skill instance, and should be set in <see cref="LastGeneratedInstance"/>
+		/// </summary>
+		/// <param name="user">User of the skill</param>
+		public void GetInstance (IUnidad user)
+		{
+			var ret = new SkillInstance (this, user);
+			ret.AddEffect (new ChangeRecurso (
+				user,
+				user,
+				ConstantesRecursos.MP,
+				_mpCost));
+			ret.AddEffect (new ChangeRecurso (user, user, ConstantesRecursos.HP, _heal));
+			LastGeneratedInstance = ret;
+		}
 
 		/// <summary>
 		/// Executes this skill

@@ -1,5 +1,5 @@
 using Moggle.Controles;
-using System;
+using Skills;
 
 namespace Units.Skills
 {
@@ -9,10 +9,19 @@ namespace Units.Skills
 	public interface ISkill : IDibujable, IComponent
 	{
 		/// <summary>
-		/// Executes this <see cref="ISkill"/>
+		/// Build a skill instance
 		/// </summary>
-		/// <param name="user">The caster</param>
-		void Execute (IUnidad user);
+		/// <remarks>
+		/// Must prepare the value of the getter <see cref="LastGeneratedInstance"/>
+		/// </remarks>
+		/// <param name="user">User of the skill</param>
+		void GetInstance (IUnidad user);
+
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
+		/// <value>The last generated instance.</value>
+		SkillInstance LastGeneratedInstance { get; }
 
 		/// <summary>
 		/// Determines whether this skill is castable by the specified user.
@@ -27,10 +36,5 @@ namespace Units.Skills
 		/// <returns><c>true</c> if this instance is visible by the specified user; otherwise, <c>false</c></returns>
 		/// <param name="user">User</param>
 		bool IsVisible (IUnidad user);
-
-		/// <summary>
-		/// Occurs when the eexecution finishes completly
-		/// </summary>
-		event EventHandler Executed;
 	}
 }

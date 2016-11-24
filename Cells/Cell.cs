@@ -144,6 +144,11 @@ namespace Cells
 		}
 
 		/// <summary>
+		/// Una celda virtual
+		/// </summary>
+		public static Cell EmptyCell { get; }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.Cell"/> class.
 		/// </summary>
 		/// <param name="location">Grid-wise coordinates of this Cell</param>
@@ -151,6 +156,11 @@ namespace Cells
 		{
 			Location = location;
 			Objects = new List<IGridObject> ();
+		}
+
+		static Cell ()
+		{
+			EmptyCell = new Cell (Point.Zero);
 		}
 	}
 }

@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Screens;
-using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 
 namespace Screens
@@ -110,7 +109,7 @@ namespace Screens
 	/// <summary>
 	/// Pantalla de selección de target
 	/// </summary>
-	public class SelectTargetScreen : Screen
+	public class SelectTargetScreen : Screen, Moggle.Screens.Dials.IRespScreen
 	{
 		/// <summary>
 		/// Grid lógico
@@ -127,7 +126,7 @@ namespace Screens
 		/// <summary>
 		/// Ocurre cuando hay selección
 		/// </summary>
-		public event EventHandler Selected;
+		public event EventHandler<object> HayRespuesta;
 
 		/// <summary>
 		/// Tecla de movimiento de cursor: arriba
@@ -179,7 +178,7 @@ namespace Screens
 			}
 			if (GlobalKeys.Accept.Contains (key))
 			{
-				Selected?.Invoke (this, EventArgs.Empty);
+				HayRespuesta?.Invoke (this, this.GridSelector.CursorPosition);
 				data.Item2.TerminateLast ();
 				return true;
 			}

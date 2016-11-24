@@ -29,6 +29,8 @@ namespace Cells
 		{
 			get
 			{
+				if (ix >= Size.Width || iy >= Size.Height)
+					return Cell.EmptyCell;
 				return _cells [ix, iy];
 			}
 		}
@@ -40,6 +42,8 @@ namespace Cells
 		{
 			get
 			{
+				if (p.X >= Size.Width || p.Y >= Size.Height)
+					return Cell.EmptyCell;
 				return _cells [p.X, p.Y];
 			}
 		}

@@ -5,6 +5,9 @@ using Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using Screens;
+using Skills;
+using Units;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
@@ -16,19 +19,64 @@ namespace Items.Declarations.Equipment.Skills
 	/// </summary>
 	public class RangedDamage : ISkill
 	{
-		/// <summary>
-		/// Ejecuta
-		/// </summary>
-		/// <param name="user">Usuario</param>
-		public void Execute (Units.IUnidad user)
+		static IEffect[] effectMaker (IUnidad user, IUnidad target)
 		{
-			// Calcular la posisicón inicial del cursor: la del enemigo más cercano
-			SelectorController.Run (
-				user.Grid,
-				user,
-				z => DoEffect (user, z),
-				user.Grid.GetClosestEnemy (user),
-				true);
+			if (target == null)
+				throw new ArgumentNullException ("target");
+			if (user == null)
+				throw new ArgumentNullException ("user");
+			
+			var chance = HitDamageCalculator.GetPctHit (
+				             user,
+				             target,
+				             ConstantesRecursos.CertezaRango,
+				             ConstantesRecursos.EvasiónRango);
+			var dmg = HitDamageCalculator.Damage (
+				          user,
+				          target,
+				          ConstantesRecursos.Fuerza,
+				          ConstantesRecursos.Fuerza);
+			var ret = new ChangeRecurso (user, target, ConstantesRecursos.HP, -dmg)
+			{ Chance = chance };
+			return new IEffect[] { ret };
+		}
+
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
+		/// <value>The last generated instance.</value>
+		public SkillInstance LastGeneratedInstance { get; protected set; }
+
+		/// <summary>
+		/// Build a skill instance
+		/// </summary>
+		/// <param name="user">Caster</param>
+		public void GetInstance (IUnidad user)
+		{
+			var dialSer = new Moggle.Screens.Dials.ScreenDialSerial ();
+
+			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
+			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
+
+			dialSer.AddRequest (selScr);
+
+			dialSer.HayRespuesta += delegate(object sender, object [] e)
+			{
+				var pt = (Point)e [0];
+				var tg = user.Grid [pt].GetAliveUnidadHere ();
+				LastGeneratedInstance = new SkillInstance (this, tg);
+				var effs = effectMaker (user, tg);
+				foreach (var eff in effs)
+					LastGeneratedInstance.AddEffect (eff);
+
+				LastGeneratedInstance.Execute ();
+			};
+
+			selScr.HayRespuesta += (sender, e) => Executed?.Invoke (
+				this,
+				EventArgs.Empty);
+
+			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);
 		}
 
 		/// <summary>

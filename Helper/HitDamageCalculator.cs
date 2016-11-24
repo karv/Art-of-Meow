@@ -36,12 +36,41 @@ namespace Helper
 		                                string attHitRecurso,
 		                                string defEvaRecurso)
 		{
+			if (def == null)
+				throw new ArgumentNullException ("def");
+			if (att == null)
+				throw new ArgumentNullException ("att");
+			
 			var attHit = att.Recursos.GetRecurso (attHitRecurso).Valor;
 			var defEva = def.Recursos.GetRecurso (defEvaRecurso).Valor;
 			return GetPctHit (
 				attHit,
 				defEva,
 				att.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor);
+		}
+
+		/// <summary>
+		/// Devuelve el daño que se debe de producir en habilidades con un sólo atributo de ataque y de defensa
+		/// </summary>
+		/// <param name="att">Atacante</param>
+		/// <param name="def">Defensor</param>
+		/// <param name="attDmgRecurso">Nombre del recurso de habilidad de ataque</param>
+		/// <param name="defDefRecurso">Nombre del recurso de habilidad de defensa</param>
+		public static float Damage (IUnidad att,
+		                            IUnidad def,
+		                            string attDmgRecurso,
+		                            string defDefRecurso)
+		{
+			if (def == null)
+				throw new ArgumentNullException ("def");
+			if (att == null)
+				throw new ArgumentNullException ("att");
+			
+			var attHit = att.Recursos.GetRecurso (attDmgRecurso).Valor;
+			var defEva = def.Recursos.GetRecurso (defDefRecurso).Valor;
+
+			// TODO: Calcular bien (esta es la misma fórmula que se usa en melee)
+			return attHit * 0.35f;
 		}
 
 		/// <summary>
