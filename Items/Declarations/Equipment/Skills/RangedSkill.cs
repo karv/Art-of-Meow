@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using AoM;
 using Cells;
 using Helper;
@@ -8,12 +9,8 @@ using Moggle.Controles;
 using Screens;
 using Skills;
 using Units;
-using Units.Order;
 using Units.Recursos;
 using Units.Skills;
-using OpenTK.Graphics.OpenGL;
-using System.Text;
-using System.Diagnostics;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -73,25 +70,8 @@ namespace Items.Declarations.Equipment.Skills
 			selScr.AddComponent (infoBox);
 
 			dialSer.AddRequest (selScr);
-			selScr.GridSelector.CursorMoved += delegate(object sender, EventArgs e)
-			{
-				// Se cambió la selección; volver a calcular skill
-				var pt = selScr.GridSelector.CursorPosition;
-				var tg = user.Grid [pt].GetAliveUnidadHere ();
-				if (tg == null)
-					return;
-				var effs = effectMaker (user, tg);
-				var infoStrBuilding = new StringBuilder ();
-				foreach (var eff in effs)
-					infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
-				
-				infoBox.Texto = infoStrBuilding.ToString ();
-				infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
-
-				//LastGeneratedInstance.AddEffect (eff);
-
-				//LastGeneratedInstance.Execute ();
-			};
+			selScr.GridSelector.CursorMoved += 
+			 	(s, e) => updateInfoBox (selScr.GridSelector, user, infoBox);
 
 			dialSer.HayRespuesta += delegate(object sender, object [] e)
 			{
@@ -111,44 +91,23 @@ namespace Items.Declarations.Equipment.Skills
 			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
 		}
 
-		/// <summary>
-		/// Causa el efecto en un punto
-		/// </summary>
-		protected virtual void DoEffect (Units.IUnidad user, Point? targetPoint)
+		static void updateInfoBox (SelectableGridControl selGrid,
+		                           IUnidad user,
+		                           EtiquetaMultiLínea infoBox)
 		{
-			if (targetPoint.HasValue)
-			{
-				var targ = user.Grid.GetCell (targetPoint.Value).GetAliveUnidadHere ();
-				if (targ != null)
-					DoEffect (user, targ);
-				
-				// Se invoca Execute aunque no haga nada
-				Executed?.Invoke (this, EventArgs.Empty);
-			}
-		}
+			// Se cambió la selección; volver a calcular skill
+			var pt = selGrid.CursorPosition;
+			var tg = user.Grid [pt].GetAliveUnidadHere ();
+			if (tg == null)
+				return;
+			var effs = effectMaker (user, tg);
+			var infoStrBuilding = new StringBuilder ();
+			foreach (var eff in effs)
+				infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
 
-		static void DoEffect (Units.IUnidad user, Units.IUnidad target)
-		{
-			var cert = user.Recursos.GetRecurso (ConstantesRecursos.CertezaRango).Valor;
-			var eva = target.Recursos.GetRecurso (ConstantesRecursos.CertezaRango).Valor;
-			var pctHit = eva < cert ? 0.8 : 0.5;
-			var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Destreza) * 0.35f;
-			var _r = new Random ();
-			if (_r.NextDouble () < pctHit)
-				user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
-			
-			user.EnqueueOrder (new CooldownOrder (
-				user,
-				1f / user.Recursos.ValorRecurso (ConstantesRecursos.Destreza)));
+			infoBox.Texto = infoStrBuilding.ToString ();
+			infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
 
-			// Asignación de stats
-			user.Exp.AddAssignation (
-				user.Recursos.GetRecurso (ConstantesRecursos.CertezaRango),
-				0.1f);
-
-			target.Exp.AddAssignation (
-				target.Recursos.GetRecurso (ConstantesRecursos.EvasiónRango),
-				0.1f);
 		}
 
 		/// <summary>
