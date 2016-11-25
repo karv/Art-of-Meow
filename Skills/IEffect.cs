@@ -171,26 +171,40 @@ namespace Skills
 	/// </summary>
 	public class ChangeRecurso : ITargetEffect
 	{
+		double _chance;
+
 		/// <summary>
 		/// Probabilidad de que ocurra
 		/// </summary>
 		/// <value>The chance.</value>
-		public double Chance { get; set; }
+		public double Chance
+		{
+			get
+			{
+				return _chance;
+			}
+			set
+			{
+				_chance = value;
+			}
+		}
 
 		public string DetailedInfo ()
 		{
 			if (Parámetro == null)
 				return string.Format (
-					"{0}'s {1} changed by {2}.",
+					"{3}: {0}'s {1} changed by {2}.",
 					Target,
 					TargetRecurso.NombreLargo,
-					DeltaValor);
+					DeltaValor,
+					Chance);
 			return string.Format (
-				"{0}'s {1}'s {2} changed by {3}.",
+				"{4}: {0}'s {1}'s {2} changed by {3}.",
 				Target,
 				TargetRecurso.NombreLargo,
 				Parámetro.NombreÚnico,
-				DeltaValor);
+				DeltaValor,
+				Chance);
 		}
 
 		/// <summary>
