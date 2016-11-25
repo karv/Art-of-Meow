@@ -19,6 +19,8 @@ namespace Items.Declarations.Equipment.Skills
 	/// </summary>
 	public class RangedDamage : ISkill
 	{
+		const string defaultInfoboxText = "Info box";
+
 		static IEffect[] effectMaker (IUnidad user, IUnidad target)
 		{
 			if (target == null)
@@ -64,7 +66,7 @@ namespace Items.Declarations.Equipment.Skills
 				TextColor = Color.White,
 				TopLeft = new Point (500, 200),
 				UseFont = "Fonts//small",
-				Texto = "Info",
+				Texto = defaultInfoboxText,
 				BackgroundColor = Color.Black
 			};
 			selScr.AddComponent (infoBox);
@@ -73,6 +75,7 @@ namespace Items.Declarations.Equipment.Skills
 			selScr.GridSelector.CursorMoved += 
 			 	(s, e) => updateInfoBox (selScr.GridSelector, user, infoBox);
 
+			updateInfoBox (selScr.GridSelector, user, infoBox);
 			dialSer.HayRespuesta += delegate(object sender, object [] e)
 			{
 				var pt = (Point)e [0];
@@ -99,7 +102,11 @@ namespace Items.Declarations.Equipment.Skills
 			var pt = selGrid.CursorPosition;
 			var tg = user.Grid [pt].GetAliveUnidadHere ();
 			if (tg == null)
+			{
+				infoBox.Texto = defaultInfoboxText;
+				infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
 				return;
+			}
 			var effs = effectMaker (user, tg);
 			var infoStrBuilding = new StringBuilder ();
 			foreach (var eff in effs)
