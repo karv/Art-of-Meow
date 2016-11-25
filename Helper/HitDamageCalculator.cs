@@ -69,11 +69,12 @@ namespace Helper
 			if (att == null)
 				throw new ArgumentNullException ("att");
 			
-			var attHit = att.Recursos.GetRecurso (attDmgRecurso).Valor;
-			var defEva = def.Recursos.GetRecurso (defDefRecurso).Valor;
+			var attStr = att.Recursos.GetRecurso (attDmgRecurso).Valor;
+			var defAC = def.Recursos.GetRecurso (defDefRecurso).Valor;
 
 			// TODO: Calcular bien (esta es la misma fórmula que se usa en melee)
-			return attHit * 0.35f;
+			var diffStat = Math.Max (0, 2 * attStr - defAC);
+			return diffStat * 0.35f;
 		}
 
 		/// <summary>
