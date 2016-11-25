@@ -9,23 +9,11 @@ namespace Skills
 	/// </summary>
 	public class ChangeRecurso : ITargetEffect
 	{
-		double _chance;
-
 		/// <summary>
 		/// Probabilidad de que ocurra
 		/// </summary>
 		/// <value>The chance.</value>
-		public double Chance
-		{
-			get
-			{
-				return _chance;
-			}
-			set
-			{
-				_chance = value;
-			}
-		}
+		public double Chance { get; set; }
 
 		/// <summary>
 		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox
