@@ -80,6 +80,8 @@ namespace Items.Declarations.Equipment.Skills
 			{
 				var pt = (Point)e [0];
 				var tg = user.Grid [pt].GetAliveUnidadHere ();
+				if (tg == null)
+					return;
 				LastGeneratedInstance = new SkillInstance (this, tg);
 				var effs = effectMaker (user, tg);
 				foreach (var eff in effs)
