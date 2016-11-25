@@ -45,6 +45,9 @@ namespace Skills
 		/// </summary>
 		void Execute ();
 
+		/// <summary>
+		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox
+		/// </summary>
 		string DetailedInfo ();
 	}
 
@@ -123,6 +126,9 @@ namespace Skills
 				throw new Exception ("Cannot execute effect");
 		}
 
+		/// <summary>
+		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox
+		/// </summary>
 		public string DetailedInfo ()
 		{
 			return string.Format ("{1}: Removes {0}", RemovingItem.Nombre, Chance);
@@ -189,6 +195,9 @@ namespace Skills
 			}
 		}
 
+		/// <summary>
+		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox
+		/// </summary>
 		public string DetailedInfo ()
 		{
 			if (Parámetro == null)
