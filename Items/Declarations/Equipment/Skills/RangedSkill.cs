@@ -108,15 +108,7 @@ namespace Items.Declarations.Equipment.Skills
 			selScr.HayRespuesta += (sender, e) => Executed?.Invoke (
 				this,
 				EventArgs.Empty);
-			try
-			{
-				dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine (ex);
-			}
-
+			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
 		}
 
 		/// <summary>
