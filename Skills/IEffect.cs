@@ -44,6 +44,8 @@ namespace Skills
 		/// Runs the effect
 		/// </summary>
 		void Execute ();
+
+		string DetailedInfo ();
 	}
 
 	/// <summary>
@@ -121,6 +123,11 @@ namespace Skills
 				throw new Exception ("Cannot execute effect");
 		}
 
+		public string DetailedInfo ()
+		{
+			return string.Format ("{1}: Removes {0}", RemovingItem.Nombre, Chance);
+		}
+
 		/// <summary>
 		/// Probabilidad de que ocurra
 		/// </summary>
@@ -169,6 +176,22 @@ namespace Skills
 		/// </summary>
 		/// <value>The chance.</value>
 		public double Chance { get; set; }
+
+		public string DetailedInfo ()
+		{
+			if (Parámetro == null)
+				return string.Format (
+					"{0}'s {1} changed by {2}.",
+					Target,
+					TargetRecurso.NombreLargo,
+					DeltaValor);
+			return string.Format (
+				"{0}'s {1}'s {2} changed by {3}.",
+				Target,
+				TargetRecurso.NombreLargo,
+				Parámetro.NombreÚnico,
+				DeltaValor);
+		}
 
 		/// <summary>
 		/// Runs the effect

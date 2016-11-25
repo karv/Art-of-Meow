@@ -11,6 +11,9 @@ using Units;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
+using OpenTK.Graphics.OpenGL;
+using System.Text;
+using System.Diagnostics;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -58,7 +61,37 @@ namespace Items.Declarations.Equipment.Skills
 			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
 			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
 
+			var infoBox = new EtiquetaMultiLínea (selScr)
+			{
+				MaxWidth = 200,
+				TextColor = Color.White,
+				TopLeft = new Point (500, 200),
+				UseFont = "Fonts//small",
+				Texto = "Info",
+				BackgroundColor = Color.Black
+			};
+			selScr.AddComponent (infoBox);
+
 			dialSer.AddRequest (selScr);
+			selScr.GridSelector.CursorMoved += delegate(object sender, EventArgs e)
+			{
+				// Se cambió la selección; volver a calcular skill
+				var pt = selScr.GridSelector.CursorPosition;
+				var tg = user.Grid [pt].GetAliveUnidadHere ();
+				if (tg == null)
+					return;
+				var effs = effectMaker (user, tg);
+				var infoStrBuilding = new StringBuilder ();
+				foreach (var eff in effs)
+					infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
+				
+				infoBox.Texto = infoStrBuilding.ToString ();
+				infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
+
+				//LastGeneratedInstance.AddEffect (eff);
+
+				//LastGeneratedInstance.Execute ();
+			};
 
 			dialSer.HayRespuesta += delegate(object sender, object [] e)
 			{
@@ -75,8 +108,15 @@ namespace Items.Declarations.Equipment.Skills
 			selScr.HayRespuesta += (sender, e) => Executed?.Invoke (
 				this,
 				EventArgs.Empty);
+			try
+			{
+				dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine (ex);
+			}
 
-			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);
 		}
 
 		/// <summary>
@@ -123,7 +163,7 @@ namespace Items.Declarations.Equipment.Skills
 		/// Determines whether this skill is castable by the specified user.
 		/// </summary>
 		/// <param name="user">User</param>
-		public bool IsCastable (Units.IUnidad user)
+		public bool IsCastable (IUnidad user)
 		{
 			// TODO: Debe consumir(requerir) ¿ammo?
 			return true;
@@ -133,7 +173,7 @@ namespace Items.Declarations.Equipment.Skills
 		/// Determines whether this instance is visible the specified user.
 		/// </summary>
 		/// <param name="user">User.</param>
-		public bool IsVisible (Units.IUnidad user)
+		public bool IsVisible (IUnidad user)
 		{
 			return true;
 		}
