@@ -19,6 +19,9 @@ namespace Helper
 		/// <param name="equilibrio">Equilibrio</param>
 		public static double GetPctHit (float attHit, float defEva, float equilibrio)
 		{
+			// Manejar casos especiales primero
+			if (attHit == 0)
+				return defEva == 0 ? 0.5 : 0;
 			var rate = attHit * Math.Pow (equilibrio, 2) / defEva;
 			return Math.Min (1, rate);
 		}

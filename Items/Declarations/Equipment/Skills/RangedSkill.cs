@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using AoM;
 using Cells;
 using Helper;
@@ -8,7 +9,6 @@ using Moggle.Controles;
 using Screens;
 using Skills;
 using Units;
-using Units.Order;
 using Units.Recursos;
 using Units.Skills;
 
@@ -19,6 +19,8 @@ namespace Items.Declarations.Equipment.Skills
 	/// </summary>
 	public class RangedDamage : ISkill
 	{
+		const string defaultInfoboxText = "Info box";
+
 		static IEffect[] effectMaker (IUnidad user, IUnidad target)
 		{
 			if (target == null)
@@ -58,12 +60,28 @@ namespace Items.Declarations.Equipment.Skills
 			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
 			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
 
-			dialSer.AddRequest (selScr);
+			var infoBox = new EtiquetaMultiLínea (selScr)
+			{
+				MaxWidth = 200,
+				TextColor = Color.White,
+				TopLeft = new Point (500, 200),
+				UseFont = "Fonts//small",
+				Texto = defaultInfoboxText,
+				BackgroundColor = Color.Black
+			};
+			selScr.AddComponent (infoBox);
 
+			dialSer.AddRequest (selScr);
+			selScr.GridSelector.CursorMoved += 
+			 	(s, e) => updateInfoBox (selScr.GridSelector, user, infoBox);
+
+			updateInfoBox (selScr.GridSelector, user, infoBox);
 			dialSer.HayRespuesta += delegate(object sender, object [] e)
 			{
 				var pt = (Point)e [0];
 				var tg = user.Grid [pt].GetAliveUnidadHere ();
+				if (tg == null)
+					return;
 				LastGeneratedInstance = new SkillInstance (this, tg);
 				var effs = effectMaker (user, tg);
 				foreach (var eff in effs)
@@ -75,55 +93,37 @@ namespace Items.Declarations.Equipment.Skills
 			selScr.HayRespuesta += (sender, e) => Executed?.Invoke (
 				this,
 				EventArgs.Empty);
-
-			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);
+			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
 		}
 
-		/// <summary>
-		/// Causa el efecto en un punto
-		/// </summary>
-		protected virtual void DoEffect (Units.IUnidad user, Point? targetPoint)
+		static void updateInfoBox (SelectableGridControl selGrid,
+		                           IUnidad user,
+		                           EtiquetaMultiLínea infoBox)
 		{
-			if (targetPoint.HasValue)
+			// Se cambió la selección; volver a calcular skill
+			var pt = selGrid.CursorPosition;
+			var tg = user.Grid [pt].GetAliveUnidadHere ();
+			if (tg == null)
 			{
-				var targ = user.Grid.GetCell (targetPoint.Value).GetAliveUnidadHere ();
-				if (targ != null)
-					DoEffect (user, targ);
-				
-				// Se invoca Execute aunque no haga nada
-				Executed?.Invoke (this, EventArgs.Empty);
+				infoBox.Texto = defaultInfoboxText;
+				infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
+				return;
 			}
-		}
+			var effs = effectMaker (user, tg);
+			var infoStrBuilding = new StringBuilder ();
+			foreach (var eff in effs)
+				infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
 
-		static void DoEffect (Units.IUnidad user, Units.IUnidad target)
-		{
-			var cert = user.Recursos.GetRecurso (ConstantesRecursos.CertezaRango).Valor;
-			var eva = target.Recursos.GetRecurso (ConstantesRecursos.CertezaRango).Valor;
-			var pctHit = eva < cert ? 0.8 : 0.5;
-			var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Destreza) * 0.35f;
-			var _r = new Random ();
-			if (_r.NextDouble () < pctHit)
-				user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
-			
-			user.EnqueueOrder (new CooldownOrder (
-				user,
-				1f / user.Recursos.ValorRecurso (ConstantesRecursos.Destreza)));
+			infoBox.Texto = infoStrBuilding.ToString ();
+			infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
 
-			// Asignación de stats
-			user.Exp.AddAssignation (
-				user.Recursos.GetRecurso (ConstantesRecursos.CertezaRango),
-				0.1f);
-
-			target.Exp.AddAssignation (
-				target.Recursos.GetRecurso (ConstantesRecursos.EvasiónRango),
-				0.1f);
 		}
 
 		/// <summary>
 		/// Determines whether this skill is castable by the specified user.
 		/// </summary>
 		/// <param name="user">User</param>
-		public bool IsCastable (Units.IUnidad user)
+		public bool IsCastable (IUnidad user)
 		{
 			// TODO: Debe consumir(requerir) ¿ammo?
 			return true;
@@ -133,7 +133,7 @@ namespace Items.Declarations.Equipment.Skills
 		/// Determines whether this instance is visible the specified user.
 		/// </summary>
 		/// <param name="user">User.</param>
-		public bool IsVisible (Units.IUnidad user)
+		public bool IsVisible (IUnidad user)
 		{
 			return true;
 		}

@@ -171,6 +171,12 @@
     <Compile Include="Helper\HitDamageCalculator.cs" />
     <Compile Include="Componentes\VanishingLabel.cs" />
     <Compile Include="Skills\IEffect.cs" />
+    <Compile Include="Skills\IEffectAgent.cs" />
+    <Compile Include="Skills\ITarget.cs" />
+    <Compile Include="Skills\ITargetEffect.cs" />
+    <Compile Include="Skills\SkillInstance.cs" />
+    <Compile Include="Skills\RemoveItemEffect.cs" />
+    <Compile Include="Skills\ChangeRecurso.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
