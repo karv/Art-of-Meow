@@ -42,6 +42,7 @@ namespace Units.Order
 			{
 				var extraExp = Target.GetExperienceValue ();
 				unid.Exp.ExperienciaAcumulada += extraExp;
+				// TODO: MeleeDamage no debería manejar esto
 				Debug.WriteLine (
 					string.Format (
 						"{0} recibe exp {1} por asesinar a {2}",
