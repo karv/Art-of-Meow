@@ -425,7 +425,7 @@ namespace Units
 		/// </summary>
 		public override string ToString ()
 		{
-			return string.Format ("[Unidad: {0}", Nombre);
+			return Nombre;
 		}
 
 		/// <summary>

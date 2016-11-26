@@ -1,6 +1,7 @@
 using Skills;
 using Units;
 using Units.Recursos;
+using System.Diagnostics;
 
 namespace Skills
 {
@@ -47,6 +48,27 @@ namespace Skills
 			else
 				// Efecto es en parámetro
 				Parámetro.Valor += DeltaValor;
+
+			if (TargetRecurso is RecursoHP && TargetRecurso.Valor == 0)
+				OnKill ();
+		}
+
+		/// <summary>
+		/// Se invoca cuando este efecto asesina a una unidad
+		/// </summary>
+		protected void OnKill ()
+		{
+			var expGetter = Agent as IUnidad;
+			if (expGetter != null)
+			{
+				var exp = Target.GetExperienceValue ();
+				expGetter.Exp.ExperienciaAcumulada += exp;
+				Debug.WriteLine (string.Format (
+					"{0} kills {1}.\nReceving {2} exp",
+					Agent,
+					Target,
+					exp), "Experience");
+			}
 		}
 
 		/// <summary>

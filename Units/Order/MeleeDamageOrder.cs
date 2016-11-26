@@ -1,5 +1,6 @@
 using Units.Recursos;
 using System.Diagnostics;
+using Skills;
 
 namespace Units.Order
 {
@@ -37,6 +38,10 @@ namespace Units.Order
 			var str = Unidad.Recursos.GetRecurso (ConstantesRecursos.Fuerza) as StatRecurso;
 			unid.Exp.AddAssignation (str.BaseP, 1f);
 
+			var ef = new ChangeRecurso (unid, Target, ConstantesRecursos.HP, -Damage);
+			ef.Execute ();
+
+			/*
 			// Recibir exp de kill
 			if (hp.Valor == 0)
 			{
@@ -51,7 +56,7 @@ namespace Units.Order
 						Target),
 					"Experience");
 			}
-
+			*/
 		}
 
 		/// <summary>

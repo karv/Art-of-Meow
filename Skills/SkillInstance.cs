@@ -4,7 +4,6 @@ using Units.Skills;
 
 namespace Skills
 {
-
 	/// <summary>
 	/// Una instancia de skill.
 	/// Se usa como feedback de datos y resultados del skill
