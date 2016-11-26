@@ -36,7 +36,7 @@ namespace Skills
 		public void Execute ()
 		{
 			for (int i = 0; i < _effects.Count; i++)
-				_effects [i].Execute ();
+				_effects [i].Execute (true);
 		}
 
 		/// <summary>

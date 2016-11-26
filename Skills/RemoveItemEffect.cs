@@ -13,12 +13,17 @@ namespace Skills
 		/// <summary>
 		/// Runs the effect
 		/// </summary>
-		public void Execute ()
+		public void Execute (bool checkRun)
 		{
-			// Removes the item, it it does not exists: exception
-			if (!Target.Inventory.Items.Remove (RemovingItem))
-				throw new Exception ("Cannot execute effect");
+			if (this.CheckAndExecute ())
+			{
+				// Removes the item, it it does not exists: exception
+				if (!Target.Inventory.Items.Remove (RemovingItem))
+					throw new Exception ("Cannot execute effect");
+			}
 		}
+
+		public EffectResultEnum Result { get; set; }
 
 		/// <summary>
 		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox

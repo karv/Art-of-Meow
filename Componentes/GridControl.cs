@@ -56,8 +56,10 @@ namespace Componentes
 
 		const string damageFont = "Fonts//damage";
 
+		[Obsolete]
 		void hp_damage_done_event (object sender, float e)
 		{
+			return;
 			const int milisecsDuration = 3000;
 			var rec = sender as IRecurso;
 			var unid = rec.Unidad;

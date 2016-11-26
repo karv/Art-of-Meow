@@ -1,6 +1,7 @@
 using Units.Recursos;
 using System.Diagnostics;
 using Skills;
+using Helper;
 
 namespace Units.Order
 {
@@ -30,8 +31,6 @@ namespace Units.Order
 
 			if (Unidad.Team == Target.Team)
 				return;
-			var hp = Target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			hp.Valor -= Damage;
 
 			// Asignar exp
 			unid.Exp.AddAssignation (dex.BaseP, 0.1f);
@@ -39,24 +38,13 @@ namespace Units.Order
 			unid.Exp.AddAssignation (str.BaseP, 1f);
 
 			var ef = new ChangeRecurso (unid, Target, ConstantesRecursos.HP, -Damage);
-			ef.Execute ();
+			ef.Chance = HitDamageCalculator.GetPctHit (
+				unid,
+				Target,
+				ConstantesRecursos.CertezaMelee,
+				ConstantesRecursos.EvasiónMelee);
 
-			/*
-			// Recibir exp de kill
-			if (hp.Valor == 0)
-			{
-				var extraExp = Target.GetExperienceValue ();
-				unid.Exp.ExperienciaAcumulada += extraExp;
-				// TODO: MeleeDamage no debería manejar esto
-				Debug.WriteLine (
-					string.Format (
-						"{0} recibe exp {1} por asesinar a {2}",
-						this,
-						extraExp,
-						Target),
-					"Experience");
-			}
-			*/
+			ef.Execute (true);
 		}
 
 		/// <summary>

@@ -1,7 +1,13 @@
+using System.Diagnostics;
 using Skills;
 using Units;
 using Units.Recursos;
-using System.Diagnostics;
+using Componentes;
+using AoM;
+using System;
+using Screens;
+using Microsoft.Xna.Framework;
+using Moggle.Controles;
 
 namespace Skills
 {
@@ -37,11 +43,14 @@ namespace Skills
 				Chance);
 		}
 
+		public EffectResultEnum Result { get; set; }
+
 		/// <summary>
 		/// Runs the effect
 		/// </summary>
-		public void Execute ()
+		protected void DoRun ()
 		{
+			
 			if (Parámetro == null)
 				// Efecto es en recurso
 				TargetRecurso.Valor += DeltaValor;
@@ -49,8 +58,34 @@ namespace Skills
 				// Efecto es en parámetro
 				Parámetro.Valor += DeltaValor;
 
+
+
 			if (TargetRecurso is RecursoHP && TargetRecurso.Valor == 0)
 				OnKill ();
+		}
+
+		public void Execute (bool checkHit)
+		{
+			if (this.CheckAndExecute ())
+				DoRun ();
+
+			if (ShowDeltaLabel)
+			{
+				var scr = Program.MyGame.ScreenManager.ActiveThread.ClosestOfType<MapMainScreen> () as MapMainScreen;
+				var txt = Result == EffectResultEnum.Hit ?
+					Math.Abs (DeltaValor).ToString () :
+					"miss";
+				var label = new VanishingLabel (
+					            Program.MyGame.ScreenManager.ActiveThread.Current,
+					            txt,
+					            TimeSpan.FromMilliseconds (900));
+				scr.AddComponent (label);
+				label.FontName = "Fonts//damage";
+				(label as IComponent).InitializeContent ();
+				label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
+				label.ColorInicial = Color.Red;
+				label.Initialize ();
+			}
 		}
 
 		/// <summary>
@@ -101,6 +136,8 @@ namespace Skills
 		/// </summary>
 		public float DeltaValor { get; }
 
+		public bool ShowDeltaLabel { get; set; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Skills.ChangeRecurso"/> class.
 		/// </summary>
@@ -120,6 +157,7 @@ namespace Skills
 			TargetRecurso = target.Recursos.GetRecurso (recNombre);
 			Parámetro = TargetRecurso.ValorParámetro (recParámetro);
 			DeltaValor = deltaValor;
+			ShowDeltaLabel = true;
 		}
 
 		/// <summary>
@@ -138,6 +176,7 @@ namespace Skills
 			Target = target;
 			TargetRecurso = target.Recursos.GetRecurso (recNombre);
 			DeltaValor = deltaValor;
+			ShowDeltaLabel = true;
 		}
 	}
 }
