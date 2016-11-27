@@ -178,6 +178,7 @@
     <Compile Include="Skills\RemoveItemEffect.cs" />
     <Compile Include="Skills\ChangeRecurso.cs" />
     <Compile Include="Skills\EffectResultEnum.cs" />
+    <Compile Include="Skills\CollectionEffect.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
