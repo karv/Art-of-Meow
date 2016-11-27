@@ -1,6 +1,7 @@
 using Units.Recursos;
 using Skills;
 using Helper;
+using System;
 
 namespace Units.Order
 {
@@ -9,6 +10,7 @@ namespace Units.Order
 	/// doing damage and
 	/// add a cooldown
 	/// </summary>
+	[ObsoleteAttribute]
 	public class MeleeDamageOrder : ExecuteOrder
 	{
 		/// <summary>

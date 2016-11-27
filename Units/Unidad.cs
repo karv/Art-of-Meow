@@ -14,6 +14,7 @@ using Units.Equipment;
 using Units.Inteligencia;
 using Units.Order;
 using Units.Recursos;
+using Skills;
 
 namespace Units
 {
@@ -304,7 +305,8 @@ namespace Units
 				// Construct the order
 				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
 				var melee = Equipment.GetMeleeDamageType ();
-				melee.DoMeleeEffectOn (this, target);
+				var eff = melee.GetEffect (this, target);
+				eff.Execute ();
 			}
 			else
 			{
