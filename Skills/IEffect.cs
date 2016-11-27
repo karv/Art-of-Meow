@@ -23,10 +23,9 @@ namespace Skills
 		/// </summary>
 		double Chance { get; }
 
-		/// <summary>
-		/// Runs the effect
-		/// </summary>
-		void Execute (bool checkHit);
+		void WhenMiss ();
+
+		void WhenHit ();
 
 		/// <summary>
 		/// Devuelve el resultado del hit-check
@@ -47,7 +46,7 @@ namespace Skills
 		/// <summary>
 		/// Hace un hit-checkM de ser positivo ejecuta el efecto
 		/// </summary>
-		public static bool CheckAndExecute (this IEffect eff)
+		public static bool Execute (this IEffect eff)
 		{
 			eff.Result = (HitDamageCalculator.Hit (eff.Chance)) ? 
 				EffectResultEnum.Hit : 
@@ -60,7 +59,13 @@ namespace Skills
 					eff.Result),
 				"Effect");
 			
-			return eff.Result == EffectResultEnum.Hit;
+			var ret = eff.Result == EffectResultEnum.Hit;
+			if (ret)
+				eff.WhenHit ();
+			else
+				eff.WhenMiss ();
+
+			return ret;
 		}
 	}
 }

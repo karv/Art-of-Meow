@@ -64,28 +64,37 @@ namespace Skills
 				OnKill ();
 		}
 
-		public void Execute (bool checkHit)
+		protected void ShowLabel ()
 		{
-			if (this.CheckAndExecute ())
-				DoRun ();
+			var scr = Program.MyGame.ScreenManager.ActiveThread.ClosestOfType<MapMainScreen> () as MapMainScreen;
+			var txt = Result == EffectResultEnum.Hit ?
+				Math.Abs (Math.Truncate (DeltaValor)).ToString () :
+				"...."; // TODO Renombrar a "miss" cuando tenga el content
+			var label = new VanishingLabel (
+				            scr,
+				            txt,
+				            TimeSpan.FromMilliseconds (900));
+			scr.AddComponent (label);
+			label.FontName = "Fonts//damage";
+			(label as IComponent).InitializeContent ();
+			label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
+			label.ColorInicial = Color.Red;
+			label.Initialize ();
+
+		}
+
+		void IEffect.WhenHit ()
+		{
+			DoRun ();
 
 			if (ShowDeltaLabel)
-			{
-				var scr = Program.MyGame.ScreenManager.ActiveThread.ClosestOfType<MapMainScreen> () as MapMainScreen;
-				var txt = Result == EffectResultEnum.Hit ?
-					Math.Abs (Math.Truncate (DeltaValor)).ToString () :
-					"...."; // TODO Renombrar a "miss" cuando tenga el content
-				var label = new VanishingLabel (
-					            scr,
-					            txt,
-					            TimeSpan.FromMilliseconds (900));
-				scr.AddComponent (label);
-				label.FontName = "Fonts//damage";
-				(label as IComponent).InitializeContent ();
-				label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
-				label.ColorInicial = Color.Red;
-				label.Initialize ();
-			}
+				ShowLabel ();
+		}
+
+		void IEffect.WhenMiss ()
+		{
+			if (ShowDeltaLabel)
+				ShowLabel ();
 		}
 
 		/// <summary>

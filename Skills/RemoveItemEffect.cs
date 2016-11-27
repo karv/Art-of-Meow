@@ -13,15 +13,18 @@ namespace Skills
 		/// <summary>
 		/// Runs the effect
 		/// </summary>
-		public void Execute (bool checkRun)
+		void IEffect.WhenHit ()
 		{
-			if (this.CheckAndExecute ())
-			{
-				// Removes the item, it it does not exists: exception
-				if (!Target.Inventory.Items.Remove (RemovingItem))
-					throw new Exception ("Cannot execute effect");
-			}
+			// Removes the item, it it does not exists: exception
+			if (!Target.Inventory.Items.Remove (RemovingItem))
+				throw new Exception ("Cannot execute effect");
 		}
+
+		void IEffect.WhenMiss ()
+		{
+		}
+
+
 
 		EffectResultEnum result;
 

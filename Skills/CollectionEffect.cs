@@ -40,15 +40,22 @@ namespace Skills
 
 		#region IEffect implementation
 
+		void IEffect.WhenMiss ()
+		{
+			foreach (var ef in _effects)
+				ef.WhenMiss ();
+		}
+
+		void IEffect.WhenHit ()
+		{
+			foreach (var ef in _effects)
+				ef.WhenHit ();
+		}
+
 		public void ExecuteAll ()
 		{
 			for (int i = 0; i < _effects.Count; i++)
-				_effects [i].Execute (true);
-		}
-
-		void IEffect.Execute (bool checkHit)
-		{
-			ExecuteAll ();
+				_effects [i].Execute ();
 		}
 
 		string IEffect.DetailedInfo ()
