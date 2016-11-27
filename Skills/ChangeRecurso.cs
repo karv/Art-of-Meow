@@ -89,12 +89,15 @@ namespace Skills
 
 			if (ShowDeltaLabel)
 				ShowLabel ();
+
+			Executed?.Invoke (this, EffectResultEnum.Hit);
 		}
 
 		void IEffect.WhenMiss ()
 		{
 			if (ShowDeltaLabel)
 				ShowLabel ();
+			Executed?.Invoke (this, EffectResultEnum.Miss);
 		}
 
 		/// <summary>
@@ -147,6 +150,8 @@ namespace Skills
 
 		public bool ShowDeltaLabel { get; set; }
 
+		public event EventHandler<EffectResultEnum> Executed;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Skills.ChangeRecurso"/> class.
 		/// </summary>
@@ -159,7 +164,8 @@ namespace Skills
 		                      IUnidad target,
 		                      string recNombre,
 		                      string recParámetro, 
-		                      float deltaValor)
+		                      float deltaValor,
+		                      double chance = 1)
 		{
 			Agent = agent;
 			Target = target;
@@ -167,6 +173,7 @@ namespace Skills
 			Parámetro = TargetRecurso.ValorParámetro (recParámetro);
 			DeltaValor = deltaValor;
 			ShowDeltaLabel = true;
+			Chance = chance;
 		}
 
 		/// <summary>
@@ -179,13 +186,15 @@ namespace Skills
 		public ChangeRecurso (IEffectAgent agent,
 		                      IUnidad target,
 		                      string recNombre, 
-		                      float deltaValor)
+		                      float deltaValor,
+		                      double chance = 1)
 		{
 			Agent = agent;
 			Target = target;
 			TargetRecurso = target.Recursos.GetRecurso (recNombre);
 			DeltaValor = deltaValor;
 			ShowDeltaLabel = true;
+			Chance = chance;
 		}
 	}
 }

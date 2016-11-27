@@ -26,7 +26,8 @@ namespace Skills
 		/// </summary>
 		public void Execute ()
 		{
-			Effects.ExecuteAll ();
+			Effects.Execute ();
+			//Effects.ExecuteAll ();
 		}
 
 		/// <summary>

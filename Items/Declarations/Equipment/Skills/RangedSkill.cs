@@ -11,6 +11,7 @@ using Skills;
 using Units;
 using Units.Recursos;
 using Units.Skills;
+using Units.Order;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -21,8 +22,9 @@ namespace Items.Declarations.Equipment.Skills
 	{
 		const string defaultInfoboxText = "Info box";
 
-		static IEffect[] effectMaker (IUnidad user, IUnidad target)
+		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
+			
 			if (target == null)
 				throw new ArgumentNullException ("target");
 			if (user == null)
@@ -38,9 +40,18 @@ namespace Items.Declarations.Equipment.Skills
 				          target,
 				          ConstantesRecursos.Fuerza,
 				          ConstantesRecursos.Fuerza);
-			var ret = new ChangeRecurso (user, target, ConstantesRecursos.HP, -dmg)
-			{ Chance = chance };
-			return new IEffect[] { ret };
+			var ef = new ChangeRecurso (
+				         user,
+				         target,
+				         ConstantesRecursos.HP,
+				         -dmg);
+
+			var ret = new SkillInstance (this, user);
+			ret.Effects.Chance = chance;
+			ret.Effects.AddEffect (ef);
+			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, 1), true); // TODO calcular cooldowntime
+
+			return ret;
 		}
 
 		/// <summary>
@@ -82,10 +93,26 @@ namespace Items.Declarations.Equipment.Skills
 				var tg = user.Grid [pt].GetAliveUnidadHere ();
 				if (tg == null)
 					return;
-				LastGeneratedInstance = new SkillInstance (this, tg);
-				var effs = effectMaker (user, tg);
-				foreach (var eff in effs)
-					LastGeneratedInstance.Effects.AddEffect (eff);
+				LastGeneratedInstance = buildSkillInstance (user, tg);
+				LastGeneratedInstance.Effects.Executed += delegate(object sender2,
+				                                                   EffectResultEnum efRes)
+				{
+					switch (efRes)
+					{
+						case EffectResultEnum.Hit:
+							user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.4f);
+							tg.Exp.AddAssignation (ConstantesRecursos.EvasiónRango, "base", 0.2f);
+							tg.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor -= 0.1f;
+							break;
+						case EffectResultEnum.Miss:
+							user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.2f);
+							tg.Exp.AddAssignation (ConstantesRecursos.EvasiónRango, "base", 0.4f);
+							tg.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor -= 0.2f;
+							break;
+						default:
+							throw new Exception ();
+					}
+				};
 
 				LastGeneratedInstance.Execute ();
 			};
@@ -96,9 +123,9 @@ namespace Items.Declarations.Equipment.Skills
 			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
 		}
 
-		static void updateInfoBox (SelectableGridControl selGrid,
-		                           IUnidad user,
-		                           EtiquetaMultiLínea infoBox)
+		void updateInfoBox (SelectableGridControl selGrid,
+		                    IUnidad user,
+		                    EtiquetaMultiLínea infoBox)
 		{
 			// Se cambió la selección; volver a calcular skill
 			var pt = selGrid.CursorPosition;
@@ -109,9 +136,9 @@ namespace Items.Declarations.Equipment.Skills
 				infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
 				return;
 			}
-			var effs = effectMaker (user, tg);
+			var skInst = buildSkillInstance (user, tg);
 			var infoStrBuilding = new StringBuilder ();
-			foreach (var eff in effs)
+			foreach (var eff in skInst.Effects)
 				infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
 
 			infoBox.Texto = infoStrBuilding.ToString ();

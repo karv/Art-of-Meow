@@ -179,6 +179,8 @@
     <Compile Include="Skills\ChangeRecurso.cs" />
     <Compile Include="Skills\EffectResultEnum.cs" />
     <Compile Include="Skills\CollectionEffect.cs" />
+    <Compile Include="Skills\Effect.cs" />
+    <Compile Include="Skills\GenerateCooldownEffect.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
