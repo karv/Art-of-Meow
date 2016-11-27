@@ -85,7 +85,7 @@ namespace Items.Declarations.Equipment.Skills
 				LastGeneratedInstance = new SkillInstance (this, tg);
 				var effs = effectMaker (user, tg);
 				foreach (var eff in effs)
-					LastGeneratedInstance.AddEffect (eff);
+					LastGeneratedInstance.Effects.AddEffect (eff);
 
 				LastGeneratedInstance.Execute ();
 			};

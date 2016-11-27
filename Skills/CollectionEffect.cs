@@ -15,8 +15,7 @@ namespace Skills
 		{
 			if (_effects.Contains (eff))
 				throw new InvalidOperationException (
-					"Duplicated effect in collection: ",
-					eff);
+					"Duplicated effect in collection: " + eff);
 			_effects.Add (eff);
 		}
 
@@ -62,11 +61,16 @@ namespace Skills
 
 		public IEffectAgent Agent { get; }
 
-		public double Chance { get; }
+		public double Chance { get; set; }
 
-		public EffectResultEnum IEffect.Result { get; set; }
+		public EffectResultEnum Result { get; set; }
 
 		#endregion
+
+		public CollectionEffect ()
+		{
+			Chance = 1;
+		}
 	}
 	
 }

@@ -30,8 +30,11 @@ namespace Items.Declarations.Pots
 		void ISkill.GetInstance (IUnidad user)
 		{
 			LastGeneratedInstance = new SkillInstance (this, user);
-			LastGeneratedInstance.AddEffect (new RemoveItemEffect (user, user, this) { Chance = 1 });
-			LastGeneratedInstance.AddEffect (
+			LastGeneratedInstance.Effects.AddEffect (new RemoveItemEffect (
+				user,
+				user,
+				this) { Chance = 1 });
+			LastGeneratedInstance.Effects.AddEffect (
 				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp){ Chance = 1 });
 
 
