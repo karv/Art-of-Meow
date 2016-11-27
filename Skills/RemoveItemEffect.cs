@@ -23,7 +23,25 @@ namespace Skills
 			}
 		}
 
-		public EffectResultEnum Result { get; set; }
+		EffectResultEnum result;
+
+		/// <summary>
+		/// Devuelve el resultado del hit-check
+		/// </summary>
+		/// <value>The result.</value>
+		public EffectResultEnum Result
+		{
+			get
+			{
+				return result;
+			}
+			set
+			{
+				if (result != EffectResultEnum.NotInstanced)
+					throw new InvalidOperationException ();
+				result = value;
+			}
+		}
 
 		/// <summary>
 		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox

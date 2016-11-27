@@ -99,12 +99,23 @@ namespace Units
 				AddAssignation (x, cant);
 		}
 
+		/// <summary>
+		/// Asigna proporción de experiencia a todos los parámetros
+		/// </summary>
+		/// <param name="recurso">Nombre del recurso de asignación</param>
+		/// <param name="cant">Peso de la asignación</param>
 		public void AddAssignation (string recurso, float cant)
 		{
 			var rec = Unidad.Recursos.GetRecurso (recurso);
 			AddAssignation (rec, cant);
 		}
 
+		/// <summary>
+		/// Asigna proporción de experiencia a un parámetro
+		/// </summary>
+		/// <param name="recurso">Nombre del recurso de asignación</param>
+		/// <param name="parámetro">Nombre del parámetro del recurso</param>
+		/// <param name="cant">Peso de la asignación</param>
 		public void AddAssignation (string recurso, string parámetro, float cant)
 		{
 			var rec = Unidad.Recursos.GetRecurso (recurso);

@@ -24,6 +24,9 @@ namespace Skills
 		/// </summary>
 		void Execute (bool checkHit);
 
+		/// <summary>
+		/// Devuelve el resultado del hit-check
+		/// </summary>
 		EffectResultEnum Result { get; set; }
 
 		/// <summary>
@@ -32,8 +35,14 @@ namespace Skills
 		string DetailedInfo ();
 	}
 
+	/// <summary>
+	/// Extensiones de efectos de skill
+	/// </summary>
 	public static class EffectExt
 	{
+		/// <summary>
+		/// Hace un hit-checkM de ser positivo ejecuta el efecto
+		/// </summary>
 		public static bool CheckAndExecute (this IEffect eff)
 		{
 			eff.Result = (HitDamageCalculator.Hit (eff.Chance)) ? 
