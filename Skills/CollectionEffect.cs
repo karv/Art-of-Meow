@@ -49,7 +49,7 @@ namespace Skills
 		void IEffect.WhenHit ()
 		{
 			foreach (var ef in _effects)
-				ef.WhenHit ();
+				ef.Execute ();
 		}
 
 		public void ExecuteAll ()
