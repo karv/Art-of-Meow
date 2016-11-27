@@ -146,6 +146,20 @@ namespace Skills
 		public bool ShowDeltaLabel { get; set; }
 
 		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Skills.ChangeRecurso"/>.
+		/// </summary>
+		public override string ToString ()
+		{
+			if (Parámetro == null)
+				return string.Format ("{0} += {1}", TargetRecurso.NombreCorto, DeltaValor);
+			return string.Format (
+				"{0}.{1} += {2}",
+				TargetRecurso.NombreCorto,
+				Parámetro.NombreÚnico,
+				DeltaValor);
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Skills.ChangeRecurso"/> class.
 		/// </summary>
 		/// <param name="agent">Agent.</param>
