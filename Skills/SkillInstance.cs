@@ -19,6 +19,9 @@ namespace Skills
 		/// </summary>
 		public IEffectAgent Agent { get; }
 
+		/// <summary>
+		/// La colección de efectos
+		/// </summary>
 		public readonly CollectionEffect Effects;
 
 		/// <summary>

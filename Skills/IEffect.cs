@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using Helper;
 using Skills;
-using Units;
-using Units.Order;
 
 namespace Skills
 {
@@ -23,8 +21,14 @@ namespace Skills
 		/// </summary>
 		double Chance { get; }
 
+		/// <summary>
+		/// Ocurre cuando se falla
+		/// </summary>
 		void WhenMiss ();
 
+		/// <summary>
+		/// Ocurre cuando s acierta
+		/// </summary>
 		void WhenHit ();
 
 		/// <summary>
@@ -54,7 +58,7 @@ namespace Skills
 			
 			Debug.WriteLine (
 				string.Format (
-					"Resolving hit with probbility {0} : {1}",
+					"Resolving hit with probability {0} : {1}",
 					eff.Chance,
 					eff.Result),
 				"Effect");

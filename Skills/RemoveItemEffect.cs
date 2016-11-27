@@ -10,12 +10,18 @@ namespace Skills
 	/// </summary>
 	public class RemoveItemEffect : Effect, ITargetEffect
 	{
+		/// <summary>
+		/// Se invoca cuando acierta, elimina el item
+		/// </summary>
 		protected override void WhenHit ()
 		{
 			if (!Target.Inventory.Items.Remove (RemovingItem))
 				throw new Exception ("Cannot execute effect");
 		}
 
+		/// <summary>
+		/// Se invoca cuando falla
+		/// </summary>
 		protected override void WhenMiss ()
 		{
 		}

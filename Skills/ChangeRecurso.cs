@@ -16,13 +16,24 @@ namespace Skills
 	/// </summary>
 	public class ChangeRecurso : Effect, ITargetEffect
 	{
+		/// <summary>
+		/// Se invoca cuando acierta
+		/// </summary>
 		protected override void WhenHit ()
 		{
 			DoRun ();
+
+			if (ShowDeltaLabel)
+				ShowLabel ();
 		}
 
+		/// <summary>
+		/// Se invoca cuando falla
+		/// </summary>
 		protected override void WhenMiss ()
 		{
+			if (ShowDeltaLabel)
+				ShowLabel ();
 		}
 
 		/// <summary>
@@ -65,6 +76,9 @@ namespace Skills
 				OnKill ();
 		}
 
+		/// <summary>
+		/// Muestra al jugador/usuario el daño causado
+		/// </summary>
 		protected void ShowLabel ()
 		{
 			var scr = Program.MyGame.ScreenManager.ActiveThread.ClosestOfType<MapMainScreen> () as MapMainScreen;
@@ -81,7 +95,6 @@ namespace Skills
 			label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
 			label.ColorInicial = Color.Red;
 			label.Initialize ();
-
 		}
 
 		/// <summary>
@@ -127,6 +140,9 @@ namespace Skills
 		/// </summary>
 		public float DeltaValor { get; }
 
+		/// <summary>
+		/// Devuelve o establece si debe de ser mostrada una etiqueta con el delta causado
+		/// </summary>
 		public bool ShowDeltaLabel { get; set; }
 
 		/// <summary>
@@ -166,8 +182,12 @@ namespace Skills
 		                      string recNombre, 
 		                      float deltaValor,
 		                      double chance = 1)
-			: this (agent, target, recNombre, null, deltaValor, chance)
+			: base (agent, chance)
 		{
+			Target = target;
+			TargetRecurso = target.Recursos.GetRecurso (recNombre);
+			DeltaValor = deltaValor;
+			ShowDeltaLabel = true;
 		}
 	}
 }

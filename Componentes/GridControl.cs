@@ -44,6 +44,7 @@ namespace Componentes
 			InitializeContent ();
 		}
 
+		[Obsolete]
 		void suscribtions ()
 		{
 			// Suscribirse a las unidades
@@ -60,26 +61,6 @@ namespace Componentes
 		void hp_damage_done_event (object sender, float e)
 		{
 			return;
-			const int milisecsDuration = 3000;
-			var rec = sender as IRecurso;
-			var unid = rec.Unidad;
-			var delta = rec.Valor - e;
-			var str = new VanishingLabel (
-				          Screen,
-				          delta.ToString (),
-				          TimeSpan.FromMilliseconds (milisecsDuration))
-			{
-				ColorInicial = Color.Green,
-				ColorFinal = Color.Transparent,
-				FontName = damageFont,
-				Velocidad = new Vector2 (0, -1),
-			};
-			((IComponent)str).InitializeContent ();
-			((IComponent)str).Initialize ();
-
-			// La posición ya que cargue el contenido
-			str.Centro = CellSpotLocation (unid.Location).ToVector2 ();
-			Screen.AddComponent (str);
 		}
 
 
@@ -240,7 +221,6 @@ namespace Componentes
 		{
 			base.Initialize ();
 			Grid.AddedObject += itemAdded;
-			suscribtions ();
 		}
 
 		/// <summary>
