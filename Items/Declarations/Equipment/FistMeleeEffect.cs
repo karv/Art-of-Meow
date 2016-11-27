@@ -32,6 +32,15 @@ namespace Items.Declarations.Equipment
 					1),
 				true);
 
+			ret.AddEffect (
+				new ChangeRecurso (
+					user,
+					user,
+					ConstantesRecursos.Equilibrio,
+					-RecursoEquilibro.ReduceValue,
+					1),
+				true);
+			
 			var damage = Helper.HitDamageCalculator.Damage (
 				             user, target,
 				             ConstantesRecursos.Fuerza,
