@@ -307,6 +307,11 @@ namespace Units
 				var melee = Equipment.GetMeleeDamageType ();
 				var eff = melee.GetEffect (this, target);
 				eff.Execute ();
+
+				// Asignar exp
+				Exp.AddAssignation (ConstantesRecursos.CertezaMelee, 0.3f);
+				Exp.AddAssignation (ConstantesRecursos.Fuerza, 0.1f);
+				target.Exp.AddAssignation (ConstantesRecursos.EvasiónMelee, 0.3f);
 			}
 			else
 			{

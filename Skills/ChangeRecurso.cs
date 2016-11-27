@@ -70,7 +70,7 @@ namespace Skills
 				// Efecto es en parámetro
 				Parámetro.Valor += DeltaValor;
 
-
+			Debug.WriteLine (ToString (), "Recurso");
 
 			if (TargetRecurso is RecursoHP && TargetRecurso.Valor == 0)
 				OnKill ();

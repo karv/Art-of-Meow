@@ -41,7 +41,7 @@ namespace Items.Declarations.Equipment
 					1),
 				true);
 			
-			var damage = Helper.HitDamageCalculator.Damage (
+			var damage = 0.4f * Helper.HitDamageCalculator.Damage (
 				             user, target,
 				             ConstantesRecursos.Fuerza,
 				             ConstantesRecursos.Destreza);
