@@ -1,5 +1,4 @@
 using Units.Recursos;
-using System.Diagnostics;
 using Skills;
 using Helper;
 
@@ -29,13 +28,10 @@ namespace Units.Order
 			var dex = Unidad.Recursos.GetRecurso (ConstantesRecursos.Destreza) as StatRecurso;
 			dex.Valor *= 0.8f;
 
-			if (Unidad.Team == Target.Team)
-				return;
-
 			// Asignar exp
-			unid.Exp.AddAssignation (dex.BaseP, 0.1f);
-			var str = Unidad.Recursos.GetRecurso (ConstantesRecursos.Fuerza) as StatRecurso;
-			unid.Exp.AddAssignation (str.BaseP, 1f);
+			unid.Exp.AddAssignation (ConstantesRecursos.Destreza, "base", 0.1f);
+			unid.Exp.AddAssignation (ConstantesRecursos.CertezaMelee, "base", 0.05f);
+			Target.Exp.AddAssignation (ConstantesRecursos.EvasiónMelee, "base", 0.05f);
 
 			var ef = new ChangeRecurso (unid, Target, ConstantesRecursos.HP, -Damage);
 			ef.Chance = HitDamageCalculator.GetPctHit (

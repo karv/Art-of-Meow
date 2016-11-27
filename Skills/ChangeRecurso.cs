@@ -73,10 +73,10 @@ namespace Skills
 			{
 				var scr = Program.MyGame.ScreenManager.ActiveThread.ClosestOfType<MapMainScreen> () as MapMainScreen;
 				var txt = Result == EffectResultEnum.Hit ?
-					Math.Abs (DeltaValor).ToString () :
-					"miss";
+					Math.Abs (Math.Truncate (DeltaValor)).ToString () :
+					"...."; // TODO Renombrar a "miss" cuando tenga el content
 				var label = new VanishingLabel (
-					            Program.MyGame.ScreenManager.ActiveThread.Current,
+					            scr,
 					            txt,
 					            TimeSpan.FromMilliseconds (900));
 				scr.AddComponent (label);

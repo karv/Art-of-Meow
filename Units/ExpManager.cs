@@ -99,6 +99,19 @@ namespace Units
 				AddAssignation (x, cant);
 		}
 
+		public void AddAssignation (string recurso, float cant)
+		{
+			var rec = Unidad.Recursos.GetRecurso (recurso);
+			AddAssignation (rec, cant);
+		}
+
+		public void AddAssignation (string recurso, string parámetro, float cant)
+		{
+			var rec = Unidad.Recursos.GetRecurso (recurso);
+			var par = rec.ValorParámetro (parámetro);
+			AddAssignation (par, cant);
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Units.ExpManager"/> class.
 		/// </summary>
