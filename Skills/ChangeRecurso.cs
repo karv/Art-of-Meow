@@ -14,18 +14,21 @@ namespace Skills
 	/// <summary>
 	/// Un efecto de cambio de recurso en un target
 	/// </summary>
-	public class ChangeRecurso : ITargetEffect
+	public class ChangeRecurso : Effect, ITargetEffect
 	{
-		/// <summary>
-		/// Probabilidad de que ocurra
-		/// </summary>
-		/// <value>The chance.</value>
-		public double Chance { get; set; }
+		protected override void WhenHit ()
+		{
+			DoRun ();
+		}
+
+		protected override void WhenMiss ()
+		{
+		}
 
 		/// <summary>
 		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox
 		/// </summary>
-		public string DetailedInfo ()
+		public override string DetailedInfo ()
 		{
 			if (Parámetro == null)
 				return string.Format (
@@ -42,8 +45,6 @@ namespace Skills
 				DeltaValor,
 				Chance);
 		}
-
-		public EffectResultEnum Result { get; set; }
 
 		/// <summary>
 		/// Runs the effect
@@ -81,23 +82,6 @@ namespace Skills
 			label.ColorInicial = Color.Red;
 			label.Initialize ();
 
-		}
-
-		void IEffect.WhenHit ()
-		{
-			DoRun ();
-
-			if (ShowDeltaLabel)
-				ShowLabel ();
-
-			Executed?.Invoke (this, EffectResultEnum.Hit);
-		}
-
-		void IEffect.WhenMiss ()
-		{
-			if (ShowDeltaLabel)
-				ShowLabel ();
-			Executed?.Invoke (this, EffectResultEnum.Miss);
 		}
 
 		/// <summary>
@@ -139,18 +123,11 @@ namespace Skills
 		ITarget ITargetEffect.Target { get { return Target; } }
 
 		/// <summary>
-		/// Devuelve quien causa el efecto.
-		/// </summary>
-		public IEffectAgent Agent { get; }
-
-		/// <summary>
 		/// Devuelve la diferencia de valor que causa el recurso
 		/// </summary>
 		public float DeltaValor { get; }
 
 		public bool ShowDeltaLabel { get; set; }
-
-		public event EventHandler<EffectResultEnum> Executed;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Skills.ChangeRecurso"/> class.
@@ -160,20 +137,20 @@ namespace Skills
 		/// <param name="recNombre">Nombre del recurso</param>
 		/// <param name="recParámetro">Nombre del parámetro</param>
 		/// <param name="deltaValor">Cambio de valor</param>
+		/// <param name = "chance">PRobabilidad de que HIT</param>
 		public ChangeRecurso (IEffectAgent agent,
 		                      IUnidad target,
 		                      string recNombre,
 		                      string recParámetro, 
 		                      float deltaValor,
 		                      double chance = 1)
+			: base (agent, chance)
 		{
-			Agent = agent;
 			Target = target;
 			TargetRecurso = target.Recursos.GetRecurso (recNombre);
 			Parámetro = TargetRecurso.ValorParámetro (recParámetro);
 			DeltaValor = deltaValor;
 			ShowDeltaLabel = true;
-			Chance = chance;
 		}
 
 		/// <summary>
@@ -183,18 +160,14 @@ namespace Skills
 		/// <param name="target">Target.</param>
 		/// <param name="recNombre">Nombre del recurso</param>
 		/// <param name="deltaValor">Cambio de valor</param>
+		/// <param name = "chance">PRobabilidad de que HIT</param>
 		public ChangeRecurso (IEffectAgent agent,
 		                      IUnidad target,
 		                      string recNombre, 
 		                      float deltaValor,
 		                      double chance = 1)
+			: this (agent, target, recNombre, null, deltaValor, chance)
 		{
-			Agent = agent;
-			Target = target;
-			TargetRecurso = target.Recursos.GetRecurso (recNombre);
-			DeltaValor = deltaValor;
-			ShowDeltaLabel = true;
-			Chance = chance;
 		}
 	}
 }

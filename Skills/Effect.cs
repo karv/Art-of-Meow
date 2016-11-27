@@ -5,7 +5,7 @@ namespace Skills
 {
 	public abstract class Effect : IEffect
 	{
-		public abstract void WhenMiss ();
+		protected abstract void WhenMiss ();
 
 		void IEffect.WhenMiss ()
 		{
@@ -13,7 +13,7 @@ namespace Skills
 			Executed?.Invoke (this, EffectResultEnum.Miss);
 		}
 
-		public abstract void WhenHit ();
+		protected abstract void WhenHit ();
 
 		void IEffect.WhenHit ()
 		{

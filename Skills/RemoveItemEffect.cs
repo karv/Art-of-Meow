@@ -8,56 +8,25 @@ namespace Skills
 	/// <summary>
 	/// Representa el efecto de un <see cref="Units.Skills.ISkill"/> que consisnte en eliminar un item de un <see cref="IUnidad"/>
 	/// </summary>
-	public class RemoveItemEffect : ITargetEffect
+	public class RemoveItemEffect : Effect, ITargetEffect
 	{
-		/// <summary>
-		/// Runs the effect
-		/// </summary>
-		void IEffect.WhenHit ()
+		protected override void WhenHit ()
 		{
-			// Removes the item, it it does not exists: exception
 			if (!Target.Inventory.Items.Remove (RemovingItem))
 				throw new Exception ("Cannot execute effect");
 		}
 
-		void IEffect.WhenMiss ()
+		protected override void WhenMiss ()
 		{
-		}
-
-
-
-		EffectResultEnum result;
-
-		/// <summary>
-		/// Devuelve el resultado del hit-check
-		/// </summary>
-		/// <value>The result.</value>
-		public EffectResultEnum Result
-		{
-			get
-			{
-				return result;
-			}
-			set
-			{
-				if (result != EffectResultEnum.NotInstanced)
-					throw new InvalidOperationException ();
-				result = value;
-			}
 		}
 
 		/// <summary>
 		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox
 		/// </summary>
-		public string DetailedInfo ()
+		public override string DetailedInfo ()
 		{
 			return string.Format ("{1}: Removes {0}", RemovingItem.Nombre, Chance);
 		}
-
-		/// <summary>
-		/// Probabilidad de que ocurra
-		/// </summary>
-		public double Chance { get; set; }
 
 		/// <summary>
 		/// Whose inventory gonna lose the item.
@@ -72,11 +41,6 @@ namespace Skills
 		public IItem RemovingItem { get; }
 
 		/// <summary>
-		/// What caused this effect
-		/// </summary>
-		public IEffectAgent Agent { get; }
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="Skills.RemoveItemEffect"/> class.
 		/// </summary>
 		/// <param name="source">Source.</param>
@@ -85,10 +49,11 @@ namespace Skills
 		public RemoveItemEffect (IEffectAgent source,
 		                         IUnidad target,
 		                         IItem removingItem)
+			: base (source)
 		{
-			Agent = source;
 			Target = target;
 			RemovingItem = removingItem;
+			Chance = 1;
 		}
 	}
 }

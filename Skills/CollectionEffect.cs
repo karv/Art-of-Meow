@@ -5,7 +5,7 @@ using System;
 
 namespace Skills
 {
-	public class CollectionEffect : IEffect, IEnumerable<IEffect>
+	public class CollectionEffect : Effect, IEnumerable<IEffect>
 	{
 		readonly List<IEffect> _effects = new List<IEffect> ();
 		readonly List<IEffect> _neverMissEffect = new List<IEffect> ();
@@ -61,24 +61,20 @@ namespace Skills
 
 		#region IEffect implementation
 
-		void IEffect.WhenMiss ()
+		protected override void WhenHit ()
+		{
+			foreach (var ef in _neverMissEffect)
+				ef.Execute ();
+			foreach (var ef in _effects)
+				ef.Execute ();
+		}
+
+		protected override void WhenMiss ()
 		{
 			foreach (var ef in _neverMissEffect)
 				ef.Execute ();
 			foreach (var ef in _effects)
 				ef.WhenMiss ();
-
-			Executed?.Invoke (this, EffectResultEnum.Miss);
-		}
-
-		void IEffect.WhenHit ()
-		{
-			foreach (var ef in _neverMissEffect)
-				ef.Execute ();
-			foreach (var ef in _effects)
-				ef.Execute ();
-
-			Executed?.Invoke (this, EffectResultEnum.Hit);
 		}
 
 		public void ExecuteAll ()
@@ -87,7 +83,7 @@ namespace Skills
 				_effects [i].Execute ();
 		}
 
-		string IEffect.DetailedInfo ()
+		public override string DetailedInfo ()
 		{
 			var sb = new StringBuilder ();
 			foreach (var ef in _effects)
@@ -95,19 +91,11 @@ namespace Skills
 			return sb.ToString ();
 		}
 
-		public IEffectAgent Agent { get; }
-
-		public double Chance { get; set; }
-
-		public EffectResultEnum Result { get; set; }
-
 		#endregion
 
-		public event EventHandler<EffectResultEnum> Executed;
-
-		public CollectionEffect ()
+		public CollectionEffect (IEffectAgent agent, double chance = 1)
+			: base (agent, chance)
 		{
-			Chance = 1;
 		}
 	}
 	

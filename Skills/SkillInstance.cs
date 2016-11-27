@@ -39,7 +39,7 @@ namespace Skills
 		{
 			Skill = skill;
 			Agent = agent;
-			Effects = new CollectionEffect ();
+			Effects = new CollectionEffect (agent);
 		}
 	}
 }

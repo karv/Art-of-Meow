@@ -9,11 +9,11 @@ namespace Skills
 	{
 		#region IEffect implementation
 
-		public override void WhenMiss ()
+		protected override void WhenMiss ()
 		{
 		}
 
-		public override void WhenHit ()
+		protected override void WhenHit ()
 		{
 			
 			var tg = Target as IUnidad;
