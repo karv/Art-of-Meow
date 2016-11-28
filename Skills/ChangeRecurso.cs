@@ -1,13 +1,13 @@
+using System;
 using System.Diagnostics;
+using AoM;
+using Componentes;
+using Microsoft.Xna.Framework;
+using Moggle.Controles;
+using Screens;
 using Skills;
 using Units;
 using Units.Recursos;
-using Componentes;
-using AoM;
-using System;
-using Screens;
-using Microsoft.Xna.Framework;
-using Moggle.Controles;
 
 namespace Skills
 {
@@ -147,6 +147,10 @@ namespace Skills
 		/// </summary>
 		public bool ShowDeltaLabel { get; set; }
 
+		/// <summary>
+		/// Cuando <see cref="ShowDeltaLabel"/> es <c>true</c>, este valor determina el color de la equiqueta.
+		/// </summary>
+		/// <seealso cref="ShowDeltaLabel"/>
 		public Color LabelColor { get; set; }
 
 		/// <summary>
