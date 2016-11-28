@@ -17,13 +17,25 @@ namespace Helper
 		/// <param name="attHit">Certeza</param>
 		/// <param name="defEva">Evasión</param>
 		/// <param name="equilibrio">Equilibrio</param>
-		public static double GetPctHit (float attHit, float defEva, float equilibrio)
+		/// <param name = "baseHit">The probability of hit when hit is equal to defense</param>
+		public static double GetPctHit (float attHit,
+		                                float defEva,
+		                                float equilibrio,
+		                                double baseHit)
 		{
-			// Manejar casos especiales primero
-			if (attHit == 0)
-				return defEva == 0 ? 0.5 : 0;
-			var rate = attHit * Math.Pow (equilibrio, 2) / defEva;
-			return Math.Min (1, rate);
+			if (equilibrio < 0 || equilibrio > 1)
+				throw new ArgumentException ("equilibrio");
+			if (baseHit < 0 || baseHit > 1)
+				throw new ArgumentException ("baseHit");
+			var diff = attHit * (equilibrio + 1) / 2f - defEva;
+			if (diff == 0)
+				return baseHit;
+
+			if (diff < 0)
+				return Math.Pow (baseHit, -diff);
+
+			var pow2 = Math.Pow (2, -diff);
+			return (pow2 - 1 + baseHit) / (pow2);
 		}
 
 		/// <summary>
@@ -34,10 +46,12 @@ namespace Helper
 		/// <param name="def">Defensor</param>
 		/// <param name="attHitRecurso">Nombre del atributo de certeza</param>
 		/// <param name="defEvaRecurso">Nombre del atributo de evasión</param>
+		/// <param name = "baseHit">The probability of hit when hit is equal to defense</param>
 		public static double GetPctHit (IUnidad att,
 		                                IUnidad def,
 		                                string attHitRecurso,
-		                                string defEvaRecurso)
+		                                string defEvaRecurso,
+		                                double baseHit)
 		{
 			if (def == null)
 				throw new ArgumentNullException ("def");
@@ -49,7 +63,8 @@ namespace Helper
 			return GetPctHit (
 				attHit,
 				defEva,
-				att.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor);
+				att.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor,
+				baseHit);
 		}
 
 		/// <summary>

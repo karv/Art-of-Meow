@@ -29,11 +29,13 @@ namespace Items.Declarations.Equipment.Skills
 			if (user == null)
 				throw new ArgumentNullException ("user");
 			
+			const double baseHit = 0.7;
 			var chance = HitDamageCalculator.GetPctHit (
 				             user,
 				             target,
 				             ConstantesRecursos.CertezaRango,
-				             ConstantesRecursos.EvasiónRango);
+				             ConstantesRecursos.EvasiónRango,
+				             baseHit);
 			var dmg = HitDamageCalculator.Damage (
 				          user,
 				          target,
@@ -43,7 +45,8 @@ namespace Items.Declarations.Equipment.Skills
 				         user,
 				         target,
 				         ConstantesRecursos.HP,
-				         -dmg);
+				         -dmg, 
+				         chance);
 
 			var ret = new SkillInstance (this, user);
 			ret.Effects.Chance = chance;

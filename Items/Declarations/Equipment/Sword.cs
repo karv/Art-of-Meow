@@ -50,6 +50,8 @@ namespace Items.Declarations.Equipment
 	/// </summary>
 	public class Sword : Equipment, IMeleeEffect
 	{
+		const double baseHit = 0.8;
+
 		#region IEquipment implementation
 
 		/// <summary>
@@ -71,7 +73,8 @@ namespace Items.Declarations.Equipment
 				          user,
 				          target,
 				          ConstantesRecursos.CertezaMelee,
-				          ConstantesRecursos.EvasiónMelee);
+				          ConstantesRecursos.EvasiónMelee,
+				          baseHit);
 			var ret = new CollectionEffect (user, pct);
 			ret.AddEffect (
 				new ChangeRecurso (

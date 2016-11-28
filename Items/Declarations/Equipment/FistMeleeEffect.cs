@@ -17,11 +17,13 @@ namespace Items.Declarations.Equipment
 		/// <param name="target">Target.</param>
 		public IEffect GetEffect (IUnidad user, IUnidad target)
 		{
+			const double baseHit = 0.9;
 			var pct = Helper.HitDamageCalculator.GetPctHit (
 				          user,
 				          target,
 				          ConstantesRecursos.CertezaMelee,
-				          ConstantesRecursos.EvasiónMelee);
+				          ConstantesRecursos.EvasiónMelee,
+				          baseHit);
 			var ret = new CollectionEffect (user, pct);
 			ret.AddEffect (
 				new ChangeRecurso (
