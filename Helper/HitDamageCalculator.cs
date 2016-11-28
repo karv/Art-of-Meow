@@ -34,6 +34,9 @@ namespace Helper
 			if (diff < 0)
 				return Math.Pow (baseHit, -diff);
 
+			if (diff < 1)
+				return baseHit + (1 - baseHit) * diff / 2d;
+
 			var pow2 = Math.Pow (2, -diff);
 			return (pow2 - 1 + baseHit) / (pow2);
 		}
