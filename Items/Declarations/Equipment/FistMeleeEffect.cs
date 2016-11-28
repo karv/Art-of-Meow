@@ -2,6 +2,7 @@ using Items.Declarations.Equipment;
 using Skills;
 using Units;
 using Units.Recursos;
+using Microsoft.Xna.Framework;
 
 namespace Items.Declarations.Equipment
 {
@@ -29,7 +30,7 @@ namespace Items.Declarations.Equipment
 					target,
 					ConstantesRecursos.Equilibrio,
 					-RecursoEquilibro.ReduceValue,
-					1),
+					1) { ShowDeltaLabel = false },
 				true);
 
 			ret.AddEffect (
@@ -38,7 +39,7 @@ namespace Items.Declarations.Equipment
 					user,
 					ConstantesRecursos.Equilibrio,
 					-RecursoEquilibro.ReduceValue,
-					1),
+					1){ ShowDeltaLabel = false },
 				true);
 			
 			var damage = 0.4f * Helper.HitDamageCalculator.Damage (

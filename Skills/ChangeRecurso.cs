@@ -81,9 +81,11 @@ namespace Skills
 		/// </summary>
 		protected void ShowLabel ()
 		{
+			if (DeltaValor == 0)
+				return;
 			var scr = Program.MyGame.ScreenManager.ActiveThread.ClosestOfType<MapMainScreen> () as MapMainScreen;
 			var txt = Result == EffectResultEnum.Hit ?
-				Math.Abs (Math.Truncate (DeltaValor)).ToString () :
+				Math.Abs (Math.Truncate (DeltaValor * 10) / 10).ToString () :
 				"...."; // TODO Renombrar a "miss" cuando tenga el content
 			var label = new VanishingLabel (
 				            scr,
@@ -93,7 +95,7 @@ namespace Skills
 			label.FontName = "Fonts//damage";
 			(label as IComponent).InitializeContent ();
 			label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
-			label.ColorInicial = Color.Red;
+			label.ColorInicial = LabelColor;
 			label.Initialize ();
 		}
 
@@ -144,6 +146,8 @@ namespace Skills
 		/// Devuelve o establece si debe de ser mostrada una etiqueta con el delta causado
 		/// </summary>
 		public bool ShowDeltaLabel { get; set; }
+
+		public Color LabelColor { get; set; }
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Skills.ChangeRecurso"/>.
@@ -202,6 +206,7 @@ namespace Skills
 			TargetRecurso = target.Recursos.GetRecurso (recNombre);
 			DeltaValor = deltaValor;
 			ShowDeltaLabel = true;
+			LabelColor = Color.Red;
 		}
 	}
 }
