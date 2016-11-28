@@ -1,7 +1,8 @@
+using System.Diagnostics;
+using Helper;
 using Items.Declarations.Equipment;
 using Skills;
 using Units;
-using Units.Recursos;
 
 namespace Items.Declarations.Equipment
 {
@@ -17,52 +18,21 @@ namespace Items.Declarations.Equipment
 		/// <param name="target">Target.</param>
 		public IEffect GetEffect (IUnidad user, IUnidad target)
 		{
-			var pct = Helper.HitDamageCalculator.GetPctHit (
+			var ret = MeleeEffectHelper.BuildDefaultMeleeEffect (
 				          user,
 				          target,
-				          ConstantesRecursos.CertezaMelee,
-				          ConstantesRecursos.EvasiónMelee);
-			var ret = new CollectionEffect (user, pct);
-			ret.AddEffect (
-				new ChangeRecurso (
+				          0.4f,
+				          0.9f);
+			
+			Debug.WriteLine (
+				string.Format (
+					"Melee effect from {0} to {1} causing\n{2}",
 					user,
 					target,
-					ConstantesRecursos.Equilibrio,
-					-RecursoEquilibro.ReduceValue,
-					1) { ShowDeltaLabel = false },
-				true);
-
-			ret.AddEffect (
-				new ChangeRecurso (
-					user,
-					user,
-					ConstantesRecursos.Equilibrio,
-					-RecursoEquilibro.ReduceValue,
-					1){ ShowDeltaLabel = false },
-				true);
-			
-			var damage = 0.4f * Helper.HitDamageCalculator.Damage (
-				             user, target,
-				             ConstantesRecursos.Fuerza,
-				             ConstantesRecursos.Destreza);
-
-			ret.AddEffect (
-				new ChangeRecurso (user, target, ConstantesRecursos.HP, -damage, 1));
-
-			ret.AddEffect (
-				new GenerateCooldownEffect (
-					user,
-					user,
-					calcularTiempoMelee (user)),
-				true);
+					ret.DetailedInfo ())
+			);
 
 			return ret;
-		}
-
-		static float calcularTiempoMelee (IUnidad user)
-		{
-			var dex = user.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
-			return 1 / dex;
 		}
 	}
 }
