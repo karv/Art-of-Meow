@@ -47,5 +47,13 @@ namespace Units.Recursos
 		/// Equilibrio
 		/// </summary>
 		public const string Equilibrio = "equilibrio";
+		/// <summary>
+		/// Presición melee
+		/// </summary>
+		public const string CertezaMelee = "melee_prec";
+		/// <summary>
+		/// Persición de rango
+		/// </summary>
+		public const string EvasiónMelee = "melee_eva";
 	}
 }
