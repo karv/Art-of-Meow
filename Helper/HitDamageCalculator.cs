@@ -16,18 +16,14 @@ namespace Helper
 		/// </summary>
 		/// <param name="attHit">Certeza</param>
 		/// <param name="defEva">Evasión</param>
-		/// <param name="equilibrio">Equilibrio</param>
 		/// <param name = "baseHit">The probability of hit when hit is equal to defense</param>
 		public static double GetPctHit (float attHit,
 		                                float defEva,
-		                                float equilibrio,
 		                                double baseHit)
 		{
-			if (equilibrio < 0 || equilibrio > 1)
-				throw new ArgumentException ("equilibrio");
 			if (baseHit < 0 || baseHit > 1)
 				throw new ArgumentException ("baseHit");
-			var diff = attHit * (equilibrio + 1) / 2f - defEva;
+			var diff = attHit - defEva;
 			if (diff == 0)
 				return baseHit;
 
@@ -60,13 +56,12 @@ namespace Helper
 				throw new ArgumentNullException ("def");
 			if (att == null)
 				throw new ArgumentNullException ("att");
-			
-			var attHit = att.Recursos.GetRecurso (attHitRecurso).Valor;
-			var defEva = def.Recursos.GetRecurso (defEvaRecurso).Valor;
+
+			var attHit = att.Recursos.GetRecurso (attHitRecurso).Valor * att.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor;
+			var defEva = def.Recursos.GetRecurso (defEvaRecurso).Valor * def.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor;
 			return GetPctHit (
 				attHit,
 				defEva,
-				att.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor,
 				baseHit);
 		}
 
