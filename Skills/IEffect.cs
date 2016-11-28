@@ -5,7 +5,6 @@ using Skills;
 
 namespace Skills
 {
-
 	/// <summary>
 	/// Un efecto de un objeto.
 	/// </summary>
@@ -72,4 +71,4 @@ namespace Skills
 			return ret;
 		}
 	}
-}	
+}

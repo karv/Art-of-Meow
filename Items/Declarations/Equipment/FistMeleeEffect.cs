@@ -2,7 +2,6 @@ using Items.Declarations.Equipment;
 using Skills;
 using Units;
 using Units.Recursos;
-using Microsoft.Xna.Framework;
 
 namespace Items.Declarations.Equipment
 {
