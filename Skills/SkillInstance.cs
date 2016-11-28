@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Skills;
 using Units.Skills;
 
@@ -20,23 +19,18 @@ namespace Skills
 		/// </summary>
 		public IEffectAgent Agent { get; }
 
-		readonly List<IEffect> _effects;
-
 		/// <summary>
-		/// Añadir un efecto
+		/// La colección de efectos
 		/// </summary>
-		public void AddEffect (IEffect effect)
-		{
-			_effects.Add (effect);
-		}
+		public readonly CollectionEffect Effects;
 
 		/// <summary>
 		/// Ejecuta
 		/// </summary>
 		public void Execute ()
 		{
-			for (int i = 0; i < _effects.Count; i++)
-				_effects [i].Execute ();
+			Effects.Execute ();
+			//Effects.ExecuteAll ();
 		}
 
 		/// <summary>
@@ -48,7 +42,7 @@ namespace Skills
 		{
 			Skill = skill;
 			Agent = agent;
-			_effects = new List<IEffect> ();
+			Effects = new CollectionEffect (agent);
 		}
 	}
 }

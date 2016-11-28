@@ -1,6 +1,6 @@
 using Items.Declarations.Equipment;
+using Skills;
 using Units;
-using Units.Order;
 using Units.Recursos;
 
 namespace Items.Declarations.Equipment
@@ -11,25 +11,52 @@ namespace Items.Declarations.Equipment
 	public class FistMeleeEffect : IMeleeEffect
 	{
 		/// <summary>
-		/// Causes damage on target
+		/// Causes melee effect on a target
 		/// </summary>
-		/// <param name="user">User.</param>
+		/// <param name="user">The user of the melee move</param>
 		/// <param name="target">Target.</param>
-		public void DoMeleeEffectOn (IUnidad user, IUnidad target)
+		public IEffect GetEffect (IUnidad user, IUnidad target)
 		{
 			var pct = Helper.HitDamageCalculator.GetPctHit (
 				          user,
 				          target,
-				          ConstantesRecursos.Destreza,
-				          ConstantesRecursos.Destreza);
-			var eq = user.Recursos.GetRecurso (ConstantesRecursos.Equilibrio);
-			eq.Valor /= 2;
-			if (Helper.HitDamageCalculator.Hit (pct))
-			{
-				var damage = user.Recursos.ValorRecurso (ConstantesRecursos.Fuerza) / 8;
-				user.EnqueueOrder (new MeleeDamageOrder (user, target, damage));
-			}
-			user.EnqueueOrder (new CooldownOrder (user, calcularTiempoMelee (user)));
+				          ConstantesRecursos.CertezaMelee,
+				          ConstantesRecursos.EvasiónMelee);
+			var ret = new CollectionEffect (user, pct);
+			ret.AddEffect (
+				new ChangeRecurso (
+					user,
+					target,
+					ConstantesRecursos.Equilibrio,
+					-RecursoEquilibro.ReduceValue,
+					1) { ShowDeltaLabel = false },
+				true);
+
+			ret.AddEffect (
+				new ChangeRecurso (
+					user,
+					user,
+					ConstantesRecursos.Equilibrio,
+					-RecursoEquilibro.ReduceValue,
+					1){ ShowDeltaLabel = false },
+				true);
+			
+			var damage = 0.4f * Helper.HitDamageCalculator.Damage (
+				             user, target,
+				             ConstantesRecursos.Fuerza,
+				             ConstantesRecursos.Destreza);
+
+			ret.AddEffect (
+				new ChangeRecurso (user, target, ConstantesRecursos.HP, -damage, 1));
+
+			ret.AddEffect (
+				new GenerateCooldownEffect (
+					user,
+					user,
+					calcularTiempoMelee (user)),
+				true);
+
+			return ret;
 		}
 
 		static float calcularTiempoMelee (IUnidad user)

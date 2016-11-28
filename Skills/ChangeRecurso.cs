@@ -1,25 +1,45 @@
+using System;
+using System.Diagnostics;
+using AoM;
+using Componentes;
+using Microsoft.Xna.Framework;
+using Moggle.Controles;
+using Screens;
 using Skills;
 using Units;
 using Units.Recursos;
-using System.Diagnostics;
 
 namespace Skills
 {
 	/// <summary>
 	/// Un efecto de cambio de recurso en un target
 	/// </summary>
-	public class ChangeRecurso : ITargetEffect
+	public class ChangeRecurso : Effect, ITargetEffect
 	{
 		/// <summary>
-		/// Probabilidad de que ocurra
+		/// Se invoca cuando acierta
 		/// </summary>
-		/// <value>The chance.</value>
-		public double Chance { get; set; }
+		protected override void WhenHit ()
+		{
+			DoRun ();
+
+			if (ShowDeltaLabel)
+				ShowLabel ();
+		}
+
+		/// <summary>
+		/// Se invoca cuando falla
+		/// </summary>
+		protected override void WhenMiss ()
+		{
+			if (ShowDeltaLabel)
+				ShowLabel ();
+		}
 
 		/// <summary>
 		/// Devuelve un <c>string</c> de una línea que describe este efecto como infobox
 		/// </summary>
-		public string DetailedInfo ()
+		public override string DetailedInfo ()
 		{
 			if (Parámetro == null)
 				return string.Format (
@@ -40,8 +60,9 @@ namespace Skills
 		/// <summary>
 		/// Runs the effect
 		/// </summary>
-		public void Execute ()
+		protected void DoRun ()
 		{
+			
 			if (Parámetro == null)
 				// Efecto es en recurso
 				TargetRecurso.Valor += DeltaValor;
@@ -49,8 +70,33 @@ namespace Skills
 				// Efecto es en parámetro
 				Parámetro.Valor += DeltaValor;
 
+			Debug.WriteLine (ToString (), "Recurso");
+
 			if (TargetRecurso is RecursoHP && TargetRecurso.Valor == 0)
 				OnKill ();
+		}
+
+		/// <summary>
+		/// Muestra al jugador/usuario el daño causado
+		/// </summary>
+		protected void ShowLabel ()
+		{
+			if (DeltaValor == 0)
+				return;
+			var scr = Program.MyGame.ScreenManager.ActiveThread.ClosestOfType<MapMainScreen> () as MapMainScreen;
+			var txt = Result == EffectResultEnum.Hit ?
+				Math.Abs (Math.Truncate (DeltaValor * 10) / 10).ToString () :
+				"...."; // TODO Renombrar a "miss" cuando tenga el content
+			var label = new VanishingLabel (
+				            scr,
+				            txt,
+				            TimeSpan.FromMilliseconds (900));
+			scr.AddComponent (label);
+			label.FontName = "Fonts//damage";
+			(label as IComponent).InitializeContent ();
+			label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
+			label.ColorInicial = LabelColor;
+			label.Initialize ();
 		}
 
 		/// <summary>
@@ -92,14 +138,34 @@ namespace Skills
 		ITarget ITargetEffect.Target { get { return Target; } }
 
 		/// <summary>
-		/// Devuelve quien causa el efecto.
-		/// </summary>
-		public IEffectAgent Agent { get; }
-
-		/// <summary>
 		/// Devuelve la diferencia de valor que causa el recurso
 		/// </summary>
 		public float DeltaValor { get; }
+
+		/// <summary>
+		/// Devuelve o establece si debe de ser mostrada una etiqueta con el delta causado
+		/// </summary>
+		public bool ShowDeltaLabel { get; set; }
+
+		/// <summary>
+		/// Cuando <see cref="ShowDeltaLabel"/> es <c>true</c>, este valor determina el color de la equiqueta.
+		/// </summary>
+		/// <seealso cref="ShowDeltaLabel"/>
+		public Color LabelColor { get; set; }
+
+		/// <summary>
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Skills.ChangeRecurso"/>.
+		/// </summary>
+		public override string ToString ()
+		{
+			if (Parámetro == null)
+				return string.Format ("{0} += {1}", TargetRecurso.NombreCorto, DeltaValor);
+			return string.Format (
+				"{0}.{1} += {2}",
+				TargetRecurso.NombreCorto,
+				Parámetro.NombreÚnico,
+				DeltaValor);
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Skills.ChangeRecurso"/> class.
@@ -109,17 +175,20 @@ namespace Skills
 		/// <param name="recNombre">Nombre del recurso</param>
 		/// <param name="recParámetro">Nombre del parámetro</param>
 		/// <param name="deltaValor">Cambio de valor</param>
+		/// <param name = "chance">PRobabilidad de que HIT</param>
 		public ChangeRecurso (IEffectAgent agent,
 		                      IUnidad target,
 		                      string recNombre,
 		                      string recParámetro, 
-		                      float deltaValor)
+		                      float deltaValor,
+		                      double chance = 1)
+			: base (agent, chance)
 		{
-			Agent = agent;
 			Target = target;
 			TargetRecurso = target.Recursos.GetRecurso (recNombre);
 			Parámetro = TargetRecurso.ValorParámetro (recParámetro);
 			DeltaValor = deltaValor;
+			ShowDeltaLabel = true;
 		}
 
 		/// <summary>
@@ -129,15 +198,19 @@ namespace Skills
 		/// <param name="target">Target.</param>
 		/// <param name="recNombre">Nombre del recurso</param>
 		/// <param name="deltaValor">Cambio de valor</param>
+		/// <param name = "chance">PRobabilidad de que HIT</param>
 		public ChangeRecurso (IEffectAgent agent,
 		                      IUnidad target,
 		                      string recNombre, 
-		                      float deltaValor)
+		                      float deltaValor,
+		                      double chance = 1)
+			: base (agent, chance)
 		{
-			Agent = agent;
 			Target = target;
 			TargetRecurso = target.Recursos.GetRecurso (recNombre);
 			DeltaValor = deltaValor;
+			ShowDeltaLabel = true;
+			LabelColor = Color.Red;
 		}
 	}
 }

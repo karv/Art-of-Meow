@@ -33,12 +33,16 @@ namespace Units.Skills
 		public void GetInstance (IUnidad user)
 		{
 			var ret = new SkillInstance (this, user);
-			ret.AddEffect (new ChangeRecurso (
+			ret.Effects.AddEffect (new ChangeRecurso (
 				user,
 				user,
 				ConstantesRecursos.MP,
 				_mpCost));
-			ret.AddEffect (new ChangeRecurso (user, user, ConstantesRecursos.HP, _heal));
+			ret.Effects.AddEffect (new ChangeRecurso (
+				user,
+				user,
+				ConstantesRecursos.HP,
+				_heal));
 			LastGeneratedInstance = ret;
 		}
 

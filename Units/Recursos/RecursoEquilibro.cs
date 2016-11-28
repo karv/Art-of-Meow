@@ -8,6 +8,11 @@ namespace Units.Recursos
 	/// </summary>
 	public class RecursoEquilibro : Recurso, IVisibleRecurso
 	{
+		/// <summary>
+		/// El valor en el que se reduce con acada acción
+		/// </summary>
+		public const float ReduceValue = 0.1f;
+
 		#region Visibilidad
 
 		float IVisibleRecurso.PctValue (float value)
@@ -80,7 +85,7 @@ namespace Units.Recursos
 
 		void doRegen (float gameTime)
 		{
-			var ubValue = Regen * gameTime / 3 + Valor;
+			var ubValue = Regen * gameTime / 6 + Valor;
 			Valor = Math.Min (1, ubValue);
 		}
 
@@ -148,4 +153,3 @@ namespace Units.Recursos
 		}
 	}
 }
-

@@ -30,18 +30,12 @@ namespace Items.Declarations.Pots
 		void ISkill.GetInstance (IUnidad user)
 		{
 			LastGeneratedInstance = new SkillInstance (this, user);
-			LastGeneratedInstance.AddEffect (new RemoveItemEffect (user, user, this));
-			LastGeneratedInstance.AddEffect (
-				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp));
+			LastGeneratedInstance.Effects.AddEffect (
+				new RemoveItemEffect (user, user, this));
+			LastGeneratedInstance.Effects.AddEffect (
+				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp){ ShowDeltaLabel = true });
 
 
-
-		}
-
-		void doEffect (IUnidad target)
-		{
-			//var hpRec = target.Recursos.GetRecurso (ConstantesRecursos.HP);
-			//hpRec.Valor += HealHp;
 		}
 
 		bool ISkill.IsCastable (IUnidad user)

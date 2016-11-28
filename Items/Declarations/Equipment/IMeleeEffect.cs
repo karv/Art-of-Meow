@@ -1,4 +1,5 @@
 using Units;
+using Skills;
 
 namespace Items.Declarations.Equipment
 {
@@ -8,10 +9,10 @@ namespace Items.Declarations.Equipment
 	public interface IMeleeEffect
 	{
 		/// <summary>
-		/// Do the melee effect from a Unidad to its target
+		/// Devuelve el efecto que causa este ataque melee sobre un target
 		/// </summary>
-		/// <param name="user">User of the melee move</param>
-		/// <param name="target">Target.</param>
-		void DoMeleeEffectOn (IUnidad user, IUnidad target);
+		/// <param name="user">Agente</param>
+		/// <param name="target">Target</param>
+		IEffect GetEffect (IUnidad user, IUnidad target);
 	}
 }
