@@ -181,6 +181,7 @@
     <Compile Include="Skills\CollectionEffect.cs" />
     <Compile Include="Skills\Effect.cs" />
     <Compile Include="Skills\GenerateCooldownEffect.cs" />
+    <Compile Include="Helper\MeleeEffectHelper.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
