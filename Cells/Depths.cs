@@ -7,9 +7,13 @@ namespace Cells
 	public static class Depths
 	{
 		/// <summary>
-		/// The background object depth
+		/// Fondo de pantalla
 		/// </summary>
 		public const float Background = 1f;
+		/// <summary>
+		/// The background object depth
+		/// </summary>
+		public const float BackgroundGridObject = 0.95f;
 		/// <summary>
 		/// The ground decoration depth
 		/// </summary>

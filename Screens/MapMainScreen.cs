@@ -26,17 +26,10 @@ namespace Screens
 		/// Color de fondo
 		/// </summary>
 		/// <value>The color of the background.</value>
-		public override Color? BgColor { get { return Color.DarkBlue; } }
+		public override Color? BgColor { get { return Color.Black; } }
 
-		/// <summary>
-		/// Resource view manager
-		/// </summary>
-		public RecursoView _recursoView { get; private set; }
 
-		/// <summary>
-		/// Gets the visual control that displays the buffs
-		/// </summary>
-		public BuffDisplay _playerHooks { get; private set; }
+		PlayerInfoControl PlayerInfoControl;
 
 		PlayerKeyListener SpecialKeyListener;
 
@@ -102,6 +95,7 @@ namespace Screens
 			// Poner aquí al jugador
 			Player.Location = newGrid.GetRandomEmptyCell ();
 			Player.Grid = newGrid;
+			PlayerInfoControl.ReloadStats ();
 
 			foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
 				str.AlActivar += on_stair_down;
@@ -121,7 +115,38 @@ namespace Screens
 		{
 			Batch.Begin (SpriteSortMode.BackToFront);
 			EntreBatches ();
+			DrawGridBackground ();
 			Batch.End ();
+		}
+
+		Texture2D solidTexture;
+		Color gridBackgroundColor = Color.DarkRed * 0.15f;
+
+		/// <summary>
+		/// Dibuja el fondo de GridControl
+		/// </summary>
+		protected void DrawGridBackground ()
+		{
+			Batch.Draw (
+				solidTexture,
+				destinationRectangle: GridDrawingRectangle,
+				color: gridBackgroundColor,
+				layerDepth: Depths.Background);
+		}
+
+		/// <summary>
+		/// Cargar contenido de cada control incluido.
+		/// </summary>
+		public override void AddAllContent ()
+		{
+			Content.AddContent ("Fonts//small");
+			base.AddAllContent ();
+		}
+
+		protected override void InitializeContent ()
+		{
+			base.InitializeContent ();
+			solidTexture = Content.GetContent<Texture2D> ("pixel");
 		}
 
 		/// <summary>
@@ -141,15 +166,22 @@ namespace Screens
 		public List<IUnidad> AIPlayers = new List<IUnidad> ();
 
 		/// <summary>
+		/// El área de dibujo del tablero
+		/// </summary>
+		public static Rectangle GridDrawingRectangle = 
+			new Rectangle (30, 30, 1000, 700);
+
+		/// <summary>
 		/// Calculates the grid size to make it fir correctly
 		/// </summary>
 		void generateGridSizes ()
 		{
-			int visCellX = GetDisplayMode.Width / GridControl.CellSize.Width;
-			int visCellY = GetDisplayMode.Height / GridControl.CellSize.Height;
+			int visCellX = GridDrawingRectangle.Width / GridControl.CellSize.Width;
+			int visCellY = GridDrawingRectangle.Height / GridControl.CellSize.Height;
 			GridControl.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - (GridControl.CellSize.Width * visCellX);
-			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
+			int ScreenOffsX = GridDrawingRectangle.Width - (GridControl.CellSize.Width * visCellX);
+			int ScreenOffsY = GridDrawingRectangle.Height - (GridControl.CellSize.Height * visCellY);
+			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, ScreenOffsY / 2) + GridDrawingRectangle.Location;
 		}
 
 		/// <summary>
@@ -157,22 +189,9 @@ namespace Screens
 		/// </summary>
 		void inicializarJugador ()
 		{
-			_playerHooks = new BuffDisplay (this, Player)
-			{
-				MargenInterno = new Moggle.Controles.MargenType
-				{
-					Top = 1,
-					Bot = 1,
-					Left = 1,
-					Right = 1
-				},
-				TamañoBotón = new Size (16, 16),
-				TipoOrden = Moggle.Controles.Contenedor<Moggle.Controles.IDibujable>.TipoOrdenEnum.ColumnaPrimero,
-				Posición = new Point (0, 100)
-			};
-
-			_recursoView = new RecursoView (this, Player.Recursos);
-			AddComponent (_recursoView);
+			PlayerInfoControl = new PlayerInfoControl (this, Player);
+			PlayerInfoControl.DrawingArea = new Rectangle (
+				GridDrawingRectangle.Right, 0, 300, 900);
 		}
 
 		/// <summary>
@@ -194,6 +213,8 @@ namespace Screens
 			GridControl.TryCenterOn (Player.Location);
 
 			SpecialKeyListener = new PlayerKeyListener (this);
+
+			AddAllContent ();
 		}
 
 		/// <summary>

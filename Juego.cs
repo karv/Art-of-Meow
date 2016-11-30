@@ -24,7 +24,15 @@ namespace AoM
 		/// </summary>
 		protected override void LoadContent ()
 		{
-			base.LoadContent ();
+			try
+			{
+				base.LoadContent ();
+			}
+			catch (System.Exception ex)
+			{
+				System.Console.WriteLine ("Critical error: cannot load content");
+				throw ex;
+			}
 			Textures = new Textures (GraphicsDevice);
 		}
 

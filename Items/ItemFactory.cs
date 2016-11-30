@@ -16,7 +16,6 @@ namespace Items
 		/// <summary>
 		/// Sword
 		/// </summary>
-		/// <seealso cref="Items.Declarations.Equipment.Sword"/>
 		Sword,
 		/// <summary>
 		/// Un arco
@@ -45,6 +44,23 @@ namespace Items
 		static BibliotecaContenido contentManager { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
+		/// Creates a new item of the given type and casts it into a given type
+		/// </summary>
+		/// <returns>A newly created item</returns>
+		/// <param name="type">Type of the item</param>
+		/// <exception cref="T:System.InvalidCastException">The return item is not of the given type</exception>
+		public static T CreateItem<T> (ItemType type)
+			where T : IItem
+		{
+			var item = CreateItem (type);
+			if (!(item is T))
+				throw new InvalidCastException ();
+			var ret = (T)item;
+			ret.Initialize ();
+			return ret;
+		}
+
+		/// <summary>
 		/// Creates a new item of the given type
 		/// </summary>
 		/// <returns>A newly created item</returns>
@@ -55,7 +71,7 @@ namespace Items
 			switch (type)
 			{
 				case ItemType.Sword:
-					ret = new Sword ();
+					ret = new MeleeWeapon ("Espada", "Items//katana", 1.4f, 0.7f){ Color = Color.DarkBlue };
 					break;
 				case ItemType.Bow:
 					ret = new GenericSkillListEquipment (
@@ -85,7 +101,6 @@ namespace Items
 				default:
 					throw new Exception ();
 			}
-			ret.Initialize ();
 			return ret;
 		}
 	}
