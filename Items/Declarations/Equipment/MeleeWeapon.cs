@@ -57,7 +57,7 @@ namespace Items.Declarations.Equipment
 		#endregion
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Sword"/> class.
+		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.MeleeWeapon"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
 		/// <param name="icon">Icon.</param>
