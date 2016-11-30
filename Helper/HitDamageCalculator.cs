@@ -28,7 +28,7 @@ namespace Helper
 				return baseHit;
 
 			if (diff < 0)
-				return Math.Pow (baseHit, -diff);
+				return Math.Pow (baseHit, 1 - diff);
 
 			if (diff < 1)
 				return baseHit + (1 - baseHit) * diff / 2d;
