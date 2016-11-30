@@ -27,7 +27,11 @@ namespace Helper
 			};
 
 			player.Inteligencia = new HumanIntelligence (player);
-			player.Equipment.EquipItem (ItemFactory.CreateItem (ItemType.Bow) as IEquipment);
+
+			#region Cheat
+			player.Equipment.EquipItem (ItemFactory.CreateItem<IEquipment> (ItemType.Bow));
+			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			#endregion
 
 			return player;
 		}
