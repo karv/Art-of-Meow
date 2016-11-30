@@ -26,7 +26,8 @@ namespace Helper
 				          user,
 				          target,
 				          ConstantesRecursos.CertezaMelee,
-				          ConstantesRecursos.EvasiónMelee);
+				          ConstantesRecursos.EvasiónMelee, 
+				          baseHit);
 			var ret = new CollectionEffect (user, pct);
 			ret.AddEffect (
 				new ChangeRecurso (

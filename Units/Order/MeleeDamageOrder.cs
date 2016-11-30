@@ -36,11 +36,13 @@ namespace Units.Order
 			Target.Exp.AddAssignation (ConstantesRecursos.EvasiónMelee, "base", 0.05f);
 
 			var ef = new ChangeRecurso (unid, Target, ConstantesRecursos.HP, -Damage);
+			const double baseHit = 0.9;
 			ef.Chance = HitDamageCalculator.GetPctHit (
 				unid,
 				Target,
 				ConstantesRecursos.CertezaMelee,
-				ConstantesRecursos.EvasiónMelee);
+				ConstantesRecursos.EvasiónMelee,
+				baseHit);
 
 			ef.Execute ();
 		}

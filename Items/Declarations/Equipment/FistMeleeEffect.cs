@@ -18,6 +18,7 @@ namespace Items.Declarations.Equipment
 		/// <param name="target">Target.</param>
 		public IEffect GetEffect (IUnidad user, IUnidad target)
 		{
+			const double baseHit = 0.9;
 			var ret = MeleeEffectHelper.BuildDefaultMeleeEffect (
 				          user,
 				          target,
