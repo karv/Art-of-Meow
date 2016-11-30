@@ -5,11 +5,21 @@ using Units;
 
 namespace Items.Declarations.Equipment
 {
-
+	/// <summary>
+	/// Representa una arma melee genérica
+	/// </summary>
 	public class MeleeWeapon : Equipment, IMeleeEffect
 	{
+		/// <summary>
+		/// Devuelve el daño base
+		/// </summary>
+		/// <value>The base damage.</value>
 		public float BaseDamage { get; }
 
+		/// <summary>
+		/// Devuelve la certeza base
+		/// </summary>
+		/// <value>The base hit.</value>
 		public float BaseHit { get; }
 
 		#region IEquipment implementation
