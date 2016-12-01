@@ -26,7 +26,7 @@ namespace Screens
 		/// Color de fondo
 		/// </summary>
 		/// <value>The color of the background.</value>
-		public override Color? BgColor { get { return Color.DarkBlue; } }
+		public override Color? BgColor { get { return Color.Black; } }
 
 		/// <summary>
 		/// Resource view manager
@@ -121,7 +121,32 @@ namespace Screens
 		{
 			Batch.Begin (SpriteSortMode.BackToFront);
 			EntreBatches ();
+			DrawGridBackground ();
 			Batch.End ();
+		}
+
+		Texture2D solidTexture;
+		Color gridBackgroundColor = Color.DarkRed * 0.15f;
+
+		/// <summary>
+		/// Dibuja el fondo de GridControl
+		/// </summary>
+		protected void DrawGridBackground ()
+		{
+			Batch.Draw (
+				solidTexture,
+				destinationRectangle: GridDrawingRectangle,
+				color: gridBackgroundColor,
+				layerDepth: Depths.Background);
+		}
+
+		/// <summary>
+		/// Cargar contenido de cada control incluido.
+		/// </summary>
+		public override void AddAllContent ()
+		{
+			base.AddAllContent ();
+			solidTexture = Content.GetContent<Texture2D> ("pixel");
 		}
 
 		/// <summary>
@@ -141,15 +166,22 @@ namespace Screens
 		public List<IUnidad> AIPlayers = new List<IUnidad> ();
 
 		/// <summary>
+		/// El área de dibujo del tablero
+		/// </summary>
+		public static Rectangle GridDrawingRectangle = 
+			new Rectangle (30, 30, 1000, 700);
+
+		/// <summary>
 		/// Calculates the grid size to make it fir correctly
 		/// </summary>
 		void generateGridSizes ()
 		{
-			int visCellX = GetDisplayMode.Width / GridControl.CellSize.Width;
-			int visCellY = GetDisplayMode.Height / GridControl.CellSize.Height;
+			int visCellX = GridDrawingRectangle.Width / GridControl.CellSize.Width;
+			int visCellY = GridDrawingRectangle.Height / GridControl.CellSize.Height;
 			GridControl.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GetDisplayMode.Width - (GridControl.CellSize.Width * visCellX);
-			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, 0);
+			int ScreenOffsX = GridDrawingRectangle.Width - (GridControl.CellSize.Width * visCellX);
+			int ScreenOffsY = GridDrawingRectangle.Height - (GridControl.CellSize.Height * visCellY);
+			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, ScreenOffsY / 2) + GridDrawingRectangle.Location;
 		}
 
 		/// <summary>
