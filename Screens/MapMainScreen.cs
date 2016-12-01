@@ -28,10 +28,6 @@ namespace Screens
 		/// <value>The color of the background.</value>
 		public override Color? BgColor { get { return Color.Black; } }
 
-		/// <summary>
-		/// Resource view manager
-		/// </summary>
-		public RecursoView _recursoView { get; private set; }
 
 		PlayerInfoControl PlayerInfoControl;
 
@@ -189,9 +185,6 @@ namespace Screens
 			PlayerInfoControl = new PlayerInfoControl (this, Player);
 			PlayerInfoControl.DrawingArea = new Rectangle (
 				GridDrawingRectangle.Right, 0, 300, 900);
-
-			_recursoView = new RecursoView (this, Player.Recursos);
-			AddComponent (_recursoView);
 		}
 
 		/// <summary>

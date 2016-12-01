@@ -4,6 +4,7 @@ using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
+using Moggle.Screens;
 
 namespace Componentes
 {
@@ -32,14 +33,19 @@ namespace Componentes
 			set
 			{
 				drawingArea = value;
-				_playerHooks.Posición = DrawingArea.Location + new Point (30, 30);
+				PlayerHooks.Posición = DrawingArea.Location + new Point (30, 30);
 			}
 		}
 
 		/// <summary>
 		/// Gets the visual control that displays the buffs
 		/// </summary>
-		public BuffDisplay _playerHooks { get; private set; }
+		public BuffDisplay PlayerHooks { get; private set; }
+
+		/// <summary>
+		/// Resource view manager
+		/// </summary>
+		public RecursoView RecursoView { get; private set; }
 
 		#region DSBC
 
@@ -64,7 +70,37 @@ namespace Componentes
 		/// </summary>
 		protected override void Draw ()
 		{
-			(_playerHooks as IDrawable).Draw (null);
+			(PlayerHooks as IDrawable).Draw (null);
+			(RecursoView as IDrawable).Draw (null);
+		}
+
+		/// <summary>
+		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
+		///  No invoca LoadContent por lo que es seguro agregar componentes
+		/// </summary>
+		public override void Initialize ()
+		{
+			PlayerHooks.Initialize ();
+			RecursoView.TopLeft = PlayerHooks.Posición + new Point (0, 60);
+			(RecursoView as IComponent).Initialize ();
+		}
+
+		/// <summary>
+		/// Loads the content.
+		/// </summary>
+		protected override void AddContent ()
+		{
+			(PlayerHooks as IComponent).AddContent ();
+			(RecursoView as IComponent).AddContent ();
+		}
+
+		/// <summary>
+		/// Vincula el contenido a campos de clase
+		/// </summary>
+		protected override void InitializeContent ()
+		{
+			(PlayerHooks as IComponent).InitializeContent ();
+			(RecursoView as IComponent).InitializeContent ();
 		}
 
 		#endregion
@@ -74,14 +110,14 @@ namespace Componentes
 		/// </summary>
 		/// <param name="cont">Contenedor</param>
 		/// <param name="player">Jugador de información</param>
-		public PlayerInfoControl (IComponentContainerComponent<IControl> cont,
+		public PlayerInfoControl (IScreen cont,
 		                          IUnidad player)
 			: base (cont)
 		{
 			if (player == null)
 				throw new ArgumentNullException ("player");
 			Player = player;
-			_playerHooks = new BuffDisplay (cont, Player)
+			PlayerHooks = new BuffDisplay (cont, Player)
 			{
 				MargenInterno = new MargenType
 				{
@@ -94,6 +130,8 @@ namespace Componentes
 				TipoOrden = Contenedor<IDibujable>.TipoOrdenEnum.ColumnaPrimero,
 				Posición = DrawingArea.Location + new Point (30, 30)
 			};
+
+			RecursoView = new RecursoView (cont, Player.Recursos);
 		}
 	}
 }
