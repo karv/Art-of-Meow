@@ -182,6 +182,7 @@
     <Compile Include="Skills\GenerateCooldownEffect.cs" />
     <Compile Include="Helper\MeleeEffectHelper.cs" />
     <Compile Include="Items\Declarations\Equipment\MeleeWeapon.cs" />
+    <Compile Include="Componentes\PlayerInfoControl.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

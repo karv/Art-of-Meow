@@ -33,10 +33,7 @@ namespace Screens
 		/// </summary>
 		public RecursoView _recursoView { get; private set; }
 
-		/// <summary>
-		/// Gets the visual control that displays the buffs
-		/// </summary>
-		public BuffDisplay _playerHooks { get; private set; }
+		PlayerInfoControl PlayerInfoControl;
 
 		PlayerKeyListener SpecialKeyListener;
 
@@ -189,19 +186,9 @@ namespace Screens
 		/// </summary>
 		void inicializarJugador ()
 		{
-			_playerHooks = new BuffDisplay (this, Player)
-			{
-				MargenInterno = new Moggle.Controles.MargenType
-				{
-					Top = 1,
-					Bot = 1,
-					Left = 1,
-					Right = 1
-				},
-				TamañoBotón = new Size (16, 16),
-				TipoOrden = Moggle.Controles.Contenedor<Moggle.Controles.IDibujable>.TipoOrdenEnum.ColumnaPrimero,
-				Posición = new Point (0, 100)
-			};
+			PlayerInfoControl = new PlayerInfoControl (this, Player);
+			PlayerInfoControl.DrawingArea = new Rectangle (
+				GridDrawingRectangle.Right, 0, 300, 900);
 
 			_recursoView = new RecursoView (this, Player.Recursos);
 			AddComponent (_recursoView);
