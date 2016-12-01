@@ -1,10 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using Moggle.Screens;
 using MonoGame.Extended;
+using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
 using Units;
-using Moggle.Screens;
 
 namespace Componentes
 {
@@ -37,6 +39,9 @@ namespace Componentes
 			}
 		}
 
+		BitmapFont smallFont;
+		Texture2D pixel;
+
 		/// <summary>
 		/// Gets the visual control that displays the buffs
 		/// </summary>
@@ -46,6 +51,8 @@ namespace Componentes
 		/// Resource view manager
 		/// </summary>
 		public RecursoView RecursoView { get; private set; }
+
+		public MultiEtiqueta Stats { get; private set; }
 
 		#region DSBC
 
@@ -83,6 +90,22 @@ namespace Componentes
 			PlayerHooks.Initialize ();
 			RecursoView.TopLeft = PlayerHooks.Posición + new Point (0, 60);
 			(RecursoView as IComponent).Initialize ();
+
+		}
+
+		public void ReloadStats ()
+		{
+			Stats.Mostrables.Clear ();
+			foreach (var stat in Player.Recursos.Enumerate ())
+				foreach (var param in stat.EnumerateParameters ())
+				{
+					Stats.Mostrables.Add (new MultiEtiqueta.IconTextEntry (
+						smallFont,
+						pixel,
+						param.ToString (),
+						Color.White,
+						Color.White));
+				}
 		}
 
 		/// <summary>
@@ -90,8 +113,12 @@ namespace Componentes
 		/// </summary>
 		protected override void AddContent ()
 		{
+			pixel = Screen.Content.GetContent<Texture2D> ("pixel");
 			(PlayerHooks as IComponent).AddContent ();
 			(RecursoView as IComponent).AddContent ();
+			smallFont = Screen.Content.GetContent<BitmapFont> ("Fonts//small");
+
+			ReloadStats ();
 		}
 
 		/// <summary>
@@ -101,6 +128,7 @@ namespace Componentes
 		{
 			(PlayerHooks as IComponent).InitializeContent ();
 			(RecursoView as IComponent).InitializeContent ();
+			//Screen.Content.AddContent ("pixel", );
 		}
 
 		#endregion
@@ -132,6 +160,8 @@ namespace Componentes
 			};
 
 			RecursoView = new RecursoView (cont, Player.Recursos);
+
+			Stats = new MultiEtiqueta (cont, null);
 		}
 	}
 }
