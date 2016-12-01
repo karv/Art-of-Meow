@@ -12,10 +12,17 @@ namespace Componentes
 	/// </summary>
 	public class PlayerInfoControl : DSBC
 	{
+		/// <summary>
+		/// Jugador del cual se muestra la información
+		/// </summary>
 		public IUnidad Player { get; }
 
 		Rectangle drawingArea;
 
+		/// <summary>
+		/// Devuelve o establece el área de dibujo para este control
+		/// </summary>
+		/// <value>The drawing area.</value>
 		public Rectangle DrawingArea
 		{
 			get
@@ -36,15 +43,25 @@ namespace Componentes
 
 		#region DSBC
 
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		/// <returns>The bounds.</returns>
 		protected override IShapeF GetBounds ()
 		{
 			return (RectangleF)DrawingArea;
 		}
 
+		/// <summary>
+		/// Update lógico
+		/// </summary>
 		public override void Update (GameTime gameTime)
 		{
 		}
 
+		/// <summary>
+		/// Dibuja el control.
+		/// </summary>
 		protected override void Draw ()
 		{
 			(_playerHooks as IDrawable).Draw (null);
@@ -52,6 +69,11 @@ namespace Componentes
 
 		#endregion
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Componentes.PlayerInfoControl"/> class.
+		/// </summary>
+		/// <param name="cont">Contenedor</param>
+		/// <param name="player">Jugador de información</param>
 		public PlayerInfoControl (IComponentContainerComponent<IControl> cont,
 		                          IUnidad player)
 			: base (cont)
