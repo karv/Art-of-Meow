@@ -17,12 +17,28 @@ namespace Items.Declarations.Equipment
 		public float BaseDamage { get; }
 
 		/// <summary>
+		/// Calcula el daño neto
+		/// </summary>
+		public float Damage ()
+		{
+			return BaseDamage + Modifiers.GetTotalModificationOf (ConstantesAtributos.Ataque);
+		}
+
+		/// <summary>
 		/// Devuelve la certeza base
 		/// </summary>
 		/// <value>The base hit.</value>
 		public float BaseHit { get; }
 
-		#region IEquipment implementation
+		/// <summary>
+		/// Calcula el hit chance neto
+		/// </summary>
+		public float Hit ()
+		{
+			return BaseHit + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
+		}
+
+		#region IEquipment & Melee
 
 		/// <summary>
 		/// Gets the equipment slot.
@@ -40,8 +56,8 @@ namespace Items.Declarations.Equipment
 			var ret = MeleeEffectHelper.BuildDefaultMeleeEffect (
 				          user,
 				          target,
-				          BaseDamage,
-				          BaseHit);
+				          Damage (),
+				          Hit ());
 
 			Debug.WriteLine (
 				string.Format (

@@ -12,7 +12,7 @@ namespace Items
 		/// Gets the name for the item
 		/// </summary>
 		/// <value>The nombre.</value>
-		string Nombre { get; }
+		string NombreBase { get; }
 
 		/// <summary>
 		/// Gets the default texture name

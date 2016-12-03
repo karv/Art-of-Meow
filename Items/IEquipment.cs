@@ -1,5 +1,6 @@
-﻿using Units.Equipment;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Items.Modifiers;
+using Units.Equipment;
 using Units.Skills;
 
 namespace Items
@@ -41,6 +42,12 @@ namespace Items
 		/// Gets or sets the maanger of the currenty equiped <see cref="Units.IUnidad"/>
 		/// </summary>
 		EquipmentManager Owner { get; set; }
+
+		/// <summary>
+		/// Devuelve los modificadores del objeto
+		/// </summary>
+		/// <value>The modifiers.</value>
+		ItemModifiersManager Modifiers { get; }
 	}
 
 	/// <summary>

@@ -41,7 +41,6 @@ namespace Componentes
 		}
 
 		BitmapFont smallFont;
-		Texture2D pixel;
 
 		/// <summary>
 		/// Gets the visual control that displays the buffs
@@ -53,6 +52,10 @@ namespace Componentes
 		/// </summary>
 		public RecursoView RecursoView { get; private set; }
 
+		/// <summary>
+		/// Devuelve el control que muestra los stats
+		/// </summary>
+		/// <value>The stats.</value>
 		public MultiEtiqueta Stats { get; private set; }
 
 		#region DSBC
@@ -94,6 +97,9 @@ namespace Componentes
 
 		}
 
+		/// <summary>
+		/// Reconstruye la lista de stats
+		/// </summary>
 		public void ReloadStats ()
 		{
 			Stats.Clear ();
@@ -116,7 +122,6 @@ namespace Componentes
 		/// </summary>
 		protected override void AddContent ()
 		{
-			pixel = Screen.Content.GetContent<Texture2D> ("pixel");
 			(PlayerHooks as IComponent).AddContent ();
 			(RecursoView as IComponent).AddContent ();
 		}

@@ -1,3 +1,4 @@
+using Items.Modifiers;
 using Units;
 
 namespace Items.Declarations.Equipment
@@ -34,8 +35,13 @@ namespace Items.Declarations.Equipment
 				"[Equipment: Slot={0}, Owner={1}, Nombre={2}]",
 				Slot,
 				Owner,
-				Nombre);
+				NombreBase);
 		}
+
+		/// <summary>
+		/// Devuelve los modificadores del objeto
+		/// </summary>
+		public ItemModifiersManager Modifiers { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Equipment"/> class.
@@ -44,6 +50,7 @@ namespace Items.Declarations.Equipment
 		protected Equipment (string nombre)
 			: base (nombre)
 		{
+			Modifiers = new ItemModifiersManager (this);
 		}
 	}
 }

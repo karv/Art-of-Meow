@@ -28,7 +28,6 @@ namespace Screens
 		/// <value>The color of the background.</value>
 		public override Color? BgColor { get { return Color.Black; } }
 
-
 		PlayerInfoControl PlayerInfoControl;
 
 		PlayerKeyListener SpecialKeyListener;
@@ -143,6 +142,9 @@ namespace Screens
 			base.AddAllContent ();
 		}
 
+		/// <summary>
+		/// Tell its components to get the content from the library
+		/// </summary>
 		protected override void InitializeContent ()
 		{
 			base.InitializeContent ();
