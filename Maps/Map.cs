@@ -5,11 +5,9 @@ using System.IO;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
-using Items;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
-using Moggle;
 
 namespace Maps
 {
@@ -124,6 +122,7 @@ namespace Maps
 					newObj.Location = p;
 					return newObj;
 				case '\n':
+				case '\r':
 					return null;
 			}
 			throw new FormatException ("Unknown accepted map symbol " + c);
