@@ -1,6 +1,7 @@
 using Units;
 using System.Collections.Generic;
 using Items.Modifiers;
+using Maps;
 
 namespace Items.Declarations.Equipment
 {
@@ -48,6 +49,7 @@ namespace Items.Declarations.Equipment
 		protected Equipment (string nombre)
 			: base (nombre)
 		{
+			Modifiers = new ItemModifiersManager (this);
 		}
 	}
 }

@@ -55,9 +55,10 @@ namespace Items.Modifiers
 			return ret.Values;
 		}
 
-		public ItemModifiersManager ()
+		public ItemModifiersManager (IItem item)
 		{
 			Modifiers = new List<ItemModifier> ();
+			Item = item;
 		}
 	}
 }
