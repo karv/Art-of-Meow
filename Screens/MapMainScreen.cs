@@ -143,6 +143,9 @@ namespace Screens
 			base.AddAllContent ();
 		}
 
+		/// <summary>
+		/// Tell its components to get the content from the library
+		/// </summary>
 		protected override void InitializeContent ()
 		{
 			base.InitializeContent ();

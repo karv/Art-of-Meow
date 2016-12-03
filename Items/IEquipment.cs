@@ -1,11 +1,7 @@
-﻿using Units.Equipment;
-using System.Collections.Generic;
-using Units.Skills;
-using System.Collections;
-using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Items.Modifiers;
+using Units.Equipment;
+using Units.Skills;
 
 namespace Items
 {
@@ -47,6 +43,10 @@ namespace Items
 		/// </summary>
 		EquipmentManager Owner { get; set; }
 
+		/// <summary>
+		/// Devuelve los modificadores del objeto
+		/// </summary>
+		/// <value>The modifiers.</value>
 		ItemModifiersManager Modifiers { get; }
 	}
 

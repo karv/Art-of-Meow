@@ -4,10 +4,21 @@ using System;
 
 namespace Items.Modifiers
 {
+	/// <summary>
+	/// Controla las modificaciones de un objeto
+	/// </summary>
 	public class ItemModifiersManager
 	{
+		/// <summary>
+		/// Objeto
+		/// </summary>
+		/// <value>The item.</value>
 		public IItem Item { get; }
 
+		/// <summary>
+		/// Devuelve el nombre de objeto, tomando en cuenta sus modificadores
+		/// </summary>
+		/// <returns>The name.</returns>
 		public string GetName ()
 		{
 			var ret = Modifiers.Aggregate (
@@ -31,14 +42,23 @@ namespace Items.Modifiers
 			throw new Exception (string.Format ("{0} not implemented.", mod.NameUsage));
 		}
 
-
+		/// <summary>
+		/// Devuelve los modificadores
+		/// </summary>
 		public List<ItemModifier> Modifiers { get; }
 
+		/// <summary>
+		/// Devuelve la modificación total de un atributo
+		/// </summary>
+		/// <param name="attr">Nombre del atributo</param>
 		public float GetTotalModificationOf (string attr)
 		{
 			return Modifiers.Sum (im => im.GetModificationValueOf (attr));
 		}
 
+		/// <summary>
+		/// Devuelve una colección de <see cref="ItemModification"/> en su forma más compacta
+		/// </summary>
 		public ICollection<ItemModification> SquashMods ()
 		{
 			var ret = new Dictionary<string, ItemModification> ();
@@ -55,6 +75,9 @@ namespace Items.Modifiers
 			return ret.Values;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModifiersManager"/> class.
+		/// </summary>
 		public ItemModifiersManager (IItem item)
 		{
 			Modifiers = new List<ItemModifier> ();

@@ -1,7 +1,5 @@
-using Units;
-using System.Collections.Generic;
 using Items.Modifiers;
-using Maps;
+using Units;
 
 namespace Items.Declarations.Equipment
 {
@@ -40,6 +38,9 @@ namespace Items.Declarations.Equipment
 				NombreBase);
 		}
 
+		/// <summary>
+		/// Devuelve los modificadores del objeto
+		/// </summary>
 		public ItemModifiersManager Modifiers { get; }
 
 		/// <summary>
