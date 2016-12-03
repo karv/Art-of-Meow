@@ -31,7 +31,7 @@ namespace Skills
 		/// </summary>
 		public override string DetailedInfo ()
 		{
-			return string.Format ("{1}: Removes {0}", RemovingItem.Nombre, Chance);
+			return string.Format ("{1}: Removes {0}", RemovingItem.NombreBase, Chance);
 		}
 
 		/// <summary>

@@ -1,4 +1,5 @@
 using Units;
+using System.Collections.Generic;
 
 namespace Items.Declarations.Equipment
 {
@@ -34,8 +35,12 @@ namespace Items.Declarations.Equipment
 				"[Equipment: Slot={0}, Owner={1}, Nombre={2}]",
 				Slot,
 				Owner,
-				Nombre);
+				NombreBase);
 		}
+
+		public List<ItemModifier> Modifiers { get; }
+
+		ICollection<ItemModifier> IEquipment.Modifiers { get { return Modifiers; } }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Equipment"/> class.

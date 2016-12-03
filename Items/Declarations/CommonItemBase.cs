@@ -118,7 +118,7 @@ namespace Items.Declarations
 		/// Gets the name of the item
 		/// </summary>
 		/// <value>The nombre.</value>
-		public string Nombre { get; }
+		public string NombreBase { get; }
 
 		string IItem.DefaultTextureName { get { return TextureName; } }
 
@@ -132,7 +132,7 @@ namespace Items.Declarations
 		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Items.Declarations.CommonItemBase"/>.</returns>
 		public override string ToString ()
 		{
-			return string.Format ("[CommonItemBase: {0}]", Nombre);
+			return string.Format ("[CommonItemBase: {0}]", NombreBase);
 		}
 
 		/// <summary>
@@ -141,7 +141,7 @@ namespace Items.Declarations
 		/// <param name="nombre">Nombre.</param>
 		protected CommonItemBase (string nombre)
 		{
-			Nombre = nombre;
+			NombreBase = nombre;
 		}
 	}
 }

@@ -1,6 +1,10 @@
 ﻿using Units.Equipment;
 using System.Collections.Generic;
 using Units.Skills;
+using System.Collections;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Items
 {
@@ -41,6 +45,9 @@ namespace Items
 		/// Gets or sets the maanger of the currenty equiped <see cref="Units.IUnidad"/>
 		/// </summary>
 		EquipmentManager Owner { get; set; }
+
+		ICollection <ItemModifier> Modifiers { get; }
+		// THINK: Hacer una clase, en lugar de collection
 	}
 
 	/// <summary>
@@ -52,5 +59,31 @@ namespace Items
 		/// Devuelve la lista de skills que ofrece al usuario
 		/// </summary>
 		IEnumerable<ISkill> GetEquipmentSkills ();
+	}
+
+	public static class EquipmentExt
+	{
+		public static string NombreMostrado (this IEquipment eq)
+		{
+			var ret = eq.Modifiers.Aggregate (
+				          "",
+				          (acc, iter) => agregarNombreModificado (
+					          acc,
+					          iter));
+
+			return ret;
+		}
+
+		static string agregarNombreModificado (string nombreBase, ItemModifier mod)
+		{
+			switch (mod.NameUsage)
+			{
+				case ItemModifierNameUsage.Prefix:
+					return string.Format ("{0} {1}", mod.Name + nombreBase);
+				case ItemModifierNameUsage.Sufix:
+					return string.Format ("{0} {1}", mod.Name + nombreBase);
+			}
+			throw new Exception (string.Format ("{0} not implemented.", mod.NameUsage));
+		}
 	}
 }

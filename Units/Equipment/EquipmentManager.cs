@@ -61,7 +61,7 @@ namespace Units.Equipment
 			else
 			{
 				Debug.WriteLine (
-					"Hay un conflicto de equipment con " + equip.Nombre,
+					"Hay un conflicto de equipment con " + equip.NombreBase,
 					"Equipment Conflict");
 			}
 		}

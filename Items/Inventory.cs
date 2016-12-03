@@ -122,7 +122,7 @@ namespace Items
 		/// </summary>
 		public ILookup<string, IItem> Group ()
 		{
-			return Items.ToLookup (i => i.Nombre);
+			return Items.ToLookup (i => i.NombreBase);
 		}
 
 		/// <summary>
