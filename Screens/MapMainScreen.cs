@@ -95,6 +95,7 @@ namespace Screens
 			// Poner aquí al jugador
 			Player.Location = newGrid.GetRandomEmptyCell ();
 			Player.Grid = newGrid;
+			PlayerInfoControl.ReloadStats ();
 
 			foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
 				str.AlActivar += on_stair_down;
@@ -138,7 +139,13 @@ namespace Screens
 		/// </summary>
 		public override void AddAllContent ()
 		{
+			Content.AddContent ("Fonts//small");
 			base.AddAllContent ();
+		}
+
+		protected override void InitializeContent ()
+		{
+			base.InitializeContent ();
 			solidTexture = Content.GetContent<Texture2D> ("pixel");
 		}
 
@@ -206,6 +213,8 @@ namespace Screens
 			GridControl.TryCenterOn (Player.Location);
 
 			SpecialKeyListener = new PlayerKeyListener (this);
+
+			AddAllContent ();
 		}
 
 		/// <summary>

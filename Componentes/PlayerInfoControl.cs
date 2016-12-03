@@ -36,6 +36,7 @@ namespace Componentes
 			{
 				drawingArea = value;
 				PlayerHooks.Posición = DrawingArea.Location + new Point (30, 30);
+				Stats.Pos = DrawingArea.Location + new Point (30, 140);
 			}
 		}
 
@@ -95,16 +96,18 @@ namespace Componentes
 
 		public void ReloadStats ()
 		{
-			Stats.Mostrables.Clear ();
+			Stats.Clear ();
 			foreach (var stat in Player.Recursos.Enumerate ())
 				foreach (var param in stat.EnumerateParameters ())
 				{
-					Stats.Mostrables.Add (new MultiEtiqueta.IconTextEntry (
+					Stats.Add (
 						smallFont,
-						pixel,
-						param.ToString (),
-						Color.White,
-						Color.White));
+						string.Format (
+							"{0}.{1}:{2}",
+							stat.NombreCorto ?? stat.NombreÚnico,
+							param.NombreÚnico,
+							param.Valor),
+						Color.White);
 				}
 		}
 
@@ -116,9 +119,6 @@ namespace Componentes
 			pixel = Screen.Content.GetContent<Texture2D> ("pixel");
 			(PlayerHooks as IComponent).AddContent ();
 			(RecursoView as IComponent).AddContent ();
-			smallFont = Screen.Content.GetContent<BitmapFont> ("Fonts//small");
-
-			ReloadStats ();
 		}
 
 		/// <summary>
@@ -128,6 +128,8 @@ namespace Componentes
 		{
 			(PlayerHooks as IComponent).InitializeContent ();
 			(RecursoView as IComponent).InitializeContent ();
+			smallFont = Screen.Content.GetContent<BitmapFont> ("Fonts//small");
+			ReloadStats ();
 			//Screen.Content.AddContent ("pixel", );
 		}
 
@@ -161,7 +163,11 @@ namespace Componentes
 
 			RecursoView = new RecursoView (cont, Player.Recursos);
 
-			Stats = new MultiEtiqueta (cont, null);
+			Stats = new MultiEtiqueta (cont)
+			{
+				NumEntradasMostrar = 5,
+				TiempoEntreCambios = TimeSpan.FromMilliseconds (4000)
+			};
 		}
 	}
 }
