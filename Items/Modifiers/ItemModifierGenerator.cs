@@ -22,5 +22,24 @@ namespace Items.Modifiers
 		{
 			throw new NotImplementedException ();
 		}
+
+		public static ItemModifier GenerateItemModifier (string name)
+		{
+			// THINK: ¿convertirlo en una colección de getters estáticos?
+			switch (name)
+			{
+				case "broken":
+					var lowAtt = new ItemModification (ConstantesAtributos.Ataque, -1.2f);
+					var lowHit = new ItemModification (ConstantesAtributos.Hit, 3f);
+					var brokenMod = new ItemModifier (
+						                "broken",
+						                ItemModifierNameUsage.Prefix,
+						                new [] { lowAtt, lowHit });
+
+					return brokenMod;
+			}
+
+			throw new Exception ();
+		}
 	}
 }

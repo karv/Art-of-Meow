@@ -4,6 +4,7 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
+using Items.Modifiers;
 
 namespace Helper
 {
@@ -29,8 +30,10 @@ namespace Helper
 			player.Inteligencia = new HumanIntelligence (player);
 
 			#region Cheat
-			player.Equipment.EquipItem (ItemFactory.CreateItem<IEquipment> (ItemType.Bow));
-			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Sword));
+			var eq = ItemFactory.CreateItem<IEquipment> (ItemType.Sword);
+			eq.Modifiers.Modifiers.Add (ItemModifierGenerator.GenerateItemModifier ("broken"));
+			player.Equipment.EquipItem (eq);
+			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Bow));
 			#endregion
 
 			return player;

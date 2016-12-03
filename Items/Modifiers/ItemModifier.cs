@@ -54,9 +54,15 @@ namespace Items.Modifiers
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModifier"/> class.
 		/// </summary>
-		public ItemModifier ()
+		public ItemModifier (string name,
+		                     ItemModifierNameUsage GramUse,
+		                     IEnumerable<ItemModification> mods)
 		{
 			Modifications = new Dictionary<string, ItemModification> ();
+			Name = name;
+			NameUsage = GramUse;
+			foreach (var mod in mods)
+				Modifications.Add (mod.AttributeChangeName, mod);
 		}
 	}
 }

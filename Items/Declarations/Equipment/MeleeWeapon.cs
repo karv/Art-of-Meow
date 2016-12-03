@@ -29,7 +29,7 @@ namespace Items.Declarations.Equipment
 
 		public float Hit ()
 		{
-			return BaseHit + Modifiers.GetTotalModificationOf (ConstantesAtributos.Ataque);
+			return BaseHit + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
 		}
 
 		#region IEquipment & Melee
