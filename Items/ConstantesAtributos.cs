@@ -10,5 +10,9 @@ namespace Items
 		/// Ataque
 		/// </summary>
 		public const string Ataque = "att";
+		/// <summary>
+		/// Hit%
+		/// </summary>
+		public const string Hit = "hit";
 	}
 }
