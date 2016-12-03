@@ -21,20 +21,21 @@ namespace Helper
 		                                float defEva,
 		                                double baseHit)
 		{
-			if (baseHit < 0 || baseHit > 1)
-				throw new ArgumentException ("baseHit");
+			double pctRet;
 			var diff = attHit - defEva;
 			if (diff == 0)
-				return baseHit;
-
-			if (diff < 0)
-				return Math.Pow (baseHit, 1 - diff);
-
-			if (diff < 1)
-				return baseHit + (1 - baseHit) * diff / 2d;
-
-			var pow2 = Math.Pow (2, -diff);
-			return (pow2 - 1 + baseHit) / (pow2);
+				pctRet = baseHit;
+			else if (diff < 0)
+				pctRet = Math.Pow (baseHit, 1 - diff);
+			else if (diff < 1)
+				pctRet = baseHit + (1 - baseHit) * diff / 2d;
+			else
+			{
+				var pow2 = Math.Pow (2, -diff);
+				pctRet = (pow2 - 1 + baseHit) / (pow2);
+			}
+			pctRet = Math.Min (Math.Max (pctRet, 0), 1);
+			return pctRet;
 		}
 
 		/// <summary>
