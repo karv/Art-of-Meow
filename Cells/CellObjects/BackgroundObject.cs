@@ -86,7 +86,7 @@ namespace Cells.CellObjects
 				area, null, useColor,
 				0, Vector2.Zero,
 				SpriteEffects.None,
-				Depths.Background);
+				Depths.BackgroundGridObject);
 		}
 
 		/// <summary>

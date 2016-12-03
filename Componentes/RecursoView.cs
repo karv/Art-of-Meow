@@ -187,7 +187,7 @@ namespace Componentes
 		/// </summary>
 		/// <param name="scr">Screen</param>
 		/// <param name="recs">The recursos that this control is going to show</param>
-		public RecursoView (Screen scr,
+		public RecursoView (IScreen scr,
 		                    ManejadorRecursos recs)
 		{
 			Screen = scr;
