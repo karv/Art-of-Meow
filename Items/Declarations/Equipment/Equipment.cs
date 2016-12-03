@@ -1,5 +1,6 @@
 using Units;
 using System.Collections.Generic;
+using Items.Modifiers;
 
 namespace Items.Declarations.Equipment
 {

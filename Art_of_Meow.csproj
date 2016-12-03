@@ -183,7 +183,10 @@
     <Compile Include="Helper\MeleeEffectHelper.cs" />
     <Compile Include="Items\Declarations\Equipment\MeleeWeapon.cs" />
     <Compile Include="Componentes\PlayerInfoControl.cs" />
-    <Compile Include="Items\ItemModifier.cs" />
+    <Compile Include="Items\Modifiers\ItemModifier.cs" />
+    <Compile Include="Items\Modifiers\ItemModifierNameUsage.cs" />
+    <Compile Include="Items\Modifiers\ItemModification.cs" />
+    <Compile Include="Items\Modifiers\ItemModifierGenerator.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -219,5 +222,6 @@
     <Folder Include="Content\" />
     <Folder Include="Items\Declarations\Equipment\Skills\" />
     <Folder Include="Skills\" />
+    <Folder Include="Items\Modifiers\" />
   </ItemGroup>
 </Project>
