@@ -1,3 +1,5 @@
+using System;
+
 
 namespace Items.Modifiers
 {
@@ -11,6 +13,16 @@ namespace Items.Modifiers
 		{
 			AttributeChangeName = attrChangeName;
 			Delta = delta;
+		}
+
+		public static ItemModification operator + (ItemModification left,
+		                                           ItemModification right)
+		{
+			if (left.AttributeChangeName != right.AttributeChangeName)
+				throw new InvalidOperationException ();
+			return new ItemModification (
+				left.AttributeChangeName,
+				left.Delta + right.Delta);
 		}
 	}
 }

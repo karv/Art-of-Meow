@@ -187,6 +187,7 @@
     <Compile Include="Items\Modifiers\ItemModifierNameUsage.cs" />
     <Compile Include="Items\Modifiers\ItemModification.cs" />
     <Compile Include="Items\Modifiers\ItemModifierGenerator.cs" />
+    <Compile Include="Items\Modifiers\ItemModifiersManager.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

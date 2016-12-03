@@ -47,8 +47,7 @@ namespace Items
 		/// </summary>
 		EquipmentManager Owner { get; set; }
 
-		ICollection <ItemModifier> Modifiers { get; }
-		// THINK: Hacer una clase, en lugar de collection
+		ItemModifiersManager Modifiers { get; }
 	}
 
 	/// <summary>
@@ -60,31 +59,5 @@ namespace Items
 		/// Devuelve la lista de skills que ofrece al usuario
 		/// </summary>
 		IEnumerable<ISkill> GetEquipmentSkills ();
-	}
-
-	public static class EquipmentExt
-	{
-		public static string NombreMostrado (this IEquipment eq)
-		{
-			var ret = eq.Modifiers.Aggregate (
-				          "",
-				          (acc, iter) => agregarNombreModificado (
-					          acc,
-					          iter));
-
-			return ret;
-		}
-
-		static string agregarNombreModificado (string nombreBase, ItemModifier mod)
-		{
-			switch (mod.NameUsage)
-			{
-				case ItemModifierNameUsage.Prefix:
-					return string.Format ("{0} {1}", mod.Name + nombreBase);
-				case ItemModifierNameUsage.Sufix:
-					return string.Format ("{0} {1}", mod.Name + nombreBase);
-			}
-			throw new Exception (string.Format ("{0} not implemented.", mod.NameUsage));
-		}
 	}
 }

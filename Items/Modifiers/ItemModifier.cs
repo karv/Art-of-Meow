@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Items.Modifiers
 {
@@ -6,13 +7,31 @@ namespace Items.Modifiers
 	{
 		public ItemModifierNameUsage NameUsage { get; }
 
-		List<ItemModification> Modifications { get; }
+		Dictionary<string, ItemModification> Modifications { get; }
+
+		public IEnumerable<ItemModification> EnumerateMods ()
+		{
+			return Modifications.Values;
+		}
+
+		public float GetModificationValueOf (string attr)
+		{
+			var mod = GetModificationOf (attr);
+			return mod.HasValue ? mod.Value.Delta : 0f;
+		}
+
+		public ItemModification? GetModificationOf (string attr)
+		{
+			ItemModification mod;
+			return Modifications.TryGetValue (attr, out mod) ? mod : new ItemModification? ();
+		}
+
 
 		public string Name { get; }
 
 		public ItemModifier ()
 		{
-			Modifications = new List<ItemModification> ();
+			Modifications = new Dictionary<string, ItemModification> ();
 		}
 	}
 }

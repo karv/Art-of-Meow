@@ -39,9 +39,7 @@ namespace Items.Declarations.Equipment
 				NombreBase);
 		}
 
-		public List<ItemModifier> Modifiers { get; }
-
-		ICollection<ItemModifier> IEquipment.Modifiers { get { return Modifiers; } }
+		public ItemModifiersManager Modifiers { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Equipment"/> class.
