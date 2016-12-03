@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 
 namespace Items.Modifiers
 {
@@ -35,9 +35,9 @@ namespace Items.Modifiers
 			switch (mod.NameUsage)
 			{
 				case ItemModifierNameUsage.Prefix:
-					return string.Format ("{0} {1}", mod.Name + nombreBase);
+					return string.Format ("{0} {1}", mod.Name, nombreBase);
 				case ItemModifierNameUsage.Sufix:
-					return string.Format ("{0} {1}", mod.Name + nombreBase);
+					return string.Format ("{0} {1}", mod.Name, nombreBase);
 			}
 			throw new Exception (string.Format ("{0} not implemented.", mod.NameUsage));
 		}

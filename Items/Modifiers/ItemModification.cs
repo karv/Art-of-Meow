@@ -1,6 +1,5 @@
 using System;
 
-
 namespace Items.Modifiers
 {
 	/// <summary>
