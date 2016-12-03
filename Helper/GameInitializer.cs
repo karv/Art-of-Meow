@@ -31,7 +31,7 @@ namespace Helper
 
 			#region Cheat
 			var eq = ItemFactory.CreateItem<IEquipment> (ItemType.Sword);
-			eq.Modifiers.Modifiers.Add (ItemModifierGenerator.GenerateItemModifier ("broken"));
+			eq.Modifiers.Modifiers.Add (ItemModifierGenerator.Broken);
 			player.Equipment.EquipItem (eq);
 			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Bow));
 			#endregion

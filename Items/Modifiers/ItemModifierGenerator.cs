@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Items.Modifiers
 {
@@ -23,23 +24,31 @@ namespace Items.Modifiers
 			throw new NotImplementedException ();
 		}
 
-		public static ItemModifier GenerateItemModifier (string name)
+		/// <summary>
+		/// Get the Broken modifier
+		/// </summary>
+		/// <value>The broken.</value>
+		public static ItemModifier Broken { get; }
+
+		/// <summary>
+		/// Gets a collection with all the modifiers
+		/// </summary>
+		public static IReadOnlyCollection<ItemModifier> Modifiers;
+
+		static ItemModifierGenerator ()
 		{
-			// THINK: ¿convertirlo en una colección de getters estáticos?
-			switch (name)
-			{
-				case "broken":
-					var lowAtt = new ItemModification (ConstantesAtributos.Ataque, -1.2f);
-					var lowHit = new ItemModification (ConstantesAtributos.Hit, 3f);
-					var brokenMod = new ItemModifier (
-						                "broken",
-						                ItemModifierNameUsage.Prefix,
-						                new [] { lowAtt, lowHit });
+			var mods = new List<ItemModifier> ();
+			var lowAtt = new ItemModification (ConstantesAtributos.Ataque, -1.2f);
+			var lowHit = new ItemModification (ConstantesAtributos.Hit, -0.1f);
+			var brokenMod = new ItemModifier (
+				                "broken",
+				                ItemModifierNameUsage.Prefix,
+				                new [] { lowAtt, lowHit });
 
-					return brokenMod;
-			}
+			Broken = brokenMod;
+			mods.Add (Broken);
 
-			throw new Exception ();
+			Modifiers = mods.AsReadOnly ();
 		}
 	}
 }

@@ -16,6 +16,9 @@ namespace Items.Declarations.Equipment
 		/// <value>The base damage.</value>
 		public float BaseDamage { get; }
 
+		/// <summary>
+		/// Calcula el daño neto
+		/// </summary>
 		public float Damage ()
 		{
 			return BaseDamage + Modifiers.GetTotalModificationOf (ConstantesAtributos.Ataque);
@@ -27,6 +30,9 @@ namespace Items.Declarations.Equipment
 		/// <value>The base hit.</value>
 		public float BaseHit { get; }
 
+		/// <summary>
+		/// Calcula el hit chance neto
+		/// </summary>
 		public float Hit ()
 		{
 			return BaseHit + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
