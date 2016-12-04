@@ -33,11 +33,6 @@ namespace Maps
 		readonly StreamReader dataStream;
 
 		/// <summary>
-		/// El nombre del archivo de mapa del siguiente nivel para ser pasado al <see cref="LogicGrid"/> generado
-		/// </summary>
-		public string NextMap = @"Maps/base.map";
-
-		/// <summary>
 		/// Should add flavor features, like plants on the ground
 		/// </summary>
 		public bool AddFeatures = true;
@@ -72,7 +67,6 @@ namespace Maps
 						Debug.Assert (spl.Length == 2);
 
 						var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
-						NextMap = posMaps [_r.Next (posMaps.Count)];
 						break;
 					
 					case "Enemy": // Agregar un enemigo

@@ -75,13 +75,14 @@ namespace Screens
 			}
 		}
 
-		LogicGrid CurrentGrid;
-
 		public void ChangeGrid (WorldLocation newGrid)
 		{
+			Grid.RemoveObject (Player);
 			GridControl.ChangeGrid (newGrid.Grid);
 			Player.Location = newGrid.GridPoint;
-			CurrentGrid = newGrid.Grid;
+			Player.Grid = Grid;
+			Grid.AddCellObject (Player);
+			GridControl.TryCenterOn (Player.Location);
 		}
 
 		/*
@@ -162,7 +163,7 @@ namespace Screens
 		public override void Update (GameTime gameTime, ScreenThread currentThread)
 		{
 			base.Update (gameTime, currentThread);
-			CurrentGrid?.Update (gameTime);
+			Grid?.Update (gameTime);
 		}
 
 		/// <summary>
@@ -204,8 +205,8 @@ namespace Screens
 		/// </summary>
 		protected override void DoInitialization ()
 		{
-			CurrentGrid = GameInitializer.InitializeNewWorld (out Player);
-			GridControl = new GridControl (CurrentGrid, this);
+			var grd = GameInitializer.InitializeNewWorld (out Player);
+			GridControl = new GridControl (grd, this);
 
 			inicializarJugador ();
 

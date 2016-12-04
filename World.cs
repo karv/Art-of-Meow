@@ -44,9 +44,4 @@ namespace AoM
 			GridPoint = point;
 		}
 	}
-
-
-	public class World
-	{
-	}
 }

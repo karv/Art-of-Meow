@@ -299,7 +299,7 @@ namespace Cells
 				for (int iy = 0; iy < Size.Height; iy++)
 					_cells [ix, iy] = new Cell (new Point (ix, iy));
 			TimeManager = new GameTimeManager (this);
-			LocalTopology = new GridConnector ();
+			LocalTopology = new GridConnector (this);
 		}
 
 		/// <summary>

@@ -49,10 +49,11 @@ namespace Cells
 			return null;
 		}
 
-		public GridConnector ()
+		public GridConnector (LogicGrid grid)
 		{
 			Connections = new Dictionary<Point, WorldLocation> ();
 			PendingConnections = new List<Point> ();
+			Grid = grid;
 		}
 	}
 	
