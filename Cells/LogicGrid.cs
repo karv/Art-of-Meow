@@ -12,6 +12,26 @@ using Units;
 
 namespace Cells
 {
+	public class GridConnector
+	{
+		Dictionary <Point, WorldLocation> Connections { get; }
+
+		public void AddConnection (Point originPoint, WorldLocation endPoint)
+		{
+			Connections.Add (originPoint, endPoint);
+		}
+
+		public WorldLocation EndPointOf (Point p)
+		{
+			return Connections [p];
+		}
+
+		public GridConnector ()
+		{
+			Connections = new Dictionary<Point, WorldLocation> ();
+		}
+	}
+
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
 	/// </summary>
@@ -274,6 +294,12 @@ namespace Cells
 
 		#endregion
 
+		#region Mundo
+
+		public GridConnector LocalTopology { get; }
+
+		#endregion
+
 		/// <summary>
 		/// Ocurre al agregar un objeto
 		/// </summary>
@@ -297,6 +323,7 @@ namespace Cells
 				for (int iy = 0; iy < Size.Height; iy++)
 					_cells [ix, iy] = new Cell (new Point (ix, iy));
 			TimeManager = new GameTimeManager (this);
+			LocalTopology = new GridConnector ();
 		}
 
 		/// <summary>
