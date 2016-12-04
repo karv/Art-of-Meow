@@ -8,6 +8,7 @@ using Screens;
 using Units;
 using Microsoft.Xna.Framework;
 using AoM;
+using System.Net;
 
 namespace Helper
 {
@@ -66,6 +67,12 @@ namespace Helper
 					scr.Execute (ScreenExt.DialogOpt);
 				}
 				return true;
+			}
+			if (GlobalKeys.Stairs.Contains (key))
+			{
+				var endPoint = ManagerScreen.Grid.LocalTopology.EndPointOf (HumanPlayer.Location);
+				if (endPoint.HasValue)
+					ManagerScreen.ChangeGrid (endPoint.Value);
 			}
 			return false;
 		}

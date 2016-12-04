@@ -12,25 +12,6 @@ using Units;
 
 namespace Cells
 {
-	public class GridConnector
-	{
-		Dictionary <Point, WorldLocation> Connections { get; }
-
-		public void AddConnection (Point originPoint, WorldLocation endPoint)
-		{
-			Connections.Add (originPoint, endPoint);
-		}
-
-		public WorldLocation EndPointOf (Point p)
-		{
-			return Connections [p];
-		}
-
-		public GridConnector ()
-		{
-			Connections = new Dictionary<Point, WorldLocation> ();
-		}
-	}
 
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
@@ -103,11 +84,6 @@ namespace Cells
 		}
 
 		#endregion
-
-		/// <summary>
-		/// Devuelve o establece el archivo de generador mapa que se usará como próximo nivel
-		/// </summary>
-		public string DownMap { get; set; }
 
 		/// <summary>
 		/// Builds a <see cref="Cell"/> of the current state of a given point

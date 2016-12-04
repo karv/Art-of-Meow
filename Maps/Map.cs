@@ -8,6 +8,7 @@ using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
+using AoM;
 
 namespace Maps
 {
@@ -53,7 +54,6 @@ namespace Maps
 			if (AddFeatures)
 				AddRandomFlavorFeatures (ret);
 			
-			ret.DownMap = NextMap; // Establecer el mapa del siguiente nivel
 			return ret;
 		}
 
@@ -157,6 +157,7 @@ namespace Maps
 				Location = down
 			};
 			grid.AddCellObject (stairDown);
+			grid.LocalTopology.AddConnection (down);
 		}
 
 		/// <summary>
@@ -197,6 +198,18 @@ namespace Maps
 		{
 			dataStream = reader;
 			_r = new Random ();
+		}
+
+		public const string MapDir = "Maps";
+
+		public static Map GetRandomMap ()
+		{
+			var mapDir = new DirectoryInfo (MapDir);
+			var maps = mapDir.GetFiles ("*.map");
+			var _r = new Random ();
+
+			var ret = new Map (maps [_r.Next (maps.Length)].FullName);
+			return ret;
 		}
 
 		LogicGrid readMapIntoGrid ()

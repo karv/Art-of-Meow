@@ -19,7 +19,6 @@ namespace AoM
 		/// </summary>
 		public static void Main ()
 		{
-			var c = new World ();
 			var lg = new Logger ("debug.log");
 			Debug.Listeners.Add (lg);
 			var MapThread = MyGame.ScreenManager.AddNewThread ();
