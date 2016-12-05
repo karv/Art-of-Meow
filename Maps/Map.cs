@@ -8,7 +8,6 @@ using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
-using AoM;
 
 namespace Maps
 {
@@ -194,8 +193,14 @@ namespace Maps
 			_r = new Random ();
 		}
 
+		/// <summary>
+		/// El directorio de los mapas
+		/// </summary>
 		public const string MapDir = "Maps";
 
+		/// <summary>
+		/// Devuelve un mapa aleatorio del directorio de mapas
+		/// </summary>
 		public static Map GetRandomMap ()
 		{
 			var mapDir = new DirectoryInfo (MapDir);

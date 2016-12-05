@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Cells;
-using Cells.CellObjects;
 using Componentes;
 using Helper;
 using Maps;
@@ -14,7 +14,6 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
-using AoM;
 
 namespace Screens
 {
@@ -75,6 +74,10 @@ namespace Screens
 			}
 		}
 
+		/// <summary>
+		/// Cambia de grid y posición el jugador (y a la pantalla)
+		/// </summary>
+		/// <param name="newGrid">Nueva posición en el mundo</param>
 		public void ChangeGrid (WorldLocation newGrid)
 		{
 			Grid.RemoveObject (Player);

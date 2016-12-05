@@ -6,6 +6,9 @@ using Cells.CellObjects;
 
 namespace Cells
 {
+	/// <summary>
+	/// Controla las conexiones topológicas de un <see cref="LogicGrid"/> origen
+	/// </summary>
 	public class GridConnector
 	{
 		Dictionary <Point, WorldLocation> Connections { get; }
@@ -14,16 +17,27 @@ namespace Cells
 
 		LogicGrid Grid { get; }
 
+		/// <summary>
+		/// Agrega una conexión determinando el punto final
+		/// </summary>
 		public void AddConnection (Point originPoint, WorldLocation endPoint)
 		{
 			Connections.Add (originPoint, endPoint);
 		}
 
+		/// <summary>
+		/// Agrega una conexión, dejando el punto final sin asignar
+		/// </summary>
 		public void AddConnection (Point originPoint)
 		{
 			PendingConnections.Add (originPoint);
 		}
 
+		/// <summary>
+		/// Devuelve el punto final que le corresponte a un punto origen dado
+		/// </summary>
+		/// <returns>El punto final cuando exista; en caso contrario es <c>null</c></returns>
+		/// <param name="p">Punto origen en este tablero</param>
 		public WorldLocation? EndPointOf (Point p)
 		{
 			WorldLocation ret;
@@ -49,6 +63,9 @@ namespace Cells
 			return null;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.GridConnector"/> class.
+		/// </summary>
 		public GridConnector (LogicGrid grid)
 		{
 			Connections = new Dictionary<Point, WorldLocation> ();
@@ -56,5 +73,4 @@ namespace Cells
 			Grid = grid;
 		}
 	}
-	
 }

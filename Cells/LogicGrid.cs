@@ -272,6 +272,9 @@ namespace Cells
 
 		#region Mundo
 
+		/// <summary>
+		/// Devuelve el conector de tableros
+		/// </summary>
 		public GridConnector LocalTopology { get; }
 
 		#endregion
