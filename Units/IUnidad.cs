@@ -10,6 +10,7 @@ using Units.Equipment;
 using Units.Order;
 using Units.Recursos;
 using Units.Skills;
+using System;
 
 namespace Units
 {
@@ -21,7 +22,8 @@ namespace Units
 	ICollidableGridObject,
 	IExpGiver,
 	IEffectAgent,
-	ITarget
+	ITarget,
+	IDisposable
 	{
 		/// <summary>
 		/// Gets the map grid

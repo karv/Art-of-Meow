@@ -280,6 +280,7 @@ namespace Units
 		/// <see cref="Units.Unidad"/> was occupying.</remarks>
 		public void Dispose ()
 		{
+			(Inteligencia as IDisposable)?.Dispose ();
 		}
 
 		/// <summary>

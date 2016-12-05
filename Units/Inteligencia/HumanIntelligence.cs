@@ -5,6 +5,7 @@ using Items;
 using MonoGame.Extended.InputListeners;
 using Units.Order;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Units.Inteligencia
 {
@@ -13,7 +14,8 @@ namespace Units.Inteligencia
 	/// </summary>
 	public class HumanIntelligence :
 	IUnidadController,
-	IGameComponent
+	IGameComponent,
+	IDisposable
 	{
 		/// <summary>
 		/// The controlled unidad
@@ -30,9 +32,14 @@ namespace Units.Inteligencia
 			}
 		}
 
+		void IDisposable.Dispose ()
+		{
+			throw new NotImplementedException ();
+		}
+
 		MovementDirectionEnum ActionDir;
 
-		public void Initialize ()
+		void IGameComponent.Initialize ()
 		{
 			// Suscribirse
 			Program.MyGame.KeyListener.KeyTyped += keyPressedListener;
