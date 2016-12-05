@@ -20,6 +20,9 @@ namespace Units
 
 		float _expAcum;
 
+		/// <summary>
+		/// Devuelve la experiencia total.
+		/// </summary>
 		public float ExperienciaTotal { get; private set; }
 
 		/// <summary>

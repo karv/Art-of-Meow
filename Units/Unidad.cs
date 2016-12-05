@@ -100,7 +100,6 @@ namespace Units
 		/// Pass time
 		/// </summary>
 		/// <param name="time">Time.</param>
-
 		public void PassTime (float time)
 		{
 			PrimitiveOrders.PassTime (time);

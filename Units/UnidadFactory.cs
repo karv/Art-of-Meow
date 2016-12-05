@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using AoM;
 using Cells;
 using Items;
 using Moggle;
 using Units.Recursos;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Units
 {
@@ -25,9 +25,18 @@ namespace Units
 		__total
 	}
 
+	/// <summary>
+	/// La clase de un enemigo para su creación
+	/// </summary>
 	public enum EnemyClass
 	{
+		/// <summary>
+		/// Clase warrior
+		/// </summary>
 		Warrior,
+		/// <summary>
+		/// The total number of types
+		/// </summary>
 		__total
 	}
 
@@ -48,6 +57,10 @@ namespace Units
 
 		static Random r = new Random ();
 
+		/// <summary>
+		/// Muestra toda la información de una unidad por el debug
+		/// </summary>
+		/// <param name="u">Unidad</param>
 		[Conditional ("DEBUG")]
 		public static void DebugAllInfo (Unidad u)
 		{
@@ -74,6 +87,8 @@ namespace Units
 		/// Construye una unidad dado su tipo
 		/// </summary>
 		/// <param name="enemyType">Tipo de unidad</param>
+		/// <param name = "enemyClass">Clase de la unidad</param>
+		/// <param name = "exp">Experiencia total de la unidad</param>
 		public Unidad MakeEnemy (EnemyType enemyType,
 		                         EnemyClass enemyClass,
 		                         float exp = 0)
@@ -179,6 +194,8 @@ namespace Units
 		/// Construye una unidad dado su tipo
 		/// </summary>
 		/// <param name="type">Nombre del tipo de la unidad</param>
+		/// <param name = "class">Clase de la unidad</param>
+		/// <param name = "exp">Experiencia total de la unidad</param>
 		public Unidad MakeEnemy (string type, string @class, float exp = 0)
 		{
 			EnemyType eType = EnemyType.__total; // Para saber que no está asignado
