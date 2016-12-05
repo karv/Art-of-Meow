@@ -278,7 +278,7 @@ namespace Screens
 		MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			GridControl = new GridControl (map.GenerateGrid (), this);
+			GridControl = new GridControl (map.GenerateGrid (0), this);
 		}
 
 		/// <summary>

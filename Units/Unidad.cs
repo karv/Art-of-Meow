@@ -93,15 +93,13 @@ namespace Units
 		/// </summary>
 		public float GetExperienceValue ()
 		{
-			// TODO: calcularlo bien.
-			return 1;
+			return Exp.ExperienciaTotal * 0.15f;
 		}
 
 		/// <summary>
 		/// Pass time
 		/// </summary>
 		/// <param name="time">Time.</param>
-
 		public void PassTime (float time)
 		{
 			PrimitiveOrders.PassTime (time);
