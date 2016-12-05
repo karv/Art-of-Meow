@@ -6,7 +6,6 @@ using MonoGame.Extended.InputListeners;
 using Units.Order;
 using Microsoft.Xna.Framework;
 using System;
-using Cells.CellObjects;
 
 namespace Units.Inteligencia
 {
@@ -162,6 +161,17 @@ namespace Units.Inteligencia
 			ControlledUnidad = yo;
 			const int milisect_repeat = 150;
 			MinRepetitionTime = TimeSpan.FromMilliseconds (milisect_repeat);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Inteligencia.HumanIntelligence"/> class.
+		/// </summary>
+		/// <param name="yo">Controlled unidad</param>
+		/// <param name = "repTime">Tiempo de repetición</param>
+		public HumanIntelligence (Unidad yo, TimeSpan repTime)
+		{
+			ControlledUnidad = yo;
+			MinRepetitionTime = repTime;
 		}
 	}
 }
