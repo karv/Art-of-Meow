@@ -39,11 +39,12 @@ namespace Maps
 		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
-		public LogicGrid GenerateGrid ()
+		/// <param name="enemyExp">La experiencia de cada enemigo en el grid</param>
+		public LogicGrid GenerateGrid (float enemyExp)
 		{
 			var ret = readMapIntoGrid ();
 			makeStairs (ret);
-			getMapOptions (ret);
+			getMapOptions (ret, enemyExp);
 
 			if (AddFeatures)
 				AddRandomFlavorFeatures (ret);
@@ -51,7 +52,7 @@ namespace Maps
 			return ret;
 		}
 
-		void getMapOptions (LogicGrid grid)
+		void getMapOptions (LogicGrid grid, float mapDiffExp)
 		{
 			var uFact = new UnidadFactory (grid);
 			var enTeam = new TeamManager (Color.Blue);
@@ -70,7 +71,7 @@ namespace Maps
 					
 					case "Enemy": // Agregar un enemigo
 						Debug.Assert (spl.Length == 2);
-						var enemy = uFact.MakeEnemy (spl [1].Trim (), "Warrior", 10);
+						var enemy = uFact.MakeEnemy (spl [1].Trim (), "Warrior", mapDiffExp);
 						enemy.Team = enTeam;
 						enemy.Location = grid.GetRandomEmptyCell ();
 
@@ -157,20 +158,22 @@ namespace Maps
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="reader">Un StreamReader con la info del mapa</param>
-		public static LogicGrid GenerateGrid (StreamReader reader)
+		/// <param name = "enemyExp">Experiencia de cada enemigo</param>
+		public static LogicGrid GenerateGrid (StreamReader reader, float enemyExp)
 		{
 			var map = new Map (reader);
-			return map.GenerateGrid ();
+			return map.GenerateGrid (enemyExp);
 		}
 
 		/// <summary>
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="mapFile">Nombre de archivo del mapa</param>
-		public static LogicGrid GenerateGrid (string mapFile)
+		/// <param name = "enemyExp">Experiencia de cada enemigo</param>
+		public static LogicGrid GenerateGrid (string mapFile, float enemyExp)
 		{
 			var map = new Map (mapFile);
-			return map.GenerateGrid ();
+			return map.GenerateGrid (enemyExp);
 		}
 
 		/// <summary>

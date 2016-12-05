@@ -69,7 +69,9 @@ namespace Helper
 			}
 			if (GlobalKeys.Stairs.Contains (key))
 			{
-				var endPoint = ManagerScreen.Grid.LocalTopology.EndPointOf (HumanPlayer.Location);
+				var endPoint = ManagerScreen.Grid.LocalTopology.EndPointOf (
+					               HumanPlayer.Location,
+					               HumanPlayer.Exp.ExperienciaTotal * 0.8f);
 				if (endPoint.HasValue)
 					ManagerScreen.ChangeGrid (endPoint.Value);
 			}
