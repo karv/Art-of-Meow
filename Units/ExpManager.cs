@@ -20,6 +20,8 @@ namespace Units
 
 		float _expAcum;
 
+		public float ExperienciaTotal { get; private set; }
+
 		/// <summary>
 		/// Devuelve o establece la experiencia acumulada desde el último <see cref="Flush"/>
 		/// </summary>
@@ -72,6 +74,8 @@ namespace Units
 			foreach (var x in _distribuciónExp)
 				x.Key.ReceiveExperience (ExperienciaAcumulada * x.Value);
 			_distribuciónExp.Clear ();
+
+			ExperienciaTotal += ExperienciaAcumulada;
 			ExperienciaAcumulada = 0;
 		}
 
