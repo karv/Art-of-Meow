@@ -34,7 +34,7 @@ namespace Helper
 			player.Equipment.EquipItem (eq);
 			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Bow));
 			#endregion
-
+			player.Initialize ();
 			return player;
 		}
 

@@ -1,8 +1,8 @@
 ﻿using System;
 using AoM;
 using Cells;
-using Moggle;
 using Items;
+using Moggle;
 
 namespace Units
 {
@@ -61,7 +61,8 @@ namespace Units
 						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherArmor));
 					if (r.NextDouble () < 0.4)
 						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
-					
+
+					ret.Initialize ();
 					return ret;
 				default:
 					throw new NotImplementedException ("Enemy type " + enemyType + " not implemented");
