@@ -3,6 +3,8 @@ using AoM;
 using Cells;
 using Items;
 using Moggle;
+using Units.Recursos;
+using System.Collections.Generic;
 
 namespace Units
 {
@@ -19,6 +21,12 @@ namespace Units
 		/// <summary>
 		/// The total number of types
 		/// </summary>
+		__total
+	}
+
+	public enum EnemyClass
+	{
+		Warrior,
 		__total
 	}
 
@@ -43,45 +51,128 @@ namespace Units
 		/// Construye una unidad dado su tipo
 		/// </summary>
 		/// <param name="enemyType">Tipo de unidad</param>
-		public Unidad MakeEnemy (EnemyType enemyType)
+		public Unidad MakeEnemy (EnemyType enemyType,
+		                         EnemyClass enemyClass,
+		                         float exp = 0)
 		{
-			switch (enemyType)
+			var ret = new Unidad (Grid);
+
+			foreach (var x in GetAttrDistribution (enemyType, enemyClass))
+				ret.Exp.AddAssignation (x.Key, x.Value);
+			ret.Exp.ExperienciaAcumulada = exp;
+			ret.Exp.Flush ();
+
+			ret.RecursoHP.Fill ();
+			ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
+			ret.Nombre = enemyType.ToString ();
+
+
+			// Drops
+			if (r.NextDouble () < 0.2)
+				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherCap));
+			if (r.NextDouble () < 0.1)
+				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherArmor));
+			if (r.NextDouble () < 0.4)
+				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
+
+			return ret;
+		}
+
+		/// <summary>
+		/// Devuelve una distribución de experiencia normalizada para una clase dada
+		/// </summary>
+		public Dictionary<string, float> GetAttrDistribution (EnemyClass eClass)
+		{
+			var ret = new Dictionary<string,float> ();
+			switch (eClass)
+			{
+				case EnemyClass.Warrior: // 1.25
+					ret.Add (ConstantesRecursos.CertezaMelee, 0.16f);
+					ret.Add (ConstantesRecursos.Destreza, 0.16f);
+					ret.Add (ConstantesRecursos.EvasiónMelee, 0.08f);
+					ret.Add (ConstantesRecursos.EvasiónRango, 0.04f);
+					ret.Add (ConstantesRecursos.Fuerza, 0.24f);
+					ret.Add (ConstantesRecursos.HP, 0.16f);
+					ret.Add (ConstantesRecursos.Velocidad, 0.08f);
+					break;
+				default:
+					throw new Exception ();
+			}
+			return ret;
+		}
+
+		/// <summary>
+		/// Devuelve una distribución de experiencia normalizada para una raza dada
+		/// </summary>
+		public Dictionary<string, float> GetAttrDistribution (EnemyType eType)
+		{
+			var ret = new Dictionary<string,float> ();
+			switch (eType)
 			{
 				case EnemyType.Imp:
-					var ret = new Unidad (Grid);
-					ret.RecursoHP.Max = 1;
-					ret.RecursoHP.Fill ();
-					ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
-					ret.Nombre = "Imp";
-
-					// Drops
-					if (r.NextDouble () < 0.2)
-						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherCap));
-					if (r.NextDouble () < 0.1)
-						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherArmor));
-					if (r.NextDouble () < 0.4)
-						ret.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
-
-					ret.Initialize ();
-					return ret;
+					ret.Add (ConstantesRecursos.CertezaMelee, 1f);
+					ret.Add (ConstantesRecursos.Destreza, 0.7f);
+					ret.Add (ConstantesRecursos.EvasiónMelee, 1f);
+					ret.Add (ConstantesRecursos.EvasiónRango, 0.8f);
+					ret.Add (ConstantesRecursos.Fuerza, 0.2f);
+					ret.Add (ConstantesRecursos.HP, 0.4f);
+					ret.Add (ConstantesRecursos.Velocidad, 0.4f);
+					break;
 				default:
-					throw new Exception ("Enemy type " + enemyType + " not implemented");
+					throw new Exception ();
 			}
+			return ret;
 		}
+
+		/// <summary>
+		/// Devuelve una distribución de experiencia normalizada para clase y raza dadas, y una función de peso para la raza
+		/// </summary>
+		public Dictionary<string, float> GetAttrDistribution (EnemyType eType,
+		                                                      EnemyClass eClass,
+		                                                      float typeWeight = 0.5f)
+		{
+			if (typeWeight < 0 || typeWeight > 1)
+				throw new ArgumentOutOfRangeException ("typeWeight");
+			
+			var ret = new Dictionary<string,float> ();
+			foreach (var assign in GetAttrDistribution (eType))
+				ret.Add (assign.Key, assign.Value * typeWeight);
+			
+			float classWeight = 1 - typeWeight;
+			foreach (var assign in GetAttrDistribution (eClass))
+			{
+				float prevVal;
+				if (ret.TryGetValue (assign.Key, out prevVal))
+					ret [assign.Key] = prevVal + assign.Value * classWeight;
+				else
+					ret.Add (assign.Key, assign.Value * classWeight);
+			}
+			return ret;
+		}
+
 
 		/// <summary>
 		/// Construye una unidad dado su tipo
 		/// </summary>
 		/// <param name="type">Nombre del tipo de la unidad</param>
-		public Unidad MakeEnemy (string type)
+		public Unidad MakeEnemy (string type, string @class, float exp = 0)
 		{
+			EnemyType eType = EnemyType.__total; // Para saber que no está asignado
+			EnemyClass eClass = EnemyClass.__total;
+
 			for (int i = 0; i < (int)EnemyType.__total; i++)
 			{
 				var currEnType = (EnemyType)i;
 				if (currEnType.ToString () == type)
-					return MakeEnemy (currEnType);
+					eType = currEnType;
 			}
-			throw new Exception (string.Format ("Enemy type {0} does not exist.", type));
+			for (int i = 0; i < (int)EnemyClass.__total; i++)
+			{
+				var currEnClass = (EnemyClass)i;
+				if (currEnClass.ToString () == @class)
+					eClass = currEnClass;
+			}
+			return MakeEnemy (eType, eClass, exp);
 		}
 
 		/// <summary>

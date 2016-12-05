@@ -70,7 +70,7 @@ namespace Maps
 					
 					case "Enemy": // Agregar un enemigo
 						Debug.Assert (spl.Length == 2);
-						var enemy = uFact.MakeEnemy (spl [1].Trim ());
+						var enemy = uFact.MakeEnemy (spl [1].Trim (), "Warrior", 10);
 						enemy.Team = enTeam;
 						enemy.Location = grid.GetRandomEmptyCell ();
 
