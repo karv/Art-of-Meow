@@ -7,7 +7,6 @@ using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using Units;
 
 namespace Maps
 {
@@ -17,6 +16,7 @@ namespace Maps
 	/// </summary>
 	public class Map
 	{
+		readonly char [,] _data;
 		/*
 		/// <summary>
 		/// Gets the size of the map.
@@ -29,7 +29,14 @@ namespace Maps
 		*/
 		readonly Random _r;
 
-		readonly StreamReader dataStream;
+		/// <summary>
+		/// Sets the data as a string
+		/// </summary>
+		/// <value>The data.</value>
+		public string Data
+		{
+			set { parseMapObjects (value); }
+		}
 
 		/// <summary>
 		/// Should add flavor features, like plants on the ground
@@ -41,53 +48,13 @@ namespace Maps
 		/// </summary>
 		public LogicGrid GenerateGrid ()
 		{
-			var ret = readMapIntoGrid ();
+			var ret = buildBaseGrid ();
 			makeStairs (ret);
-			getMapOptions (ret);
 
 			if (AddFeatures)
 				AddRandomFlavorFeatures (ret);
 			
 			return ret;
-		}
-
-		void getMapOptions (LogicGrid grid)
-		{
-			var uFact = new UnidadFactory (grid);
-			var enTeam = new TeamManager (Color.Blue);
-			// Leer los flags
-			while (!dataStream.EndOfStream)
-			{
-				var cLine = dataStream.ReadLine ();
-				var spl = cLine.Split (':');
-				switch (spl [0])
-				{
-					case "Next": // Establecer aquí el valor de NextMap
-						Debug.Assert (spl.Length == 2);
-
-						//var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
-						break;
-					
-					case "Enemy": // Agregar un enemigo
-						Debug.Assert (spl.Length == 2);
-						var enemy = uFact.MakeEnemy (spl [1].Trim ());
-						enemy.Team = enTeam;
-						enemy.Location = grid.GetRandomEmptyCell ();
-
-						grid.AddCellObject (enemy);
-
-						break;
-					case "":
-						// Un fin de línea vacía es nada
-						break;
-					default:
-						Debug.WriteLine (
-							"Entrada de opción desconocida {0} en un mapa {1}",
-							spl [0],
-							dataStream);
-						break;
-				}
-			}
 		}
 
 		/// <summary>
@@ -119,6 +86,13 @@ namespace Maps
 					return null;
 			}
 			throw new FormatException ("Unknown accepted map symbol " + c);
+		}
+
+		static char [] goodSymbols = { ' ', 'W', '\n', '\r' };
+
+		public static bool ExistSymbol (char c)
+		{
+			return goodSymbols.Contains (c);
 		}
 
 		/// <summary>
@@ -189,8 +163,11 @@ namespace Maps
 		/// <param name="reader">A stream reader</param>
 		public Map (StreamReader reader)
 		{
-			dataStream = reader;
-			_r = new Random ();
+			if (reader == null)
+				throw new ArgumentNullException ("reader");
+			throw new NotImplementedException ("Load Json");
+			//dataStream = reader;
+			//_r = new Random ();
 		}
 
 		/// <summary>
@@ -211,26 +188,37 @@ namespace Maps
 			return ret;
 		}
 
-		LogicGrid readMapIntoGrid ()
-		{
-			var sizeX = int.Parse (dataStream.ReadLine ());
-			var sizeY = int.Parse (dataStream.ReadLine ());
-			var ret = new LogicGrid (sizeX, sizeY);
+		public int SizeX { get { return _data.GetLength (0); } }
 
+		public int SizeY { get { return _data.GetLength (1); } }
+
+		public Size Size { get { return new Size (SizeX, SizeY); } }
+
+		void parseMapObjects (string data)
+		{
 			var i = 0;
-			var mapSize = sizeX * sizeY;
+			var j = 0;
+			var mapSize = SizeX * SizeY;
 			while (i < mapSize)
 			{
-				var ix = i % sizeX;
-				var iy = i / sizeX;
-				var chr = (char)dataStream.Read ();
-				var obj = MakeObject (chr, ret, new Point (ix, iy));
-				if (obj != null)
-				{					
-					ret.AddCellObject (obj);
+				var ix = i % SizeX;
+				var iy = i / SizeX;
+				var chr = data [j];
+				//var obj = MakeObject (chr, ret, new Point (ix, iy));
+				if (ExistSymbol (chr))
+				{
+					_data [ix, iy] = data [j++];
 					i++;
 				}
 			}
+		}
+
+		LogicGrid buildBaseGrid ()
+		{
+			var ret = new LogicGrid (Size);
+			for (int ix = 0; ix < SizeX; ix++)
+				for (int iy = 0; iy < SizeY; iy++)
+					ret.AddCellObject (MakeObject (_data [ix, iy], ret, new Point (ix, iy)));
 
 			return ret;
 		}
