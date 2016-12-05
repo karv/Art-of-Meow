@@ -22,6 +22,10 @@ namespace Items
 		/// </summary>
 		Sword,
 		/// <summary>
+		/// Un martillo
+		/// </summary>
+		Martillo,
+		/// <summary>
 		/// Un arco
 		/// </summary>
 		Bow,
@@ -77,11 +81,17 @@ namespace Items
 				case ItemType.Knife:
 					ret = new MeleeWeapon ("Cuchillo", "Items//katana", 0.8f, 1.1f)
 					{ Color = Color.DarkBlue, BaseSpeed = 1.8f };
-
 					break;
+
 				case ItemType.Sword:
 					ret = new MeleeWeapon ("Espada", "Items//katana", 1.4f, 0.7f){ Color = Color.DarkBlue };
 					break;
+
+				case ItemType.Martillo:
+					ret = new MeleeWeapon ("Cuchillo", "Items//katana", 1.6f, 0.5f)
+					{ Color = Color.DarkBlue, BaseSpeed = 0.8f };
+					break;
+
 				case ItemType.Bow:
 					ret = new GenericSkillListEquipment (
 						"Arco",
@@ -90,9 +100,11 @@ namespace Items
 						"Items//bow_orange"
 					);
 					break;
+
 				case ItemType.HealingPotion:
 					ret = new HealingPotion ();
 					break;
+
 				case ItemType.LeatherArmor:
 					ret = new GenericArmor ("Leather Armor", EquipSlot.Body)
 					{
@@ -100,6 +112,7 @@ namespace Items
 						TextureNameGeneric = "Items//body armor"
 					};
 					break;
+
 				case ItemType.LeatherCap:
 					ret = new GenericArmor ("Leather Cap", EquipSlot.Head)
 					{
@@ -107,6 +120,7 @@ namespace Items
 						TextureNameGeneric = "Items//helmet"
 					};
 					break;
+
 				default:
 					throw new Exception ();
 			}
