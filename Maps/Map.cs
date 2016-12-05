@@ -204,7 +204,7 @@ namespace Maps
 		public static Map GetRandomMap ()
 		{
 			var mapDir = new DirectoryInfo (MapDir);
-			var maps = mapDir.GetFiles ("*.map");
+			var maps = mapDir.GetFiles ("dung*.map");
 			var _r = new Random ();
 
 			var ret = new Map (maps [_r.Next (maps.Length)].FullName);
