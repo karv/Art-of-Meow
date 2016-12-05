@@ -113,6 +113,7 @@ namespace Units
 		/// </summary>
 		public void Initialize ()
 		{
+			(Inteligencia as IGameComponent)?.Initialize ();
 		}
 
 		/// <summary>
@@ -278,6 +279,7 @@ namespace Units
 		/// <see cref="Units.Unidad"/> was occupying.</remarks>
 		public void Dispose ()
 		{
+			(Inteligencia as IDisposable)?.Dispose ();
 		}
 
 		/// <summary>

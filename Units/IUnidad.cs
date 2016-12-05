@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
@@ -21,7 +22,8 @@ namespace Units
 	ICollidableGridObject,
 	IExpGiver,
 	IEffectAgent,
-	ITarget
+	ITarget,
+	IDisposable
 	{
 		/// <summary>
 		/// Gets the map grid

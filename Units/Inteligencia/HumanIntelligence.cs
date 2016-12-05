@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AoM;
+using Cells.CellObjects;
 using Items;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended.InputListeners;
 using Units.Order;
 
@@ -12,59 +15,112 @@ namespace Units.Inteligencia
 	/// </summary>
 	public class HumanIntelligence :
 	IUnidadController,
-	Moggle.Comm.IReceptor<KeyboardEventArgs>
+	IGameComponent,
+	IDisposable
 	{
 		/// <summary>
 		/// The controlled unidad
 		/// </summary>
 		public readonly Unidad ControlledUnidad;
 
+		DateTime lastActionTime;
+		/// <summary>
+		/// Devuelve el tiempo de repetición
+		/// </summary>
+		public readonly TimeSpan MinRepetitionTime;
+
+		bool shouldDoAction ()
+		{
+			if (forcedFirstHit || DateTime.Now - lastActionTime >= MinRepetitionTime)
+			{
+				lastActionTime = DateTime.Now;
+				forcedFirstHit = false;
+				return true;
+			}
+			return false;
+		}
+
 		void IUnidadController.DoAction ()
 		{
+			if (!shouldDoAction ())
+				return;
 			ControlledUnidad.assertIsIdleCheck ();
-			if (ActionDir != MovementDirectionEnum.NoMov)
+			if (PersistenceDir != MovementDirectionEnum.NoMov)
 			{
-				ControlledUnidad.MoveOrMelee (ActionDir);
-				ActionDir = MovementDirectionEnum.NoMov;
+				ControlledUnidad.MoveOrMelee (PersistenceDir);
+//				ActionDir = MovementDirectionEnum.NoMov;
 			}
 		}
 
-		MovementDirectionEnum ActionDir;
+		void IDisposable.Dispose ()
+		{
+			Program.MyGame.KeyListener.KeyTyped -= keyPressedListener;
+			Program.MyGame.KeyListener.KeyReleased -= freeAuntoKey;
+		}
 
-		bool Moggle.Comm.IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs keyArg)
+		MovementDirectionEnum PersistenceDir;
+		bool forcedFirstHit;
+
+		void IGameComponent.Initialize ()
+		{
+			// Suscribirse
+			Program.MyGame.KeyListener.KeyPressed += keyPressedListener;
+			Program.MyGame.KeyListener.KeyReleased += freeAuntoKey;
+			PersistenceDir = MovementDirectionEnum.NoMov;
+			lastActionTime = DateTime.Now;
+		}
+
+		void freeAuntoKey (object sender, KeyboardEventArgs e)
+		{
+			PersistenceDir = MovementDirectionEnum.NoMov;
+		}
+
+		bool shouldListen ()
+		{
+			return (ControlledUnidad as IUpdateGridObject).IsReady;
+		}
+
+		void keyPressedListener (object sender, KeyboardEventArgs e)
+		{
+			forcedFirstHit = true;
+			if (shouldListen ())
+				recibirSeñal (e);
+		}
+
+		bool recibirSeñal (KeyboardEventArgs keyArg)
 		{
 			var key = keyArg.Key;
 			if (GlobalKeys.MovUpKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.Up;
+				PersistenceDir = MovementDirectionEnum.Up;
 			}
 			else if (GlobalKeys.MovDownKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.Down;
+				PersistenceDir = MovementDirectionEnum.Down;
 			}
 			else if (GlobalKeys.MovLeftKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.Left;
+				PersistenceDir = MovementDirectionEnum.Left;
 			}
 			else if (GlobalKeys.MovRightKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.Right;
+				PersistenceDir = MovementDirectionEnum.Right;
 			}
 			else if (GlobalKeys.MovUpLeftKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.UpLeft;
+				PersistenceDir = MovementDirectionEnum.UpLeft;
 			}
 			else if (GlobalKeys.MovUpRightKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.UpRight;
+				PersistenceDir = MovementDirectionEnum.UpRight;
 			}
 			else if (GlobalKeys.MovDownLeftKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.DownLeft;
+				PersistenceDir = MovementDirectionEnum.DownLeft;
 			}
 			else if (GlobalKeys.MovDownRightKey.Contains (key))
 			{
-				ActionDir = MovementDirectionEnum.DownRight;
+				PersistenceDir = MovementDirectionEnum.DownRight;
 			}
 			else if (GlobalKeys.PickupDroppedItems.Contains (key))
 			{
@@ -106,6 +162,19 @@ namespace Units.Inteligencia
 		public HumanIntelligence (Unidad yo)
 		{
 			ControlledUnidad = yo;
+			const int milisect_repeat = 150;
+			MinRepetitionTime = TimeSpan.FromMilliseconds (milisect_repeat);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.Inteligencia.HumanIntelligence"/> class.
+		/// </summary>
+		/// <param name="yo">Controlled unidad</param>
+		/// <param name = "repTime">Tiempo de repetición</param>
+		public HumanIntelligence (Unidad yo, TimeSpan repTime)
+		{
+			ControlledUnidad = yo;
+			MinRepetitionTime = repTime;
 		}
 	}
 }
