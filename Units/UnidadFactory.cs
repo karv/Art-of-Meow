@@ -5,6 +5,7 @@ using Items;
 using Moggle;
 using Units.Recursos;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Units
 {
@@ -47,6 +48,28 @@ namespace Units
 
 		static Random r = new Random ();
 
+		[Conditional ("DEBUG")]
+		public static void DebugAllInfo (Unidad u)
+		{
+			Debug.WriteLine (
+				string.Format ("Unidad creada: {0}", u.Nombre),
+				"UnidadFactory");
+			foreach (var re in u.Recursos.Enumerate ())
+			{
+				foreach (var pa in re.EnumerateParameters ())
+				{
+					Debug.Write (
+						string.Format (
+							"{2}.{0}: {1}\t",
+							pa.NombreÚnico,
+							pa.Valor,
+							re.NombreÚnico),
+						"UnidadFactory");
+				}
+				Debug.WriteLine ("", "UnidadFactory");
+			}
+		}
+
 		/// <summary>
 		/// Construye una unidad dado su tipo
 		/// </summary>
@@ -66,7 +89,6 @@ namespace Units
 			ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
 			ret.Nombre = enemyType.ToString ();
 
-
 			// Drops
 			if (r.NextDouble () < 0.2)
 				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherCap));
@@ -75,6 +97,8 @@ namespace Units
 			if (r.NextDouble () < 0.4)
 				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
 
+			DebugAllInfo (ret);
+			Debug.WriteLine ("Stats para unidad creada {0}:", ret.Nombre);
 			return ret;
 		}
 
