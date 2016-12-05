@@ -114,7 +114,7 @@ namespace Units
 		public void Initialize ()
 		{
 			// FIXME: El código nunca llega acá ¿por qué?
-			Inteligencia.Initialize ();
+			(Inteligencia as IGameComponent)?.Initialize ();
 		}
 
 		/// <summary>
