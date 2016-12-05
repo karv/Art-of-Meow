@@ -65,7 +65,7 @@ namespace Units
 					ret.Initialize ();
 					return ret;
 				default:
-					throw new NotImplementedException ("Enemy type " + enemyType + " not implemented");
+					throw new Exception ("Enemy type " + enemyType + " not implemented");
 			}
 		}
 
