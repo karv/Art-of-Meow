@@ -113,6 +113,8 @@ namespace Units
 		/// </summary>
 		public void Initialize ()
 		{
+			// FIXME: El código nunca llega acá ¿por qué?
+			Inteligencia.Initialize ();
 		}
 
 		/// <summary>

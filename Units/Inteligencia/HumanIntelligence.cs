@@ -4,6 +4,7 @@ using AoM;
 using Items;
 using MonoGame.Extended.InputListeners;
 using Units.Order;
+using Microsoft.Xna.Framework;
 
 namespace Units.Inteligencia
 {
@@ -12,7 +13,7 @@ namespace Units.Inteligencia
 	/// </summary>
 	public class HumanIntelligence :
 	IUnidadController,
-	Moggle.Comm.IReceptor<KeyboardEventArgs>
+	IGameComponent
 	{
 		/// <summary>
 		/// The controlled unidad
@@ -31,7 +32,19 @@ namespace Units.Inteligencia
 
 		MovementDirectionEnum ActionDir;
 
-		bool Moggle.Comm.IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs keyArg)
+		public void Initialize ()
+		{
+			// Suscribirse
+			Program.MyGame.KeyListener.KeyTyped += keyPressedListener;
+			throw new System.NotImplementedException ();
+		}
+
+		void keyPressedListener (object sender, KeyboardEventArgs e)
+		{
+			recibirSeñal (e);
+		}
+
+		bool recibirSeñal (KeyboardEventArgs keyArg)
 		{
 			var key = keyArg.Key;
 			if (GlobalKeys.MovUpKey.Contains (key))
