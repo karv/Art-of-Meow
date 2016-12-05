@@ -34,7 +34,7 @@ namespace Units.Inteligencia
 
 		void IDisposable.Dispose ()
 		{
-			throw new NotImplementedException ();
+			Program.MyGame.KeyListener.KeyTyped -= keyPressedListener;
 		}
 
 		MovementDirectionEnum ActionDir;
@@ -43,7 +43,6 @@ namespace Units.Inteligencia
 		{
 			// Suscribirse
 			Program.MyGame.KeyListener.KeyTyped += keyPressedListener;
-			throw new System.NotImplementedException ();
 		}
 
 		void keyPressedListener (object sender, KeyboardEventArgs e)
