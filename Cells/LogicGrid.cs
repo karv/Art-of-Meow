@@ -202,7 +202,7 @@ namespace Cells
 				{
 					var cpoint = new Point (ix, iy);
 					var cell = GetCell (cpoint);
-					if (Helper.Geometry.SquaredEucludeanDistance (anchor, cpoint) < Helper.Geometry.SquaredEucludeanDistance (
+					if (Geometry.SquaredEucludeanDistance (anchor, cpoint) < Geometry.SquaredEucludeanDistance (
 						    anchor,
 						    pRet) &&
 					    selector (cell))

@@ -195,8 +195,8 @@
     <Compile Include="Items\Modifiers\ItemModifierGenerator.cs" />
     <Compile Include="Items\Modifiers\ItemModifiersManager.cs" />
     <Compile Include="Items\ConstantesAtributos.cs" />
-    <Compile Include="World.cs" />
     <Compile Include="Cells\GridConnector.cs" />
+    <Compile Include="WorldLocation.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

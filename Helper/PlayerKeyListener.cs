@@ -1,14 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using AoM;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
 using Screens;
 using Units;
-using Microsoft.Xna.Framework;
-using AoM;
-using System.Net;
 
 namespace Helper
 {
@@ -108,4 +107,3 @@ namespace Helper
 		}
 	}
 }
-
