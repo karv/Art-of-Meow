@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Cells;
-using Cells.CellObjects;
 using Componentes;
 using Helper;
 using Maps;
@@ -54,8 +54,8 @@ namespace Screens
 				{
 					_gameGrid = value;
 					_gameGrid.CameraUnidad = Player;
-					foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
-						str.AlActivar += on_stair_down;
+//					foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
+//						str.AlActivar += on_stair_down;
 					return;
 				}
 
@@ -74,18 +74,25 @@ namespace Screens
 			}
 		}
 
-		LogicGrid CurrentGrid;
-
-		void changeGrid (LogicGrid newGrid)
+		/// <summary>
+		/// Cambia de grid y posición el jugador (y a la pantalla)
+		/// </summary>
+		/// <param name="newGrid">Nueva posición en el mundo</param>
+		public void ChangeGrid (WorldLocation newGrid)
 		{
-			GridControl.ChangeGrid (newGrid);
-			CurrentGrid = newGrid;
+			Grid.RemoveObject (Player);
+			GridControl.ChangeGrid (newGrid.Grid);
+			Player.Location = newGrid.GridPoint;
+			Player.Grid = Grid;
+			Grid.AddCellObject (Player);
+			GridControl.TryCenterOn (Player.Location);
 		}
 
+		/*
 		void on_stair_down (object sender, EventArgs e)
 		{
 			var newGrid = Map.GenerateGrid (Grid.DownMap);
-			changeGrid (newGrid);
+			ChangeGrid (newGrid);
 
 			// Recibir la experiencia
 			Player.Exp.Flush ();
@@ -101,7 +108,7 @@ namespace Screens
 			
 			Grid.AddCellObject (Player);
 		}
-
+		*/
 		/// <summary>
 		/// The human player
 		/// </summary>
@@ -159,7 +166,7 @@ namespace Screens
 		public override void Update (GameTime gameTime, ScreenThread currentThread)
 		{
 			base.Update (gameTime, currentThread);
-			CurrentGrid?.Update (gameTime);
+			Grid?.Update (gameTime);
 		}
 
 		/// <summary>
@@ -201,8 +208,8 @@ namespace Screens
 		/// </summary>
 		protected override void DoInitialization ()
 		{
-			CurrentGrid = GameInitializer.InitializeNewWorld (out Player);
-			GridControl = new GridControl (CurrentGrid, this);
+			var grd = GameInitializer.InitializeNewWorld (out Player);
+			GridControl = new GridControl (grd, this);
 
 			inicializarJugador ();
 

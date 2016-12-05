@@ -12,6 +12,7 @@ using Units;
 
 namespace Cells
 {
+
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
 	/// </summary>
@@ -83,11 +84,6 @@ namespace Cells
 		}
 
 		#endregion
-
-		/// <summary>
-		/// Devuelve o establece el archivo de generador mapa que se usará como próximo nivel
-		/// </summary>
-		public string DownMap { get; set; }
 
 		/// <summary>
 		/// Builds a <see cref="Cell"/> of the current state of a given point
@@ -206,7 +202,7 @@ namespace Cells
 				{
 					var cpoint = new Point (ix, iy);
 					var cell = GetCell (cpoint);
-					if (Helper.Geometry.SquaredEucludeanDistance (anchor, cpoint) < Helper.Geometry.SquaredEucludeanDistance (
+					if (Geometry.SquaredEucludeanDistance (anchor, cpoint) < Geometry.SquaredEucludeanDistance (
 						    anchor,
 						    pRet) &&
 					    selector (cell))
@@ -274,6 +270,15 @@ namespace Cells
 
 		#endregion
 
+		#region Mundo
+
+		/// <summary>
+		/// Devuelve el conector de tableros
+		/// </summary>
+		public GridConnector LocalTopology { get; }
+
+		#endregion
+
 		/// <summary>
 		/// Ocurre al agregar un objeto
 		/// </summary>
@@ -297,6 +302,7 @@ namespace Cells
 				for (int iy = 0; iy < Size.Height; iy++)
 					_cells [ix, iy] = new Cell (new Point (ix, iy));
 			TimeManager = new GameTimeManager (this);
+			LocalTopology = new GridConnector (this);
 		}
 
 		/// <summary>

@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 using System.Linq;
+using AoM;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Comm;
 using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
 using Screens;
 using Units;
-using Microsoft.Xna.Framework;
-using AoM;
 
 namespace Helper
 {
@@ -67,6 +67,12 @@ namespace Helper
 				}
 				return true;
 			}
+			if (GlobalKeys.Stairs.Contains (key))
+			{
+				var endPoint = ManagerScreen.Grid.LocalTopology.EndPointOf (HumanPlayer.Location);
+				if (endPoint.HasValue)
+					ManagerScreen.ChangeGrid (endPoint.Value);
+			}
 			return false;
 		}
 
@@ -101,4 +107,3 @@ namespace Helper
 		}
 	}
 }
-

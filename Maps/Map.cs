@@ -32,11 +32,6 @@ namespace Maps
 		readonly StreamReader dataStream;
 
 		/// <summary>
-		/// El nombre del archivo de mapa del siguiente nivel para ser pasado al <see cref="LogicGrid"/> generado
-		/// </summary>
-		public string NextMap = @"Maps/base.map";
-
-		/// <summary>
 		/// Should add flavor features, like plants on the ground
 		/// </summary>
 		public bool AddFeatures = true;
@@ -53,7 +48,6 @@ namespace Maps
 			if (AddFeatures)
 				AddRandomFlavorFeatures (ret);
 			
-			ret.DownMap = NextMap; // Establecer el mapa del siguiente nivel
 			return ret;
 		}
 
@@ -71,8 +65,7 @@ namespace Maps
 					case "Next": // Establecer aquí el valor de NextMap
 						Debug.Assert (spl.Length == 2);
 
-						var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
-						NextMap = posMaps [_r.Next (posMaps.Count)];
+						//var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
 						break;
 					
 					case "Enemy": // Agregar un enemigo
@@ -157,6 +150,7 @@ namespace Maps
 				Location = down
 			};
 			grid.AddCellObject (stairDown);
+			grid.LocalTopology.AddConnection (down);
 		}
 
 		/// <summary>
@@ -197,6 +191,24 @@ namespace Maps
 		{
 			dataStream = reader;
 			_r = new Random ();
+		}
+
+		/// <summary>
+		/// El directorio de los mapas
+		/// </summary>
+		public const string MapDir = "Maps";
+
+		/// <summary>
+		/// Devuelve un mapa aleatorio del directorio de mapas
+		/// </summary>
+		public static Map GetRandomMap ()
+		{
+			var mapDir = new DirectoryInfo (MapDir);
+			var maps = mapDir.GetFiles ("dung*.map");
+			var _r = new Random ();
+
+			var ret = new Map (maps [_r.Next (maps.Length)].FullName);
+			return ret;
 		}
 
 		LogicGrid readMapIntoGrid ()
