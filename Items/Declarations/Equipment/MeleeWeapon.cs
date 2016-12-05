@@ -39,6 +39,9 @@ namespace Items.Declarations.Equipment
 			return BaseHit + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
 		}
 
+		/// <summary>
+		/// Devuelve o establece la rapidez de uso (melee) del arma
+		/// </summary>
 		public float BaseSpeed { get; set; }
 
 		/// <summary>
@@ -74,7 +77,7 @@ namespace Items.Declarations.Equipment
 				new GenerateCooldownEffect (
 					user,
 					user,
-					MeleeEffectHelper.CalcularTiempoMelee (user) * Speed ()),
+					MeleeEffectHelper.CalcularTiempoMelee (user) / Speed ()),
 				true);
 			
 			Debug.WriteLine (
