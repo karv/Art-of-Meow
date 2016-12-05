@@ -1,11 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AoM;
+using Cells.CellObjects;
 using Items;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended.InputListeners;
 using Units.Order;
-using Microsoft.Xna.Framework;
-using System;
 
 namespace Units.Inteligencia
 {
@@ -23,6 +24,9 @@ namespace Units.Inteligencia
 		public readonly Unidad ControlledUnidad;
 
 		DateTime lastActionTime;
+		/// <summary>
+		/// Devuelve el tiempo de repetición
+		/// </summary>
 		public readonly TimeSpan MinRepetitionTime;
 
 		bool shouldDoAction ()
@@ -73,19 +77,18 @@ namespace Units.Inteligencia
 
 		bool shouldListen ()
 		{
-			return true;
-			//return (ControlledUnidad as IUpdateGridObject).IsReady;
+			return (ControlledUnidad as IUpdateGridObject).IsReady;
 		}
 
 		void keyPressedListener (object sender, KeyboardEventArgs e)
 		{
+			forcedFirstHit = true;
 			if (shouldListen ())
 				recibirSeñal (e);
 		}
 
 		bool recibirSeñal (KeyboardEventArgs keyArg)
 		{
-			forcedFirstHit = true;
 			var key = keyArg.Key;
 			if (GlobalKeys.MovUpKey.Contains (key))
 			{
