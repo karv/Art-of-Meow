@@ -65,7 +65,7 @@ namespace Maps
 					case "Next": // Establecer aquí el valor de NextMap
 						Debug.Assert (spl.Length == 2);
 
-						var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
+						//var posMaps = new List<string> (mapsWithTag (spl [1].Trim ()));
 						break;
 					
 					case "Enemy": // Agregar un enemigo
