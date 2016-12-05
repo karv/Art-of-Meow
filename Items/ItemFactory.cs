@@ -14,6 +14,10 @@ namespace Items
 	public enum ItemType
 	{
 		/// <summary>
+		/// Una daga corta de poco daño y buena puntería
+		/// </summary>
+		Knife,
+		/// <summary>
 		/// Sword
 		/// </summary>
 		Sword,
@@ -70,6 +74,11 @@ namespace Items
 			IItem ret;
 			switch (type)
 			{
+				case ItemType.Knife:
+					ret = new MeleeWeapon ("Cuchillo", "Items//katana", 0.8f, 1.1f)
+					{ Color = Color.DarkBlue, BaseSpeed = 1.8f };
+
+					break;
 				case ItemType.Sword:
 					ret = new MeleeWeapon ("Espada", "Items//katana", 1.4f, 0.7f){ Color = Color.DarkBlue };
 					break;

@@ -14,7 +14,7 @@ namespace Items.Declarations.Equipment
 		/// Devuelve el daño base
 		/// </summary>
 		/// <value>The base damage.</value>
-		public float BaseDamage { get; }
+		public float BaseDamage { get; set; }
 
 		/// <summary>
 		/// Calcula el daño neto
@@ -28,7 +28,8 @@ namespace Items.Declarations.Equipment
 		/// Devuelve la certeza base
 		/// </summary>
 		/// <value>The base hit.</value>
-		public float BaseHit { get; }
+		public float BaseHit { get; set; }
+
 
 		/// <summary>
 		/// Calcula el hit chance neto
@@ -36,6 +37,19 @@ namespace Items.Declarations.Equipment
 		public float Hit ()
 		{
 			return BaseHit + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
+		}
+
+		/// <summary>
+		/// Devuelve o establece la rapidez de uso (melee) del arma
+		/// </summary>
+		public float BaseSpeed { get; set; }
+
+		/// <summary>
+		/// Calcula el hit chance neto
+		/// </summary>
+		public float Speed ()
+		{
+			return BaseSpeed;// + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
 		}
 
 		#region IEquipment & Melee
@@ -57,8 +71,15 @@ namespace Items.Declarations.Equipment
 				          user,
 				          target,
 				          Damage (),
-				          Hit ());
+				          Hit (), false);
 
+			ret.AddEffect (
+				new GenerateCooldownEffect (
+					user,
+					user,
+					MeleeEffectHelper.CalcularTiempoMelee (user) / Speed ()),
+				true);
+			
 			Debug.WriteLine (
 				string.Format (
 					"Melee effect from {0} to {1} causing\n{2}",
@@ -88,6 +109,7 @@ namespace Items.Declarations.Equipment
 			TextureName = icon;
 			BaseDamage = baseDamage;
 			BaseHit = baseHit;
+			BaseSpeed = 1;
 		}
 	}
 }

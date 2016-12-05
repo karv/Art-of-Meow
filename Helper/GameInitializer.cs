@@ -1,6 +1,5 @@
 ﻿using Cells;
 using Items;
-using Items.Modifiers;
 using Maps;
 using Microsoft.Xna.Framework;
 using Units;
@@ -30,8 +29,8 @@ namespace Helper
 			player.Inteligencia = new HumanIntelligence (player);
 
 			#region Cheat
-			var eq = ItemFactory.CreateItem<IEquipment> (ItemType.Sword);
-			eq.Modifiers.Modifiers.Add (ItemModifierGenerator.Broken);
+			var eq = ItemFactory.CreateItem<IEquipment> (ItemType.Knife);
+			//eq.Modifiers.Modifiers.Add (ItemModifierGenerator.Broken);
 			player.Equipment.EquipItem (eq);
 			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Bow));
 			#endregion
