@@ -1,6 +1,7 @@
 using Skills;
 using Units;
 using Units.Recursos;
+using System.Security.Cryptography;
 
 namespace Helper
 {
@@ -17,10 +18,11 @@ namespace Helper
 		/// <param name="target">Unidad que recibe el efecto</param>
 		/// <param name="baseDamage">Daño base</param>
 		/// <param name="baseHit">Probabilidad base de acierto</param>
-		public static IEffect BuildDefaultMeleeEffect (IUnidad user,
-		                                               IUnidad target,
-		                                               float baseDamage,
-		                                               float baseHit)
+		public static CollectionEffect BuildDefaultMeleeEffect (IUnidad user,
+		                                                        IUnidad target,
+		                                                        float baseDamage,
+		                                                        float baseHit, 
+		                                                        bool addDefaultCooldownTime = true)
 		{
 			var pct = HitDamageCalculator.GetPctHit (
 				          user,
@@ -55,12 +57,13 @@ namespace Helper
 			ret.AddEffect (
 				new ChangeRecurso (user, target, ConstantesRecursos.HP, -damage, 1));
 
-			ret.AddEffect (
-				new GenerateCooldownEffect (
-					user,
-					user,
-					calcularTiempoMelee (user)),
-				true);
+			if (addDefaultCooldownTime)
+				ret.AddEffect (
+					new GenerateCooldownEffect (
+						user,
+						user,
+						CalcularTiempoMelee (user)),
+					true);
 
 			return ret;
 		}
@@ -68,7 +71,7 @@ namespace Helper
 		/// <summary>
 		/// Calcula el tiempo que tarda una unidad en realizar un ataque melee
 		/// </summary>
-		public static float calcularTiempoMelee (IUnidad user)
+		public static float CalcularTiempoMelee (IUnidad user)
 		{
 			var dex = user.Recursos.ValorRecurso (ConstantesRecursos.Destreza);
 			return 1 / dex;
