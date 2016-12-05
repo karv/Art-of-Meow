@@ -6,6 +6,7 @@ using MonoGame.Extended.InputListeners;
 using Units.Order;
 using Microsoft.Xna.Framework;
 using System;
+using Cells.CellObjects;
 
 namespace Units.Inteligencia
 {
@@ -28,13 +29,14 @@ namespace Units.Inteligencia
 			if (ActionDir != MovementDirectionEnum.NoMov)
 			{
 				ControlledUnidad.MoveOrMelee (ActionDir);
-				ActionDir = MovementDirectionEnum.NoMov;
+//				ActionDir = MovementDirectionEnum.NoMov;
 			}
 		}
 
 		void IDisposable.Dispose ()
 		{
 			Program.MyGame.KeyListener.KeyTyped -= keyPressedListener;
+			Program.MyGame.KeyListener.KeyReleased -= freeAuntoKey;
 		}
 
 		MovementDirectionEnum ActionDir;
@@ -42,12 +44,25 @@ namespace Units.Inteligencia
 		void IGameComponent.Initialize ()
 		{
 			// Suscribirse
-			Program.MyGame.KeyListener.KeyTyped += keyPressedListener;
+			Program.MyGame.KeyListener.KeyPressed += keyPressedListener;
+			Program.MyGame.KeyListener.KeyReleased += freeAuntoKey;
+			ActionDir = MovementDirectionEnum.NoMov;
+		}
+
+		void freeAuntoKey (object sender, KeyboardEventArgs e)
+		{
+			ActionDir = MovementDirectionEnum.NoMov;
+		}
+
+		bool shouldListen
+		{
+			get{ return (ControlledUnidad as IUpdateGridObject).IsReady; }
 		}
 
 		void keyPressedListener (object sender, KeyboardEventArgs e)
 		{
-			recibirSeñal (e);
+			if (shouldListen)
+				recibirSeñal (e);
 		}
 
 		bool recibirSeñal (KeyboardEventArgs keyArg)
