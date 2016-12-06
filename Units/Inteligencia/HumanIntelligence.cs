@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AoM;
+using Cells;
 using Cells.CellObjects;
 using Items;
 using Microsoft.Xna.Framework;
@@ -18,6 +19,12 @@ namespace Units.Inteligencia
 	IGameComponent,
 	IDisposable
 	{
+		/// <summary>
+		/// Devuelve o establece la memoria del jugador.
+		/// </summary>
+		/// <value>The memory.</value>
+		public MemoryGrid Memory { get; set; }
+
 		/// <summary>
 		/// The controlled unidad
 		/// </summary>
@@ -48,8 +55,14 @@ namespace Units.Inteligencia
 			if (PersistenceDir != MovementDirectionEnum.NoMov)
 			{
 				ControlledUnidad.MoveOrMelee (PersistenceDir);
+				wasMoved ();
 //				ActionDir = MovementDirectionEnum.NoMov;
 			}
+		}
+
+		void wasMoved ()
+		{
+			Memory.UpdateMemory ();
 		}
 
 		void IDisposable.Dispose ()
@@ -164,6 +177,7 @@ namespace Units.Inteligencia
 			ControlledUnidad = yo;
 			const int milisect_repeat = 150;
 			MinRepetitionTime = TimeSpan.FromMilliseconds (milisect_repeat);
+			Memory = new MemoryGrid (ControlledUnidad);
 		}
 
 		/// <summary>
@@ -175,6 +189,7 @@ namespace Units.Inteligencia
 		{
 			ControlledUnidad = yo;
 			MinRepetitionTime = repTime;
+			Memory = new MemoryGrid (ControlledUnidad);
 		}
 	}
 }

@@ -70,7 +70,6 @@ namespace Screens
 				AddAllContent ();
 				Content.Load ();
 				InitializeContent ();
-
 			}
 		}
 
@@ -88,6 +87,7 @@ namespace Screens
 			Grid.AddCellObject (Player);
 			GridControl.TryCenterOn (Player.Location);
 			PlayerInfoControl.ReloadStats ();
+			Player.Reinitialize ();
 		}
 
 		/*
