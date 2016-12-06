@@ -194,6 +194,7 @@
     <Compile Include="Items\ConstantesAtributos.cs" />
     <Compile Include="Cells\GridConnector.cs" />
     <Compile Include="WorldLocation.cs" />
+    <Compile Include="Cells\MemoryGrid.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
