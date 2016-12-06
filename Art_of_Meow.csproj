@@ -195,6 +195,7 @@
     <Compile Include="Cells\GridConnector.cs" />
     <Compile Include="WorldLocation.cs" />
     <Compile Include="Cells\MemoryGrid.cs" />
+    <Compile Include="Cells\MemorizedCell.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

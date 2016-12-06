@@ -31,5 +31,10 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <value>The grid.</value>
 		LogicGrid Grid { get; }
+
+		/// <summary>
+		/// Devuelve la profundidad del dibujado
+		/// </summary>
+		float Depth { get; }
 	}
 }

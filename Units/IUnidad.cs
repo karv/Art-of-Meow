@@ -4,7 +4,9 @@ using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Cells.Collision;
+using Helper;
 using Items;
+using Microsoft.Xna.Framework;
 using Skills;
 using Units.Buffs;
 using Units.Equipment;
@@ -122,6 +124,25 @@ namespace Units
 				yield return sk;
 			foreach (var sk in u.EnumerateInventorySkills ())
 				yield return sk;
+		}
+
+		public static bool CanSee (this IUnidad unid, Point p)
+		{
+			var visLen = (int)Math.Ceiling (unid.Recursos.ValorRecurso (ConstantesRecursos.Visión));
+			var sqVisLen = visLen * visLen;
+
+			return (Geometry.SquaredEucludeanDistance (unid.Location, p) <= sqVisLen &&
+			unid.Grid.IsVisibleFrom (unid.Location, p));
+		}
+
+		public static IEnumerable<Point> VisiblePoints (this IUnidad unid)
+		{
+			var visLen = (int)Math.Ceiling (unid.Recursos.ValorRecurso (ConstantesRecursos.Visión));
+			var posRect = new Rectangle (unid.Location.X - visLen,
+				              unid.Location.Y - visLen,
+				              2 * visLen, 2 * visLen);
+
+			return posRect.EnumeratePoints ().Where (unid.CanSee);
 		}
 	}
 }

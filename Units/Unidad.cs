@@ -231,6 +231,11 @@ namespace Units
 				ForceDraw (area, bat);
 		}
 
+		float IGridObject.Depth
+		{
+			get { return Depths.Unit; }
+		}
+
 		/// <summary>
 		/// Draw the unidad, even if it not enabled
 		/// </summary>
@@ -494,6 +499,14 @@ namespace Units
 			{
 				Regen = 1,
 				Valor = 1
+			});
+
+			Recursos.Add (new StatRecurso (ConstantesRecursos.Visión, this)
+			{
+				TasaRecuperaciónNormal = 0.01f,
+				TasaRecuperaciónMax = 0.01f,
+				Valor = 5,
+				Max = 5
 			});
 		}
 

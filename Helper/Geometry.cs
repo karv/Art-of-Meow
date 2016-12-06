@@ -10,6 +10,16 @@ namespace Helper
 	public static class Geometry
 	{
 		/// <summary>
+		/// Enumera los puntos de un rectángulo
+		/// </summary>
+		public static IEnumerable<Point> EnumeratePoints (this Rectangle rect)
+		{
+			for (int ix = rect.Left; ix <= rect.Right; ix++)
+				for (int iy = rect.Top; iy <= rect.Bottom; iy++)
+					yield return new Point (ix, iy);
+		}
+
+		/// <summary>
 		/// Devuelve el cuadrado de la distancia Eucludiana entre dos <see cref="Point"/>
 		/// </summary>
 		public static float SquaredEucludeanDistance (Point p0, Point p1)
