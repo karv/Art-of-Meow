@@ -87,6 +87,7 @@ namespace Screens
 			Player.Grid = Grid;
 			Grid.AddCellObject (Player);
 			GridControl.TryCenterOn (Player.Location);
+			PlayerInfoControl.ReloadStats ();
 		}
 
 		/*
