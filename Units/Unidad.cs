@@ -93,7 +93,7 @@ namespace Units
 		/// </summary>
 		public float GetExperienceValue ()
 		{
-			return Exp.ExperienciaTotal * 0.15f;
+			return 1 + Exp.ExperienciaTotal * 0.15f;
 		}
 
 		/// <summary>
