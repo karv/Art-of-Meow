@@ -135,7 +135,6 @@ namespace Items.Declarations.Equipment.Skills
 			if (tg == null)
 			{
 				infoBox.Texto = defaultInfoboxText;
-				infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
 				return;
 			}
 			var skInst = buildSkillInstance (user, tg);
@@ -144,7 +143,6 @@ namespace Items.Declarations.Equipment.Skills
 				infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
 
 			infoBox.Texto = infoStrBuilding.ToString ();
-			infoBox.MaxWidth = infoBox.MaxWidth; // TODO: Eliminar cuando se use Moggle 0.11.1
 
 		}
 
