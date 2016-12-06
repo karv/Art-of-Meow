@@ -56,8 +56,7 @@ namespace Skills
 		/// <param name="i">The index.</param>
 		public IEffect Effect (int i)
 		{
-			// FIXME: Revisar _neverMissEffect
-			return _effects [i];
+			return i < _effects.Count ? _effects [i] : _neverMissEffect [i - _effects.Count];
 		}
 
 		/// <summary>
@@ -75,8 +74,10 @@ namespace Skills
 		/// <param name="i">Índice del efecto</param>
 		public void RemoveEffect (int i)
 		{
-			// FIXME: Revisar _neverMissEffect
-			_effects.RemoveAt (i);
+			if (i < _effects.Count)
+				_effects.RemoveAt (i);
+			else
+				_neverMissEffect.RemoveAt (i - _effects.Count);
 		}
 
 		/// <summary>

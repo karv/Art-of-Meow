@@ -86,7 +86,6 @@ namespace Helper
 			var attStr = att.Recursos.GetRecurso (attDmgRecurso).Valor;
 			var defAC = def.Recursos.GetRecurso (defDefRecurso).Valor;
 
-			// TODO: Calcular bien (esta es la misma fórmula que se usa en melee)
 			var diffStat = Math.Max (0, 2 * attStr - defAC);
 			return diffStat * 0.35f;
 		}
