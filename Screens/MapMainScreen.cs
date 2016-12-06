@@ -80,6 +80,7 @@ namespace Screens
 		/// <param name="newGrid">Nueva posición en el mundo</param>
 		public void ChangeGrid (WorldLocation newGrid)
 		{
+			Player.Exp.Flush ();
 			Grid.RemoveObject (Player);
 			GridControl.ChangeGrid (newGrid.Grid);
 			Player.Location = newGrid.GridPoint;
