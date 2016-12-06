@@ -139,7 +139,7 @@ namespace Componentes
 		/// <summary>
 		/// Devuelve o establece la unidad que debe de seguir el control
 		/// </summary>
-		public IUnidad CameraUnidad { get; set; }
+		public Unidad CameraUnidad { get; set; }
 
 		/// <summary>
 		/// Devuelve el punto de visibilidad (ie, la localización de <see cref="CameraUnidad"/>
@@ -159,16 +159,20 @@ namespace Componentes
 			var bat = Screen.Batch;
 
 			var box = GetVisibilityBox ();
+			var intel = CameraUnidad.Inteligencia as HumanIntelligence;
 			for (int ix = box.Left; ix <= box.Right; ix++)
 			{
 				for (int iy = box.Top; iy <= box.Bottom; iy++)
 				{
 					var p = new Point (ix, iy);
-					if ((CameraUnidad == null ||
-					    Grid.IsVisibleFrom (VisibilityPoint, p)))
-					{
-						var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
+					var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
+					if (CameraUnidad?.CanSee (p) ?? true)
 						Grid [p].Draw (bat, rectOutput);
+					else
+					{
+						// Dejar que la memoria dibuje
+						var dCell = intel.Memory [p];
+						dCell.Draw (bat, rectOutput);
 					}
 				}
 			}

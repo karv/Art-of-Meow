@@ -16,10 +16,23 @@ namespace Cells
 
 		readonly MemorizedCell [,] cellData;
 
-		MemorizedCell this [Point p]
+		int sizeX { get { return cellData.GetLength (0); } }
+
+		int sizeY { get { return cellData.GetLength (1); } }
+
+		/// <summary>
+		/// Devuelve la celda emorizada en un punto del tablero
+		/// </summary>
+		/// <param name="p">P.</param>
+		public MemorizedCell this [Point p]
 		{
-			get{ return cellData [p.X, p.Y]; }
-			set{ cellData [p.X, p.Y] = value; }
+			get
+			{ 
+				if (p.X < 0 || p.Y < 0 || p.X >= sizeX || p.Y >= sizeY)
+					return MemorizedCell.VoidCell;
+				return cellData [p.X, p.Y]; 
+			}
+			private set{ cellData [p.X, p.Y] = value; }
 		}
 
 		/// <summary>
@@ -37,10 +50,18 @@ namespace Cells
 		/// </summary>
 		public void UpdateMemory ()
 		{
-			foreach (var p in Unidad.VisiblePoints())
-			{
+			var vPoints = Unidad.VisiblePoints ();
+			foreach (var p in vPoints)
 				storeCellInfo (MemorizingGrid [p]);
-			}
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.MemoryGrid"/> class.
+		/// </summary>
+		/// <param name="unid">Unidad de memoria</param>
+		public MemoryGrid (IUnidad unid)
+			: this (unid.Grid, unid)
+		{
 		}
 
 		/// <summary>

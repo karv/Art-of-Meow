@@ -30,11 +30,21 @@ namespace Cells
 					bat.Draw (x, rect, Color.White * Alpha);
 		}
 
-		internal MemorizedCell (IEnumerable<Texture2D> data, float alpha = 1)
+		/// <summary>
+		/// Devuelve una celda vacía
+		/// </summary>
+		/// <value>The void cell.</value>
+		public static MemorizedCell VoidCell { get; }
+
+		internal MemorizedCell (IEnumerable<Texture2D> data, float alpha = 0.3f)
 		{
 			objects = new List<Texture2D> (data);
 			Alpha = alpha;
 		}
+
+		static MemorizedCell ()
+		{
+			VoidCell = default (MemorizedCell);
+		}
 	}
-	
 }

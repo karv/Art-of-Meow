@@ -47,6 +47,16 @@ namespace Units
 		}
 
 		/// <summary>
+		/// Reestablece a esta unidad para que sea consistente con un nuevo tablero
+		/// </summary>
+		public void Reinitialize ()
+		{
+			var hi = Inteligencia as HumanIntelligence;
+			if (hi != null)
+				hi.Memory = new MemoryGrid (this);
+		}
+
+		/// <summary>
 		/// Enqueues a primitive order 
 		/// </summary>
 		public void EnqueueOrder (IPrimitiveOrder order)
@@ -505,8 +515,9 @@ namespace Units
 			{
 				TasaRecuperaciónNormal = 0.01f,
 				TasaRecuperaciónMax = 0.01f,
-				Valor = 5,
-				Max = 5
+				Base = 5,
+				Max = 5,
+				Valor = 5
 			});
 		}
 
