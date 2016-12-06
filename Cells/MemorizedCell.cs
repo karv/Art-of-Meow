@@ -18,13 +18,16 @@ namespace Cells
 		/// <value>The alpha.</value>
 		public float Alpha { get; set; }
 
+		bool hasData { get { return objects != null; } }
+
 		/// <summary>
 		/// Dibuja el objeto sobre un rectángulo específico
 		/// </summary>
 		public void Draw (SpriteBatch bat, Rectangle rect)
 		{
-			foreach (var x in objects)
-				bat.Draw (x, rect, Color.White * Alpha);
+			if (hasData)
+				foreach (var x in objects)
+					bat.Draw (x, rect, Color.White * Alpha);
 		}
 
 		internal MemorizedCell (IEnumerable<Texture2D> data, float alpha = 1)
