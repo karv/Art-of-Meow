@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
+using Maps;
 
 namespace Cells
 {
@@ -278,6 +279,11 @@ namespace Cells
 		public GridConnector LocalTopology { get; }
 
 		#endregion
+
+		/// <summary>
+		/// Get or set the enemy generator
+		/// </summary>
+		public EnemySmartGenerator Factory { get; set; }
 
 		/// <summary>
 		/// Ocurre al agregar un objeto

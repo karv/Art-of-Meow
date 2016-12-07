@@ -171,7 +171,9 @@ namespace Units
 		                                                      float typeWeight = 0.5f)
 		{
 			if (typeWeight < 0 || typeWeight > 1)
-				throw new ArgumentOutOfRangeException ("typeWeight");
+				throw new ArgumentOutOfRangeException (
+					"typeWeight",
+					"typeWeight must be a non-negative number at most 1");
 			
 			var ret = new Dictionary<string,float> ();
 			foreach (var assign in GetAttrDistribution (eType))
@@ -213,6 +215,10 @@ namespace Units
 				if (currEnClass.ToString () == @class)
 					eClass = currEnClass;
 			}
+
+			Debug.Assert (eClass != EnemyClass.__total);
+			Debug.Assert (eType != EnemyType.__total);
+
 			return MakeEnemy (eType, eClass, exp);
 		}
 

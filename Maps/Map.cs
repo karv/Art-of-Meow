@@ -7,6 +7,7 @@ using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using Units;
 
 namespace Maps
 {
@@ -43,6 +44,10 @@ namespace Maps
 			var ret = buildBaseGrid ();
 			makeStairs (ret);
 
+			var factory = new UnidadFactory (ret);
+			ret.Factory = new EnemySmartGenerator (factory, enemyExp);
+
+			ret.Factory.PopulateGrid ();
 			if (AddFeatures)
 				addRandomFlavorFeatures (ret);
 			

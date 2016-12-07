@@ -196,6 +196,9 @@
     <Compile Include="WorldLocation.cs" />
     <Compile Include="Cells\MemoryGrid.cs" />
     <Compile Include="Cells\MemorizedCell.cs" />
+    <Compile Include="Helper\IntegerInterval.cs" />
+    <Compile Include="Maps\EnemySmartGenerator.cs" />
+    <Compile Include="Helper\IDistribution.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
