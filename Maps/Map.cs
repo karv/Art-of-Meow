@@ -17,16 +17,7 @@ namespace Maps
 	public class Map
 	{
 		readonly char [,] _data;
-		/*
-		/// <summary>
-		/// Gets the size of the map.
-		/// </summary>
-		/// <value>The size of the map.</value>
 
-		public Size MapSize { get { return new Size (
-				_data.GetLength (0),
-				_data.GetLength (1)); } }
-		*/
 		readonly Random _r;
 
 		/// <summary>
@@ -136,8 +127,9 @@ namespace Maps
 		/// <param name="reader">Un StreamReader con la info del mapa</param>
 		public static LogicGrid GenerateGrid (StreamReader reader)
 		{
-			var map = new Map (reader);
-			return map.GenerateGrid ();
+			throw new NotImplementedException ();
+			//var map = new Map (reader);
+			//return map.GenerateGrid ();
 		}
 
 		/// <summary>
@@ -146,31 +138,19 @@ namespace Maps
 		/// <param name="mapFile">Nombre de archivo del mapa</param>
 		public static LogicGrid GenerateGrid (string mapFile)
 		{
-			var map = new Map (mapFile);
-			return map.GenerateGrid ();
+			throw new NotImplementedException ();
+			//var map = new Map (mapFile);
+			//return map.GenerateGrid ();
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Maps.Map"/> class by reading the content from a .map file
+		/// Initializes a new instance of the <see cref="Maps.Map"/> class
 		/// </summary>
-		/// <param name="fileName">The .map file name</param>
-		public Map (string fileName)
-			: this (new StreamReader (fileName))
+		/// <param name="size">Size</param>
+		public Map (Size size)
 		{
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Maps.Map"/> class by reading the content from a 
-		/// <see cref="StreamReader"/> with a .map format
-		/// </summary>
-		/// <param name="reader">A stream reader</param>
-		public Map (StreamReader reader)
-		{
-			if (reader == null)
-				throw new ArgumentNullException ("reader");
-			throw new NotImplementedException ("Load Json");
-			//dataStream = reader;
-			//_r = new Random ();
+			_r = new Random ();
+			_data = new char[size.Width, size.Height];
 		}
 
 		/// <summary>
@@ -187,7 +167,7 @@ namespace Maps
 			var maps = mapDir.GetFiles ("dung*.map");
 			var _r = new Random ();
 
-			var ret = new Map (maps [_r.Next (maps.Length)].FullName);
+			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
 			return ret;
 		}
 
@@ -223,6 +203,24 @@ namespace Maps
 					i++;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Read and return a new <see cref="Map"/> from a json
+		/// </summary>
+		/// <param name="json">Json-formatted data</param>
+		public static Map ReadFromJSON (string json)
+		{
+			throw new NotImplementedException ();
+		}
+
+		/// <summary>
+		/// Read and return a new <see cref="Map"/> from a json in a file
+		/// </summary>
+		/// <param name = "fileName">Nme of the file to read from</param>
+		public static Map ReadFromFile (string fileName)
+		{
+			throw new NotImplementedException ();
 		}
 
 		LogicGrid buildBaseGrid ()
