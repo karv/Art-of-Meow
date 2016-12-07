@@ -127,25 +127,12 @@ namespace Maps
 		/// <summary>
 		/// Genera un Grid a partir de un reader
 		/// </summary>
-		/// <param name="reader">Un StreamReader con la info del mapa</param>
-		/// <param name = "enemyExp">Experiencia de cada enemigo</param>
-		public static LogicGrid GenerateGrid (StreamReader reader, float enemyExp)
-		{
-			throw new NotImplementedException ();
-			//var map = new Map (reader);
-			//return map.GenerateGrid ();
-		}
-
-		/// <summary>
-		/// Genera un Grid a partir de un reader
-		/// </summary>
 		/// <param name="mapFile">Nombre de archivo del mapa</param>
 		/// <param name = "enemyExp">Experiencia de cada enemigo</param>
 		public static LogicGrid GenerateGrid (string mapFile, float enemyExp)
 		{
-			throw new NotImplementedException ();
-			//var map = new Map (mapFile);
-			//return map.GenerateGrid ();
+			var map = Map.ReadFromFile (mapFile);
+			return map.GenerateGrid (enemyExp);
 		}
 
 		/// <summary>
