@@ -90,6 +90,9 @@ namespace Maps
 
 		static char [] goodSymbols = { ' ', 'W', '\n', '\r' };
 
+		/// <summary>
+		/// Determines if a <c>char</c> represents is a map symbol representing an object
+		/// </summary>
 		public static bool ExistSymbol (char c)
 		{
 			return goodSymbols.Contains (c);
@@ -188,10 +191,19 @@ namespace Maps
 			return ret;
 		}
 
+		/// <summary>
+		/// Gets the horizontal size
+		/// </summary>
 		public int SizeX { get { return _data.GetLength (0); } }
 
+		/// <summary>
+		/// Gets the vertical size
+		/// </summary>
 		public int SizeY { get { return _data.GetLength (1); } }
 
+		/// <summary>
+		/// Gets the size of this map
+		/// </summary>
 		public Size Size { get { return new Size (SizeX, SizeY); } }
 
 		void parseMapObjects (string data)
