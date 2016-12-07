@@ -44,7 +44,7 @@ namespace Maps
 			makeStairs (ret);
 
 			if (AddFeatures)
-				AddRandomFlavorFeatures (ret);
+				addRandomFlavorFeatures (ret);
 			
 			return ret;
 		}
@@ -63,7 +63,7 @@ namespace Maps
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
 			if (p.X < 0 || p.Y < 0 || p.X >= grid.Size.Width || p.Y >= grid.Size.Height)
-				throw new Exception ("Point outsite grid bounds");
+				throw new ArgumentOutOfRangeException ("p", "Point outsite grid bounds");
 			switch (c)
 			{
 				case ' ':
@@ -94,7 +94,7 @@ namespace Maps
 		/// Adds random flavored features to a grid
 		/// </summary>
 		/// <param name="grid">Grid.</param>
-		public void AddRandomFlavorFeatures (LogicGrid grid)
+		void addRandomFlavorFeatures (LogicGrid grid)
 		{
 			const float probZacate = 0.1f;
 			var mapSize = grid.Size;
@@ -114,10 +114,7 @@ namespace Maps
 		static void makeStairs (LogicGrid grid)
 		{
 			var down = grid.GetRandomEmptyCell ();
-			var stairDown = new StairsGridObject (grid)
-			{
-				Location = down
-			};
+			var stairDown = new StairsGridObject (grid) { Location = down };
 			grid.AddCellObject (stairDown);
 			grid.LocalTopology.AddConnection (down);
 		}
@@ -223,7 +220,10 @@ namespace Maps
 		/// <param name = "fileName">Nme of the file to read from</param>
 		public static Map ReadFromFile (string fileName)
 		{
-			throw new NotImplementedException ();
+			var file = File.OpenText (fileName);
+			var jsonStr = file.ReadToEnd ();
+			file.Close ();
+			return Map.ReadFromJSON (jsonStr);
 		}
 
 		LogicGrid buildBaseGrid ()
