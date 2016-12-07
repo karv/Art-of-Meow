@@ -63,9 +63,6 @@
     <None Include="Content\*.xnb">
       <Link>Content\*.xnb</Link>
     </None>
-    <None Include="Maps\void.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Maps\base.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -197,6 +194,8 @@
     <Compile Include="Items\ConstantesAtributos.cs" />
     <Compile Include="Cells\GridConnector.cs" />
     <Compile Include="WorldLocation.cs" />
+    <Compile Include="Cells\MemoryGrid.cs" />
+    <Compile Include="Cells\MemorizedCell.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

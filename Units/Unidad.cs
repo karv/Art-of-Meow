@@ -47,6 +47,16 @@ namespace Units
 		}
 
 		/// <summary>
+		/// Reestablece a esta unidad para que sea consistente con un nuevo tablero
+		/// </summary>
+		public void Reinitialize ()
+		{
+			var hi = Inteligencia as HumanIntelligence;
+			if (hi != null)
+				hi.Memory = new MemoryGrid (this);
+		}
+
+		/// <summary>
 		/// Enqueues a primitive order 
 		/// </summary>
 		public void EnqueueOrder (IPrimitiveOrder order)
@@ -93,15 +103,13 @@ namespace Units
 		/// </summary>
 		public float GetExperienceValue ()
 		{
-			// TODO: calcularlo bien.
-			return 1;
+			return 1 + Exp.ExperienciaTotal * 0.15f;
 		}
 
 		/// <summary>
 		/// Pass time
 		/// </summary>
 		/// <param name="time">Time.</param>
-
 		public void PassTime (float time)
 		{
 			PrimitiveOrders.PassTime (time);
@@ -231,6 +239,11 @@ namespace Units
 		{
 			if (Habilitado)
 				ForceDraw (area, bat);
+		}
+
+		float IGridObject.Depth
+		{
+			get { return Depths.Unit; }
 		}
 
 		/// <summary>
@@ -496,6 +509,15 @@ namespace Units
 			{
 				Regen = 1,
 				Valor = 1
+			});
+
+			Recursos.Add (new StatRecurso (ConstantesRecursos.Visión, this)
+			{
+				TasaRecuperaciónNormal = 0.01f,
+				TasaRecuperaciónMax = 0.01f,
+				Base = 5,
+				Max = 5,
+				Valor = 5
 			});
 		}
 

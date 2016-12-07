@@ -21,6 +21,11 @@ namespace Units
 		float _expAcum;
 
 		/// <summary>
+		/// Devuelve la experiencia total.
+		/// </summary>
+		public float ExperienciaTotal { get; private set; }
+
+		/// <summary>
 		/// Devuelve o establece la experiencia acumulada desde el último <see cref="Flush"/>
 		/// </summary>
 		public float ExperienciaAcumulada
@@ -31,7 +36,6 @@ namespace Units
 			}
 			set
 			{
-				
 				_expAcum = value;
 				if (Autoflush)
 					Flush ();
@@ -61,17 +65,24 @@ namespace Units
 		/// </summary>
 		public void Flush ()
 		{
+			if (ExperienciaAcumulada == 0)
+			{
+				Debug.WriteLine (
+					string.Format ("{0} No recibe experiencia de este nivel.", Unidad),
+					"Experiencia");
+				return;
+			}
 			Debug.WriteLine (
 				string.Format (
 					"{0} está recibiendo {1} puntos de experiencia de este nivel.",
 					Unidad,
-					ExperienciaAcumulada));
-			if (ExperienciaAcumulada == 0)
-				return;
+					ExperienciaAcumulada), "Experiencia");
 			_normalizeDistDict ();
 			foreach (var x in _distribuciónExp)
 				x.Key.ReceiveExperience (ExperienciaAcumulada * x.Value);
 			_distribuciónExp.Clear ();
+
+			ExperienciaTotal += ExperienciaAcumulada;
 			ExperienciaAcumulada = 0;
 		}
 

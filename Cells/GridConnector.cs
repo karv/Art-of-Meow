@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using AoM;
-using Microsoft.Xna.Framework;
-using Maps;
 using Cells.CellObjects;
+using Maps;
+using Microsoft.Xna.Framework;
 
 namespace Cells
 {
@@ -38,7 +38,8 @@ namespace Cells
 		/// </summary>
 		/// <returns>El punto final cuando exista; en caso contrario es <c>null</c></returns>
 		/// <param name="p">Punto origen en este tablero</param>
-		public WorldLocation? EndPointOf (Point p)
+		/// <param name = "enemyDiff">Experiencia de os enemigos en caso de que sea <c>Exploración</c></param>
+		public WorldLocation? EndPointOf (Point p, float enemyDiff)
 		{
 			WorldLocation ret;
 			if (Connections.TryGetValue (p, out ret))
@@ -46,7 +47,7 @@ namespace Cells
 			if (PendingConnections.Contains (p))
 			{
 				var newMap = Map.GetRandomMap ();
-				var newGrid = newMap.GenerateGrid ();
+				var newGrid = newMap.GenerateGrid (enemyDiff);
 				PendingConnections.Remove (p);
 				var pt = newGrid.GetRandomEmptyCell ();
 				newGrid.AddCellObject (new StairsGridObject (newGrid)

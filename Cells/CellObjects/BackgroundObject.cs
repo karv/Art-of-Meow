@@ -16,6 +16,11 @@ namespace Cells.CellObjects
 		/// </summary>
 		public readonly string StringTexture;
 
+		float IGridObject.Depth
+		{
+			get { return Depths.BackgroundGridObject; }
+		}
+
 		/// <summary>
 		/// Gets the texture
 		/// </summary>

@@ -23,6 +23,14 @@ namespace Cells
 		}
 
 		/// <summary>
+		/// Devuelve una copia estática del sprite de la celda
+		/// </summary>
+		public MemorizedCell GetMemorizationClone ()
+		{
+			return new MemorizedCell (Objects.OrderBy (z => z.Depth).Select (z => z.Texture));
+		}
+
+		/// <summary>
 		/// Devuelve la posición de esta cenda en <see cref="LogicGrid"/>
 		/// </summary>
 		/// <value>The location.</value>

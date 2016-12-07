@@ -70,7 +70,6 @@ namespace Screens
 				AddAllContent ();
 				Content.Load ();
 				InitializeContent ();
-
 			}
 		}
 
@@ -80,12 +79,15 @@ namespace Screens
 		/// <param name="newGrid">Nueva posición en el mundo</param>
 		public void ChangeGrid (WorldLocation newGrid)
 		{
+			Player.Exp.Flush ();
 			Grid.RemoveObject (Player);
 			GridControl.ChangeGrid (newGrid.Grid);
 			Player.Location = newGrid.GridPoint;
 			Player.Grid = Grid;
 			Grid.AddCellObject (Player);
 			GridControl.TryCenterOn (Player.Location);
+			PlayerInfoControl.ReloadStats ();
+			Player.Reinitialize ();
 		}
 
 		/*
@@ -278,7 +280,7 @@ namespace Screens
 		MapMainScreen (Moggle.Game game, Map map)
 			: base (game)
 		{
-			GridControl = new GridControl (map.GenerateGrid (), this);
+			GridControl = new GridControl (map.GenerateGrid (0), this);
 		}
 
 		/// <summary>

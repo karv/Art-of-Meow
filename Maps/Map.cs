@@ -37,7 +37,8 @@ namespace Maps
 		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
-		public LogicGrid GenerateGrid ()
+		/// <param name="enemyExp">La experiencia de cada enemigo en el grid</param>
+		public LogicGrid GenerateGrid (float enemyExp)
 		{
 			var ret = buildBaseGrid ();
 			makeStairs (ret);
@@ -125,7 +126,8 @@ namespace Maps
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="reader">Un StreamReader con la info del mapa</param>
-		public static LogicGrid GenerateGrid (StreamReader reader)
+		/// <param name = "enemyExp">Experiencia de cada enemigo</param>
+		public static LogicGrid GenerateGrid (StreamReader reader, float enemyExp)
 		{
 			throw new NotImplementedException ();
 			//var map = new Map (reader);
@@ -136,7 +138,8 @@ namespace Maps
 		/// Genera un Grid a partir de un reader
 		/// </summary>
 		/// <param name="mapFile">Nombre de archivo del mapa</param>
-		public static LogicGrid GenerateGrid (string mapFile)
+		/// <param name = "enemyExp">Experiencia de cada enemigo</param>
+		public static LogicGrid GenerateGrid (string mapFile, float enemyExp)
 		{
 			throw new NotImplementedException ();
 			//var map = new Map (mapFile);

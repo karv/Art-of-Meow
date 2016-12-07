@@ -8,8 +8,6 @@ namespace Units.Order
 	/// </summary>
 	public class OrderQueue
 	{
-		// TODO: hacer un IList que maneje bien las inserciones por los costados.
-
 		List<IPrimitiveOrder> queueSkill { get; }
 
 		/// <summary>
