@@ -223,7 +223,7 @@ namespace Units.Recursos
 
 			public void Update (float gameTime)
 			{
-				Recurso.Valor += Valor * gameTime;
+				Recurso.Valor += Valor * gameTime * 20;
 
 				// pedir exp
 				if (Recurso.RelativeHp < expGainThreshold)
