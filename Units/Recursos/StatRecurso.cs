@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using AoM;
+using Debugging;
 
 namespace Units.Recursos
 {
@@ -175,11 +176,13 @@ namespace Units.Recursos
 
 		void baseValueChanged (object sender, EventArgs e)
 		{
-			Debug.WriteLine (string.Format (
-				"Jugador: {2}\t\tstat base {0} changed to {1}.",
-				NombreÚnico,
-				BaseP.Valor,
-				Unidad));
+			Debug.WriteLine (
+				string.Format (
+					"Jugador: {2}\t\tstat base {0} changed to {1}.",
+					NombreÚnico,
+					BaseP.Valor,
+					Unidad),
+				DebugCategories.ResourceAffected);
 		}
 
 
@@ -199,7 +202,7 @@ namespace Units.Recursos
 						exp,
 						Valor, 
 						Recurso.NombreÚnico),
-					"Experiencia");
+					DebugCategories.Experience);
 			}
 
 			void IInternalUpdate.Update (float gameTime)

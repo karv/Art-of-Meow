@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Cells;
 using Cells.CellObjects;
+using Debugging;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Units;
@@ -83,9 +84,10 @@ namespace Maps
 						break;
 					default:
 						Debug.WriteLine (
-							"Entrada de opción desconocida {0} en un mapa {1}",
-							spl [0],
-							dataStream);
+							string.Format (
+								"Entrada de opción desconocida {0} en un mapa {1}",
+								spl [0], dataStream), 
+							DebugCategories.MapGeneration);
 						break;
 				}
 			}

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -37,13 +36,6 @@ namespace Helper
 				Juego.Exit ();
 				return true;
 			}
-			#if DEBUG
-			if (GlobalKeys.PrintRec.Contains (key))
-			{
-				Debug.WriteLine (HumanPlayer.Recursos);
-				return true;
-			}
-			#endif 
 			if (GlobalKeys.OpenWindowInventory.Contains (key))
 			{
 				if (HumanPlayer.Inventory.Any () || HumanPlayer.Equipment.EnumerateEquipment ().Any ())
