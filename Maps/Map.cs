@@ -7,10 +7,53 @@ using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using Newtonsoft.Json;
 using Units;
+using System.Runtime.Serialization;
+using System.Text;
+using Moggle.Controles.Listas;
 
 namespace Maps
 {
+	public static class MapParser
+	{
+		public static IEnumerable <string> DataToString (char [,] data)
+		{
+			var sizeX = data.GetLength (0);
+			var sizeY = data.GetLength (1);
+
+			var line = new StringBuilder ();
+			for (int ix = 0; ix < sizeX; ix++)
+			{
+				for (int iy = 0; iy < sizeY; iy++)
+					line.Append (data [ix, iy]);
+				yield return line.ToString ();
+				line.Clear ();
+			}		
+		}
+
+		public static void StringToData (IEnumerable<char> data, char [,] output)
+		{
+			var i = 0;
+			var j = 0;
+			var sizeX = output.GetLength (0);
+			var sizeY = output.GetLength (1);
+			var mapSize = sizeX * sizeY;
+			foreach (var chr in data)
+			{
+				var ix = i % sizeX;
+				var iy = i / sizeX;
+
+				if (Map.ExistSymbol (chr))
+				{
+					output [ix, iy] = chr;
+					i++;
+					j++;
+				}
+			}
+		}
+	}
+
 	/// <summary>
 	/// Representa un conjunto de características.
 	/// Provee un constructor de <see cref="Cells.LogicGrid"/>
@@ -25,14 +68,23 @@ namespace Maps
 		/// Sets the data as a string
 		/// </summary>
 		/// <value>The data.</value>
-		public string Data
+		[JsonProperty (Order = 1)]
+		public IEnumerable<string> Data
 		{
-			set { parseMapObjects (value); }
+			set
+			{ 
+				MapParser.StringToData ((IEnumerable<char>)value, _data); 
+			}
+			get
+			{ 
+				return MapParser.DataToString (_data);
+			}
 		}
 
 		/// <summary>
 		/// Should add flavor features, like plants on the ground
 		/// </summary>
+		[JsonProperty]
 		public bool AddFeatures = true;
 
 		/// <summary>
@@ -47,12 +99,18 @@ namespace Maps
 			var factory = new UnidadFactory (ret);
 			ret.Factory = new EnemySmartGenerator (factory, enemyExp);
 
+			foreach (var x in EnemyType)
+				ret.Factory.AddEnemyType (x);
+
 			ret.Factory.PopulateGrid ();
 			if (AddFeatures)
 				addRandomFlavorFeatures (ret);
 			
 			return ret;
 		}
+
+		[JsonProperty (Order = 1)]
+		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
 
 		/// <summary>
 		/// Makes a object from a given <c>char</c>
@@ -163,19 +221,39 @@ namespace Maps
 			return ret;
 		}
 
+		public static Map HardCreateNew ()
+		{
+			var ret = new Map (new Size (50, 50));
+			for (int i = 0; i < 50 * 50; i++)
+			{
+				ret._data [i % 50, i / 50] = ' ';
+			}
+			ret._data [0, 0] = 'W';
+			ret.EnemyType = new []
+			{
+				new EnemySmartGenerator.EnemyGenerationData (
+					Units.EnemyType.Imp,
+					EnemyClass.Warrior)
+			};
+			return ret;
+		}
+
 		/// <summary>
 		/// Gets the horizontal size
 		/// </summary>
+		[JsonIgnore]
 		public int SizeX { get { return _data.GetLength (0); } }
 
 		/// <summary>
 		/// Gets the vertical size
 		/// </summary>
+		[JsonIgnore]
 		public int SizeY { get { return _data.GetLength (1); } }
 
 		/// <summary>
 		/// Gets the size of this map
 		/// </summary>
+		[JsonProperty (Order = 0)]
 		public Size Size { get { return new Size (SizeX, SizeY); } }
 
 		void parseMapObjects (string data)
@@ -197,13 +275,36 @@ namespace Maps
 			}
 		}
 
+		IEnumerable <string> unparseMapObjects ()
+		{
+			var line = new StringBuilder ();
+			for (int ix = 0; ix < SizeX; ix++)
+			{
+				for (int iy = 0; iy < SizeY; iy++)
+					line.Append (_data [ix, iy]);
+				yield return line.ToString ();
+				line.Clear ();
+			}		
+		}
+
+		static JsonSerializerSettings JsonSets = new JsonSerializerSettings
+		{
+			Formatting = Formatting.Indented
+		};
+
 		/// <summary>
 		/// Read and return a new <see cref="Map"/> from a json
 		/// </summary>
 		/// <param name="json">Json-formatted data</param>
 		public static Map ReadFromJSON (string json)
 		{
-			throw new NotImplementedException ();
+			var map = JsonConvert.DeserializeObject<Map> (json, JsonSets);
+			return map;
+		}
+
+		public string ToJSON ()
+		{
+			return JsonConvert.SerializeObject (this, JsonSets);
 		}
 
 		/// <summary>
@@ -223,8 +324,10 @@ namespace Maps
 			var ret = new LogicGrid (Size);
 			for (int ix = 0; ix < SizeX; ix++)
 				for (int iy = 0; iy < SizeY; iy++)
-					ret.AddCellObject (MakeObject (_data [ix, iy], ret, new Point (ix, iy)));
-
+				{
+					var newObj = MakeObject (_data [ix, iy], ret, new Point (ix, iy));
+					ret.AddCellObject (newObj);
+				}
 			return ret;
 		}
 

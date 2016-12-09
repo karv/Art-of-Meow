@@ -20,7 +20,7 @@ namespace Maps
 
 		readonly IDistribution<int> NumEnemiesInterval;
 
-		List<EnemyGenerationData> enemyType { get; set; }
+		List<EnemyGenerationData> enemyType { get; }
 
 		/// <summary>
 		/// Add new enemies to it's <see cref="LogicGrid"/>
@@ -51,6 +51,16 @@ namespace Maps
 		/// </summary>
 		public float Difficulty;
 
+		public void AddEnemyType (EnemyType type, EnemyClass @class)
+		{
+			enemyType.Add (new EnemyGenerationData (type, @class));
+		}
+
+		public void AddEnemyType (EnemyGenerationData enemyType)
+		{
+			this.enemyType.Add (enemyType);
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Maps.EnemySmartGenerator"/> class.
 		/// </summary>
@@ -62,6 +72,7 @@ namespace Maps
 			Factory = factory;
 			Difficulty = difficulty;
 			NumEnemiesInterval = new Helper.IntegerInterval (minEnemies, maxEnemines);
+			enemyType = new List<EnemyGenerationData> ();
 			_r = new Random ();
 		}
 
@@ -79,11 +90,17 @@ namespace Maps
 		{
 		}
 
-		struct EnemyGenerationData
+		public struct EnemyGenerationData
 		{
 			public EnemyType Type { get; }
 
 			public EnemyClass Class { get; }
+
+			public EnemyGenerationData (EnemyType type, EnemyClass @class)
+			{
+				Type = type;
+				Class = @class;
+			}
 		}
 	}
 	

@@ -44,7 +44,10 @@ namespace Helper
 		/// <param name="player">El jugador humano generado</param>
 		public static LogicGrid InitializeNewWorld (out Unidad player)
 		{
-			var ret = Map.GenerateGrid (FirstMap, 0);
+			//var ret = Map.GenerateGrid (FirstMap, 0);
+			var map = Map.HardCreateNew ();
+			var json = map.ToJSON ();
+			var ret = map.GenerateGrid (0);
 			player = buildPlayer (ret);
 			ret.AddCellObject (player);
 			return ret;
