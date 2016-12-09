@@ -2,6 +2,7 @@
 using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 namespace Units.Recursos
 {
@@ -87,11 +88,11 @@ namespace Units.Recursos
 		/// <value>The valor.</value>
 		public override float Valor
 		{
-			get { return Value.Valor; }
+			get { return Value.Value; }
 			set
 			{
 				var before = Valor;
-				Value.Valor = Math.Min (Math.Max (value, 0), Max);
+				Value.Value = Math.Min (Math.Max (value, 0), Max);
 
 				// Si no hay cambio, regresar inmediatamente
 				if (Valor == before)
@@ -150,15 +151,30 @@ namespace Units.Recursos
 		/// Ocurre cuando su valor cambia,
 		/// su argumento dice su valor antes del cambio
 		/// </summary>
-		public event EventHandler<float> ValorChanged;
+		public event EventHandler<float> ValorChanged
+		{
+			add{ Value.ValorChanged += value;}
+			remove{ Value.ValorChanged -= value;}
+		}
+
 		/// <summary>
 		/// Occurs when reached zero.
 		/// </summary>
-		public event EventHandler ReachedZero;
+		public event EventHandler ReachedZero
+		{
+			add{ Value.ReachedZero += value;}
+			remove{ Value.ReachedZero -= value;}
+		}
+
 		/// <summary>
 		/// Occurs when reached max.
 		/// </summary>
-		public event EventHandler ReachedMax;
+		public event EventHandler ReachedMax
+		{
+			add{ Value.ReachedMax += value;}
+			remove{ Value.ReachedMax -= value;}
+		}
+
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoHP"/>.
@@ -188,6 +204,7 @@ namespace Units.Recursos
 
 		class ValueParam : IParámetroRecurso
 		{
+			
 			public void ReceiveExperience (float exp)
 			{
 				Max += 10 * exp;
@@ -195,6 +212,8 @@ namespace Units.Recursos
 
 			const float expGainThreshold = 0.25f;
 			const float expGameRate = 0.9f;
+
+			float IParámetroRecurso.Valor { get { return value; } }
 
 			public void Update (float gameTime)
 			{
@@ -209,9 +228,64 @@ namespace Units.Recursos
 
 			public string NombreÚnico { get { return "value"; } }
 
-			public float Valor { get; set; }
+			float value;
+			float max;
 
-			public float Max { get; set; }
+			public float Value
+			{
+				get { return value; }
+				set
+				{
+					var before = Value;
+					this.value = Math.Min (Math.Max (value, 0), Max);
+
+					OnValueChanged (before);
+				}
+			}
+
+			protected void OnValueChanged (float oldValue)
+			{
+				// Si no hay cambio, regresar inmediatamente
+				if (Value == oldValue)
+					return;
+				ValorChanged?.Invoke (this, oldValue);
+
+				if (Value == Max)
+					ReachedMax?.Invoke (this, EventArgs.Empty);
+				if (Value == 0)
+					ReachedZero?.Invoke (this, EventArgs.Empty);
+			}
+
+			public float Max
+			{
+				get
+				{
+					return max;
+				}
+				set
+				{
+					max = value;
+					if (max < Value)
+					{
+						Debug.WriteLine ("Max set < value");
+						Value = max;
+					}
+				}
+			}
+
+			/// <summary>
+			/// Ocurre cuando su valor cambia,
+			/// su argumento dice su valor antes del cambio
+			/// </summary>
+			public event EventHandler<float> ValorChanged;
+			/// <summary>
+			/// Occurs when reached zero.
+			/// </summary>
+			public event EventHandler ReachedZero;
+			/// <summary>
+			/// Occurs when reached max.
+			/// </summary>
+			public event EventHandler ReachedMax;
 
 			public ValueParam (RecursoHP recurso)
 			{
