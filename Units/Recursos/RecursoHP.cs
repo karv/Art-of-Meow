@@ -190,13 +190,22 @@ namespace Units.Recursos
 		{
 			public void ReceiveExperience (float exp)
 			{
+				Max += 10 * exp;
 			}
+
+			const float expGainThreshold = 0.25f;
+			const float expGameRate = 0.9f;
 
 			public void Update (float gameTime)
 			{
+				// pedir exp
+				if (Recurso.RelativeHp < expGainThreshold)
+					Recurso.Unidad.Exp.AddAssignation (this, gameTime * expGameRate);
 			}
 
-			public IRecurso Recurso { get; }
+			public RecursoHP Recurso { get; }
+
+			IRecurso IParámetroRecurso.Recurso { get { return Recurso; } }
 
 			public string NombreÚnico { get { return "value"; } }
 
@@ -204,7 +213,7 @@ namespace Units.Recursos
 
 			public float Max { get; set; }
 
-			public ValueParam (IRecurso recurso)
+			public ValueParam (RecursoHP recurso)
 			{
 				Recurso = recurso;
 			}
