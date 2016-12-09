@@ -196,6 +196,7 @@
     <Compile Include="WorldLocation.cs" />
     <Compile Include="Cells\MemoryGrid.cs" />
     <Compile Include="Cells\MemorizedCell.cs" />
+    <Compile Include="Units\Recursos\MaxParameter.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
