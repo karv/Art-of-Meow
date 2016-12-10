@@ -4,6 +4,7 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
+using System.Diagnostics;
 
 namespace Helper
 {
@@ -46,7 +47,10 @@ namespace Helper
 		{
 			//var ret = Map.GenerateGrid (FirstMap, 0);
 			var map = Map.HardCreateNew ();
+			//var map = Map.ReadFromFile (@"Maps/dung00.map");
 			var json = map.ToJSON ();
+			Debug.WriteLine (json);
+			map = Map.ReadFromJSON (json);
 			var ret = map.GenerateGrid (0);
 			player = buildPlayer (ret);
 			ret.AddCellObject (player);

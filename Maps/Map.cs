@@ -32,24 +32,43 @@ namespace Maps
 			}		
 		}
 
+		static IEnumerable<char> EnumerateChars (this IEnumerable<IEnumerable<char>> obj)
+		{
+			foreach (var str in obj)
+				foreach (var c in str)
+					yield return c;
+		}
+
+		public static void StringToData (IEnumerable<string> data, char [,] output)
+		{
+			StringToData (data.EnumerateChars (), output);
+		}
+
 		public static void StringToData (IEnumerable<char> data, char [,] output)
 		{
 			var i = 0;
 			var j = 0;
-			var sizeX = output.GetLength (0);
-			var sizeY = output.GetLength (1);
-			var mapSize = sizeX * sizeY;
-			foreach (var chr in data)
+			try
 			{
-				var ix = i % sizeX;
-				var iy = i / sizeX;
-
-				if (Map.ExistSymbol (chr))
+				var sizeX = output.GetLength (0);
+				var sizeY = output.GetLength (1);
+				var mapSize = sizeX * sizeY;
+				foreach (var chr in data)
 				{
-					output [ix, iy] = chr;
-					i++;
-					j++;
+					var ix = i % sizeX;
+					var iy = i / sizeX;
+
+					if (Map.ExistSymbol (chr))
+					{
+						output [ix, iy] = chr;
+						i++;
+						j++;
+					}
 				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine (ex);
 			}
 		}
 	}
@@ -60,7 +79,7 @@ namespace Maps
 	/// </summary>
 	public class Map
 	{
-		readonly char [,] _data;
+		char [,] _data;
 
 		readonly Random _r;
 
@@ -68,12 +87,13 @@ namespace Maps
 		/// Sets the data as a string
 		/// </summary>
 		/// <value>The data.</value>
-		[JsonProperty (Order = 1)]
+		[JsonProperty (Order = 2)]
 		public IEnumerable<string> Data
 		{
 			set
 			{ 
-				MapParser.StringToData ((IEnumerable<char>)value, _data); 
+				var r = value;
+				MapParser.StringToData (value, _data); 
 			}
 			get
 			{ 
@@ -84,7 +104,7 @@ namespace Maps
 		/// <summary>
 		/// Should add flavor features, like plants on the ground
 		/// </summary>
-		[JsonProperty]
+		[JsonProperty (Order = 4)]
 		public bool AddFeatures = true;
 
 		/// <summary>
@@ -109,7 +129,7 @@ namespace Maps
 			return ret;
 		}
 
-		[JsonProperty (Order = 1)]
+		[JsonProperty (Order = 3)]
 		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
 
 		/// <summary>
@@ -241,20 +261,22 @@ namespace Maps
 		/// <summary>
 		/// Gets the horizontal size
 		/// </summary>
-		[JsonIgnore]
+		[JsonProperty (Order = 1)]
 		public int SizeX { get { return _data.GetLength (0); } }
 
 		/// <summary>
 		/// Gets the vertical size
 		/// </summary>
-		[JsonIgnore]
+		[JsonProperty (Order = 0)]
 		public int SizeY { get { return _data.GetLength (1); } }
 
 		/// <summary>
 		/// Gets the size of this map
 		/// </summary>
-		[JsonProperty (Order = 0)]
-		public Size Size { get { return new Size (SizeX, SizeY); } }
+		public Size Size
+		{ 
+			get { return new Size (SizeX, SizeY); } 
+		}
 
 		void parseMapObjects (string data)
 		{
@@ -289,8 +311,15 @@ namespace Maps
 
 		static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
-			Formatting = Formatting.Indented
+			Formatting = Formatting.Indented,
+			Error = onError
 		};
+
+		static void onError (object sender,
+		                     Newtonsoft.Json.Serialization.ErrorEventArgs e)
+		{
+			Console.WriteLine ();
+		}
 
 		/// <summary>
 		/// Read and return a new <see cref="Map"/> from a json
@@ -356,6 +385,16 @@ namespace Maps
 				}
 			}
 			return false;
+		}
+
+		[JsonConstructor]
+		Map (int sizeX, int sizeY,
+		     IEnumerable<string> data,
+		     IEnumerable<EnemySmartGenerator.EnemyGenerationData> enemyType)
+			: this (new Size (sizeX, sizeY))
+		{
+			Data = data;
+			EnemyType = enemyType;
 		}
 	}
 }
