@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Debugging;
 using Helper;
 using Skills;
 
@@ -60,7 +61,7 @@ namespace Skills
 					"Resolving hit with probability {0} : {1}",
 					eff.Chance,
 					eff.Result),
-				"Effect");
+				DebugCategories.EffectResolution);
 			
 			var ret = eff.Result == EffectResultEnum.Hit;
 			if (ret)

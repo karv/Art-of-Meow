@@ -44,9 +44,14 @@ namespace Cells
 		{
 			get
 			{
-				if (p.X >= Size.Width || p.Y >= Size.Height)
+				try
+				{
+					return _cells [p.X, p.Y];
+				}
+				catch (IndexOutOfRangeException ex)
+				{
 					return Cell.EmptyCell;
-				return _cells [p.X, p.Y];
+				}
 			}
 		}
 

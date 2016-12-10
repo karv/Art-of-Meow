@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Debugging;
 using Items;
 using Items.Declarations.Equipment;
 using Moggle;
@@ -62,7 +63,7 @@ namespace Units.Equipment
 			{
 				Debug.WriteLine (
 					"Hay un conflicto de equipment con " + equip.NombreBase,
-					"Equipment Conflict");
+					DebugCategories.Equipment);
 			}
 		}
 

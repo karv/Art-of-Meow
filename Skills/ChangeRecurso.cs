@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using AoM;
 using Componentes;
+using Debugging;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Screens;
@@ -70,7 +71,7 @@ namespace Skills
 				// Efecto es en parámetro
 				Parámetro.Valor += DeltaValor;
 
-			Debug.WriteLine (ToString (), "Recurso");
+			Debug.WriteLine (ToString (), DebugCategories.ResourceAffected);
 
 			if (TargetRecurso is RecursoHP && TargetRecurso.Valor == 0)
 				OnKill ();
@@ -113,7 +114,7 @@ namespace Skills
 					"{0} kills {1}.\nReceving {2} exp",
 					Agent,
 					Target,
-					exp), "Experience");
+					exp), DebugCategories.Experience);
 			}
 		}
 

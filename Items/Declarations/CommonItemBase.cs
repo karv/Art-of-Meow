@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using AoM;
+using Debugging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
@@ -79,8 +80,10 @@ namespace Items.Declarations
 		/// </summary>
 		protected virtual void Initialize ()
 		{
-			Debug.WriteLineIf (IsInitialized,
-				string.Format ("Object {0} initialized multiple times.", this), "Init");
+			Debug.WriteLineIf (
+				IsInitialized,
+				string.Format ("Object {0} initialized multiple times.", this),
+				DebugCategories.Item);
 			IsInitialized = true;
 		}
 

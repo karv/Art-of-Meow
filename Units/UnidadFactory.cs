@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using AoM;
 using Cells;
+using Debugging;
 using Items;
 using Moggle;
 using Units.Recursos;
@@ -66,7 +67,7 @@ namespace Units
 		{
 			Debug.WriteLine (
 				string.Format ("Unidad creada: {0}", u.Nombre),
-				"UnidadFactory");
+				DebugCategories.UnitFactory);
 			foreach (var re in u.Recursos.Enumerate ())
 			{
 				foreach (var pa in re.EnumerateParameters ())
@@ -77,9 +78,9 @@ namespace Units
 							pa.NombreÚnico,
 							pa.Valor,
 							re.NombreÚnico),
-						"UnidadFactory");
+						DebugCategories.UnitFactory);
 				}
-				Debug.WriteLine ("", "UnidadFactory");
+				Debug.WriteLine ("", DebugCategories.UnitFactory);
 			}
 		}
 
@@ -113,7 +114,9 @@ namespace Units
 				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
 
 			DebugAllInfo (ret);
-			Debug.WriteLine ("Stats para unidad creada {0}:", ret.Nombre);
+			Debug.WriteLine (string.Format (
+				"Stats para unidad creada {0}:", ret.Nombre),
+				DebugCategories.UnitFactory);
 			return ret;
 		}
 

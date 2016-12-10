@@ -202,6 +202,7 @@
     <Compile Include="Helper\IntegerInterval.cs" />
     <Compile Include="Maps\EnemySmartGenerator.cs" />
     <Compile Include="Helper\IDistribution.cs" />
+    <Compile Include="Debugging\DebugCategories.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

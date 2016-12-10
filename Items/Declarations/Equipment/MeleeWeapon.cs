@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Debugging;
 using Helper;
 using Skills;
 using Units;
@@ -85,7 +86,8 @@ namespace Items.Declarations.Equipment
 					"Melee effect from {0} to {1} causing\n{2}",
 					user,
 					target,
-					ret.DetailedInfo ())
+					ret.DetailedInfo ()), 
+				DebugCategories.MeleeResolution
 			);
 
 			return ret;

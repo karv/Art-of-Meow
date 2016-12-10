@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using AoM;
+using Debugging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
@@ -145,10 +146,12 @@ namespace Units.Buffs
 
 		void timer_countdown (object sender, EventArgs e)
 		{
-			Debug.WriteLine (string.Format (
-				"Desanclando buff {0} de {1}",
-				this,
-				Manager.HookedOn));
+			Debug.WriteLine (
+				string.Format (
+					"Desanclando buff {0} de {1}",
+					this,
+					Manager.HookedOn),
+				DebugCategories.Buff);
 			Manager.UnHook (this);
 		}
 
