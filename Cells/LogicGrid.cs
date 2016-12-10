@@ -321,7 +321,7 @@ namespace Cells
 		/// </summary>
 		/// <param name="mapSize">Map size.</param>
 		public LogicGrid (Size mapSize)
-			: this (mapSize.Height, mapSize.Height)
+			: this (mapSize.Width, mapSize.Height)
 		{
 		}
 	}
