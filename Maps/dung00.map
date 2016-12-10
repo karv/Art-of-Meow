@@ -1,8 +1,6 @@
 ﻿{
-  "Size": {
-    "Width": 10,
-    "Height": 11,
-  },
+  "SizeY": 50,
+  "SizeX": 50,
   "Data": [
     "WWWWWWWWWW",
     "W        W",
@@ -19,5 +17,6 @@
       "Type": 0,
       "Class": 0
     }
-  ]
+  ],
+  "AddFeatures": true
 }

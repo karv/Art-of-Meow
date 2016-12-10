@@ -273,6 +273,7 @@ namespace Maps
 		/// <summary>
 		/// Gets the size of this map
 		/// </summary>
+		[JsonIgnore]
 		public Size Size
 		{ 
 			get { return new Size (SizeX, SizeY); } 
