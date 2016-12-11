@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using AoM;
 using Microsoft.Xna.Framework;
@@ -19,7 +18,6 @@ namespace Cells.CellObjects
 		/// </summary>
 		void IActivable.Activar ()
 		{
-			Debug.WriteLine ("Stairs");
 			_AlActivar (EventArgs.Empty);
 		}
 
@@ -27,7 +25,6 @@ namespace Cells.CellObjects
 		{
 			if (GlobalKeys.Stairs.Contains (key.Key))
 			{
-				Debug.WriteLine ("Stairs");
 				_AlActivar (EventArgs.Empty);
 				return true;
 			}

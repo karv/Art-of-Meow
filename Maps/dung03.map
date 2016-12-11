@@ -1,113 +1,113 @@
-﻿100
-100
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-W             W             W             W                                                        W
-W             W             W             W                                                        W
-W             W             W             W                                                        W
-W             W             W             W                                                        W
-W             W             W             W                                                        W
-W             W             W             W                                                        W
-WWWWW  WWWWWWWWWWWWW  WWWWWWWWWWWW  WWWWWWW                                                        W
-W                                                                                                  W
-W                                                                                                  W
-W                                                                                                  W
-W                            WWWWWWWWWWWWW                                                         W
-W                            W           W                                                         W
-W                            W           W                                                         W
-W                            W           W                                                         W
-W                            W           W                                                         W
-W                            W           W                    WWWWWWWWWWWWWWWW                     W
-WWWWWWWWWWWWWWWWW            W           W                    W              W                     W
-W               W            W           W                    W              W                     W
-W               W            WWWWWW  WWWWW                    W              W                     W
-W               W                                             W              W                     W
-W                                                             W              W                     W
-W                                                                            W                     W
-W               W   WWWWWWW  WWWWWWWW                         W              W                     W
-W               W   W               W                         W              W                     W
-W               W   W               W                         W              W                     W
-WWWWWWWWWWWWWWWWW   W               W                         W              W                     W
-W                   W               W                         W              W                     W
-W                   W               W                         W              W                     W
-W                   W               W                         WWWWWWWWWWWWWWWW                     W
-W                   W               W                                                              W
-W                   W               W                                                              W
-W                   WWWWWWWWWWWWWWWWW                                                              W
-W                                                                                                  W
-W                                                                                    WWWWWWWWWWWWW W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    WWWWWWWWWWWWWWW
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                                  W
-W                                                                                                  W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    WWWWWWWWWWWWWWW
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                                                                                  W
-W                                                                                                  W
-W                                                                                    W             W
-W                                                                                    W             W
-W                                   WWWWWWWWWWWWWW W W WWWWWWWWWWWWW                 W             W
-W                                   W                              W                 W             W
-W                                   W                              W                 W             W
-W                                   W                              W                 W             W
-W                                   W                              W                 WWWWWWWWWWWWW W
-W                                   W                              W                 W             W
-W                                   W          WWWWWWWWWWW         W                 W             W
-W                                   W          W         W         W                 W             W
-W                                   W          W         W         W                 W             W
-W                                   W          W         W         W                 WWWWWWWWWWWWW W
-W                                   W          W         W         W                 W             W
-W                                   W          W         W         W                 W             W
-W                                   W          W         W         W                 W             W
-W                                   W          W         W         W                 W             W
-W                                   W          W         W         W                 W             W
-W                                   W          W         W         W                               W
-W                                   W          W         W         W                               W
-W                                   W          W         W         W                 W             W
-W                                   W          WWWW   WWWW         W                 W             W
-W                                   W                              W                 W             W
-WWWWWWWWWWWWWWWWWWWWWWWWWWWW        W                              W                 W             W
-W                          W        W                              W                 W             W
-W                          W        W                              W                 W             W
-W                          W        W                              W                 WWWWWWWWWWWWWWW
-W                          W        W                              W                 W             W
-W                          W        W                              W                 W             W
-W                                   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW                 W             W
-W                                                                                    W             W
-W                          W                                                         W             W
-W                          W                                                                       W
-W                          W                                                                       W
-W                          W                                                         W             W
-W                          W                                                         W             W
-W                          W                                                         W             W
-W                          W                                                         W             W
-W                          W                                                         W             W
-WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-Tag:Dungeon
-Next:Dungeon
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
+﻿{
+  "SizeY": 100,
+  "SizeX": 100,
+  "Data": [
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+"W             W             W             W                                                        W"
+"W             W             W             W                                                        W"
+"W             W             W             W                                                        W"
+"W             W             W             W                                                        W"
+"W             W             W             W                                                        W"
+"W             W             W             W                                                        W"
+"WWWWW  WWWWWWWWWWWWW  WWWWWWWWWWWW  WWWWWWW                                                        W"
+"W                                                                                                  W"
+"W                                                                                                  W"
+"W                                                                                                  W"
+"W                            WWWWWWWWWWWWW                                                         W"
+"W                            W           W                                                         W"
+"W                            W           W                                                         W"
+"W                            W           W                                                         W"
+"W                            W           W                                                         W"
+"W                            W           W                    WWWWWWWWWWWWWWWW                     W"
+"WWWWWWWWWWWWWWWWW            W           W                    W              W                     W"
+"W               W            W           W                    W              W                     W"
+"W               W            WWWWWW  WWWWW                    W              W                     W"
+"W               W                                             W              W                     W"
+"W                                                             W              W                     W"
+"W                                                                            W                     W"
+"W               W   WWWWWWW  WWWWWWWW                         W              W                     W"
+"W               W   W               W                         W              W                     W"
+"W               W   W               W                         W              W                     W"
+"WWWWWWWWWWWWWWWWW   W               W                         W              W                     W"
+"W                   W               W                         W              W                     W"
+"W                   W               W                         W              W                     W"
+"W                   W               W                         WWWWWWWWWWWWWWWW                     W"
+"W                   W               W                                                              W"
+"W                   W               W                                                              W"
+"W                   WWWWWWWWWWWWWWWWW                                                              W"
+"W                                                                                                  W"
+"W                                                                                    WWWWWWWWWWWWW W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    WWWWWWWWWWWWWWW"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                                  W"
+"W                                                                                                  W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    WWWWWWWWWWWWWWW"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                                                                                  W"
+"W                                                                                                  W"
+"W                                                                                    W             W"
+"W                                                                                    W             W"
+"W                                   WWWWWWWWWWWWWW W W WWWWWWWWWWWWW                 W             W"
+"W                                   W                              W                 W             W"
+"W                                   W                              W                 W             W"
+"W                                   W                              W                 W             W"
+"W                                   W                              W                 WWWWWWWWWWWWW W"
+"W                                   W                              W                 W             W"
+"W                                   W          WWWWWWWWWWW         W                 W             W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          W         W         W                 WWWWWWWWWWWWW W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          W         W         W                               W"
+"W                                   W          W         W         W                               W"
+"W                                   W          W         W         W                 W             W"
+"W                                   W          WWWW   WWWW         W                 W             W"
+"W                                   W                              W                 W             W"
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWW        W                              W                 W             W"
+"W                          W        W                              W                 W             W"
+"W                          W        W                              W                 W             W"
+"W                          W        W                              W                 WWWWWWWWWWWWWWW"
+"W                          W        W                              W                 W             W"
+"W                          W        W                              W                 W             W"
+"W                                   WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW                 W             W"
+"W                                                                                    W             W"
+"W                          W                                                         W             W"
+"W                          W                                                                       W"
+"W                          W                                                                       W"
+"W                          W                                                         W             W"
+"W                          W                                                         W             W"
+"W                          W                                                         W             W"
+"W                          W                                                         W             W"
+"W                          W                                                         W             W"
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "EnemyType": [
+    {
+      "Type": 0,
+      "Class": 0
+    }
+  ],
+  "AddFeatures": true
+}

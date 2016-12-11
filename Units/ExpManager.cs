@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Debugging;
 using Units.Recursos;
 
 namespace Units
@@ -69,14 +70,14 @@ namespace Units
 			{
 				Debug.WriteLine (
 					string.Format ("{0} No recibe experiencia de este nivel.", Unidad),
-					"Experiencia");
+					DebugCategories.Experience);
 				return;
 			}
 			Debug.WriteLine (
 				string.Format (
 					"{0} está recibiendo {1} puntos de experiencia de este nivel.",
 					Unidad,
-					ExperienciaAcumulada), "Experiencia");
+					ExperienciaAcumulada), DebugCategories.Experience);
 			_normalizeDistDict ();
 			foreach (var x in _distribuciónExp)
 				x.Key.ReceiveExperience (ExperienciaAcumulada * x.Value);

@@ -15,7 +15,7 @@ namespace Helper
 		/// <summary>
 		/// Gets the name of the first map
 		/// </summary>
-		public const string FirstMap = @"Maps/base.map";
+		public const string FirstMap = Map.MapDir + "//base.map";
 
 		static Unidad buildPlayer (LogicGrid grid)
 		{
@@ -44,7 +44,14 @@ namespace Helper
 		/// <param name="player">El jugador humano generado</param>
 		public static LogicGrid InitializeNewWorld (out Unidad player)
 		{
-			var ret = Map.GenerateGrid (FirstMap, 0);
+			Map map;
+			//var ret = Map.GenerateGrid (FirstMap, 0);
+			//map = Map.HardCreateNew ();
+			//var json = map.ToJSON ();
+			//Debug.WriteLine (json);
+			//map = Map.ReadFromJSON (json);
+			map = Map.ReadFromFile (FirstMap);
+			var ret = map.GenerateGrid (0);
 			player = buildPlayer (ret);
 			ret.AddCellObject (player);
 			return ret;

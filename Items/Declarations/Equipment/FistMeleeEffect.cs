@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Debugging;
 using Helper;
 using Items.Declarations.Equipment;
 using Skills;
@@ -18,19 +19,20 @@ namespace Items.Declarations.Equipment
 		/// <param name="target">Target.</param>
 		public IEffect GetEffect (IUnidad user, IUnidad target)
 		{
-			const double baseHit = 0.9;
+			const float baseHit = 0.9f;
 			var ret = MeleeEffectHelper.BuildDefaultMeleeEffect (
 				          user,
 				          target,
 				          0.4f,
-				          0.9f);
+				          baseHit);
 			
 			Debug.WriteLine (
 				string.Format (
 					"Melee effect from {0} to {1} causing\n{2}",
 					user,
 					target,
-					ret.DetailedInfo ())
+					ret.DetailedInfo ()),
+				DebugCategories.MeleeResolution
 			);
 
 			return ret;

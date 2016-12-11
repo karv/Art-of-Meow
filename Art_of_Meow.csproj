@@ -55,6 +55,9 @@
     <Reference Include="NVorbis">
       <HintPath>packages\Moggle.0.11.1\lib\NVorbis.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -196,6 +199,12 @@
     <Compile Include="WorldLocation.cs" />
     <Compile Include="Cells\MemoryGrid.cs" />
     <Compile Include="Cells\MemorizedCell.cs" />
+    <Compile Include="Helper\IntegerInterval.cs" />
+    <Compile Include="Maps\EnemySmartGenerator.cs" />
+    <Compile Include="Helper\IDistribution.cs" />
+    <Compile Include="Debugging\DebugCategories.cs" />
+    <Compile Include="Units\EnemyType.cs" />
+    <Compile Include="Units\EnemyClass.cs" />
     <Compile Include="Units\Recursos\MaxParameter.cs" />
   </ItemGroup>
   <ProjectExtensions>
