@@ -5,6 +5,7 @@ using AoM;
 using Cells.CellObjects;
 using Cells.Collision;
 using Helper;
+using Maps;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using MonoGame.Extended;
@@ -12,7 +13,6 @@ using Units;
 
 namespace Cells
 {
-
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
 	/// </summary>
@@ -47,7 +47,7 @@ namespace Cells
 				{
 					return _cells [p.X, p.Y];
 				}
-				catch (IndexOutOfRangeException ex)
+				catch (IndexOutOfRangeException)
 				{
 					return Cell.EmptyCell;
 				}
@@ -285,6 +285,11 @@ namespace Cells
 		#endregion
 
 		/// <summary>
+		/// Get or set the enemy generator
+		/// </summary>
+		public EnemySmartGenerator Factory { get; set; }
+
+		/// <summary>
 		/// Ocurre al agregar un objeto
 		/// </summary>
 		public event EventHandler<IGridObject> AddedObject;
@@ -315,7 +320,7 @@ namespace Cells
 		/// </summary>
 		/// <param name="mapSize">Map size.</param>
 		public LogicGrid (Size mapSize)
-			: this (mapSize.Height, mapSize.Height)
+			: this (mapSize.Width, mapSize.Height)
 		{
 		}
 	}

@@ -1,23 +1,28 @@
-﻿15
-15
-WWWWWWWWWWWWWWW
-W             W
-W             W
-W             W
-W    WWWWW    W
-W    W   W    W
-W    W   W    W
-W        W    W
-W    W   W    W
-W    W   W    W
-W    WWWWW    W
-W             W
-W             W
-W             W
-WWWWWWWWWWWWWWW
-Tag:Dungeon
-Next:Dungeon
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
-Enemy:Imp
+﻿{
+  "SizeY": 15,
+  "SizeX": 15,
+  "Data": [
+"WWWWWWWWWWWWWWW"
+"W             W"
+"W             W"
+"W             W"
+"W    WWWWW    W"
+"W    W   W    W"
+"W    W   W    W"
+"W        W    W"
+"W    W   W    W"
+"W    W   W    W"
+"W    WWWWW    W"
+"W             W"
+"W             W"
+"W             W"
+"WWWWWWWWWWWWWWW"
+  ],
+  "EnemyType": [
+    {
+      "Type": 0,
+      "Class": 0
+    }
+  ],
+  "AddFeatures": true
+}

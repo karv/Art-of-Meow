@@ -11,37 +11,6 @@ using Units.Recursos;
 namespace Units
 {
 	/// <summary>
-	/// Enumera los tipos de enemigos
-	/// </summary>
-	public enum EnemyType
-	{
-		/// <summary>
-		/// Un duende, fácil
-		/// </summary>
-		Imp,
-
-		/// <summary>
-		/// The total number of types
-		/// </summary>
-		__total
-	}
-
-	/// <summary>
-	/// La clase de un enemigo para su creación
-	/// </summary>
-	public enum EnemyClass
-	{
-		/// <summary>
-		/// Clase warrior
-		/// </summary>
-		Warrior,
-		/// <summary>
-		/// The total number of types
-		/// </summary>
-		__total
-	}
-
-	/// <summary>
 	/// Provee métodos para generar unidades
 	/// </summary>
 	public class UnidadFactory
@@ -84,6 +53,17 @@ namespace Units
 			}
 		}
 
+		static string getTextureString (EnemyType enemyType)
+		{
+			switch (enemyType)
+			{
+				case EnemyType.Imp:
+					return "swordman";
+				default:
+					return "swordman";
+			}
+		}
+
 		/// <summary>
 		/// Construye una unidad dado su tipo
 		/// </summary>
@@ -94,7 +74,8 @@ namespace Units
 		                         EnemyClass enemyClass,
 		                         float exp = 0)
 		{
-			var ret = new Unidad (Grid);
+			var textureString = getTextureString (enemyType);
+			var ret = new Unidad (Grid, textureString);
 
 			foreach (var x in GetAttrDistribution (enemyType, enemyClass))
 				ret.Exp.AddAssignation (x.Key, x.Value);
@@ -174,7 +155,9 @@ namespace Units
 		                                                      float typeWeight = 0.5f)
 		{
 			if (typeWeight < 0 || typeWeight > 1)
-				throw new ArgumentOutOfRangeException ("typeWeight");
+				throw new ArgumentOutOfRangeException (
+					"typeWeight",
+					"typeWeight must be a non-negative number at most 1");
 			
 			var ret = new Dictionary<string,float> ();
 			foreach (var assign in GetAttrDistribution (eType))
@@ -216,6 +199,10 @@ namespace Units
 				if (currEnClass.ToString () == @class)
 					eClass = currEnClass;
 			}
+
+			Debug.Assert (eClass != EnemyClass.__total);
+			Debug.Assert (eType != EnemyType.__total);
+
 			return MakeEnemy (eType, eClass, exp);
 		}
 

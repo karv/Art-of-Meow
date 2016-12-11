@@ -1,14 +1,23 @@
-﻿10
-10
-WWWWWWWWWW
-W        W
-W        W
-W        W
-W        W
-W        W
-W        W
-W        W
-W        W
-WWWWWWWWWW
-Next:Dungeon
-Enemy:Imp
+﻿{
+  "SizeY": 10,
+  "SizeX": 10,
+  "Data": [
+    "WWWWWWWWWW",
+    "W        W",
+    "W        W",
+    "W        W",
+    "W        W",
+    "W        W",
+    "W        W",
+    "W        W",
+    "W        W",
+    "WWWWWWWWWW",
+  ],
+  "EnemyType": [
+    {
+      "Type": 0,
+      "Class": 0
+    }
+  ],
+  "AddFeatures": true
+}
