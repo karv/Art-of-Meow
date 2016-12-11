@@ -4,7 +4,6 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
-using System.Diagnostics;
 
 namespace Helper
 {
@@ -16,7 +15,7 @@ namespace Helper
 		/// <summary>
 		/// Gets the name of the first map
 		/// </summary>
-		public const string FirstMap = @"Maps/base.map";
+		public const string FirstMap = Map.MapDir + "//base.map";
 
 		static Unidad buildPlayer (LogicGrid grid)
 		{
@@ -51,7 +50,7 @@ namespace Helper
 			//var json = map.ToJSON ();
 			//Debug.WriteLine (json);
 			//map = Map.ReadFromJSON (json);
-			map = Map.ReadFromFile (@"Maps/dung00.map");
+			map = Map.ReadFromFile (FirstMap);
 			var ret = map.GenerateGrid (0);
 			player = buildPlayer (ret);
 			ret.AddCellObject (player);
