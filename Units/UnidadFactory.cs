@@ -84,6 +84,17 @@ namespace Units
 			}
 		}
 
+		static string getTextureString (EnemyType enemyType)
+		{
+			switch (enemyType)
+			{
+				case EnemyType.Imp:
+					return "swordman";
+				default:
+					return "swordman";
+			}
+		}
+
 		/// <summary>
 		/// Construye una unidad dado su tipo
 		/// </summary>
@@ -94,7 +105,8 @@ namespace Units
 		                         EnemyClass enemyClass,
 		                         float exp = 0)
 		{
-			var ret = new Unidad (Grid);
+			var textureString = getTextureString (enemyType);
+			var ret = new Unidad (Grid, textureString);
 
 			foreach (var x in GetAttrDistribution (enemyType, enemyClass))
 				ret.Exp.AddAssignation (x.Key, x.Value);

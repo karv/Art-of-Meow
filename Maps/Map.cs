@@ -122,8 +122,8 @@ namespace Maps
 
 			foreach (var x in EnemyType)
 				ret.Factory.AddEnemyType (x);
-
 			ret.Factory.PopulateGrid ();
+
 			if (AddFeatures)
 				addRandomFlavorFeatures (ret);
 			

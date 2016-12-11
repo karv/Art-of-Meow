@@ -20,6 +20,8 @@ namespace Maps
 
 		readonly IDistribution<int> NumEnemiesInterval;
 
+		static readonly Color enemyColor = Color.Blue;
+
 		List<EnemyGenerationData> enemyType { get; }
 
 		/// <summary>
@@ -30,7 +32,7 @@ namespace Maps
 			var numEnemies = NumEnemiesInterval.Pick ();	// Number of enemies
 			var expEach = Difficulty / numEnemies;			// Experience for each enemy
 
-			var enemyTeam = new TeamManager ();
+			var enemyTeam = new TeamManager (enemyColor);
 			for (int i = 0; i < numEnemies; i++)
 			{
 				// Pick a data
