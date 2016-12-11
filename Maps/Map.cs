@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Cells;
 using Cells.CellObjects;
-using Debugging;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using Units;
-using System.Runtime.Serialization;
-using System.Text;
-using Moggle.Controles.Listas;
 
 namespace Maps
 {
+	/// <summary>
+	/// Provides methods to convert maps into string, and string into maps
+	/// </summary>
 	public static class MapParser
 	{
+		/// <summary>
+		/// Convert a map into a enumeration os string
+		/// </summary>
 		public static IEnumerable <string> DataToString (char [,] data)
 		{
 			var sizeX = data.GetLength (0);
@@ -40,11 +43,17 @@ namespace Maps
 					yield return c;
 		}
 
+		/// <summary>
+		/// Convert an enumeration of string into the data of a map
+		/// </summary>
 		public static void StringToData (IEnumerable<string> data, char [,] output)
 		{
 			StringToData (data.EnumerateChars (), output);
 		}
 
+		/// <summary>
+		/// Convert an enumeration of char into the data of a map
+		/// </summary>
 		public static void StringToData (IEnumerable<char> data, char [,] output)
 		{
 			var i = 0;
@@ -52,8 +61,6 @@ namespace Maps
 			try
 			{
 				var sizeX = output.GetLength (0);
-				var sizeY = output.GetLength (1);
-				var mapSize = sizeX * sizeY;
 				foreach (var chr in data)
 				{
 					var ix = i % sizeX;
@@ -69,7 +76,7 @@ namespace Maps
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine (ex);
+				Debug.WriteLine (ex);
 			}
 		}
 	}
@@ -93,7 +100,6 @@ namespace Maps
 		{
 			set
 			{ 
-				var r = value;
 				MapParser.StringToData (value, _data); 
 			}
 			get
@@ -130,6 +136,10 @@ namespace Maps
 			return ret;
 		}
 
+		/// <summary>
+		/// Gets or sets the type of enemies in this map
+		/// </summary>
+		/// <value>The type of the enemy.</value>
 		[JsonProperty (Order = 3)]
 		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
 
@@ -242,7 +252,7 @@ namespace Maps
 			return ret;
 		}
 
-		public static Map HardCreateNew ()
+		internal static Map HardCreateNew ()
 		{
 			var ret = new Map (new Size (50, 50));
 			for (int i = 0; i < 50 * 50; i++)
@@ -333,6 +343,9 @@ namespace Maps
 			return map;
 		}
 
+		/// <summary>
+		/// Converts the map into a JSON formatted string
+		/// </summary>
 		public string ToJSON ()
 		{
 			return JsonConvert.SerializeObject (this, JsonSets);

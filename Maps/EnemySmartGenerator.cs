@@ -53,11 +53,20 @@ namespace Maps
 		/// </summary>
 		public float Difficulty;
 
+		/// <summary>
+		/// Adds the type of enemy
+		/// </summary>
+		/// <param name="type">Type.</param>
+		/// <param name="class">Class.</param>
 		public void AddEnemyType (EnemyType type, EnemyClass @class)
 		{
 			enemyType.Add (new EnemyGenerationData (type, @class));
 		}
 
+		/// <summary>
+		/// Adds the type of enemy.
+		/// </summary>
+		/// <param name="enemyType">Enemy type.</param>
 		public void AddEnemyType (EnemyGenerationData enemyType)
 		{
 			this.enemyType.Add (enemyType);
@@ -92,12 +101,25 @@ namespace Maps
 		{
 		}
 
+		/// <summary>
+		/// Has the information to generate a new enemies
+		/// </summary>
 		public struct EnemyGenerationData
 		{
+			/// <summary>
+			/// Type of enemy
+			/// </summary>
+			/// <value>The type.</value>
 			public EnemyType Type { get; }
 
+			/// <summary>
+			/// Class of enemy
+			/// </summary>
+			/// <value>The class.</value>
 			public EnemyClass Class { get; }
 
+			/// <param name="type">Type.</param>
+			/// <param name="class">Class.</param>
 			public EnemyGenerationData (EnemyType type, EnemyClass @class)
 			{
 				Type = type;
@@ -105,5 +127,4 @@ namespace Maps
 			}
 		}
 	}
-	
 }

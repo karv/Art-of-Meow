@@ -48,7 +48,7 @@ namespace Cells
 				{
 					return _cells [p.X, p.Y];
 				}
-				catch (IndexOutOfRangeException ex)
+				catch (IndexOutOfRangeException)
 				{
 					return Cell.EmptyCell;
 				}
