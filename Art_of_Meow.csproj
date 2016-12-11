@@ -203,6 +203,8 @@
     <Compile Include="Maps\EnemySmartGenerator.cs" />
     <Compile Include="Helper\IDistribution.cs" />
     <Compile Include="Debugging\DebugCategories.cs" />
+    <Compile Include="Units\EnemyType.cs" />
+    <Compile Include="Units\EnemyClass.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

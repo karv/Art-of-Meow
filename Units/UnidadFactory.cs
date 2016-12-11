@@ -11,37 +11,6 @@ using Units.Recursos;
 namespace Units
 {
 	/// <summary>
-	/// Enumera los tipos de enemigos
-	/// </summary>
-	public enum EnemyType
-	{
-		/// <summary>
-		/// Un duende, fácil
-		/// </summary>
-		Imp,
-
-		/// <summary>
-		/// The total number of types
-		/// </summary>
-		__total
-	}
-
-	/// <summary>
-	/// La clase de un enemigo para su creación
-	/// </summary>
-	public enum EnemyClass
-	{
-		/// <summary>
-		/// Clase warrior
-		/// </summary>
-		Warrior,
-		/// <summary>
-		/// The total number of types
-		/// </summary>
-		__total
-	}
-
-	/// <summary>
 	/// Provee métodos para generar unidades
 	/// </summary>
 	public class UnidadFactory

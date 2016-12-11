@@ -5,15 +5,14 @@ using AoM;
 using Cells.CellObjects;
 using Cells.Collision;
 using Helper;
+using Maps;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
-using Maps;
 
 namespace Cells
 {
-
 	/// <summary>
 	/// Representa la parte lógica de un tablero/mapa
 	/// </summary>

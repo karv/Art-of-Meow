@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Cells;
+using Helper;
 using Microsoft.Xna.Framework;
 using Units;
-using Helper;
 
 namespace Maps
 {
@@ -82,7 +82,7 @@ namespace Maps
 		{
 			Factory = factory;
 			Difficulty = difficulty;
-			NumEnemiesInterval = new Helper.IntegerInterval (minEnemies, maxEnemines);
+			NumEnemiesInterval = new IntegerInterval (minEnemies, maxEnemines);
 			enemyType = new List<EnemyGenerationData> ();
 			_r = new Random ();
 		}
