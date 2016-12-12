@@ -1,11 +1,11 @@
 ﻿using System;
+using AoM;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
-using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
+using Screens;
 using Units;
 
 namespace Componentes
@@ -18,7 +18,7 @@ namespace Componentes
 		/// <summary>
 		/// Jugador del cual se muestra la información
 		/// </summary>
-		public IUnidad Player { get; }
+		public Unidad Player { get; }
 
 		Rectangle drawingArea;
 
@@ -74,6 +74,8 @@ namespace Componentes
 		/// </summary>
 		public override void Update (GameTime gameTime)
 		{
+			RecursoView.Update (gameTime);
+			PlayerHooks.Update (gameTime);
 		}
 
 		/// <summary>
@@ -140,13 +142,29 @@ namespace Componentes
 
 		#endregion
 
+		GameTimeManager Time { get; }
+
+		/// <summary>
+		/// Shuts down the component.
+		///  De de-suscribe a los eventos del ratón
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Componentes.PlayerInfoControl"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Componentes.PlayerInfoControl"/> in an unusable state. After
+		/// calling <see cref="Dispose"/>, you must release all references to the <see cref="Componentes.PlayerInfoControl"/>
+		/// so the garbage collector can reclaim the memory that the <see cref="Componentes.PlayerInfoControl"/> was occupying.</remarks>
+		protected override void Dispose ()
+		{
+			base.Dispose ();
+			Time.AfterTimePassed -= updateEvent;
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Componentes.PlayerInfoControl"/> class.
 		/// </summary>
 		/// <param name="cont">Contenedor</param>
 		/// <param name="player">Jugador de información</param>
-		public PlayerInfoControl (IScreen cont,
-		                          IUnidad player)
+		public PlayerInfoControl (MapMainScreen cont,
+		                          Unidad player)
 			: base (cont)
 		{
 			if (player == null)
@@ -173,6 +191,14 @@ namespace Componentes
 				NumEntradasMostrar = 5,
 				TiempoEntreCambios = TimeSpan.FromMilliseconds (4000)
 			};
+
+			Time = cont.Grid.TimeManager;
+			Time.AfterTimePassed += updateEvent;
+		}
+
+		void updateEvent (object sender, float e)
+		{
+			ReloadStats ();
 		}
 	}
 }

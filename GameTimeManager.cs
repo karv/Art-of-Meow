@@ -23,11 +23,28 @@ namespace AoM
 		/// </summary>
 		IEnumerable<IGridObject> Objects { get { return MapGrid.Objects; } }
 
+		IUpdateGridObject _actual;
+
 		/// <summary>
 		/// Gets the current object
 		/// </summary>
 		/// <value>The actual.</value>
-		public IUpdateGridObject Actual { get; private set; }
+		public IUpdateGridObject Actual
+		{
+			get
+			{
+				return _actual;
+			}
+			private set
+			{
+				if (Actual == value)
+					return;
+
+				LostTurn?.Invoke (this, Actual);
+				_actual = value;
+				GotTurn?.Invoke (this, Actual);
+			}
+		}
 
 		IEnumerable<IUpdateGridObject> UpdateGridObjects
 		{
@@ -48,9 +65,12 @@ namespace AoM
 		/// <param name="time">length of time to pass</param>
 		public void PassTime (float time)
 		{
+			if (time == 0)
+				return;
 			foreach (var ob in new List<IUpdateGridObject> (UpdateGridObjects))
 				ob.PassTime (time);
 			TimePassed += time;
+			AfterTimePassed?.Invoke (this, time);
 		}
 
 		/// <summary>
@@ -83,6 +103,18 @@ namespace AoM
 			var ret = UpdateGridObjects.Aggregate ((x, y) => x.NextActionTime < y.NextActionTime ? x : y);
 			return ret;
 		}
+
+		/// <summary>
+		/// Occurs when a new object gets the turn
+		/// </summary>
+		public event EventHandler<IUpdateGridObject> GotTurn;
+
+		/// <summary>
+		/// Occurs when the current object loses the turn
+		/// </summary>
+		public event EventHandler<IUpdateGridObject> LostTurn;
+
+		public event EventHandler<float> AfterTimePassed;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AoM.GameTimeManager"/> class.
