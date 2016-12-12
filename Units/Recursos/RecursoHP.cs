@@ -81,41 +81,29 @@ namespace Units.Recursos
 		/// </summary>
 		public string NombreLargo { get { return "Hit points"; } }
 
-		float _valor;
-
 		/// <summary>
 		/// Gets or sets the current value of HP
 		/// </summary>
 		/// <value>The valor.</value>
 		public override float Valor
 		{
-			get { return _valor; }
-			set
-			{
-				var before = _valor;
-				_valor = Math.Min (Math.Max (value, 0), Max);
-
-				// Si no hay cambio, regresar inmediatamente
-				if (_valor == before)
-					return;
-				ValorChanged?.Invoke (this, before);
-
-				if (_valor == Max)
-					ReachedMax?.Invoke (this, EventArgs.Empty);
-				if (_valor == 0)
-					ReachedZero?.Invoke (this, EventArgs.Empty);
-			}
+			get { return Value.Value; }
+			set { Value.Value = value; }
 		}
 
 		/// <summary>
 		/// Gets or sets the max HP value 
 		/// </summary>
-		public float Max { get; set; }
+		public float Max
+		{
+			get{ return Value.Max; }
+			set { Value.Max = value; }
+		}
 
 		/// <summary>
 		/// Gets the relative value.  Value / MaxValue
 		/// </summary>
-		public float RelativeHp { get { return _valor / Max; } }
+		public float RelativeHp { get { return Valor / Max; } }
 
 		/// <summary>
 		/// Sets the HP to the max
@@ -138,6 +126,10 @@ namespace Units.Recursos
 			return value / Max;
 		}
 
+		RegenParam Regen { get; }
+
+		ValueParam Value { get; }
+
 		bool IVisibleRecurso.Visible { get { return true; } }
 
 		string IVisibleRecurso.TextureFill { get { return "pixel"; } }
@@ -148,15 +140,29 @@ namespace Units.Recursos
 		/// Ocurre cuando su valor cambia,
 		/// su argumento dice su valor antes del cambio
 		/// </summary>
-		public event EventHandler<float> ValorChanged;
+		public event EventHandler<float> ValorChanged
+		{
+			add{ Value.ValorChanged += value;}
+			remove{ Value.ValorChanged -= value;}
+		}
+
 		/// <summary>
 		/// Occurs when reached zero.
 		/// </summary>
-		public event EventHandler ReachedZero;
+		public event EventHandler ReachedZero
+		{
+			add{ Value.ReachedZero += value;}
+			remove{ Value.ReachedZero -= value;}
+		}
+
 		/// <summary>
 		/// Occurs when reached max.
 		/// </summary>
-		public event EventHandler ReachedMax;
+		public event EventHandler ReachedMax
+		{
+			add{ Value.ReachedMax += value;}
+			remove{ Value.ReachedMax -= value;}
+		}
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoHP"/>.
@@ -178,6 +184,71 @@ namespace Units.Recursos
 		public RecursoHP (IUnidad unidad)
 			: base (unidad)
 		{
+			Regen = new RegenParam (this);
+			Value = new ValueParam (this);
+			Parámetros.Add (Regen);
+			Parámetros.Add (Value);
+		}
+
+		class ValueParam : MaxParameter
+		{
+			public override void ReceiveExperience (float exp)
+			{
+				Max += 10 * exp;
+			}
+
+			const float expGainThreshold = 0.25f;
+			const float expGameRate = 0.9f;
+
+			public override void Update (float gameTime)
+			{
+				// pedir exp
+				if (recursoHP.RelativeHp < expGainThreshold)
+					Recurso.Unidad.Exp.AddAssignation (this, gameTime * expGameRate);
+			}
+
+			RecursoHP recursoHP { get { return Recurso as RecursoHP; } }
+
+			public override string NombreÚnico { get { return "value"; } }
+
+			public ValueParam (RecursoHP recurso)
+				: base (recurso)
+			{
+			}
+		}
+
+		class RegenParam : IParámetroRecurso
+		{
+			public void ReceiveExperience (float exp)
+			{
+				Valor += exp;
+			}
+
+			const float expGainThreshold = 0.5f;
+
+			const float expGameRate = 0.01f;
+
+			public void Update (float gameTime)
+			{
+				Recurso.Valor += Valor * gameTime * 20;
+
+				// pedir exp
+				if (Recurso.RelativeHp < expGainThreshold)
+					Recurso.Unidad.Exp.AddAssignation (this, gameTime * expGameRate);
+			}
+
+			public RecursoHP Recurso { get; }
+
+			IRecurso IParámetroRecurso.Recurso { get { return Recurso; } }
+
+			public string NombreÚnico { get { return "regen"; } }
+
+			public float Valor { get; set; }
+
+			public RegenParam (RecursoHP recBase)
+			{
+				Recurso = recBase;
+			}
 		}
 	}
 }
