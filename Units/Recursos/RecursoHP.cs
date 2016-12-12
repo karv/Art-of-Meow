@@ -94,7 +94,11 @@ namespace Units.Recursos
 		/// <summary>
 		/// Gets or sets the max HP value 
 		/// </summary>
-		public float Max { get; set; }
+		public float Max
+		{
+			get{ return Value.Max; }
+			set { Value.Max = value; }
+		}
 
 		/// <summary>
 		/// Gets the relative value.  Value / MaxValue
