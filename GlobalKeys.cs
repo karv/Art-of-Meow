@@ -45,6 +45,10 @@ namespace AoM
 		/// Usar escaleras
 		/// </summary>
 		public static Keys [] Stairs = { Keys.Enter };
+		/// <summary>
+		/// Wait (hold position)
+		/// </summary>
+		public static Keys [] WaitKey = { Keys.W, Keys.Space };
 
 		#endregion
 

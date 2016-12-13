@@ -135,6 +135,13 @@ namespace Units.Inteligencia
 			{
 				PersistenceDir = MovementDirectionEnum.DownRight;
 			}
+			else if (GlobalKeys.WaitKey.Contains (key))
+			{
+				const float waitTime = 0.05f;
+				ControlledUnidad.EnqueueOrder (new CooldownOrder (
+					ControlledUnidad,
+					waitTime));
+			}
 			else if (GlobalKeys.PickupDroppedItems.Contains (key))
 			{
 				// Tomar los objetos
