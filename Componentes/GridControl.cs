@@ -275,7 +275,7 @@ namespace Componentes
 		/// The size of the edge.
 		/// Objects outside this area are considered as "centered enough"
 		/// </summary>
-		static Size _edgeSize = new Size (4, 3);
+		static Size _edgeSize = new Size (10, 8);
 
 		/// <summary>
 		/// Centers the view on a given object, if it is not centered enough.
