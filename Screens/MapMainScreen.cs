@@ -203,6 +203,14 @@ namespace Screens
 			PlayerInfoControl = new PlayerInfoControl (this, Player);
 			PlayerInfoControl.DrawingArea = new Rectangle (
 				GridDrawingRectangle.Right, 0, 300, 900);
+
+			// Evento de movimiento para centrar cámara
+			Player.OnRelocation += recenterCameraOnPlayer;
+		}
+
+		void recenterCameraOnPlayer (object sender, EventArgs e)
+		{
+			GridControl.CenterIfNeeded (Player);
 		}
 
 		/// <summary>
