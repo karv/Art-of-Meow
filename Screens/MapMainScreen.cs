@@ -276,7 +276,6 @@ namespace Screens
 			var playerCell = Grid.GetCell (Player.Location);
 			foreach (var x in playerCell.EnumerateObjects ().OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (keyArg);
-			GridControl.CenterIfNeeded (Player);
 		}
 
 		/// <summary>

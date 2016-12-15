@@ -42,7 +42,7 @@ namespace Units.Inteligencia
 
 		void IUnidadController.DoAction ()
 		{
-			ControlledUnidad.assertIsIdleCheck ();
+			ControlledUnidad.assertIsIdle ();
 			TryUpdateTarget ();
 			if (Target == null)
 				return; // Si no encuentra enemigo, debe ser porque la instancia de mapa se está desechando

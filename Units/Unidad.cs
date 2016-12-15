@@ -337,7 +337,7 @@ namespace Units
 					return false;
 
 				// Construct the order
-				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
+				assertIsIdle ();// Unidad debe estar idle para llegar aquí
 				var melee = Equipment.GetMeleeDamageType ();
 				var eff = melee.GetEffect (this, target);
 				eff.Execute ();
@@ -349,7 +349,7 @@ namespace Units
 			}
 			else
 			{
-				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
+				assertIsIdle ();// Unidad debe estar idle para llegar aquí
 				PrimitiveOrders.Queue (new CooldownOrder (
 					this,
 					calcularTiempoMov (
@@ -360,7 +360,7 @@ namespace Units
 		}
 
 		[Conditional ("DEBUG")]
-		internal void assertIsIdleCheck ()
+		internal void assertIsIdle ()
 		{
 			if (!PrimitiveOrders.IsIdle)
 				throw new Exception ();

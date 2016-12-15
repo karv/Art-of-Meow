@@ -259,6 +259,9 @@ namespace Cells
 		public bool MoveCellObject (ICollidableGridObject objeto,
 		                            MovementDirectionEnum dir)
 		{
+			if (dir == MovementDirectionEnum.NoMov)
+				return false;
+			
 			var moveDir = dir.AsDirectionalPoint ();
 			var endLoc = objeto.Location + moveDir;
 
