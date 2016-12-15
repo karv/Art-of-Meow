@@ -1,21 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Cells;
 using Cells.CellObjects;
-using Cells.Collision;
-using Helper;
-using Items;
 using Microsoft.Xna.Framework;
-using Skills;
-using Units.Buffs;
-using Units.Equipment;
-using Units.Order;
-using Units.Recursos;
-using Units.Skills;
 
 namespace Units
 {
+	/// <summary>
+	/// This object can be relocated by the <see cref="Cells.LogicGrid"/>
+	/// </summary>
 	public interface IGridMoveable : IGridObject
 	{
 		/// <summary>
@@ -38,5 +29,4 @@ namespace Units
 		/// </summary>
 		event EventHandler OnRelocation;
 	}
-	
 }

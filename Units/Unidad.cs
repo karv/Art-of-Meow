@@ -34,6 +34,11 @@ namespace Units
 		/// </summary>
 		public event EventHandler OnRelocation;
 
+		/// <summary>
+		/// Determines whether this instance can move to the specified destination.
+		/// </summary>
+		/// <returns><c>true</c> if this instance can move the specified destination; otherwise, <c>false</c>.</returns>
+		/// <param name="destination">Destination.</param>
 		public bool CanMove (Point destination)
 		{
 			return true;
