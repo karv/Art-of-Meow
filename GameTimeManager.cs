@@ -114,6 +114,9 @@ namespace AoM
 		/// </summary>
 		public event EventHandler<IUpdateGridObject> LostTurn;
 
+		/// <summary>
+		/// Occurs when time > 0 passed.
+		/// </summary>
 		public event EventHandler<float> AfterTimePassed;
 
 		/// <summary>

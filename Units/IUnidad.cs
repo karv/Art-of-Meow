@@ -25,6 +25,7 @@ namespace Units
 	IExpGiver,
 	IEffectAgent,
 	ITarget,
+	IGridMoveable,
 	IDisposable
 	{
 		/// <summary>

@@ -77,8 +77,8 @@ namespace Maps
 		/// </summary>
 		public EnemySmartGenerator (UnidadFactory factory,
 		                            float difficulty,
-		                            int minEnemies = 1,
-		                            int maxEnemines = 10)
+		                            int minEnemies = 0,
+		                            int maxEnemines = 5)
 		{
 			Factory = factory;
 			Difficulty = difficulty;
@@ -92,8 +92,8 @@ namespace Maps
 		/// </summary>
 		public EnemySmartGenerator (LogicGrid grid,
 		                            float difficulty,
-		                            int minEnemies = 1,
-		                            int maxEnemines = 10)
+		                            int minEnemies = 0,
+		                            int maxEnemines = 5)
 			: this (new UnidadFactory (grid),
 			        difficulty,
 			        minEnemies,

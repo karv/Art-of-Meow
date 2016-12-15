@@ -249,8 +249,8 @@ namespace Componentes
 		/// <param name="p">P.</param>
 		public void TryCenterOn (Point p)
 		{
-			var left = Math.Max (0, p.X - VisibleCells.Width / 2);
-			var top = Math.Max (0, p.Y - VisibleCells.Height / 2);
+			var left = p.X - VisibleCells.Width / 2;
+			var top = p.Y - VisibleCells.Height / 2;
 			CurrentVisibleTopLeft = new Point (left, top);
 		}
 
@@ -275,7 +275,7 @@ namespace Componentes
 		/// The size of the edge.
 		/// Objects outside this area are considered as "centered enough"
 		/// </summary>
-		static Size _edgeSize = new Size (4, 3);
+		static Size _edgeSize = new Size (6, 4);
 
 		/// <summary>
 		/// Centers the view on a given object, if it is not centered enough.

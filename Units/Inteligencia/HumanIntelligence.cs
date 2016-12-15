@@ -51,7 +51,7 @@ namespace Units.Inteligencia
 		{
 			if (!shouldDoAction ())
 				return;
-			ControlledUnidad.assertIsIdleCheck ();
+			ControlledUnidad.assertIsIdle ();
 			if (PersistenceDir != MovementDirectionEnum.NoMov)
 			{
 				ControlledUnidad.MoveOrMelee (PersistenceDir);

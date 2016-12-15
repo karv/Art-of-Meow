@@ -30,6 +30,30 @@ namespace Units
 		public string Nombre { get; set; }
 
 		/// <summary>
+		/// Ocurrs when location changes
+		/// </summary>
+		public event EventHandler OnRelocation;
+
+		/// <summary>
+		/// Determines whether this instance can move to the specified destination.
+		/// </summary>
+		/// <returns><c>true</c> if this instance can move the specified destination; otherwise, <c>false</c>.</returns>
+		/// <param name="destination">Destination.</param>
+		public bool CanMove (Point destination)
+		{
+			return true;
+		}
+
+		void IGridMoveable.BeforeMoving (Point destination)
+		{
+		}
+
+		void IGridMoveable.AfterMoving (Point destination)
+		{
+			OnRelocation?.Invoke (this, EventArgs.Empty);
+		}
+
+		/// <summary>
 		/// Gets the team's id
 		/// </summary>
 		public TeamManager Team { get; set; }
@@ -318,7 +342,7 @@ namespace Units
 					return false;
 
 				// Construct the order
-				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
+				assertIsIdle ();// Unidad debe estar idle para llegar aquí
 				var melee = Equipment.GetMeleeDamageType ();
 				var eff = melee.GetEffect (this, target);
 				eff.Execute ();
@@ -330,7 +354,7 @@ namespace Units
 			}
 			else
 			{
-				assertIsIdleCheck ();// Unidad debe estar idle para llegar aquí
+				assertIsIdle ();// Unidad debe estar idle para llegar aquí
 				PrimitiveOrders.Queue (new CooldownOrder (
 					this,
 					calcularTiempoMov (
@@ -341,7 +365,7 @@ namespace Units
 		}
 
 		[Conditional ("DEBUG")]
-		internal void assertIsIdleCheck ()
+		internal void assertIsIdle ()
 		{
 			if (!PrimitiveOrders.IsIdle)
 				throw new Exception ();
