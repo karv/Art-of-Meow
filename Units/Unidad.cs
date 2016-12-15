@@ -30,6 +30,25 @@ namespace Units
 		public string Nombre { get; set; }
 
 		/// <summary>
+		/// Ocurrs when location changes
+		/// </summary>
+		public event EventHandler OnRelocation;
+
+		public bool CanMove (Point destination)
+		{
+			return true;
+		}
+
+		void IGridMoveable.BeforeMoving (Point destination)
+		{
+		}
+
+		void IGridMoveable.AfterMoving (Point destination)
+		{
+			OnRelocation?.Invoke (this, EventArgs.Empty);
+		}
+
+		/// <summary>
 		/// Gets the team's id
 		/// </summary>
 		public TeamManager Team { get; set; }

@@ -263,11 +263,15 @@ namespace Cells
 			var endLoc = objeto.Location + moveDir;
 
 			var destCell = this [endLoc];
-			if (_collisionSystem.CanFill (objeto, destCell))
+			var moveObj = objeto as IGridMoveable;
+			var shouldMove = moveObj?.CanMove (endLoc) ?? true;
+			if (shouldMove && _collisionSystem.CanFill (objeto, destCell))
 			{
+				moveObj?.BeforeMoving (endLoc);
 				this [objeto.Location].Remove (objeto);
 				objeto.Location = endLoc;
 				this [objeto.Location].Add (objeto);
+				moveObj?.AfterMoving (endLoc);
 				return true;
 			}
 			return false;

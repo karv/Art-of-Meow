@@ -206,6 +206,7 @@
     <Compile Include="Units\EnemyType.cs" />
     <Compile Include="Units\EnemyClass.cs" />
     <Compile Include="Units\Recursos\MaxParameter.cs" />
+    <Compile Include="Units\IGridMoveable.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
