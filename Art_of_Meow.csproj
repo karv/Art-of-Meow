@@ -207,6 +207,10 @@
     <Compile Include="Units\EnemyClass.cs" />
     <Compile Include="Units\Recursos\MaxParameter.cs" />
     <Compile Include="Units\IGridMoveable.cs" />
+    <Compile Include="Maps\MapParser.cs" />
+    <Compile Include="Helper\ItemWeightPair.cs" />
+    <Compile Include="Helper\ProbabilityInstanceSet.cs" />
+    <Compile Include="Helper\PickOneProbabilityDictionary.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

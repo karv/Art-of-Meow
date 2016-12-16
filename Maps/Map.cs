@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using Cells;
 using Cells.CellObjects;
+using Helper;
+using Items;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
@@ -13,74 +15,6 @@ using Units;
 
 namespace Maps
 {
-	/// <summary>
-	/// Provides methods to convert maps into string, and string into maps
-	/// </summary>
-	public static class MapParser
-	{
-		/// <summary>
-		/// Convert a map into a enumeration os string
-		/// </summary>
-		public static IEnumerable <string> DataToString (char [,] data)
-		{
-			var sizeX = data.GetLength (0);
-			var sizeY = data.GetLength (1);
-
-			var line = new StringBuilder ();
-			for (int ix = 0; ix < sizeX; ix++)
-			{
-				for (int iy = 0; iy < sizeY; iy++)
-					line.Append (data [ix, iy]);
-				yield return line.ToString ();
-				line.Clear ();
-			}		
-		}
-
-		static IEnumerable<char> EnumerateChars (this IEnumerable<IEnumerable<char>> obj)
-		{
-			foreach (var str in obj)
-				foreach (var c in str)
-					yield return c;
-		}
-
-		/// <summary>
-		/// Convert an enumeration of string into the data of a map
-		/// </summary>
-		public static void StringToData (IEnumerable<string> data, char [,] output)
-		{
-			StringToData (data.EnumerateChars (), output);
-		}
-
-		/// <summary>
-		/// Convert an enumeration of char into the data of a map
-		/// </summary>
-		public static void StringToData (IEnumerable<char> data, char [,] output)
-		{
-			var i = 0;
-			var j = 0;
-			try
-			{
-				var sizeX = output.GetLength (0);
-				foreach (var chr in data)
-				{
-					var ix = i % sizeX;
-					var iy = i / sizeX;
-
-					if (Map.ExistSymbol (chr))
-					{
-						output [ix, iy] = chr;
-						i++;
-						j++;
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine (ex);
-			}
-		}
-	}
-
 	/// <summary>
 	/// Representa un conjunto de características.
 	/// Provee un constructor de <see cref="Cells.LogicGrid"/>
@@ -132,9 +66,31 @@ namespace Maps
 
 			if (AddFeatures)
 				addRandomFlavorFeatures (ret);
+
+			if (MapItemGroundItems != null)
+				addDropItems (ret);
 			
 			return ret;
 		}
+
+		void addDropItems (LogicGrid grid)
+		{
+			var items = MapItemGroundItems.Pick ();
+			foreach (var x in items)
+			{
+				var loc = grid.GetRandomEmptyCell ();
+				var newItem = ItemFactory.CreateItem (x);
+				var groundItem = new GroundItem (newItem, grid);
+				groundItem.Location = loc;
+				grid.AddCellObject (groundItem);
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the distribution used to produce items
+		/// </summary>
+		[JsonProperty (Order = 4)]
+		public ProbabilityInstanceSet<ItemType> MapItemGroundItems { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of enemies in this map
