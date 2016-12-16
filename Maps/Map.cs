@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using Cells;
 using Cells.CellObjects;
+using Helper;
+using Items;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
@@ -64,9 +66,31 @@ namespace Maps
 
 			if (AddFeatures)
 				addRandomFlavorFeatures (ret);
+
+			if (MapItemGroundItems != null)
+				addDropItems (ret);
 			
 			return ret;
 		}
+
+		void addDropItems (LogicGrid grid)
+		{
+			var items = MapItemGroundItems.Pick ();
+			foreach (var x in items)
+			{
+				var loc = grid.GetRandomEmptyCell ();
+				var newItem = ItemFactory.CreateItem (x);
+				var groundItem = new GroundItem (newItem, grid);
+				groundItem.Location = loc;
+				grid.AddCellObject (groundItem);
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the distribution used to produce items
+		/// </summary>
+		[JsonProperty (Order = 4)]
+		public IDistribution<ICollection<ItemType>> MapItemGroundItems { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of enemies in this map
