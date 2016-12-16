@@ -188,7 +188,7 @@ namespace Componentes
 
 			Stats = new MultiEtiqueta (cont)
 			{
-				NumEntradasMostrar = 5,
+				NumEntradasMostrar = 15,
 				TiempoEntreCambios = TimeSpan.FromMilliseconds (4000)
 			};
 
