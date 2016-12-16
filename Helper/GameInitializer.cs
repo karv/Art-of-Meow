@@ -53,13 +53,6 @@ namespace Helper
 			//Debug.WriteLine (json);
 			//map = Map.ReadFromJSON (json);
 			map = Map.ReadFromFile (FirstMap);
-			var dropSetter = new ProbabilityInstanceSet<ItemType> ();
-			dropSetter.Add (ItemType.HealingPotion, 0.1f);
-			dropSetter.Add (ItemType.HealingPotion, 0.1f);
-			dropSetter.Add (ItemType.HealingPotion, 0.1f);
-			dropSetter.Add (ItemType.HealingPotion, 0.1f);
-			//map.MapItemGroundItems = dropSetter;
-			Debug.WriteLine (JsonConvert.SerializeObject (map));
 			var ret = map.GenerateGrid (0);
 
 			player = buildPlayer (ret);

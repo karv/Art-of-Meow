@@ -59,5 +59,19 @@
       "Class": 0
     }
   ],
-  "AddFeatures": true
+  "AddFeatures": true,
+  "MapItemGroundItems":
+  {
+    "Values": [
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2},
+      {"Item":4,"Weight":0.2}
+    ]
 }
