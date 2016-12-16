@@ -22,10 +22,18 @@ namespace Helper
 			var ret = new List<TItem> ();
 
 			foreach (var item in probItems)
-				if (item.Weight < rnd.NextDouble ())
+				if (rnd.NextDouble () < item.Weight)
 					ret.Add (item.Item);
 			
 			return ret;
+		}
+
+		public void Add (TItem obj, float chance)
+		{
+			if (chance < 0 || chance > 1)
+				throw new InvalidOperationException ();
+			
+			probItems.Add (new ItemWeightPair<TItem> (obj, chance));
 		}
 
 		/// <summary>

@@ -90,7 +90,7 @@ namespace Maps
 		/// Gets or sets the distribution used to produce items
 		/// </summary>
 		[JsonProperty (Order = 4)]
-		public IDistribution<ICollection<ItemType>> MapItemGroundItems { get; set; }
+		public ProbabilityInstanceSet<ItemType> MapItemGroundItems { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of enemies in this map
