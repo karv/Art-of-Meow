@@ -4,6 +4,7 @@ using System.Linq;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
@@ -11,7 +12,6 @@ using MonoGame.Extended.Shapes;
 using Units;
 using Units.Inteligencia;
 using Units.Recursos;
-using Microsoft.Xna.Framework.Content;
 
 namespace Componentes
 {

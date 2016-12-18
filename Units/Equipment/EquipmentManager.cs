@@ -5,9 +5,8 @@ using System.Linq;
 using Debugging;
 using Items;
 using Items.Declarations.Equipment;
-using Moggle;
-using Units.Buffs;
 using Microsoft.Xna.Framework.Content;
+using Units.Buffs;
 
 namespace Units.Equipment
 {

@@ -4,6 +4,7 @@ using AoM;
 using Cells;
 using Helper;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Screens;
@@ -11,7 +12,6 @@ using Skills;
 using Units;
 using Units.Recursos;
 using Units.Skills;
-using Microsoft.Xna.Framework.Content;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -52,7 +52,7 @@ namespace Items.Declarations.Equipment.Skills
 			var ret = new SkillInstance (this, user);
 			ret.Effects.Chance = chance;
 			ret.Effects.AddEffect (ef);
-			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, 1), true); // TODO calcular cooldowntime
+			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, 1), true);
 
 			return ret;
 		}

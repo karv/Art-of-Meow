@@ -1,11 +1,9 @@
 ﻿using System;
-using AoM;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle;
 using Moggle.Controles;
 using Units;
-using Microsoft.Xna.Framework.Content;
 
 namespace Cells.CellObjects
 {

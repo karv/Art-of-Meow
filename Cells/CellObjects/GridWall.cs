@@ -1,11 +1,9 @@
 using System;
-using AoM;
 using Cells.Collision;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Moggle;
-using Moggle.Controles;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 
 namespace Cells.CellObjects
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Moggle.Controles;
 using Microsoft.Xna.Framework.Content;
+using Moggle.Controles;
 
 namespace Units.Skills
 {

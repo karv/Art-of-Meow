@@ -58,7 +58,8 @@ namespace Screens
 
 		void cargarContenido ()
 		{
-			foreach (var x in Enumerable.Union (Unidad.Inventory.Items, Unidad.Equipment.EnumerateEquipment ()))
+			// Loads items and equipment objects
+			foreach (var x in Unidad.Inventory.Items.Union (Unidad.Equipment.EnumerateEquipment ()))
 				x.LoadContent (Content);
 		}
 

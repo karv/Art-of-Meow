@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using Helper;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended;
 using Units.Recursos;
-using Microsoft.Xna.Framework.Content;
 
 namespace Componentes
 {
@@ -19,8 +19,6 @@ namespace Componentes
 
 		readonly RetardValue [] _suavizador;
 		readonly IVisibleRecurso [] _recursos;
-		readonly Texture2D [] _texture;
-		Texture2D _contornoTextura;
 
 		readonly int count;
 
@@ -57,15 +55,8 @@ namespace Componentes
 
 		void IComponent.LoadContent (ContentManager manager)
 		{
-			var textMaker = new Moggle.Textures.SimpleTextures (Screen.Device);
-			_contornoTextura = textMaker.OutlineTexture (
-				Size,
-				Color.Black,
-				Color.Transparent);
-
 			for (int i = 0; i < count; i++)
 				_recursos [i].LoadContent (manager);
-			//_texture [i] = manager.Load<Texture2D> (_recursos [i].TextureFill);
 		}
 
 		#endregion
@@ -181,7 +172,6 @@ namespace Componentes
 			_recursos = Recursos.Enumerate ().OfType<IVisibleRecurso> ().ToArray ();
 			count = _recursos.Length;
 			_suavizador = new RetardValue[count];
-			_texture = new Texture2D[count];
 
 			Size = new Size (64, 8);
 			TopLeft = new Point (3, 3);

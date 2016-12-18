@@ -2,7 +2,6 @@
 using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle.Textures;
 using Moggle.Controles;
 
 namespace Units.Recursos
@@ -132,9 +131,6 @@ namespace Units.Recursos
 
 		bool IVisibleRecurso.Visible { get { return true; } }
 
-		readonly Texture2D _textureFilling;
-		readonly Texture2D _textureBorder;
-
 		/// <summary>
 		/// Ocurre cuando su valor cambia,
 		/// su argumento dice su valor antes del cambio
@@ -169,11 +165,12 @@ namespace Units.Recursos
 		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoHP"/>.</returns>
 		public override string ToString ()
 		{
-			return base.ToString () + string.Format (
-				"{0}: {1}/{2}",
+			return string.Format (
+				"{3}::{0}: {1}/{2}",
 				NombreCorto,
 				Valor,
-				Max);
+				Max, 
+				base.ToString ());
 		}
 
 

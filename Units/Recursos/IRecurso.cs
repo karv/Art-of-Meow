@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using AoM;
-using Microsoft.Xna.Framework;
-using Units;
-using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using Units;
 
 namespace Units.Recursos
 {

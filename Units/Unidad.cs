@@ -6,8 +6,8 @@ using Cells.CellObjects;
 using Cells.Collision;
 using Items;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle;
 using Moggle.Controles;
 using Skills;
 using Units.Buffs;
@@ -15,7 +15,6 @@ using Units.Equipment;
 using Units.Inteligencia;
 using Units.Order;
 using Units.Recursos;
-using Microsoft.Xna.Framework.Content;
 
 namespace Units
 {

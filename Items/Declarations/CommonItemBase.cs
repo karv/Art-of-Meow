@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using AoM;
 using Debugging;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Moggle;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Items.Declarations
 {

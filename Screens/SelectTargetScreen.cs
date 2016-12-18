@@ -178,7 +178,7 @@ namespace Screens
 			}
 			if (GlobalKeys.Accept.Contains (key))
 			{
-				HayRespuesta?.Invoke (this, this.GridSelector.CursorPosition);
+				HayRespuesta?.Invoke (this, GridSelector.CursorPosition);
 				data.Item2.TerminateLast ();
 				return true;
 			}

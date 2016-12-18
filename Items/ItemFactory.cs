@@ -1,10 +1,8 @@
 ﻿using System;
-using AoM;
 using Items.Declarations.Equipment;
 using Items.Declarations.Equipment.Skills;
 using Items.Declarations.Pots;
 using Microsoft.Xna.Framework;
-using Moggle;
 
 namespace Items
 {

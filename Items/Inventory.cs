@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AoM;
 using Items;
-using Moggle;
+using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
-using Microsoft.Xna.Framework.Content;
 
 namespace Items
 {
