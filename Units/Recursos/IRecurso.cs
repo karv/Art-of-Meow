@@ -2,33 +2,20 @@ using System.Collections.Generic;
 using AoM;
 using Microsoft.Xna.Framework;
 using Units;
+using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 
 namespace Units.Recursos
 {
 	/// <summary>
 	/// Un recurso que puede ser mostrado en <see cref="Componentes.RecursoView"/>
 	/// </summary>
-	public interface IVisibleRecurso : IRecurso
+	public interface IVisibleRecurso : IRecurso, IDibujable
 	{
 		/// <summary>
 		/// El recurso es visible
 		/// </summary>
 		bool Visible { get; }
-
-		/// <summary>
-		/// Nombre de la textura relleno
-		/// </summary>
-		string TextureFill { get; }
-
-		/// <summary>
-		/// Color de relleno
-		/// </summary>
-		Color FullColor { get; }
-
-		/// <summary>
-		/// Devuelve el porcentage (en la barra) que le corresponde a un valor dado
-		/// </summary>
-		float PctValue (float value);
 	}
 
 	/// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using AoM;
 
 namespace Units.Recursos
 {
@@ -8,6 +9,30 @@ namespace Units.Recursos
 	/// </summary>
 	public class RecursoEquilibro : Recurso, IVisibleRecurso
 	{
+		readonly Color FillColor = Color.Blue;
+
+		void Moggle.Controles.IDibujable.Draw (Microsoft.Xna.Framework.Graphics.SpriteBatch bat,
+		                                       Rectangle rect)
+		{
+			var text = Juego.Textures.SolidTexture;
+
+			/* Horizontal*/
+			var fullRect = new Rectangle (
+				               rect.Location,
+				               new Point ((int)(Valor * rect.Width), rect.Height));
+
+			bat.Draw (text, fullRect, FillColor);
+		}
+
+		void Moggle.Controles.IComponent.LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+		}
+
+		void IGameComponent.Initialize ()
+		{
+		}
+
+		
 		/// <summary>
 		/// El valor en el que se reduce con acada acción
 		/// </summary>
@@ -15,32 +40,11 @@ namespace Units.Recursos
 
 		#region Visibilidad
 
-		float IVisibleRecurso.PctValue (float value)
-		{
-			return value;
-		}
-
 		bool IVisibleRecurso.Visible
 		{
 			get
 			{
 				return true;
-			}
-		}
-
-		string IVisibleRecurso.TextureFill
-		{
-			get
-			{
-				return "pixel";
-			}
-		}
-
-		Color IVisibleRecurso.FullColor
-		{
-			get
-			{
-				return Color.Blue;
 			}
 		}
 

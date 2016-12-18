@@ -64,8 +64,8 @@ namespace Componentes
 				Color.Transparent);
 
 			for (int i = 0; i < count; i++)
-				_texture [i] = manager.Load<Texture2D> (_recursos [i].TextureFill);
-			
+				_recursos [i].LoadContent (manager);
+			//_texture [i] = manager.Load<Texture2D> (_recursos [i].TextureFill);
 		}
 
 		#endregion
@@ -137,19 +137,8 @@ namespace Componentes
 		/// <param name="index">Índice del recurso en dibujo</param>
 		void draw (SpriteBatch batch, Rectangle rect, int index)
 		{
-			var ret = _suavizador [index];
 			var rec = _recursos [index];
-
-			var text = _texture [index];
-
-			var deltaRect = new Rectangle (
-				                rect.Location,
-				                new Point (
-					                (int)(rec.PctValue (ret.VisibleValue) * rect.Width),
-					                rect.Height));
-
-			batch.Draw (text, deltaRect, rec.FullColor);
-			batch.Draw (_contornoTextura, rect, Color.Black);
+			rec.Draw (batch, rect);
 		}
 
 		/// <summary>
