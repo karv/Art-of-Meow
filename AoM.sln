@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Art_of_Meow", "Art_of_Meow.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{36AC7EB9-A814-4F10-9F34-4EE66D36C51B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controles_Moggle", "Moggle\Controles_Moggle.csproj", "{63EB1C06-BE20-4A59-B879-C9E52DA53204}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -15,6 +17,10 @@ Global
 		{36AC7EB9-A814-4F10-9F34-4EE66D36C51B}.Debug|x86.Build.0 = Debug|Any CPU
 		{36AC7EB9-A814-4F10-9F34-4EE66D36C51B}.Release|x86.ActiveCfg = Release|Any CPU
 		{36AC7EB9-A814-4F10-9F34-4EE66D36C51B}.Release|x86.Build.0 = Release|Any CPU
+		{63EB1C06-BE20-4A59-B879-C9E52DA53204}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63EB1C06-BE20-4A59-B879-C9E52DA53204}.Debug|x86.Build.0 = Debug|Any CPU
+		{63EB1C06-BE20-4A59-B879-C9E52DA53204}.Release|x86.ActiveCfg = Release|Any CPU
+		{63EB1C06-BE20-4A59-B879-C9E52DA53204}.Release|x86.Build.0 = Release|Any CPU
 		{AF2D54DE-9879-4C2F-8911-628AB7D239A2}.Debug|x86.ActiveCfg = Debug|x86
 		{AF2D54DE-9879-4C2F-8911-628AB7D239A2}.Debug|x86.Build.0 = Debug|x86
 		{AF2D54DE-9879-4C2F-8911-628AB7D239A2}.Release|x86.ActiveCfg = Release|x86

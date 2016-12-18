@@ -46,17 +46,11 @@
     <Reference Include="AdvMath">
       <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
     </Reference>
-    <Reference Include="Controles_Moggle">
-      <HintPath>packages\Moggle.0.11.1\lib\Controles_Moggle.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoGame.Extended">
-      <HintPath>packages\Moggle.0.11.1\lib\MonoGame.Extended.dll</HintPath>
-    </Reference>
-    <Reference Include="NVorbis">
-      <HintPath>packages\Moggle.0.11.1\lib\NVorbis.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Extended">
+      <HintPath>packages\MonoGame.Extended.0.6.0.0\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -247,5 +241,11 @@
     <Folder Include="Items\Declarations\Equipment\Skills\" />
     <Folder Include="Skills\" />
     <Folder Include="Items\Modifiers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Moggle\Controles_Moggle.csproj">
+      <Project>{63EB1C06-BE20-4A59-B879-C9E52DA53204}</Project>
+      <Name>Controles_Moggle</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
