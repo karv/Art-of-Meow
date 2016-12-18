@@ -28,6 +28,10 @@ namespace Helper
 			return ret;
 		}
 
+		/// <summary>
+		/// Add the specified obj and chance.
+		/// </summary>
+		/// <exception cref="T:System.InvalidOperationException">The chance is a number between 0 and 1 (inclusive)</exception>
 		public void Add (TItem obj, float chance)
 		{
 			if (chance < 0 || chance > 1)
