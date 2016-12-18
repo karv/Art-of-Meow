@@ -5,6 +5,7 @@ using Moggle;
 using Skills;
 using Units.Order;
 using Units.Recursos;
+using Microsoft.Xna.Framework.Content;
 
 namespace Units.Skills
 {
@@ -17,8 +18,6 @@ namespace Units.Skills
 
 		const float _heal = 10f;
 		const float _mpCost = 3f;
-
-		static BibliotecaContenido content { get; }
 
 		/// <summary>
 		/// Devuelve la última instancia generada.
@@ -97,20 +96,11 @@ namespace Units.Skills
 		const string TextureName = "heal";
 
 		/// <summary>
-		/// Loads the icon texture
-		/// </summary>
-		public void AddContent ()
-		{
-			content.AddContent (TextureName);
-			InitializeContent ();
-		}
-
-		/// <summary>
 		/// Carga la textura
 		/// </summary>
-		public void InitializeContent ()
+		public void LoadContent (ContentManager manager)
 		{
-			_texture = content.GetContent<Texture2D> (TextureName);
+			_texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		#endregion

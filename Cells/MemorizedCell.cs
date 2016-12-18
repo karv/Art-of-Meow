@@ -12,6 +12,14 @@ namespace Cells
 	{
 		readonly List<Texture2D> objects;
 
+		void IComponent.LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+		}
+
+		void IGameComponent.Initialize ()
+		{
+		}
+
 		/// <summary>
 		/// Devuelve o establece la transparencia
 		/// </summary>

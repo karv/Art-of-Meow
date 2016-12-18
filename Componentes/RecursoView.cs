@@ -6,6 +6,7 @@ using Moggle.Controles;
 using Moggle.Screens;
 using MonoGame.Extended;
 using Units.Recursos;
+using Microsoft.Xna.Framework.Content;
 
 namespace Componentes
 {
@@ -54,13 +55,7 @@ namespace Componentes
 
 		#region IComponent implementation
 
-		void IComponent.AddContent ()
-		{
-			foreach (var x in _recursos)
-				Screen.Content.AddContent (x.TextureFill);
-		}
-
-		void IComponent.InitializeContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
 			var textMaker = new Moggle.Textures.SimpleTextures (Screen.Device);
 			_contornoTextura = textMaker.OutlineTexture (
@@ -69,7 +64,8 @@ namespace Componentes
 				Color.Transparent);
 
 			for (int i = 0; i < count; i++)
-				_texture [i] = Screen.Content.GetContent<Texture2D> (_recursos [i].TextureFill);
+				_texture [i] = manager.Load<Texture2D> (_recursos [i].TextureFill);
+			
 		}
 
 		#endregion

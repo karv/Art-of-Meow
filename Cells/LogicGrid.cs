@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
+using System.Net.Mime;
+using Microsoft.Xna.Framework.Content;
 
 namespace Cells
 {
@@ -60,11 +62,7 @@ namespace Cells
 
 		#region IComponent implementation
 
-		void IComponent.AddContent ()
-		{
-		}
-
-		void IComponent.InitializeContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
 		}
 

@@ -94,10 +94,10 @@ namespace Skills
 				            TimeSpan.FromMilliseconds (900));
 			scr.AddComponent (label);
 			label.FontName = "Fonts//damage";
-			(label as IComponent).InitializeContent ();
 			label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
 			label.ColorInicial = LabelColor;
 			label.Initialize ();
+			(label as IComponent).LoadContent (scr.Content);
 		}
 
 		/// <summary>

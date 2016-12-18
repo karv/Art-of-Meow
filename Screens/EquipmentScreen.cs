@@ -58,18 +58,16 @@ namespace Screens
 
 		void cargarContenido ()
 		{
-			foreach (var x in Unidad.Inventory.Items)
-				x.AddContent ();
-			foreach (var x in Unidad.Equipment.EnumerateEquipment ())
-				x.AddContent ();
+			foreach (var x in Enumerable.Union (Unidad.Inventory.Items, Unidad.Equipment.EnumerateEquipment ()))
+				x.LoadContent (Content);
 		}
 
 		/// <summary>
 		/// Cargar contenido de cada control incluido.
 		/// </summary>
-		public override void AddAllContent ()
+		public override void LoadAllContent ()
 		{
-			base.AddAllContent ();
+			base.LoadAllContent ();
 			cargarContenido ();
 		}
 

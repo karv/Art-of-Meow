@@ -20,11 +20,6 @@ namespace Units
 		/// </summary>
 		public LogicGrid Grid { get; }
 
-		/// <summary>
-		/// Gets the content manager
-		/// </summary>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
-
 		static Random r = new Random ();
 
 		/// <summary>

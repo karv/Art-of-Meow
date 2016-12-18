@@ -6,6 +6,7 @@ using Items;
 using Moggle;
 using Moggle.Controles;
 using MonoGame.Extended.BitmapFonts;
+using Microsoft.Xna.Framework.Content;
 
 namespace Items
 {
@@ -21,12 +22,6 @@ namespace Items
 		public List<IItem> Items { get; }
 
 		ICollection<IItem> IInventory.Items { get { return Items; } }
-
-		/// <summary>
-		/// Gets the content manager
-		/// </summary>
-		/// <value>The content.</value>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Font to use whe listing items
@@ -71,21 +66,12 @@ namespace Items
 		/// <summary>
 		/// Carga el contenido gráfico.
 		/// </summary>
-		protected void AddContent ()
+		protected void LoadContent (ContentManager manager)
 		{
 			//Font = manager.Load <BitmapFont> (FontName);
 
 			foreach (var item in Items)
-				item.AddContent ();
-		}
-
-		/// <summary>
-		/// Inicialize el contenido de sus items
-		/// </summary>
-		public void InitializeContent ()
-		{
-			foreach (var x in Items)
-				x.InitializeContent ();
+				item.LoadContent (manager);
 		}
 
 		/// <summary>
@@ -105,9 +91,9 @@ namespace Items
 			Items.Add (item);
 		}
 
-		void IComponent.AddContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			AddContent ();
+			LoadContent (manager);
 		}
 
 		/// <summary>

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle;
 using Moggle.Controles;
 using Units;
+using Microsoft.Xna.Framework.Content;
 
 namespace Cells.CellObjects
 {
@@ -23,11 +24,6 @@ namespace Cells.CellObjects
 		/// </summary>
 		/// <value>The color of the use.</value>
 		public Color UseColor { get; set; }
-
-		/// <summary>
-		/// Gets the content manager
-		/// </summary>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets or sets the depth(draw order)
@@ -84,19 +80,11 @@ namespace Cells.CellObjects
 		}
 
 		/// <summary>
-		/// Agrega su textura a la biblioteca
-		/// </summary>
-		public void AddContent ()
-		{
-			Content.AddContent (StringTexture);
-		}
-
-		/// <summary>
 		/// Carga la textura
 		/// </summary>
-		public void InitializeContent ()
+		public void LoadContent (ContentManager manager)
 		{
-			Texture = Content.GetContent<Texture2D> (StringTexture);
+			Texture = manager.Load<Texture2D> (StringTexture);
 		}
 
 		/// <summary>

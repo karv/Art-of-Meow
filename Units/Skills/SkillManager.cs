@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Moggle.Controles;
+using Microsoft.Xna.Framework.Content;
 
 namespace Units.Skills
 {
@@ -41,31 +42,17 @@ namespace Units.Skills
 		public bool AnyVisible { get { return Skills.Any (z => z.IsVisible (Unidad)); } }
 
 		/// <summary>
-		/// Loads the content of each <see cref="ISkill"/>
-		/// </summary>
-		protected void AddContent ()
-		{
-			foreach (var sk in Skills)
-				sk.AddContent ();
-		}
-
-		/// <summary>
 		/// Initializes the content of the skills
 		/// </summary>
-		protected void InitializeContent ()
+		protected void LoadContent (ContentManager manager)
 		{
 			foreach (var sk in Skills)
-				sk.InitializeContent ();
+				sk.LoadContent (manager);
 		}
 
-		void IComponent.InitializeContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			InitializeContent ();
-		}
-
-		void IComponent.AddContent ()
-		{
-			AddContent ();
+			LoadContent (manager);
 		}
 
 		/// <summary>

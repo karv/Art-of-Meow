@@ -7,6 +7,7 @@ using Items;
 using Items.Declarations.Equipment;
 using Moggle;
 using Units.Buffs;
+using Microsoft.Xna.Framework.Content;
 
 namespace Units.Equipment
 {
@@ -93,21 +94,12 @@ namespace Units.Equipment
 		}
 
 		/// <summary>
-		/// Adds the content of every equipment
-		/// </summary>
-		protected void AddContent (BibliotecaContenido manager)
-		{
-			foreach (var eq in equipment)
-				eq.AddContent ();
-		}
-
-		/// <summary>
 		/// Initializes the content of its elements
 		/// </summary>
-		protected void InitializeContent (BibliotecaContenido manager)
+		protected void LoadContent (ContentManager manager)
 		{
 			foreach (var eq in equipment)
-				eq.InitializeContent ();
+				eq.LoadContent (manager);
 		}
 
 		#region Events

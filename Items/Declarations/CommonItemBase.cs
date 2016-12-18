@@ -5,6 +5,7 @@ using Debugging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle;
+using Microsoft.Xna.Framework.Content;
 
 namespace Items.Declarations
 {
@@ -20,11 +21,6 @@ namespace Items.Declarations
 		public string TextureName { get; protected set; }
 
 		Texture2D _texture;
-
-		/// <summary>
-		/// Gets the content manager
-		/// </summary>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets the texture.
@@ -57,22 +53,9 @@ namespace Items.Declarations
 		/// <summary>
 		/// Loads the texture
 		/// </summary>
-		protected virtual void AddContent ()
+		protected virtual void LoadContent (ContentManager manager)
 		{
-			Content.AddContent (TextureName);
-		}
-
-		/// <summary>
-		/// Assigns the value of <see cref="Texture"/>
-		/// </summary>
-		protected virtual void InitializeContent ()
-		{
-			_texture = Content.GetContent<Texture2D> (TextureName);
-		}
-
-		void Moggle.Controles.IComponent.InitializeContent ()
-		{
-			InitializeContent ();
+			_texture = manager.Load<Texture2D> (TextureName);
 		}
 
 		/// <summary>
@@ -99,9 +82,9 @@ namespace Items.Declarations
 
 		#region IComponent implementation
 
-		void Moggle.Controles.IComponent.AddContent ()
+		void Moggle.Controles.IComponent.LoadContent (ContentManager manager)
 		{
-			AddContent ();
+			LoadContent (manager);
 		}
 
 		#endregion

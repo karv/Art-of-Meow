@@ -64,12 +64,12 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Vincula el contenido a campos de clase
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void InitializeContent ()
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			base.InitializeContent ();
-			pixel = Screen.Content.GetContent<Texture2D> ("pixel");
+			base.LoadContent (manager);
+			pixel = manager.Load <Texture2D> ("pixel");
 		}
 
 		/// <summary>

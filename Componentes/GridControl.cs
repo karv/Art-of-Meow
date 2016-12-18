@@ -11,6 +11,7 @@ using MonoGame.Extended.Shapes;
 using Units;
 using Units.Inteligencia;
 using Units.Recursos;
+using Microsoft.Xna.Framework.Content;
 
 namespace Componentes
 {
@@ -38,10 +39,8 @@ namespace Componentes
 		void reInitialize ()
 		{
 			Initialize ();
-			var cont = Game.Contenido;
-			AddContent ();
-			cont.Load ();
-			InitializeContent ();
+			var cont = Screen.Content;
+			LoadContent (cont);
 		}
 
 		[Obsolete]
@@ -190,23 +189,11 @@ namespace Componentes
 		/// <summary>
 		/// Agrega el contenido a la biblitoeca
 		/// </summary>
-		protected override void AddContent ()
+		protected override void LoadContent (ContentManager manager)
 		{
-			base.AddContent ();
+			base.LoadContent (manager);
 			foreach (var x in _objects)
-				x.AddContent ();
-
-			Screen.Content.AddContent (damageFont);
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			base.InitializeContent ();
-			foreach (var x in _objects)
-				x.InitializeContent ();
+				x.LoadContent (manager);
 		}
 
 		/// <summary>
@@ -312,11 +299,9 @@ namespace Componentes
 		{
 			if (e.Texture == null)
 			{
-				// cargar textura
-				var cont = Game.Contenido;
-				e.AddContent ();
-				cont.Load ();
-				e.InitializeContent ();
+				// Initialize and load content
+				e.Initialize ();
+				e.LoadContent (Screen.Content);
 			}
 		}
 

@@ -74,11 +74,10 @@ namespace Helper
 
 		#region IComponent implementation
 
-		void IComponent.AddContent ()
-		{
-		}
-
-		void IComponent.InitializeContent ()
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
+		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 		}
 

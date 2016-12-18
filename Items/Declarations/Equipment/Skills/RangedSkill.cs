@@ -11,6 +11,7 @@ using Skills;
 using Units;
 using Units.Recursos;
 using Units.Skills;
+using Microsoft.Xna.Framework.Content;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -184,14 +185,9 @@ namespace Items.Declarations.Equipment.Skills
 		/// <value>The icon.</value>
 		protected Texture2D Icon { get; private set; }
 
-		void IComponent.AddContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			Program.MyGame.Contenido.AddContent (TextureName);
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			Icon = Program.MyGame.Contenido.GetContent<Texture2D> (TextureName);
+			Icon = manager.Load<Texture2D> (TextureName);
 		}
 
 		#endregion

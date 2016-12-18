@@ -49,8 +49,6 @@ namespace Items
 	/// </summary>
 	public static class ItemFactory
 	{
-		static BibliotecaContenido contentManager { get { return Program.MyGame.Contenido; } }
-
 		/// <summary>
 		/// Creates a new item of the given type and casts it into a given type
 		/// </summary>
