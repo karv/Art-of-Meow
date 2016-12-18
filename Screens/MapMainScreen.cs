@@ -67,9 +67,7 @@ namespace Screens
 				AddComponent (_gameGrid);
 
 				// Cargar el posiblemente nuevo contenido
-				AddAllContent ();
-				Content.Load ();
-				InitializeContent ();
+				LoadAllContent ();
 			}
 		}
 
@@ -145,19 +143,12 @@ namespace Screens
 		/// <summary>
 		/// Cargar contenido de cada control incluido.
 		/// </summary>
-		public override void AddAllContent ()
+		public override void LoadAllContent ()
 		{
-			Content.AddContent ("Fonts//small");
-			base.AddAllContent ();
-		}
-
-		/// <summary>
-		/// Tell its components to get the content from the library
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			base.InitializeContent ();
-			solidTexture = Content.GetContent<Texture2D> ("pixel");
+			solidTexture = (Juego as Juego).SimpleTextureGenerator.SolidTexture (
+				new Size (1, 1),
+				Color.White);
+			base.LoadAllContent ();
 		}
 
 		/// <summary>
@@ -233,7 +224,7 @@ namespace Screens
 
 			SpecialKeyListener = new PlayerKeyListener (this);
 
-			AddAllContent ();
+			LoadAllContent ();
 		}
 
 		/// <summary>
@@ -322,9 +313,7 @@ namespace Screens
 		                            ScreenThread.ScreenStackOptions opt)
 		{
 			scr.Initialize ();
-			scr.AddContent ();
-			scr.Content.Load ();
-			scr.InitializeContent ();
+			scr.LoadContent (scr.Content);
 			thread.Stack (scr, opt);
 		}
 

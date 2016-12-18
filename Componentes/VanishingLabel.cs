@@ -90,7 +90,8 @@ namespace Componentes
 		/// </summary>
 		void calcularBounds ()
 		{
-			Bounds = Font.GetStringRectangle (Texto, TopLeft);
+			if (Font != null)
+				Bounds = Font.GetStringRectangle (Texto, TopLeft);
 		}
 
 		/// <summary>
@@ -195,19 +196,11 @@ namespace Componentes
 		}
 
 		/// <summary>
-		/// Loads the font
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			Screen.Content.AddContent (FontName);
-		}
-
-		/// <summary>
-		/// Carga el valor de <see cref="Font"/>
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			Font = Screen.Content.GetContent<BitmapFont> (FontName);
+			Font = manager.Load<BitmapFont> (FontName);
 		}
 
 		/// <summary>

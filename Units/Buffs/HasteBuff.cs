@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using AoM;
 using Debugging;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle;
 using Moggle.Controles;
 using Units.Recursos;
 
@@ -47,11 +46,6 @@ namespace Units.Buffs
 				_speedDelta = value;
 			}
 		}
-
-		/// <summary>
-		/// Gets the content manager
-		/// </summary>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Gets or sets how long the buff lasts
@@ -98,14 +92,9 @@ namespace Units.Buffs
 
 		const string iconName = "clock";
 
-		void IComponent.AddContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			Content.AddContent (iconName);
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			icon = Content.GetContent<Texture2D> (iconName);
+			icon = manager.Load<Texture2D> (iconName);
 		}
 
 		/// <summary>

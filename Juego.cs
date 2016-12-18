@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Items;
+using Moggle.Textures;
 
 namespace AoM
 {
@@ -40,14 +41,7 @@ namespace AoM
 		/// </summary>
 		protected override void Initialize ()
 		{
-			var trs = new Moggle.Textures.SimpleTextures (GraphicsDevice);
-			// Agregar texturas comunes
-			Contenido.AddContent (
-				"pixel",
-				trs.SolidTexture (
-					new MonoGame.Extended.Size (1, 1),
-					Color.White));
-
+			SimpleTextureGenerator = new SimpleTextures (GraphicsDevice);
 			base.Initialize ();
 		}
 
@@ -59,6 +53,11 @@ namespace AoM
 			Content.RootDirectory = @"Content/Content";
 			Graphics.IsFullScreen = true;
 		}
+
+		/// <summary>
+		/// Commor generator for simple definible textures
+		/// </summary>
+		public SimpleTextures SimpleTextureGenerator { get; private set; }
 	}
 
 	/// <summary>

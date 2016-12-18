@@ -1,9 +1,8 @@
 using System;
-using AoM;
 using Cells.Collision;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle;
 using Moggle.Controles;
 
 namespace Cells.CellObjects
@@ -25,11 +24,6 @@ namespace Cells.CellObjects
 		public readonly string StringTexture;
 
 		/// <summary>
-		/// Gets the content manager
-		/// </summary>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
-
-		/// <summary>
 		/// La profundidad de dibujo.
 		/// </summary>
 		public float Depth { get { return Depths.Foreground; } }
@@ -49,14 +43,9 @@ namespace Cells.CellObjects
 			bat.Draw (Texture, destinationRectangle: rect, layerDepth: Depth);
 		}
 
-		void IComponent.AddContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			Content.AddContent (StringTexture);
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			Texture = Content.GetContent<Texture2D> (StringTexture);
+			Texture = manager.Load<Texture2D> (StringTexture);
 		}
 
 		void IDisposable.Dispose ()

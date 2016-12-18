@@ -6,8 +6,8 @@ using Cells.CellObjects;
 using Cells.Collision;
 using Items;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Moggle;
 using Moggle.Controles;
 using Skills;
 using Units.Buffs;
@@ -57,11 +57,6 @@ namespace Units
 		/// Gets the team's id
 		/// </summary>
 		public TeamManager Team { get; set; }
-
-		/// <summary>
-		/// Gets the content manager.
-		/// </summary>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		/// <summary>
 		/// Desarga el contenido gráfico.
@@ -218,17 +213,9 @@ namespace Units
 		/// <summary>
 		/// Carga el contenido gráfico de la unidad, equipment e inventory
 		/// </summary>
-		public void InitializeContent ()
+		public void LoadContent (ContentManager manager)
 		{
-			Texture = Content.GetContent<Texture2D> (TextureStr);
-		}
-
-		/// <summary>
-		/// Add its texture to the content
-		/// </summary>
-		public void AddContent ()
-		{
-			Content.AddContent (TextureStr);
+			Texture = manager.Load<Texture2D> (TextureStr);
 		}
 
 		/// <summary>

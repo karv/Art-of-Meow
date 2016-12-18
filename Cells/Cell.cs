@@ -14,6 +14,14 @@ namespace Cells
 	/// <remarks>Modify this class won't change the <see cref="LogicGrid"/></remarks>
 	public class Cell : IDibujable
 	{
+		void IComponent.LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+		}
+
+		void IGameComponent.Initialize ()
+		{
+		}
+
 		/// <summary>
 		/// Devuelve un valor determinando si este grid bloquea visibilidad.
 		/// </summary>

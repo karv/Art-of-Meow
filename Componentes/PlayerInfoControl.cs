@@ -120,24 +120,14 @@ namespace Componentes
 		}
 
 		/// <summary>
-		/// Loads the content.
+		/// Loads the content using a given manager
 		/// </summary>
-		protected override void AddContent ()
+		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
-			(PlayerHooks as IComponent).AddContent ();
-			(RecursoView as IComponent).AddContent ();
-		}
-
-		/// <summary>
-		/// Vincula el contenido a campos de clase
-		/// </summary>
-		protected override void InitializeContent ()
-		{
-			(PlayerHooks as IComponent).InitializeContent ();
-			(RecursoView as IComponent).InitializeContent ();
-			smallFont = Screen.Content.GetContent<BitmapFont> ("Fonts//small");
+			(PlayerHooks as IComponent).LoadContent (manager);
+			(RecursoView as IComponent).LoadContent (manager);
+			smallFont = manager.Load<BitmapFont> ("Fonts//small");
 			ReloadStats ();
-			//Screen.Content.AddContent ("pixel", );
 		}
 
 		#endregion

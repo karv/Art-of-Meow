@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using AoM;
 using Cells;
 using Debugging;
 using Items;
-using Moggle;
 using Units.Recursos;
 
 namespace Units
@@ -19,11 +17,6 @@ namespace Units
 		/// Devuelve el tablero de mapa actual
 		/// </summary>
 		public LogicGrid Grid { get; }
-
-		/// <summary>
-		/// Gets the content manager
-		/// </summary>
-		protected static BibliotecaContenido Content { get { return Program.MyGame.Contenido; } }
 
 		static Random r = new Random ();
 

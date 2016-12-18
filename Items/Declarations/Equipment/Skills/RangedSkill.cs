@@ -4,6 +4,7 @@ using AoM;
 using Cells;
 using Helper;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Screens;
@@ -51,7 +52,7 @@ namespace Items.Declarations.Equipment.Skills
 			var ret = new SkillInstance (this, user);
 			ret.Effects.Chance = chance;
 			ret.Effects.AddEffect (ef);
-			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, 1), true); // TODO calcular cooldowntime
+			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, 1), true);
 
 			return ret;
 		}
@@ -184,14 +185,9 @@ namespace Items.Declarations.Equipment.Skills
 		/// <value>The icon.</value>
 		protected Texture2D Icon { get; private set; }
 
-		void IComponent.AddContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			Program.MyGame.Contenido.AddContent (TextureName);
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			Icon = Program.MyGame.Contenido.GetContent<Texture2D> (TextureName);
+			Icon = manager.Load<Texture2D> (TextureName);
 		}
 
 		#endregion

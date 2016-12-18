@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Helper;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using Moggle.Screens;
@@ -18,8 +19,6 @@ namespace Componentes
 
 		readonly RetardValue [] _suavizador;
 		readonly IVisibleRecurso [] _recursos;
-		readonly Texture2D [] _texture;
-		Texture2D _contornoTextura;
 
 		readonly int count;
 
@@ -54,22 +53,10 @@ namespace Componentes
 
 		#region IComponent implementation
 
-		void IComponent.AddContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
-			foreach (var x in _recursos)
-				Screen.Content.AddContent (x.TextureFill);
-		}
-
-		void IComponent.InitializeContent ()
-		{
-			var textMaker = new Moggle.Textures.SimpleTextures (Screen.Device);
-			_contornoTextura = textMaker.OutlineTexture (
-				Size,
-				Color.Black,
-				Color.Transparent);
-
 			for (int i = 0; i < count; i++)
-				_texture [i] = Screen.Content.GetContent<Texture2D> (_recursos [i].TextureFill);
+				_recursos [i].LoadContent (manager);
 		}
 
 		#endregion
@@ -141,19 +128,8 @@ namespace Componentes
 		/// <param name="index">Índice del recurso en dibujo</param>
 		void draw (SpriteBatch batch, Rectangle rect, int index)
 		{
-			var ret = _suavizador [index];
 			var rec = _recursos [index];
-
-			var text = _texture [index];
-
-			var deltaRect = new Rectangle (
-				                rect.Location,
-				                new Point (
-					                (int)(rec.PctValue (ret.VisibleValue) * rect.Width),
-					                rect.Height));
-
-			batch.Draw (text, deltaRect, rec.FullColor);
-			batch.Draw (_contornoTextura, rect, Color.Black);
+			rec.Draw (batch, rect);
 		}
 
 		/// <summary>
@@ -196,7 +172,6 @@ namespace Componentes
 			_recursos = Recursos.Enumerate ().OfType<IVisibleRecurso> ().ToArray ();
 			count = _recursos.Length;
 			_suavizador = new RetardValue[count];
-			_texture = new Texture2D[count];
 
 			Size = new Size (64, 8);
 			TopLeft = new Point (3, 3);

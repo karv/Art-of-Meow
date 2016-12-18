@@ -7,6 +7,7 @@ using Cells.Collision;
 using Helper;
 using Maps;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
@@ -60,11 +61,7 @@ namespace Cells
 
 		#region IComponent implementation
 
-		void IComponent.AddContent ()
-		{
-		}
-
-		void IComponent.InitializeContent ()
+		void IComponent.LoadContent (ContentManager manager)
 		{
 		}
 

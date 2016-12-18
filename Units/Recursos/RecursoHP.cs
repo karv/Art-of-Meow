@@ -2,6 +2,7 @@
 using AoM;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 
 namespace Units.Recursos
 {
@@ -10,10 +11,6 @@ namespace Units.Recursos
 	/// </summary>
 	public class RecursoHP : Recurso, IVisibleRecurso
 	{
-		/// <summary>
-		/// The color of the background
-		/// </summary>
-		public readonly Color BgColor = Color.Black * 0.4f;
 		/// <summary>
 		/// The filling color
 		/// </summary>
@@ -27,7 +24,6 @@ namespace Units.Recursos
 		public void Draw (SpriteBatch batch, Rectangle rect)
 		{
 			var text = Juego.Textures.SolidTexture;
-			batch.Draw (text, rect, BgColor);
 
 			/* Horizontal*/
 			var fullRect = new Rectangle (
@@ -37,6 +33,14 @@ namespace Units.Recursos
 					               rect.Height));
 
 			batch.Draw (text, fullRect, FillColor);
+		}
+
+		void IComponent.LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
+		{
+		}
+
+		void IGameComponent.Initialize ()
+		{
 		}
 
 		/// <summary>
@@ -121,20 +125,11 @@ namespace Units.Recursos
 			Valor = 0;
 		}
 
-		float IVisibleRecurso.PctValue (float value)
-		{
-			return value / Max;
-		}
-
 		RegenParam Regen { get; }
 
 		ValueParam Value { get; }
 
 		bool IVisibleRecurso.Visible { get { return true; } }
-
-		string IVisibleRecurso.TextureFill { get { return "pixel"; } }
-
-		Color IVisibleRecurso.FullColor { get { return Color.Red; } }
 
 		/// <summary>
 		/// Ocurre cuando su valor cambia,
@@ -170,12 +165,15 @@ namespace Units.Recursos
 		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoHP"/>.</returns>
 		public override string ToString ()
 		{
-			return base.ToString () + string.Format (
-				"{0}: {1}/{2}",
+			return string.Format (
+				"{3}::{0}: {1}/{2}",
 				NombreCorto,
 				Valor,
-				Max);
+				Max, 
+				base.ToString ());
 		}
+
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Units.Recursos.RecursoHP"/> class.

@@ -1,10 +1,8 @@
 ﻿using System;
-using AoM;
 using Items.Declarations.Equipment;
 using Items.Declarations.Equipment.Skills;
 using Items.Declarations.Pots;
 using Microsoft.Xna.Framework;
-using Moggle;
 
 namespace Items
 {
@@ -49,8 +47,6 @@ namespace Items
 	/// </summary>
 	public static class ItemFactory
 	{
-		static BibliotecaContenido contentManager { get { return Program.MyGame.Contenido; } }
-
 		/// <summary>
 		/// Creates a new item of the given type and casts it into a given type
 		/// </summary>

@@ -72,10 +72,7 @@ namespace Screens
 			// generar skills propios
 
 			foreach (var sk in Unidad.EnumerateAllSkills ())
-			{
-				sk.AddContent ();
 				Contenedor.Add (sk);
-			}
 		}
 
 		/// <summary>
