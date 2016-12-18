@@ -90,7 +90,8 @@ namespace Componentes
 		/// </summary>
 		void calcularBounds ()
 		{
-			Bounds = Font.GetStringRectangle (Texto, TopLeft);
+			if (Font != null)
+				Bounds = Font.GetStringRectangle (Texto, TopLeft);
 		}
 
 		/// <summary>

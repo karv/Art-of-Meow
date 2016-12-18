@@ -93,11 +93,13 @@ namespace Skills
 				            txt,
 				            TimeSpan.FromMilliseconds (900));
 			scr.AddComponent (label);
+			label.Initialize ();
+
 			label.FontName = "Fonts//damage";
+			(label as IComponent).LoadContent (scr.Content);
+
 			label.Centro = scr.GridControl.CellSpotLocation (Target.Location).ToVector2 ();
 			label.ColorInicial = LabelColor;
-			label.Initialize ();
-			(label as IComponent).LoadContent (scr.Content);
 		}
 
 		/// <summary>
