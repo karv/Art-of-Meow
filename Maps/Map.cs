@@ -277,7 +277,7 @@ namespace Maps
 			}		
 		}
 
-		static JsonSerializerSettings JsonSets = new JsonSerializerSettings
+		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
 			Formatting = Formatting.Indented,
 			Error = onError

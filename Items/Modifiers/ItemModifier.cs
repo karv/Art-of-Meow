@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Items.Modifiers
 {
@@ -12,9 +14,22 @@ namespace Items.Modifiers
 		/// Devuelve un <see cref="ItemModifierNameUsage"/> que determina cómo concatenar el nombre del objeto
 		/// con el nombre de la modificación
 		/// </summary>
+		[JsonPropertyAttribute (Order = 1)]
 		public ItemModifierNameUsage NameUsage { get; }
 
-		Dictionary<string, ItemModification> Modifications { get; }
+		Dictionary<string, ItemModification> Modifications { get; set; }
+
+		[JsonPropertyAttribute ("Modifications", Order = 2)]
+		public IEnumerable<ItemModification> _mods
+		{
+			get{ return EnumerateMods (); }
+			set
+			{
+				Modifications.Clear ();
+				foreach (var x in value)
+					Modifications.Add (x.AttributeChangeName, x);
+			}
+		}
 
 		/// <summary>
 		/// Enumera los modificadores
@@ -32,7 +47,7 @@ namespace Items.Modifiers
 		public float GetModificationValueOf (string attr)
 		{
 			var mod = GetModificationOf (attr);
-			return mod.HasValue ? mod.Value.Delta : 0f;
+			return mod?.Delta ?? 0f;
 		}
 
 		/// <summary>
@@ -40,27 +55,43 @@ namespace Items.Modifiers
 		/// </summary>
 		/// <returns>El modificador de un atributo; o <c>null</c> si éste no existe</returns>
 		/// <param name="attr">Attr.</param>
-		public ItemModification? GetModificationOf (string attr)
+		public ItemModification GetModificationOf (string attr)
 		{
 			ItemModification mod;
-			return Modifications.TryGetValue (attr, out mod) ? mod : new ItemModification? ();
+			return Modifications.TryGetValue (attr, out mod) ? mod : null;
 		}
 
 		/// <summary>
 		/// Devuelve el nombre del modificador
 		/// </summary>
+		[JsonPropertyAttribute (Order = 0)]
 		public string Name { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModifier"/> class.
 		/// </summary>
 		public ItemModifier (string name,
-		                     ItemModifierNameUsage GramUse,
+		                     ItemModifierNameUsage gramUse,
 		                     IEnumerable<ItemModification> mods)
 		{
 			Modifications = new Dictionary<string, ItemModification> ();
 			Name = name;
-			NameUsage = GramUse;
+			NameUsage = gramUse;
+			foreach (var mod in mods)
+				Modifications.Add (mod.AttributeChangeName, mod);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModifier"/> class.
+		/// </summary>
+		[JsonConstructor]
+		ItemModifier (string name,
+		              ItemModifierNameUsage gramUse,
+		              ItemModification [] mods)
+		{
+			Modifications = new Dictionary<string, ItemModification> ();
+			Name = name;
+			NameUsage = gramUse;
 			foreach (var mod in mods)
 				Modifications.Add (mod.AttributeChangeName, mod);
 		}

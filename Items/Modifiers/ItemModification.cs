@@ -5,17 +5,17 @@ namespace Items.Modifiers
 	/// <summary>
 	/// Representa una modificación de un sólo atributo como parte de un <see cref="ItemModifier"/>
 	/// </summary>
-	public struct ItemModification
+	public sealed class ItemModification
 	{
 		/// <summary>
 		/// Devuelve el nombre del atributo que es afectado
 		/// </summary>
-		public string AttributeChangeName { get; }
+		public string AttributeChangeName { get; set; }
 
 		/// <summary>
 		/// Devuelve el valor absoluto de la modificación
 		/// </summary>
-		public float Delta { get; }
+		public float Delta { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModification"/> struct.
