@@ -64,6 +64,9 @@ namespace AoM
 			ItemMods = Newtonsoft.Json.JsonConvert.DeserializeObject<ItemModifierDatabase> (
 				jsonStr,
 				Map.JsonSets);
+
+			if (ItemMods == null)
+				throw new IOException ("Cannot load ItemMods database");
 		}
 
 		/// <summary>
