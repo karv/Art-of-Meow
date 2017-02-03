@@ -279,14 +279,23 @@ namespace Maps
 
 		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
+			TypeNameHandling = TypeNameHandling.Auto,
+			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
+			NullValueHandling = NullValueHandling.Include,
+			ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+			ObjectCreationHandling = ObjectCreationHandling.Auto,
+			MetadataPropertyHandling = MetadataPropertyHandling.Default,
 			Formatting = Formatting.Indented,
+
 			Error = onError
 		};
 
 		static void onError (object sender,
 		                     Newtonsoft.Json.Serialization.ErrorEventArgs e)
 		{
-			Console.WriteLine ();
+			var err = e.ErrorContext.Error;
+			Console.WriteLine (err);
 		}
 
 		/// <summary>
