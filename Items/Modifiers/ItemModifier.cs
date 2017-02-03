@@ -22,7 +22,7 @@ namespace Items.Modifiers
 		Dictionary<string, ItemModification> Modifications { get; set; }
 
 		[JsonPropertyAttribute ("Modifications", Order = 2)]
-		public ItemModification[] _mods
+		ItemModification[] _mods
 		{
 			get
 			{

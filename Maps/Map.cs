@@ -277,6 +277,10 @@ namespace Maps
 			}		
 		}
 
+		// TODO: Move to some more generic class or namespace
+		/// <summary>
+		/// The Default settings for json files
+		/// </summary>
 		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
 			TypeNameHandling = TypeNameHandling.Auto,

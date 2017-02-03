@@ -8,11 +8,15 @@ namespace Items.Modifiers
 	/// </summary>
 	public class ItemModifierDatabase
 	{
+		//THINK: Should be loaded from file every time or stored in memory?
+		/// <summary>
+		/// The array with all the modifications
+		/// </summary>
 		[JsonProperty ("Mods")]
 		public readonly ItemModifier [] Mods;
 
 		[JsonConstructor]
-		public ItemModifierDatabase (ItemModifier [] Mods)
+		ItemModifierDatabase (ItemModifier [] Mods)
 		{
 			this.Mods = Mods;
 		}

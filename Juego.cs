@@ -22,6 +22,9 @@ namespace AoM
 
 		#endregion
 
+		/// <summary>
+		/// Gets the item modification database
+		/// </summary>
 		public ItemModifierDatabase ItemMods { get; private set; }
 
 		/// <summary>
