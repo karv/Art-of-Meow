@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Items;
 using Moggle.Textures;
+using Items.Modifiers;
+using System.IO;
+using Maps;
 
 namespace AoM
 {
@@ -19,6 +21,11 @@ namespace AoM
 		public static Textures Textures { get; private set; }
 
 		#endregion
+
+		/// <summary>
+		/// Gets the item modification database
+		/// </summary>
+		public ItemModifierDatabase ItemMods { get; private set; }
 
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
@@ -43,6 +50,20 @@ namespace AoM
 		{
 			SimpleTextureGenerator = new SimpleTextures (GraphicsDevice);
 			base.Initialize ();
+
+			// Load files
+			LoadDBContent ();
+		}
+
+		void LoadDBContent ()
+		{
+			var file = File.OpenText (FileNames.ItemModifiers);
+			var jsonStr = file.ReadToEnd ();
+			file.Close ();
+
+			ItemMods = Newtonsoft.Json.JsonConvert.DeserializeObject<ItemModifierDatabase> (
+				jsonStr,
+				Map.JsonSets);
 		}
 
 		/// <summary>

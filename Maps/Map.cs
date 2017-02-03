@@ -277,16 +277,29 @@ namespace Maps
 			}		
 		}
 
-		static JsonSerializerSettings JsonSets = new JsonSerializerSettings
+		// TODO: Move to some more generic class or namespace
+		/// <summary>
+		/// The Default settings for json files
+		/// </summary>
+		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
+			TypeNameHandling = TypeNameHandling.Auto,
+			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
+			NullValueHandling = NullValueHandling.Include,
+			ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+			ObjectCreationHandling = ObjectCreationHandling.Auto,
+			MetadataPropertyHandling = MetadataPropertyHandling.Default,
 			Formatting = Formatting.Indented,
+
 			Error = onError
 		};
 
 		static void onError (object sender,
 		                     Newtonsoft.Json.Serialization.ErrorEventArgs e)
 		{
-			Console.WriteLine ();
+			var err = e.ErrorContext.Error;
+			Console.WriteLine (err);
 		}
 
 		/// <summary>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using Debugging;
+using Items.Modifiers;
+using Maps;
 
 namespace AoM
 {
@@ -21,9 +23,11 @@ namespace AoM
 		{
 			var lg = new Logger ("debug.log");
 			Debug.Listeners.Add (lg);
+
 			var MapThread = MyGame.ScreenManager.AddNewThread ();
 			MapThread.Stack (new Screens.MapMainScreen (MyGame));
 			MyGame.Run ();
+
 			lg.WriteInAll ("=== End of log ===");
 			lg.Close ();
 			Environment.Exit (0);

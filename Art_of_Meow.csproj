@@ -36,12 +36,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <ItemGroup>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="AdvMath">
       <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
@@ -52,10 +46,18 @@
     <Reference Include="MonoGame.Extended">
       <HintPath>packages\MonoGame.Extended.0.6.0.0\lib\MonoGame.Extended.dll</HintPath>
     </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="OpenTK.dll.config" />
     <MonoGameContentReference Include="content.mgcb" />
     <None Include="Content\*.xnb">
       <Link>Content\*.xnb</Link>
@@ -76,6 +78,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Maps\dung04.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="OpenTK.dll.config" />
+    <None Include="Data\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -185,7 +191,6 @@
     <Compile Include="Items\Modifiers\ItemModifier.cs" />
     <Compile Include="Items\Modifiers\ItemModifierNameUsage.cs" />
     <Compile Include="Items\Modifiers\ItemModification.cs" />
-    <Compile Include="Items\Modifiers\ItemModifierGenerator.cs" />
     <Compile Include="Items\Modifiers\ItemModifiersManager.cs" />
     <Compile Include="Items\ConstantesAtributos.cs" />
     <Compile Include="Cells\GridConnector.cs" />
@@ -204,6 +209,8 @@
     <Compile Include="Helper\ItemWeightPair.cs" />
     <Compile Include="Helper\ProbabilityInstanceSet.cs" />
     <Compile Include="Helper\PickOneProbabilityDictionary.cs" />
+    <Compile Include="Items\Modifiers\ItemModifierDatabase.cs" />
+    <Compile Include="FileNames.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -240,6 +247,7 @@
     <Folder Include="Items\Declarations\Equipment\Skills\" />
     <Folder Include="Skills\" />
     <Folder Include="Items\Modifiers\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Moggle\Controles_Moggle.csproj">
