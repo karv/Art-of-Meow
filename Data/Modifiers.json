@@ -1,8 +1,8 @@
 ﻿{
-  "Mods": [
+	"Mods": [
     {
       "Name": "Broken",
-      "NameUsage": 1,
+      "NameUsage": 0,
       "Modifications": [
         {
           "AttributeChangeName": "att",
@@ -11,6 +11,16 @@
         {
           "AttributeChangeName": "hit",
           "Delta": -0.1
+        }
+      ]
+    },
+		{
+      "Name": "of penetration",
+      "NameUsage": 1,
+      "Modifications": [
+        {
+          "AttributeChangeName": "att",
+          "Delta": 1
         }
       ]
     }
