@@ -79,7 +79,7 @@ namespace Maps
 			foreach (var x in items)
 			{
 				var loc = grid.GetRandomEmptyCell ();
-				var newItem = ItemFactory.CreateItem (x);
+				var newItem = x.Create ();
 				var groundItem = new GroundItem (newItem, grid);
 				groundItem.Location = loc;
 				grid.AddCellObject (groundItem);
@@ -90,7 +90,7 @@ namespace Maps
 		/// Gets or sets the distribution used to produce items
 		/// </summary>
 		[JsonProperty (Order = 4)]
-		public ProbabilityInstanceSet<ItemType> MapItemGroundItems { get; set; }
+		public ProbabilityInstanceSet<IItemFactory> MapItemGroundItems { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of enemies in this map

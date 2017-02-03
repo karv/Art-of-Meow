@@ -49,10 +49,12 @@ namespace AoM
 		protected override void Initialize ()
 		{
 			SimpleTextureGenerator = new SimpleTextures (GraphicsDevice);
-			base.Initialize ();
 
 			// Load files
 			LoadDBContent ();
+
+			base.Initialize ();
+
 		}
 
 		void LoadDBContent ()

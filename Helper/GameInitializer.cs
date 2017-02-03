@@ -4,8 +4,7 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
-using System.Diagnostics;
-using Newtonsoft.Json;
+using AoM;
 
 namespace Helper
 {
@@ -32,7 +31,7 @@ namespace Helper
 
 			#region Cheat
 			var eq = ItemFactory.CreateItem<IEquipment> (ItemType.Knife);
-			//eq.Modifiers.Modifiers.Add (ItemModifierGenerator.Broken);
+			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
 			player.Equipment.EquipItem (eq);
 			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Bow));
 			#endregion

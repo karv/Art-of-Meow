@@ -42,6 +42,42 @@ namespace Items
 		LeatherCap
 	}
 
+	public interface IItemFactory
+	{
+		IItem Create ();
+	}
+
+	public class SimpleItemRecipe : IItemFactory
+	{
+		public ItemType Type;
+
+		public IItem Create ()
+		{
+			return ItemFactory.CreateItem (Type);
+		}
+	}
+
+	public class RandomItemRecipe : IItemFactory
+	{
+		readonly static Random _r = new Random ();
+		// TODO: ItemVal not impemented
+		public float MinItemVal;
+		public float MaxItemVal;
+		public ItemType [] AllowedTypes;
+
+		public IItem Create ()
+		{
+			var type = AllowedTypes [_r.Next (AllowedTypes.Length)];
+			return ItemFactory.CreateItem (type);
+		}
+
+		public RandomItemRecipe ()
+		{
+			MinItemVal = 0;
+			MaxItemVal = float.PositiveInfinity;
+		}
+	}
+
 	/// <summary>
 	/// This class produces new items from its type
 	/// </summary>
@@ -51,7 +87,24 @@ namespace Items
 		/// Creates a new item of the given type and casts it into a given type
 		/// </summary>
 		/// <returns>A newly created item</returns>
-		/// <param name="type">Type of the item</param>
+		/// <param name="recipe">The way the item should be created</param>
+		/// <exception cref="T:System.InvalidCastException">The return item is not of the given type</exception>
+		public static T CreateItem<T> (SimpleItemRecipe recipe)
+			where T : IItem
+		{
+			var item = CreateItem (recipe.Type);
+			if (!(item is T))
+				throw new InvalidCastException ();
+			var ret = (T)item;
+			ret.Initialize ();
+			return ret;
+		}
+
+		/// <summary>
+		/// Creates a new item of the given type and casts it into a given type
+		/// </summary>
+		/// <returns>A newly created item</returns>
+		/// <param name="type">The way the item should be created</param>
 		/// <exception cref="T:System.InvalidCastException">The return item is not of the given type</exception>
 		public static T CreateItem<T> (ItemType type)
 			where T : IItem
