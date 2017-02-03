@@ -8,6 +8,7 @@ using Moggle.Screens;
 using Units;
 using Units.Equipment;
 using Units.Skills;
+using System.Text;
 
 namespace Screens
 {
@@ -16,6 +17,8 @@ namespace Screens
 	/// </summary>
 	public class EquipmentScreen : Screen
 	{
+		public EtiquetaMultiLínea CursorItemInfo { get; }
+
 		/// <summary>
 		/// The inventory of the <see cref="IUnidad"/>
 		/// </summary>
@@ -50,6 +53,7 @@ namespace Screens
 		/// </summary>
 		protected override void DoInitialization ()
 		{
+			CursorItemInfo.Initialize ();
 			base.DoInitialization ();
 			//cargarContenido ();
 			buildEquipmentList ();
@@ -175,8 +179,45 @@ namespace Screens
 				EnterKey = GlobalKeys.Accept [0],
 			};
 
+			CursorItemInfo = new EtiquetaMultiLínea (this)
+			{
+				MaxWidth = 300,
+				TextColor = Color.WhiteSmoke,
+				TopLeft = new Point (30, Contenedor.ControlBounds ().Bottom + 30),
+				UseFont = "tooltipFont",
+				BackgroundColor = Color.DarkBlue
+			};
+
 			AddComponent (Contenedor);
+			AddComponent (CursorItemInfo);
+
 			Contenedor.Activado += Contenedor_cambio_selección;
+			Contenedor.CursorChanged += cursorChanged;
+		}
+
+		void rebuildCursorItemInfo ()
+		{
+			var selEquipment = Contenedor.FocusedItem as IEquipment;
+			if (selEquipment != null)
+			{
+				var TooltipString = new StringBuilder ();
+				var fullName = selEquipment.Modifiers.GetName ();
+				TooltipString.AppendLine (fullName);
+
+				foreach (var mod in selEquipment.Modifiers.SquashMods ())
+					TooltipString.AppendFormat (
+						"{0} : {1}\n",
+						mod.AttributeChangeName,
+						mod.Delta);
+
+				CursorItemInfo.Texto = TooltipString.ToString ();
+			}
+
+		}
+
+		void cursorChanged (object sender, System.EventArgs e)
+		{
+			rebuildCursorItemInfo ();
 		}
 	}
 }
