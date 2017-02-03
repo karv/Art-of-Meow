@@ -1,25 +1,18 @@
 ﻿{
-  "$id": "1",
   "Mods": [
     {
-      "$id": "2",
       "Name": "Broken",
       "NameUsage": 1,
       "Modifications": [
         {
-          "$id": "3",
           "AttributeChangeName": "att",
           "Delta": -1.2
         },
         {
-          "$id": "4",
           "AttributeChangeName": "hit",
           "Delta": -0.1
         }
       ]
-    },
-    {
-      "$ref": "2"
     }
   ]
 }
