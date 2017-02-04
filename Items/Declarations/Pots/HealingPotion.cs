@@ -50,6 +50,9 @@ namespace Items.Declarations.Pots
 			return true;
 		}
 
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
 		public override object Clone ()
 		{
 			return new HealingPotion

@@ -26,11 +26,6 @@ namespace AoM
 
 
 			#region Tmp
-			var knife = ItemFactory.CreateItem (ItemType.Knife);
-			MyGame.Items = ItemDatabase.FromFile ();
-			var mapJson = JsonConvert.SerializeObject (MyGame.Items, ItemDatabase.JsonSettings);
-
-			// var j = JsonConvert.DeserializeObject<ItemDatabase> (mapJson, CommonItemBase.JsonSettings);
 			#endregion
 
 			var MapThread = MyGame.ScreenManager.AddNewThread ();

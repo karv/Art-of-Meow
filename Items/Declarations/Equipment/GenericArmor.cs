@@ -31,6 +31,9 @@ namespace Items.Declarations.Equipment
 			return DeltaDict;
 		}
 
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
 		public override object Clone ()
 		{
 			return new GenericArmor (NombreBase, Slot)

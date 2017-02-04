@@ -4,8 +4,14 @@ using Newtonsoft.Json;
 
 namespace Items
 {
+	/// <summary>
+	/// Manages the collection of all the items by maintaining them.
+	/// </summary>
 	public class ItemDatabase
 	{
+		/// <summary>
+		/// The json settings
+		/// </summary>
 		public static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
 		{
 			TypeNameHandling = TypeNameHandling.Auto,
@@ -18,8 +24,16 @@ namespace Items
 			Formatting = Formatting.Indented
 		};
 
+		/// <summary>
+		/// Collection of items
+		/// </summary>
 		public readonly IItem [] Collection;
 
+		/// <summary>
+		/// Constructs a new <see cref="ItemDatabase"/> from a json file
+		/// </summary>
+		/// <returns>The file.</returns>
+		/// <param name="fileName">File name.</param>
 		public static ItemDatabase FromFile (string fileName = FileNames.Items)
 		{
 			var file = File.OpenText (fileName);
@@ -31,6 +45,9 @@ namespace Items
 			return ret;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.ItemDatabase"/> class.
+		/// </summary>
 		[JsonConstructor]
 		public ItemDatabase (IItem [] Collection)
 		{

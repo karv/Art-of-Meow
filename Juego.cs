@@ -28,6 +28,10 @@ namespace AoM
 		/// </summary>
 		public ItemModifierDatabase ItemMods { get; private set; }
 
+		/// <summary>
+		/// The database for item types
+		/// </summary>
+		/// <value>The items.</value>
 		public ItemDatabase Items { get; set; }
 
 		/// <summary>
@@ -69,6 +73,8 @@ namespace AoM
 			ItemMods = Newtonsoft.Json.JsonConvert.DeserializeObject<ItemModifierDatabase> (
 				jsonStr,
 				Map.JsonSets);
+
+			Items = ItemDatabase.FromFile ();
 
 			if (ItemMods == null)
 				throw new IOException ("Cannot load ItemMods database");

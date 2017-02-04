@@ -40,6 +40,9 @@ namespace Items.Declarations.Equipment
 			TextureName = textureName;
 		}
 
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
 		public override object Clone ()
 		{
 			return new GenericSkillListEquipment (NombreBase, InvokedSkills, Slot)
