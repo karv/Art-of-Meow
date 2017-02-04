@@ -211,6 +211,7 @@
     <Compile Include="Helper\PickOneProbabilityDictionary.cs" />
     <Compile Include="Items\Modifiers\ItemModifierDatabase.cs" />
     <Compile Include="FileNames.cs" />
+    <Compile Include="Items\ItemDatabase.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

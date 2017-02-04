@@ -4,6 +4,7 @@ using Moggle.Textures;
 using Items.Modifiers;
 using System.IO;
 using Maps;
+using Items;
 
 namespace AoM
 {
@@ -26,6 +27,8 @@ namespace AoM
 		/// Gets the item modification database
 		/// </summary>
 		public ItemModifierDatabase ItemMods { get; private set; }
+
+		public ItemDatabase Items { get; set; }
 
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.

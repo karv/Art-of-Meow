@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using Debugging;
-using Items.Modifiers;
-using Maps;
-using MonoGame.Extended;
 using Items;
+using Items.Declarations;
+using Newtonsoft.Json;
 
 namespace AoM
 {
@@ -28,16 +27,11 @@ namespace AoM
 
 
 			#region Tmp
-			var map = new Map (new Size (3, 3));
-			map.MapItemGroundItems = new Helper.ProbabilityInstanceSet<IItemFactory> ();
-			map.MapItemGroundItems.Add (new RandomItemRecipe
-			{
-				MinItemVal = 0,
-				MaxItemVal = 100,
-				AllowedTypes = new [] { ItemType.HealingPotion }
-			}, 0.6f);
+			var knife = ItemFactory.CreateItem (ItemType.Knife);
+			MyGame.Items = new ItemDatabase (new []{ knife });
+			var mapJson = JsonConvert.SerializeObject (MyGame.Items, CommonItemBase.JsonSettings);
 
-			var mapJson = Newtonsoft.Json.JsonConvert.SerializeObject (map, Map.JsonSets);
+			var j = JsonConvert.DeserializeObject<ItemDatabase> (mapJson, CommonItemBase.JsonSettings);
 			#endregion
 
 			var MapThread = MyGame.ScreenManager.AddNewThread ();

@@ -285,7 +285,7 @@ namespace Maps
 		{
 			TypeNameHandling = TypeNameHandling.Auto,
 			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
-			NullValueHandling = NullValueHandling.Include,
+			NullValueHandling = NullValueHandling.Ignore,
 			ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
 			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
 			ObjectCreationHandling = ObjectCreationHandling.Auto,

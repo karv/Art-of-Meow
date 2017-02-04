@@ -1,5 +1,6 @@
 using Items.Modifiers;
 using Units;
+using Newtonsoft.Json;
 
 namespace Items.Declarations.Equipment
 {
@@ -23,6 +24,7 @@ namespace Items.Declarations.Equipment
 		/// Gets the <see cref="IUnidad"/> that has this item
 		/// </summary>
 		/// <value>The unidad owner.</value>
+		[JsonIgnoreAttribute]
 		public IUnidad UnidadOwner { get { return Owner.Owner; } }
 
 		/// <summary>
@@ -41,7 +43,14 @@ namespace Items.Declarations.Equipment
 		/// <summary>
 		/// Devuelve los modificadores del objeto
 		/// </summary>
+		[JsonIgnore]
 		public ItemModifiersManager Modifiers { get; }
+
+		[JsonProperty ("Modifiers")]
+		ItemModifier[] _mods
+		{
+			get{ return Modifiers.Modifiers.ToArray (); }
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Equipment"/> class.

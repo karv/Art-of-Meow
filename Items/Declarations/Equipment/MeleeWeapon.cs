@@ -3,6 +3,7 @@ using Debugging;
 using Helper;
 using Skills;
 using Units;
+using Newtonsoft.Json;
 
 namespace Items.Declarations.Equipment
 {
@@ -112,6 +113,13 @@ namespace Items.Declarations.Equipment
 			BaseDamage = baseDamage;
 			BaseHit = baseHit;
 			BaseSpeed = 1;
+		}
+
+		[JsonConstructor]
+		MeleeWeapon (string NombreBase)
+			: base (NombreBase)
+		{
+			System.Console.WriteLine ();
 		}
 	}
 }

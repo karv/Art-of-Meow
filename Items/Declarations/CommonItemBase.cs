@@ -4,6 +4,7 @@ using Debugging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 
 namespace Items.Declarations
 {
@@ -19,6 +20,21 @@ namespace Items.Declarations
 		public string TextureName { get; protected set; }
 
 		Texture2D _texture;
+		public static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
+		{
+			TypeNameHandling = TypeNameHandling.Auto,
+			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
+			NullValueHandling = NullValueHandling.Ignore,
+			ReferenceLoopHandling = ReferenceLoopHandling.Error,
+			PreserveReferencesHandling = PreserveReferencesHandling.None,
+			ObjectCreationHandling = ObjectCreationHandling.Auto,
+			MetadataPropertyHandling = MetadataPropertyHandling.Default,
+			Formatting = Formatting.Indented,
+			Error = delegate
+			{
+				Console.WriteLine ();
+			}
+		};
 
 		/// <summary>
 		/// Gets the texture.
@@ -46,6 +62,7 @@ namespace Items.Declarations
 		/// Determines if this item is initialized
 		/// </summary>
 		/// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
+		[JsonIgnore]
 		public bool IsInitialized { get; private set; }
 
 		/// <summary>
