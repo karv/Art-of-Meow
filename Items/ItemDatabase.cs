@@ -30,12 +30,20 @@ namespace Items
 		/// </summary>
 		public readonly IItem [] Collection;
 
+		/// <summary>
+		/// Creates and returns an specified item.
+		/// </summary>
+		/// <param name="itemId">The index of the item</param>
 		public T CreateItem<T> (int itemId) 
 			where T : IItem
 		{
 			return (T)Collection [itemId].Clone ();
 		}
 
+		/// <summary>
+		/// Creates and returns an specified item.
+		/// </summary>
+		/// <param name="itemName">Base name of the item</param>
 		public T CreateItem<T> (string itemName) 
 			where T : IItem
 		{
@@ -43,11 +51,19 @@ namespace Items
 			return (T)Collection.OfType<T> ().First (z => z.NombreBase == itemName).Clone ();
 		}
 
+		/// <summary>
+		/// Creates and returns an specified item.
+		/// </summary>
+		/// <param name="itemId">The index of the item</param>
 		public IItem CreateItem (int itemId)
 		{
 			return Collection [itemId].Clone () as IItem;
 		}
 
+		/// <summary>
+		/// Creates and returns an specified item.
+		/// </summary>
+		/// <param name="itemName">The name of the item</param>
 		public IItem CreateItem (string itemName)
 		{
 			return Collection.First (z => z.NombreBase == itemName).Clone () as IItem;

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
 using AoM;
+using Items.Declarations.Equipment;
 
 namespace Helper
 {
@@ -30,10 +31,9 @@ namespace Helper
 			player.Inteligencia = new HumanIntelligence (player);
 
 			#region Cheat
-			var eq = ItemFactory.CreateItem<IEquipment> (ItemType.Knife);
+			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("knife");
 			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
 			player.Equipment.EquipItem (eq);
-			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Bow));
 			#endregion
 			player.Initialize ();
 			return player;
