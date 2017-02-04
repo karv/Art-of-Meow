@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using AoM;
 using Newtonsoft.Json;
 
@@ -28,6 +29,29 @@ namespace Items
 		/// Collection of items
 		/// </summary>
 		public readonly IItem [] Collection;
+
+		public T CreateItem<T> (int itemId) 
+			where T : IItem
+		{
+			return (T)Collection [itemId].Clone ();
+		}
+
+		public T CreateItem<T> (string itemName) 
+			where T : IItem
+		{
+			// REMARK: OfType is used to remove redundances as much as possible
+			return (T)Collection.OfType<T> ().First (z => z.NombreBase == itemName).Clone ();
+		}
+
+		public IItem CreateItem (int itemId)
+		{
+			return Collection [itemId].Clone () as IItem;
+		}
+
+		public IItem CreateItem (string itemName)
+		{
+			return Collection.First (z => z.NombreBase == itemName).Clone () as IItem;
+		}
 
 		/// <summary>
 		/// Constructs a new <see cref="ItemDatabase"/> from a json file

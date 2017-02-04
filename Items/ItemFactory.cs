@@ -9,6 +9,7 @@ namespace Items
 	/// <summary>
 	/// Tipo de objeto
 	/// </summary>
+	[Obsolete]
 	public enum ItemType
 	{
 		/// <summary>
@@ -45,7 +46,6 @@ namespace Items
 	/// <summary>
 	/// Creates items
 	/// </summary>
-	[Obsolete]
 	public interface IItemFactory
 	{
 		/// <summary>

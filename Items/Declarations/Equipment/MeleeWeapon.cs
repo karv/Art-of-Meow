@@ -96,6 +96,9 @@ namespace Items.Declarations.Equipment
 
 		#endregion
 
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
 		public override object Clone ()
 		{
 			return new MeleeWeapon (NombreBase, TextureName, BaseDamage, BaseHit)
