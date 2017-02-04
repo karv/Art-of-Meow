@@ -119,7 +119,6 @@ namespace Items.Declarations.Equipment
 		MeleeWeapon (string NombreBase)
 			: base (NombreBase)
 		{
-			System.Console.WriteLine ();
 		}
 	}
 }

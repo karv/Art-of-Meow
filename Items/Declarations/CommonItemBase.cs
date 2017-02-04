@@ -20,21 +20,6 @@ namespace Items.Declarations
 		public string TextureName { get; protected set; }
 
 		Texture2D _texture;
-		public static readonly JsonSerializerSettings JsonSettings = new JsonSerializerSettings
-		{
-			TypeNameHandling = TypeNameHandling.Auto,
-			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
-			NullValueHandling = NullValueHandling.Ignore,
-			ReferenceLoopHandling = ReferenceLoopHandling.Error,
-			PreserveReferencesHandling = PreserveReferencesHandling.None,
-			ObjectCreationHandling = ObjectCreationHandling.Auto,
-			MetadataPropertyHandling = MetadataPropertyHandling.Default,
-			Formatting = Formatting.Indented,
-			Error = delegate
-			{
-				Console.WriteLine ();
-			}
-		};
 
 		/// <summary>
 		/// Gets the texture.

@@ -1,0 +1,20 @@
+﻿{
+  "Collection": [
+    {
+      "$type": "Items.Declarations.Equipment.MeleeWeapon, Art_of_Meow",
+      "BaseDamage": 0.8,
+      "BaseHit": 1.1,
+      "BaseSpeed": 1.8,
+      "Slot": 3,
+      "TextureName": "Items//katana",
+      "Color": {
+        "B": 139,
+        "G": 0,
+        "R": 0,
+        "A": 255
+      },
+      "NombreBase": "Cuchillo",
+      "Modifiers": []
+    }
+  ]
+}

@@ -84,6 +84,7 @@
     <None Include="Data\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Items.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
