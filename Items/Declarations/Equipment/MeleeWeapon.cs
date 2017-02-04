@@ -96,6 +96,16 @@ namespace Items.Declarations.Equipment
 
 		#endregion
 
+		public override object Clone ()
+		{
+			return new MeleeWeapon (NombreBase, TextureName, BaseDamage, BaseHit)
+			{
+				Texture = Texture,
+				BaseSpeed = BaseSpeed,
+				Color = Color
+			};
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.MeleeWeapon"/> class.
 		/// </summary>

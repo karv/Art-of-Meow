@@ -50,6 +50,16 @@ namespace Items.Declarations.Pots
 			return true;
 		}
 
+		public override object Clone ()
+		{
+			return new HealingPotion
+			{
+				HealHp = this.HealHp,
+				TextureName = this.TextureName,
+				Color = this.Color
+			};
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Pots.HealingPotion"/> class.
 		/// </summary>

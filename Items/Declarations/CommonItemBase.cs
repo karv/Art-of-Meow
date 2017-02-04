@@ -122,6 +122,11 @@ namespace Items.Declarations
 		}
 
 		/// <summary>
+		/// Clones this item, without owner or modifications
+		/// </summary>
+		public abstract object Clone ();
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.CommonItemBase"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>

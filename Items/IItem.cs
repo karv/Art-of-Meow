@@ -1,12 +1,13 @@
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
+using System;
 
 namespace Items
 {
 	/// <summary>
 	/// Representa la instancia de un objeto
 	/// </summary>
-	public interface IItem : IComponent, IDibujable
+	public interface IItem : IComponent, IDibujable, ICloneable
 	{
 		/// <summary>
 		/// Gets the name for the item

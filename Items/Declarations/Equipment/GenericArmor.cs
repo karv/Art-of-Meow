@@ -31,6 +31,16 @@ namespace Items.Declarations.Equipment
 			return DeltaDict;
 		}
 
+		public override object Clone ()
+		{
+			return new GenericArmor (NombreBase, Slot)
+			{
+				TextureName = TextureName,
+				Texture = Texture,
+				Color = Color
+			};
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.GenericArmor"/> class.
 		/// </summary>
