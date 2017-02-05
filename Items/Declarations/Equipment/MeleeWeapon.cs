@@ -104,6 +104,7 @@ namespace Items.Declarations.Equipment
 			return new MeleeWeapon (NombreBase, TextureName, BaseDamage, BaseHit)
 			{
 				Texture = Texture,
+				TextureName = TextureName,
 				BaseSpeed = BaseSpeed,
 				Color = Color
 			};
@@ -129,9 +130,10 @@ namespace Items.Declarations.Equipment
 		}
 
 		[JsonConstructor]
-		MeleeWeapon (string NombreBase)
+		MeleeWeapon (string NombreBase, string TextureName)
 			: base (NombreBase)
 		{
+			this.TextureName = TextureName;
 		}
 	}
 }
