@@ -110,19 +110,30 @@
     }
   ],
   "AddFeatures": true,
-  "MapItemGroundItems":
-  {
+  "MapItemGroundItems": {
     "Values": [
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5},
-      {"Item":4,"Weight":0.5}
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedTypes": [
+            4
+          ]
+        },
+        "Weight": 1
+      },
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedTypes": [
+            4
+          ]
+        },
+        "Weight": 1
+      }
     ]
   }
 }

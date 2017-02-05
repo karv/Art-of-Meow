@@ -1,0 +1,44 @@
+﻿{
+  "SizeY": 5,
+  "SizeX": 30,
+  "Data": [
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+"W                            W"
+"W                            W"
+"W                            W"
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "EnemyType": [
+    {
+      "Type": 0,
+      "Class": 0
+    }
+  ],
+  "AddFeatures": true,
+  "MapItemGroundItems": {
+    "Values": [
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedTypes": [
+            4
+          ]
+        },
+        "Weight": 1
+      },
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedTypes": [
+            4
+          ]
+        },
+        "Weight": 0.9
+      }
+    ]
+  }
+}
