@@ -10,7 +10,7 @@ namespace Units.Order
 	/// doing damage and
 	/// add a cooldown
 	/// </summary>
-	[ObsoleteAttribute]
+	[Obsolete]
 	public class MeleeDamageOrder : ExecuteOrder
 	{
 		/// <summary>

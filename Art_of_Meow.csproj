@@ -193,7 +193,6 @@
     <Compile Include="Items\Modifiers\ItemModifierNameUsage.cs" />
     <Compile Include="Items\Modifiers\ItemModification.cs" />
     <Compile Include="Items\Modifiers\ItemModifiersManager.cs" />
-    <Compile Include="Items\ConstantesAtributos.cs" />
     <Compile Include="Cells\GridConnector.cs" />
     <Compile Include="WorldLocation.cs" />
     <Compile Include="Cells\MemoryGrid.cs" />
@@ -217,6 +216,9 @@
     <Compile Include="Items\SimpleItemRecipe.cs" />
     <Compile Include="Items\RandomItemRecipe.cs" />
     <Compile Include="Items\IItemFactory.cs" />
+    <Compile Include="Items\AttributesNames.cs" />
+    <Compile Include="Screens\ScreenExt.cs" />
+    <Compile Include="Units\Movement.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
