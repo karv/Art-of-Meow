@@ -1,10 +1,10 @@
+using System.IO;
+using Items;
+using Items.Modifiers;
+using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Textures;
-using Items.Modifiers;
-using System.IO;
-using Maps;
-using Items;
 
 namespace AoM
 {

@@ -34,8 +34,6 @@ namespace Items.Declarations.Pots
 				new RemoveItemEffect (user, user, this));
 			LastGeneratedInstance.Effects.AddEffect (
 				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp){ ShowDeltaLabel = true });
-
-
 		}
 
 		bool ISkill.IsCastable (IUnidad user)
@@ -57,9 +55,9 @@ namespace Items.Declarations.Pots
 		{
 			return new HealingPotion
 			{
-				HealHp = this.HealHp,
-				TextureName = this.TextureName,
-				Color = this.Color
+				HealHp = HealHp,
+				TextureName = TextureName,
+				Color = Color
 			};
 		}
 

@@ -51,6 +51,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public float Speed ()
 		{
+			// TODO
 			return BaseSpeed;// + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
 		}
 

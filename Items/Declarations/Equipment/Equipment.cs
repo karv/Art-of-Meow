@@ -1,6 +1,6 @@
 using Items.Modifiers;
-using Units;
 using Newtonsoft.Json;
+using Units;
 
 namespace Items.Declarations.Equipment
 {

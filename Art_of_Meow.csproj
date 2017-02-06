@@ -213,6 +213,10 @@
     <Compile Include="Items\Modifiers\ItemModifierDatabase.cs" />
     <Compile Include="FileNames.cs" />
     <Compile Include="Items\ItemDatabase.cs" />
+    <Compile Include="Items\ItemType.cs" />
+    <Compile Include="Items\SimpleItemRecipe.cs" />
+    <Compile Include="Items\RandomItemRecipe.cs" />
+    <Compile Include="Items\IItemFactory.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
