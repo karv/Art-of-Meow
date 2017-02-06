@@ -184,7 +184,7 @@ namespace Screens
 				MaxWidth = 300,
 				TextColor = Color.WhiteSmoke,
 				TopLeft = new Point (30, Contenedor.ControlBounds ().Bottom + 30),
-				UseFont = "tooltipFont",
+				UseFont = "Fonts//itemfont",
 				BackgroundColor = Color.DarkBlue
 			};
 
