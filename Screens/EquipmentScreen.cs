@@ -58,6 +58,7 @@ namespace Screens
 			//cargarContenido ();
 			buildEquipmentList ();
 			rebuildSelection ();
+			rebuildCursorItemInfo ();
 		}
 
 		void cargarContenido ()
