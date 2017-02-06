@@ -217,6 +217,8 @@
     <Compile Include="Items\RandomItemRecipe.cs" />
     <Compile Include="Items\IItemFactory.cs" />
     <Compile Include="Items\AttributesNames.cs" />
+    <Compile Include="Screens\ScreenExt.cs" />
+    <Compile Include="Units\Movement.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

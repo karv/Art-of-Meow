@@ -16,7 +16,7 @@ using Units.Recursos;
 namespace Componentes
 {
 	/// <summary>
-	/// The Griod system
+	/// The Grid system
 	/// </summary>
 	public class GridControl : DSBC
 	{
