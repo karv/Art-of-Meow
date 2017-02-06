@@ -1,0 +1,48 @@
+﻿{
+  "SizeY": 9,
+  "SizeX": 10,
+  "Data": [
+    "WWWWWWWWWW",
+    "W        W",
+    "W WWWWWWWW",
+    "W        W",
+    "WWWWWWWW W",
+    "W        W",
+    "W WWWWWWWW",
+    "W        W",
+    "WWWWWWWWWW",
+  ],
+  "EnemyType": [
+    {
+      "Type": 0,
+      "Class": 0
+    }
+  ],
+  "AddFeatures": true,
+  "MapItemGroundItems": {
+    "Values": [
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedTypes": [
+            4
+          ]
+        },
+        "Weight": 0.4
+      },
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedItemNames": [
+            "Lanza", "Cuchillo", "Espada"
+          ]
+        },
+        "Weight": 0.4
+      }
+    ]
+  }
+}

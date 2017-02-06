@@ -21,7 +21,7 @@ namespace Items
 		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Items.GroundItem"/>.</returns>
 		public override string ToString ()
 		{
-			return string.Format ("Ground {0}@{1}", ItemClass, Location);
+			return string.Format ("Ground {0}@{1}", ItemClass.NombreBase, Location);
 		}
 
 		/// <summary>

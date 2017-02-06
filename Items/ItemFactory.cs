@@ -7,51 +7,16 @@ using Microsoft.Xna.Framework;
 namespace Items
 {
 	/// <summary>
-	/// Tipo de objeto
-	/// </summary>
-	public enum ItemType
-	{
-		/// <summary>
-		/// Una daga corta de poco daño y buena puntería
-		/// </summary>
-		Knife,
-		/// <summary>
-		/// Sword
-		/// </summary>
-		Sword,
-		/// <summary>
-		/// Un martillo
-		/// </summary>
-		Martillo,
-		/// <summary>
-		/// Un arco
-		/// </summary>
-		Bow,
-		/// <summary>
-		/// Potion
-		/// </summary>
-		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
-		HealingPotion,
-		/// <summary>
-		/// Armadura de cuero
-		/// </summary>
-		LeatherArmor,
-		/// <summary>
-		/// Casco de cuero
-		/// </summary>
-		LeatherCap
-	}
-
-	/// <summary>
 	/// This class produces new items from its type
 	/// </summary>
+	[Obsolete]
 	public static class ItemFactory
 	{
 		/// <summary>
 		/// Creates a new item of the given type and casts it into a given type
 		/// </summary>
 		/// <returns>A newly created item</returns>
-		/// <param name="type">Type of the item</param>
+		/// <param name="type">The way the item should be created</param>
 		/// <exception cref="T:System.InvalidCastException">The return item is not of the given type</exception>
 		public static T CreateItem<T> (ItemType type)
 			where T : IItem

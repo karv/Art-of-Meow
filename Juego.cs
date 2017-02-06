@@ -1,9 +1,10 @@
+using System.IO;
+using Items;
+using Items.Modifiers;
+using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Textures;
-using Items.Modifiers;
-using System.IO;
-using Maps;
 
 namespace AoM
 {
@@ -28,6 +29,12 @@ namespace AoM
 		public ItemModifierDatabase ItemMods { get; private set; }
 
 		/// <summary>
+		/// The database for item types
+		/// </summary>
+		/// <value>The items.</value>
+		public ItemDatabase Items { get; set; }
+
+		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
 		/// </summary>
 		protected override void LoadContent ()
@@ -49,10 +56,12 @@ namespace AoM
 		protected override void Initialize ()
 		{
 			SimpleTextureGenerator = new SimpleTextures (GraphicsDevice);
-			base.Initialize ();
 
 			// Load files
 			LoadDBContent ();
+
+			base.Initialize ();
+
 		}
 
 		void LoadDBContent ()
@@ -64,6 +73,11 @@ namespace AoM
 			ItemMods = Newtonsoft.Json.JsonConvert.DeserializeObject<ItemModifierDatabase> (
 				jsonStr,
 				Map.JsonSets);
+
+			Items = ItemDatabase.FromFile ();
+
+			if (ItemMods == null)
+				throw new IOException ("Cannot load ItemMods database");
 		}
 
 		/// <summary>

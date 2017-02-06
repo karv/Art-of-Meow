@@ -1,11 +1,10 @@
-﻿using Cells;
-using Items;
+﻿using AoM;
+using Cells;
+using Items.Declarations.Equipment;
 using Maps;
 using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
-using System.Diagnostics;
-using Newtonsoft.Json;
 
 namespace Helper
 {
@@ -17,7 +16,7 @@ namespace Helper
 		/// <summary>
 		/// Gets the name of the first map
 		/// </summary>
-		public const string FirstMap = Map.MapDir + "//base.map";
+		public const string FirstMap = Map.MapDir + "/base.map.json";
 
 		static Unidad buildPlayer (LogicGrid grid)
 		{
@@ -31,10 +30,9 @@ namespace Helper
 			player.Inteligencia = new HumanIntelligence (player);
 
 			#region Cheat
-			var eq = ItemFactory.CreateItem<IEquipment> (ItemType.Knife);
-			//eq.Modifiers.Modifiers.Add (ItemModifierGenerator.Broken);
+			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("Cuchillo");
+			//eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
 			player.Equipment.EquipItem (eq);
-			player.Inventory.Add (ItemFactory.CreateItem (ItemType.Bow));
 			#endregion
 			player.Initialize ();
 			return player;

@@ -9,5 +9,10 @@
 		/// Items modificators file name
 		/// </summary>
 		public const string ItemModifiers = @"Data/Modifiers.json";
+
+		/// <summary>
+		/// Item definitions file name
+		/// </summary>
+		public const string Items = @"Data/Items.json";
 	}
 }

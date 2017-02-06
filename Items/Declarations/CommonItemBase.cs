@@ -4,6 +4,7 @@ using Debugging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 
 namespace Items.Declarations
 {
@@ -46,6 +47,7 @@ namespace Items.Declarations
 		/// Determines if this item is initialized
 		/// </summary>
 		/// <value><c>true</c> if this instance is initialized; otherwise, <c>false</c>.</value>
+		[JsonIgnore]
 		public bool IsInitialized { get; private set; }
 
 		/// <summary>
@@ -118,6 +120,11 @@ namespace Items.Declarations
 		{
 			return string.Format ("[CommonItemBase: {0}]", NombreBase);
 		}
+
+		/// <summary>
+		/// Clones this item, without owner or modifications
+		/// </summary>
+		public abstract object Clone ();
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.CommonItemBase"/> class.
