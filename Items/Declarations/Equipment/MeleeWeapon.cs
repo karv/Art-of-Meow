@@ -23,7 +23,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public float Damage ()
 		{
-			return BaseDamage + Modifiers.GetTotalModificationOf (ConstantesAtributos.Ataque);
+			return BaseDamage + Modifiers.GetTotalModificationOf (AttributesNames.Ataque);
 		}
 
 		/// <summary>
@@ -38,7 +38,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public float Hit ()
 		{
-			return BaseHit + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
+			return BaseHit + Modifiers.GetTotalModificationOf (AttributesNames.Hit);
 		}
 
 		/// <summary>

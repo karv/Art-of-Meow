@@ -21,7 +21,30 @@ namespace Maps
 	/// </summary>
 	public class Map
 	{
+		#region Data & internals
+
 		char [,] _data;
+
+		/// <summary>
+		/// Gets the horizontal size
+		/// </summary>
+		[JsonProperty (Order = 1)]
+		public int SizeX { get { return _data.GetLength (0); } }
+
+		/// <summary>
+		/// Gets the vertical size
+		/// </summary>
+		[JsonProperty (Order = 0)]
+		public int SizeY { get { return _data.GetLength (1); } }
+
+		/// <summary>
+		/// Gets the size of this map
+		/// </summary>
+		[JsonIgnore]
+		public Size Size
+		{ 
+			get { return new Size (SizeX, SizeY); } 
+		}
 
 		readonly Random _r;
 
@@ -49,6 +72,35 @@ namespace Maps
 		public bool AddFeatures = true;
 
 		/// <summary>
+		/// Gets or sets the distribution used to produce items
+		/// </summary>
+		[JsonProperty (Order = 4)]
+		public ProbabilityInstanceSet<IItemFactory> MapItemGroundItems { get; set; }
+
+		/// <summary>
+		/// Gets or sets the type of enemies in this map
+		/// </summary>
+		/// <value>The type of the enemy.</value>
+		[JsonProperty (Order = 3)]
+		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
+
+		#endregion
+
+		#region Generator
+
+		LogicGrid buildBaseGrid ()
+		{
+			var ret = new LogicGrid (Size);
+			for (int ix = 0; ix < SizeX; ix++)
+				for (int iy = 0; iy < SizeY; iy++)
+				{
+					var newObj = MakeObject (_data [ix, iy], ret, new Point (ix, iy));
+					ret.AddCellObject (newObj);
+				}
+			return ret;
+		}
+
+		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
 		/// <param name="enemyExp">La experiencia de cada enemigo en el grid</param>
@@ -69,7 +121,7 @@ namespace Maps
 
 			if (MapItemGroundItems != null)
 				addDropItems (ret);
-			
+
 			return ret;
 		}
 
@@ -85,19 +137,6 @@ namespace Maps
 				grid.AddCellObject (groundItem);
 			}
 		}
-
-		/// <summary>
-		/// Gets or sets the distribution used to produce items
-		/// </summary>
-		[JsonProperty (Order = 4)]
-		public ProbabilityInstanceSet<IItemFactory> MapItemGroundItems { get; set; }
-
-		/// <summary>
-		/// Gets or sets the type of enemies in this map
-		/// </summary>
-		/// <value>The type of the enemy.</value>
-		[JsonProperty (Order = 3)]
-		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
 
 		/// <summary>
 		/// Makes a object from a given <c>char</c>
@@ -128,16 +167,6 @@ namespace Maps
 					return null;
 			}
 			throw new FormatException ("Unknown accepted map symbol " + c);
-		}
-
-		static char [] goodSymbols = { ' ', 'W', '\n', '\r' };
-
-		/// <summary>
-		/// Determines if a <c>char</c> represents is a map symbol representing an object
-		/// </summary>
-		public static bool ExistSymbol (char c)
-		{
-			return goodSymbols.Contains (c);
 		}
 
 		/// <summary>
@@ -180,70 +209,18 @@ namespace Maps
 			return map.GenerateGrid (enemyExp);
 		}
 
+		#endregion
+
+		#region Symbol language
+
+		static char [] goodSymbols = { ' ', 'W', '\n', '\r' };
+
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Maps.Map"/> class
+		/// Determines if a <c>char</c> represents is a map symbol representing an object
 		/// </summary>
-		/// <param name="size">Size</param>
-		public Map (Size size)
+		public static bool ExistSymbol (char c)
 		{
-			_r = new Random ();
-			_data = new char[size.Width, size.Height];
-		}
-
-		/// <summary>
-		/// El directorio de los mapas
-		/// </summary>
-		public const string MapDir = "Maps";
-
-		/// <summary>
-		/// Devuelve un mapa aleatorio del directorio de mapas
-		/// </summary>
-		public static Map GetRandomMap ()
-		{
-			var mapDir = new DirectoryInfo (MapDir);
-			var maps = mapDir.GetFiles ("*.map.json");
-			var _r = new Random ();
-
-			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
-			return ret;
-		}
-
-		internal static Map HardCreateNew ()
-		{
-			var ret = new Map (new Size (50, 50));
-			for (int i = 0; i < 50 * 50; i++)
-			{
-				ret._data [i % 50, i / 50] = ' ';
-			}
-			ret._data [0, 0] = 'W';
-			ret.EnemyType = new []
-			{
-				new EnemySmartGenerator.EnemyGenerationData (
-					Units.EnemyType.Imp,
-					EnemyClass.Warrior)
-			};
-			return ret;
-		}
-
-		/// <summary>
-		/// Gets the horizontal size
-		/// </summary>
-		[JsonProperty (Order = 1)]
-		public int SizeX { get { return _data.GetLength (0); } }
-
-		/// <summary>
-		/// Gets the vertical size
-		/// </summary>
-		[JsonProperty (Order = 0)]
-		public int SizeY { get { return _data.GetLength (1); } }
-
-		/// <summary>
-		/// Gets the size of this map
-		/// </summary>
-		[JsonIgnore]
-		public Size Size
-		{ 
-			get { return new Size (SizeX, SizeY); } 
+			return goodSymbols.Contains (c);
 		}
 
 		void parseMapObjects (string data)
@@ -275,6 +252,70 @@ namespace Maps
 				yield return line.ToString ();
 				line.Clear ();
 			}		
+		}
+
+		#endregion
+
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Maps.Map"/> class
+		/// </summary>
+		/// <param name="size">Size</param>
+		public Map (Size size)
+		{
+			_r = new Random ();
+			_data = new char[size.Width, size.Height];
+		}
+
+		[JsonConstructor]
+		Map (int sizeX, int sizeY,
+		     IEnumerable<string> data,
+		     IEnumerable<EnemySmartGenerator.EnemyGenerationData> enemyType)
+			: this (new Size (sizeX, sizeY))
+		{
+			Data = data;
+			EnemyType = enemyType;
+		}
+
+		#endregion
+
+		#region IO & Json
+
+		/// <summary>
+		/// El directorio de los mapas
+		/// </summary>
+		public const string MapDir = "Maps";
+
+		/// <summary>
+		/// Devuelve un mapa aleatorio del directorio de mapas
+		/// </summary>
+		public static Map GetRandomMap ()
+		{
+			var mapDir = new DirectoryInfo (MapDir);
+			var maps = mapDir.GetFiles ("*.map.json");
+			var _r = new Random ();
+
+			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
+			return ret;
+		}
+
+		// What does this do? No references
+		internal static Map HardCreateNew ()
+		{
+			var ret = new Map (new Size (50, 50));
+			for (int i = 0; i < 50 * 50; i++)
+			{
+				ret._data [i % 50, i / 50] = ' ';
+			}
+			ret._data [0, 0] = 'W';
+			ret.EnemyType = new []
+			{
+				new EnemySmartGenerator.EnemyGenerationData (
+					Units.EnemyType.Imp,
+					EnemyClass.Warrior)
+			};
+			return ret;
 		}
 
 		/// <summary>
@@ -332,18 +373,6 @@ namespace Maps
 			return Map.ReadFromJSON (jsonStr);
 		}
 
-		LogicGrid buildBaseGrid ()
-		{
-			var ret = new LogicGrid (Size);
-			for (int ix = 0; ix < SizeX; ix++)
-				for (int iy = 0; iy < SizeY; iy++)
-				{
-					var newObj = MakeObject (_data [ix, iy], ret, new Point (ix, iy));
-					ret.AddCellObject (newObj);
-				}
-			return ret;
-		}
-
 		/// <summary>
 		/// Enumera los nombres de los archivos de mapa que tengan el TAG dado
 		/// </summary>
@@ -362,7 +391,7 @@ namespace Maps
 				var spl = line.Split (':');
 				if (spl.Length > 0 && spl [0].Trim () == "Tag")
 				{
-					
+
 					Debug.Assert (spl.Length == 2);
 					if (spl [1].Trim () == Tag)
 						return true;
@@ -371,14 +400,6 @@ namespace Maps
 			return false;
 		}
 
-		[JsonConstructor]
-		Map (int sizeX, int sizeY,
-		     IEnumerable<string> data,
-		     IEnumerable<EnemySmartGenerator.EnemyGenerationData> enemyType)
-			: this (new Size (sizeX, sizeY))
-		{
-			Data = data;
-			EnemyType = enemyType;
-		}
+		#endregion
 	}
 }

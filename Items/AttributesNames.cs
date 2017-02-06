@@ -4,7 +4,7 @@ namespace Items
 	/// <summary>
 	/// Contains constant strings for attributes names for modifiers
 	/// </summary>
-	public static class ConstantesAtributos
+	public static class AttributesNames
 	{
 		/// <summary>
 		/// Ataque
