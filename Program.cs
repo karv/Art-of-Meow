@@ -3,6 +3,8 @@ using System.Diagnostics;
 using Debugging;
 using Items;
 using Newtonsoft.Json;
+using System.Security.Cryptography;
+using Items.Declarations.Equipment;
 
 namespace AoM
 {
@@ -26,6 +28,12 @@ namespace AoM
 
 
 			#region Tmp
+			var mp = new RandomItemRecipe ();
+			var json = JsonConvert.SerializeObject (mp, ItemDatabase.JsonSettings);
+			Debug.WriteLine (json);
+			var mp2 = JsonConvert.DeserializeObject<RandomItemRecipe> (json, ItemDatabase.JsonSettings);
+			if (mp2.AllowedItemNames == null)
+				throw new Exception ();
 			#endregion
 
 			var MapThread = MyGame.ScreenManager.AddNewThread ();

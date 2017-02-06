@@ -27,10 +27,11 @@
           "$type": "Items.RandomItemRecipe, Art_of_Meow",
           "MinItemVal": 0.0,
           "MaxItemVal": 100.0,
-          "AllowedTypes": [
-            4
-          ]
-        },
+  				"AllowedItemNames": [
+      			"Cuchillo",
+      			"Lanza"
+  				]
+				},
         "Weight": 1
       }
     ]

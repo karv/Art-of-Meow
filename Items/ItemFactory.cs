@@ -3,6 +3,9 @@ using Items.Declarations.Equipment;
 using Items.Declarations.Equipment.Skills;
 using Items.Declarations.Pots;
 using Microsoft.Xna.Framework;
+using AoM;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Items
 {
@@ -57,27 +60,25 @@ namespace Items
 	/// <summary>
 	/// Creates an item of a given type
 	/// </summary>
-	[Obsolete]
 	public class SimpleItemRecipe : IItemFactory
 	{
 		/// <summary>
 		/// Type of item
 		/// </summary>
-		public ItemType Type;
+		public string ItemName;
 
 		/// <summary>
 		/// Creates an item
 		/// </summary>
 		public IItem Create ()
 		{
-			return ItemFactory.CreateItem (Type);
+			return Program.MyGame.Items.CreateItem (ItemName);
 		}
 	}
 
 	/// <summary>
 	/// Creates items from a list of allowed types
 	/// </summary>
-	[Obsolete]
 	public class RandomItemRecipe : IItemFactory
 	{
 		readonly static Random _r = new Random ();
@@ -85,23 +86,23 @@ namespace Items
 		/// <summary>
 		/// Min item value
 		/// </summary>
-		public float MinItemVal;
+		public readonly float MinItemVal;
 		/// <summary>
 		/// Max item value
 		/// </summary>
-		public float MaxItemVal;
+		public readonly float MaxItemVal;
 		/// <summary>
 		/// Allowed types
 		/// </summary>
-		public ItemType [] AllowedTypes;
+		public readonly string [] AllowedItemNames;
 
 		/// <summary>
 		/// Creates an item
 		/// </summary>
 		public IItem Create ()
 		{
-			var type = AllowedTypes [_r.Next (AllowedTypes.Length)];
-			return ItemFactory.CreateItem (type);
+			var type = AllowedItemNames [_r.Next (AllowedItemNames.Length)];
+			return Program.MyGame.Items.CreateItem (type);
 		}
 
 		/// <summary>
@@ -111,6 +112,17 @@ namespace Items
 		{
 			MinItemVal = 0;
 			MaxItemVal = float.PositiveInfinity;
+			AllowedItemNames = new [] { "Cuchillo", "Lanza" };
+		}
+
+		[JsonConstructor]
+		RandomItemRecipe (float MinItemVal, float MaxItemVal, string [] AllowedItemNames)
+		{
+			if (AllowedItemNames == null)
+				throw new ArgumentNullException (nameof (AllowedItemNames));
+			this.AllowedItemNames = AllowedItemNames;
+			this.MinItemVal = MinItemVal;
+			this.MaxItemVal = MaxItemVal;
 		}
 	}
 
@@ -120,23 +132,6 @@ namespace Items
 	[Obsolete]
 	public static class ItemFactory
 	{
-		/// <summary>
-		/// Creates a new item of the given type and casts it into a given type
-		/// </summary>
-		/// <returns>A newly created item</returns>
-		/// <param name="recipe">The way the item should be created</param>
-		/// <exception cref="T:System.InvalidCastException">The return item is not of the given type</exception>
-		public static T CreateItem<T> (SimpleItemRecipe recipe)
-			where T : IItem
-		{
-			var item = CreateItem (recipe.Type);
-			if (!(item is T))
-				throw new InvalidCastException ();
-			var ret = (T)item;
-			ret.Initialize ();
-			return ret;
-		}
-
 		/// <summary>
 		/// Creates a new item of the given type and casts it into a given type
 		/// </summary>

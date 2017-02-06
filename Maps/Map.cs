@@ -201,7 +201,7 @@ namespace Maps
 		public static Map GetRandomMap ()
 		{
 			var mapDir = new DirectoryInfo (MapDir);
-			var maps = mapDir.GetFiles ("dung*.map");
+			var maps = mapDir.GetFiles ("*.map.json");
 			var _r = new Random ();
 
 			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
@@ -283,7 +283,7 @@ namespace Maps
 		/// </summary>
 		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
-			TypeNameHandling = TypeNameHandling.Auto,
+			TypeNameHandling = TypeNameHandling.All,
 			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
 			NullValueHandling = NullValueHandling.Ignore,
 			ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
@@ -329,6 +329,7 @@ namespace Maps
 			var file = File.OpenText (fileName);
 			var jsonStr = file.ReadToEnd ();
 			file.Close ();
+			Debug.WriteLine (jsonStr, Debugging.DebugCategories.MapGeneration);
 			return Map.ReadFromJSON (jsonStr);
 		}
 
