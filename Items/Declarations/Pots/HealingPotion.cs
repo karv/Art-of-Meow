@@ -34,8 +34,6 @@ namespace Items.Declarations.Pots
 				new RemoveItemEffect (user, user, this));
 			LastGeneratedInstance.Effects.AddEffect (
 				new ChangeRecurso (user, user, ConstantesRecursos.HP, HealHp){ ShowDeltaLabel = true });
-
-
 		}
 
 		bool ISkill.IsCastable (IUnidad user)
@@ -48,6 +46,19 @@ namespace Items.Declarations.Pots
 		{
 			// return true, si el objeto no está en el inventario no aparecerá
 			return true;
+		}
+
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
+		public override object Clone ()
+		{
+			return new HealingPotion
+			{
+				HealHp = HealHp,
+				TextureName = TextureName,
+				Color = Color
+			};
 		}
 
 		/// <summary>

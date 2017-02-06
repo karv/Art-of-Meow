@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using AoM;
 using Cells;
 using Debugging;
-using Items;
 using Units.Recursos;
 
 namespace Units
@@ -80,12 +80,8 @@ namespace Units
 			ret.Nombre = enemyType.ToString ();
 
 			// Drops
-			if (r.NextDouble () < 0.2)
-				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherCap));
-			if (r.NextDouble () < 0.1)
-				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.LeatherArmor));
-			if (r.NextDouble () < 0.4)
-				ret.Inventory.Add (ItemFactory.CreateItem (ItemType.HealingPotion));
+			if (r.NextDouble () < 0.9)
+				ret.Inventory.Add (Program.MyGame.Items.CreateItem (0));
 
 			DebugAllInfo (ret);
 			Debug.WriteLine (string.Format (

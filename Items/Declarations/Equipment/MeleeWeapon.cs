@@ -3,6 +3,7 @@ using Debugging;
 using Helper;
 using Skills;
 using Units;
+using Newtonsoft.Json;
 
 namespace Items.Declarations.Equipment
 {
@@ -50,6 +51,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public float Speed ()
 		{
+			// TODO
 			return BaseSpeed;// + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
 		}
 
@@ -96,6 +98,20 @@ namespace Items.Declarations.Equipment
 		#endregion
 
 		/// <summary>
+		/// Clone this instance.
+		/// </summary>
+		public override object Clone ()
+		{
+			return new MeleeWeapon (NombreBase, TextureName, BaseDamage, BaseHit)
+			{
+				Texture = Texture,
+				TextureName = TextureName,
+				BaseSpeed = BaseSpeed,
+				Color = Color
+			};
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.MeleeWeapon"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
@@ -112,6 +128,13 @@ namespace Items.Declarations.Equipment
 			BaseDamage = baseDamage;
 			BaseHit = baseHit;
 			BaseSpeed = 1;
+		}
+
+		[JsonConstructor]
+		MeleeWeapon (string NombreBase, string TextureName)
+			: base (NombreBase)
+		{
+			this.TextureName = TextureName;
 		}
 	}
 }

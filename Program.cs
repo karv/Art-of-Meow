@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Debugging;
-using Items.Modifiers;
-using Maps;
 
 namespace AoM
 {

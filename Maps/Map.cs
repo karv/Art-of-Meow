@@ -79,7 +79,7 @@ namespace Maps
 			foreach (var x in items)
 			{
 				var loc = grid.GetRandomEmptyCell ();
-				var newItem = ItemFactory.CreateItem (x);
+				var newItem = x.Create ();
 				var groundItem = new GroundItem (newItem, grid);
 				groundItem.Location = loc;
 				grid.AddCellObject (groundItem);
@@ -90,7 +90,7 @@ namespace Maps
 		/// Gets or sets the distribution used to produce items
 		/// </summary>
 		[JsonProperty (Order = 4)]
-		public ProbabilityInstanceSet<ItemType> MapItemGroundItems { get; set; }
+		public ProbabilityInstanceSet<IItemFactory> MapItemGroundItems { get; set; }
 
 		/// <summary>
 		/// Gets or sets the type of enemies in this map
@@ -201,7 +201,7 @@ namespace Maps
 		public static Map GetRandomMap ()
 		{
 			var mapDir = new DirectoryInfo (MapDir);
-			var maps = mapDir.GetFiles ("dung*.map");
+			var maps = mapDir.GetFiles ("*.map.json");
 			var _r = new Random ();
 
 			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
@@ -277,15 +277,14 @@ namespace Maps
 			}		
 		}
 
-		// TODO: Move to some more generic class or namespace
 		/// <summary>
 		/// The Default settings for json files
 		/// </summary>
 		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
-			TypeNameHandling = TypeNameHandling.Auto,
+			TypeNameHandling = TypeNameHandling.All,
 			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
-			NullValueHandling = NullValueHandling.Include,
+			NullValueHandling = NullValueHandling.Ignore,
 			ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
 			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
 			ObjectCreationHandling = ObjectCreationHandling.Auto,
@@ -329,6 +328,7 @@ namespace Maps
 			var file = File.OpenText (fileName);
 			var jsonStr = file.ReadToEnd ();
 			file.Close ();
+			Debug.WriteLine (jsonStr, Debugging.DebugCategories.MapGeneration);
 			return Map.ReadFromJSON (jsonStr);
 		}
 
