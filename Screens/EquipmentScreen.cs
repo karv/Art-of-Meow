@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using AoM;
 using Items;
+using Items.Declarations.Equipment;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
 using Units;
 using Units.Equipment;
 using Units.Skills;
-using System.Text;
-using Items.Declarations.Equipment;
 
 namespace Screens
 {
@@ -18,6 +18,9 @@ namespace Screens
 	/// </summary>
 	public class EquipmentScreen : Screen
 	{
+		/// <summary>
+		/// Gets the control that show the item stats
+		/// </summary>
 		public EtiquetaMultiLínea CursorItemInfo { get; }
 
 		/// <summary>
