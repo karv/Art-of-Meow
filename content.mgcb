@@ -205,6 +205,11 @@
 /processor:BitmapFontProcessor
 /build:Content/Fonts/small.fnt
 
+#begin Content/Fonts/itemfont.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:Content/Fonts/itemfont.fnt
+
 #begin Content/Fonts/itemfont_0.tga
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -216,9 +221,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Content/Fonts/itemfont_0.tga
-
-#begin Content/Fonts/itemfont.fnt
-/importer:BitmapFontImporter
-/processor:BitmapFontProcessor
-/build:Content/Fonts/itemfont.fnt
 
