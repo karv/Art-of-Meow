@@ -187,7 +187,7 @@ namespace Screens
 				TextColor = Color.WhiteSmoke,
 				TopLeft = new Point (30, Contenedor.ControlBounds ().Bottom + 30),
 				UseFont = "Fonts//itemfont",
-				BackgroundColor = Color.DarkBlue
+				BackgroundColor = Color.Black
 			};
 
 			AddComponent (Contenedor);
