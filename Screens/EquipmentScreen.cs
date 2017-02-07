@@ -9,6 +9,7 @@ using Units;
 using Units.Equipment;
 using Units.Skills;
 using System.Text;
+using Items.Declarations.Equipment;
 
 namespace Screens
 {
@@ -201,17 +202,27 @@ namespace Screens
 			var selEquipment = Contenedor.FocusedItem as IEquipment;
 			if (selEquipment != null)
 			{
-				var TooltipString = new StringBuilder ();
+				var tooltipString = new StringBuilder ();
 				var fullName = selEquipment.Modifiers.GetName ();
-				TooltipString.Append (fullName + "\t\t");
+				tooltipString.Append (fullName + "\t\t");
+
+				var mEq = selEquipment as MeleeWeapon;
+				if (mEq != null)
+				{
+					tooltipString.Append (string.Format (
+						"Damage: {0}\tAccuracy: {1}\tSpeed: {2}\t",
+						mEq.BaseDamage,
+						mEq.BaseHit,
+						mEq.BaseSpeed));
+				}
 
 				foreach (var mod in selEquipment.Modifiers.SquashMods ())
-					TooltipString.AppendFormat (
+					tooltipString.AppendFormat (
 						"{0} : {1}\t",
 						mod.AttributeChangeName,
 						mod.Delta);
 
-				CursorItemInfo.Texto = TooltipString.ToString ();
+				CursorItemInfo.Texto = tooltipString.ToString ();
 			}
 
 		}
