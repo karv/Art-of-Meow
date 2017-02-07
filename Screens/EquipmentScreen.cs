@@ -203,11 +203,11 @@ namespace Screens
 			{
 				var TooltipString = new StringBuilder ();
 				var fullName = selEquipment.Modifiers.GetName ();
-				TooltipString.AppendLine (fullName);
+				TooltipString.Append (fullName + "\t\t");
 
 				foreach (var mod in selEquipment.Modifiers.SquashMods ())
 					TooltipString.AppendFormat (
-						"{0} : {1}\n",
+						"{0} : {1}\t",
 						mod.AttributeChangeName,
 						mod.Delta);
 
