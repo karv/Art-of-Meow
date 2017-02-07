@@ -22,7 +22,7 @@ namespace Items.Modifiers
 		public string GetName ()
 		{
 			var ret = Modifiers.Aggregate (
-				          "",
+				          Item.NombreBase,
 				          (acc, iter) => agregarNombreModificado (
 					          acc,
 					          iter));
