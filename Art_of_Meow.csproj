@@ -220,6 +220,8 @@
     <Compile Include="Screens\ScreenExt.cs" />
     <Compile Include="Units\Movement.cs" />
     <Compile Include="Units\UnitClass.cs" />
+    <Compile Include="Maps\Populator.cs" />
+    <Compile Include="Maps\PopulationRule.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

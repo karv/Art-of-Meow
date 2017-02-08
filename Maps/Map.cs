@@ -74,7 +74,7 @@ namespace Maps
 		/// <summary>
 		/// Gets or sets the distribution used to produce items
 		/// </summary>
-		[JsonProperty (Order = 4)]
+		[JsonProperty (Order = 5)]
 		public ProbabilityInstanceSet<IItemFactory> MapItemGroundItems { get; set; }
 
 		/// <summary>
@@ -82,6 +82,7 @@ namespace Maps
 		/// </summary>
 		/// <value>The type of the enemy.</value>
 		[JsonProperty (Order = 3)]
+		[Obsolete]
 		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
 
 		#endregion
@@ -113,6 +114,9 @@ namespace Maps
 			ret.Factory = new EnemySmartGenerator (factory, enemyExp);
 
 			foreach (var x in EnemyType)
+			{
+				x.Class
+			}
 				ret.Factory.AddEnemyType (x);
 			ret.Factory.PopulateGrid ();
 

@@ -10,6 +10,7 @@ namespace Maps
 	/// <summary>
 	/// The enemy generator for a <see cref="LogicGrid"/>
 	/// </summary>
+	[Obsolete ("UnitRace will do the work now")]
 	public class EnemySmartGenerator
 	{
 		UnidadFactory Factory { get; }
