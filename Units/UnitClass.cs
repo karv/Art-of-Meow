@@ -8,11 +8,23 @@ using Newtonsoft.Json;
 
 namespace Units
 {
+	/// <summary>
+	/// Represents a unit's job
+	/// </summary>
 	public class UnitClass
 	{
+		/// <summary>
+		/// Name of the job
+		/// </summary>
 		public readonly string Name;
+		/// <summary>
+		/// Attributes of this job
+		/// </summary>
 		public readonly ReadOnlyDictionary<string, float> AttributesDistribution;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.UnitClass"/> class.
+		/// </summary>
 		[JsonConstructor]
 		public UnitClass (string Name, Dictionary<string, float> AttributesDistribution)
 		{
@@ -22,13 +34,29 @@ namespace Units
 		
 	}
 
+	/// <summary>
+	/// Represents a type o race of unit
+	/// </summary>
 	public class UnitRace
 	{
+		/// <summary>
+		/// Name of the race
+		/// </summary>
 		public readonly string Name;
+		/// <summary>
+		/// Possible classes for this race
+		/// </summary>
 		public readonly UnitClass [] PossibleClasses;
+		/// <summary>
+		/// Attributes distribution for this race
+		/// </summary>
 		public readonly ReadOnlyDictionary<string, float> AttributesDistribution;
+		/// <summary>
+		/// Texture used to draw this unit
+		/// </summary>
 		public readonly string TextureString;
-		public static readonly Random _r = new Random ();
+
+		static readonly Random _r = new Random ();
 
 		static Dictionary<string,float> mergeAttrDists (UnitRace race, UnitClass cls, float typeWeight = 0.5f)
 		{
@@ -53,6 +81,11 @@ namespace Units
 			return ret;
 		}
 
+		/// <summary>
+		/// Makes a new random enemy from this race
+		/// </summary>
+		/// <param name="grid">The logic grid where this <see cref="Unidad"/> lives</param>
+		/// <param name="exp">Experience</param>
 		public Unidad MakeEnemy (LogicGrid grid, float exp = 0)
 		{
 			var ret = new Unidad (grid, TextureString);
@@ -75,6 +108,9 @@ namespace Units
 
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Units.UnitRace"/> class.
+		/// </summary>
 		[JsonConstructor]
 		public UnitRace (string Name,
 		                 UnitClass [] PossibleClasses,
