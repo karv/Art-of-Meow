@@ -219,6 +219,7 @@
     <Compile Include="Items\AttributesNames.cs" />
     <Compile Include="Screens\ScreenExt.cs" />
     <Compile Include="Units\Movement.cs" />
+    <Compile Include="Units\UnitClass.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

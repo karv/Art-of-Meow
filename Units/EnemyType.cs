@@ -1,9 +1,11 @@
+using System;
 
 namespace Units
 {
 	/// <summary>
 	/// Enumera los tipos de enemigos
 	/// </summary>
+	[ObsoleteAttribute]
 	public enum EnemyType
 	{
 		/// <summary>

@@ -11,6 +11,7 @@ namespace Units
 	/// <summary>
 	/// Provee métodos para generar unidades
 	/// </summary>
+	[Obsolete]
 	public class UnidadFactory
 	{
 		/// <summary>
