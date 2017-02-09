@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace Units
 {
+
 	/// <summary>
 	/// Represents a unit's job
 	/// </summary>

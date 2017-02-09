@@ -222,6 +222,7 @@
     <Compile Include="Units\UnitClass.cs" />
     <Compile Include="Maps\Populator.cs" />
     <Compile Include="Maps\PopulationRule.cs" />
+    <Compile Include="Units\UnitClassRaceManager.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

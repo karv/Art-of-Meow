@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cells;
 using Units;
+using Newtonsoft.Json;
 
 namespace Maps
 {
@@ -11,7 +12,9 @@ namespace Maps
 	/// </summary>
 	public class Populator
 	{
-		internal readonly List<PopulationRule> Rules;
+		[JsonProperty]
+		internal readonly PopulationRule [] Rules;
+		[JsonIgnore]
 		static readonly Random _r = new Random ();
 
 		public IList<Unidad> BuildPop (LogicGrid grid, float totalExp = 0)
@@ -32,14 +35,17 @@ namespace Maps
 			return ret;
 		}
 
-		public void AddRule (PopulationRule rule)
+		void linkRules ()
 		{
-			rule.LinkWith (this);
+			foreach (var r in Rules)
+				r.LinkWith (this);
 		}
 
-		public Populator ()
+		[JsonConstructor]
+		public Populator (PopulationRule [] Rules)
 		{
-			Rules = new List<PopulationRule> ();
+			this.Rules = Rules;
+			linkRules ();
 		}
 	}
 	

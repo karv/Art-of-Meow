@@ -1,7 +1,9 @@
 using System;
+using System.Linq;
 using Helper;
 using Newtonsoft.Json;
 using Units;
+using AoM;
 
 namespace Maps
 {
@@ -20,7 +22,7 @@ namespace Maps
 		/// Gets the chance of run this population rule
 		/// </summary>
 		/// <value>The chance.</value>
-		public float Chance { get; }
+		public float Chance { get; set; }
 
 		/// <summary>
 		/// The stacks created by this rule
@@ -31,11 +33,10 @@ namespace Maps
 		{
 			if (populator == null)
 				throw new ArgumentNullException ("populator");
-			if (Populator != null || populator.Rules.Contains (this))
+			if (Populator != null)
 				throw new InvalidOperationException ("This rule already has a populator");
 			
 			Populator = populator;
-			Populator.Rules.Add (this);
 		}
 	}
 
@@ -47,7 +48,7 @@ namespace Maps
 		{
 			get
 			{
-				throw new NotImplementedException ("This should read the race manager.");
+				return Program.MyGame.ClassRaceManager.GetRace (RaceName);
 			}
 		}
 

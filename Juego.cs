@@ -5,6 +5,7 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Textures;
+using Units;
 
 namespace AoM
 {
@@ -33,6 +34,8 @@ namespace AoM
 		/// </summary>
 		/// <value>The items.</value>
 		public ItemDatabase Items { get; set; }
+
+		public UnitClassRaceManager ClassRaceManager { get; private set; }
 
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
