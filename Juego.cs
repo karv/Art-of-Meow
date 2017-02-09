@@ -35,7 +35,7 @@ namespace AoM
 		/// <value>The items.</value>
 		public ItemDatabase Items { get; set; }
 
-		public UnitClassRaceManager ClassRaceManager { get; private set; }
+		public UnitClassRaceManager ClassRaceManager { get; set; }
 
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.

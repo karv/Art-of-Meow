@@ -4,6 +4,7 @@ using Debugging;
 using Maps;
 using Helper;
 using Newtonsoft.Json;
+using Units;
 
 namespace AoM
 {
@@ -26,7 +27,10 @@ namespace AoM
 			Debug.Listeners.Add (lg);
 
 			#region Test
-
+			var alienRace = new UnitRace ("Alien", new [] { }, null, null);
+			MyGame.ClassRaceManager = new Units.UnitClassRaceManager (
+				new [] { },
+				new [] { alienRace });
 
 			var rule = new PopulationRule
 			{
