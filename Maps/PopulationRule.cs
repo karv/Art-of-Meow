@@ -32,7 +32,7 @@ namespace Maps
 			if (populator == null)
 				throw new ArgumentNullException ("populator");
 			if (Populator != null || populator.Rules.Contains (this))
-				throw new InvalidOperationException ();
+				throw new InvalidOperationException ("This rule already has a populator");
 			
 			Populator = populator;
 			Populator.Rules.Add (this);
