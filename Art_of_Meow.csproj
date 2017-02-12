@@ -85,6 +85,7 @@
     <None Include="Maps\base.map.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\RaceClass.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />

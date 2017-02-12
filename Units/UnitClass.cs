@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Cells;
 using Debugging;
 using Newtonsoft.Json;
+using AoM;
 
 namespace Units
 {
@@ -44,10 +45,25 @@ namespace Units
 		/// Name of the race
 		/// </summary>
 		public readonly string Name;
+
+		public readonly string [] PossibleClasses;
+
 		/// <summary>
 		/// Possible classes for this race
 		/// </summary>
-		public readonly UnitClass [] PossibleClasses;
+		public UnitClass [] PossibleClassesRef ()
+		{
+			var ret = new UnitClass[PossibleClasses.Length];
+			for (int i = 0; i < ret.Length; i++)
+				ret [i] = Program.MyGame.ClassRaceManager.GetClass (PossibleClasses [i]);
+			return ret;
+		}
+
+		public UnitClass PossibleClass (int i)
+		{
+			return Program.MyGame.ClassRaceManager.GetClass (PossibleClasses [i]);
+		}
+
 		/// <summary>
 		/// Attributes distribution for this race
 		/// </summary>
@@ -90,7 +106,7 @@ namespace Units
 		public Unidad MakeEnemy (LogicGrid grid, float exp = 0)
 		{
 			var ret = new Unidad (grid, TextureString);
-			var uClass = PossibleClasses [_r.Next (PossibleClasses.Length)];
+			var uClass = PossibleClassesRef () [_r.Next (PossibleClasses.Length)];
 
 
 			foreach (var x in mergeAttrDists (this, uClass))
@@ -114,7 +130,7 @@ namespace Units
 		/// </summary>
 		[JsonConstructor]
 		public UnitRace (string Name,
-		                 UnitClass [] PossibleClasses,
+		                 string [] PossibleClasses,
 		                 ReadOnlyDictionary<string, float> AttributesDistribution,
 		                 string TextureString)
 		{

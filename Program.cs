@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
-using Debugging;
-using Maps;
-using Helper;
-using Newtonsoft.Json;
-using Units;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using Debugging;
+using Helper;
+using Maps;
+using Newtonsoft.Json;
+using Units;
+using Units.Recursos;
 
 namespace AoM
 {
@@ -29,16 +30,38 @@ namespace AoM
 			Debug.Listeners.Add (lg);
 
 			#region Test
-			var warriorClass = new UnitClass ("Warrior", new Dictionary<string, float> ());
+
+			MyGame.ClassRaceManager = UnitClassRaceManager.FromFile (FileNames.RaceClass);
+			// read races and classes
+			var warrStats = new Dictionary<string, float> ();
+			warrStats.Add (ConstantesRecursos.CertezaMelee, 0.16f);
+			warrStats.Add (ConstantesRecursos.Destreza, 0.16f);
+			warrStats.Add (ConstantesRecursos.EvasiónMelee, 0.08f);
+			warrStats.Add (ConstantesRecursos.EvasiónRango, 0.04f);
+			warrStats.Add (ConstantesRecursos.Fuerza, 0.24f);
+			warrStats.Add (ConstantesRecursos.HP, 0.16f);
+			warrStats.Add (ConstantesRecursos.Velocidad, 0.08f);
+			var warriorClass = new UnitClass ("Warrior", warrStats);
+
+			warrStats = new Dictionary<string, float> ();
+			warrStats.Add (ConstantesRecursos.CertezaMelee, 1f);
+			warrStats.Add (ConstantesRecursos.Destreza, 0.7f);
+			warrStats.Add (ConstantesRecursos.EvasiónMelee, 1f);
+			warrStats.Add (ConstantesRecursos.EvasiónRango, 0.8f);
+			warrStats.Add (ConstantesRecursos.Fuerza, 0.2f);
+			warrStats.Add (ConstantesRecursos.HP, 0.4f);
+			warrStats.Add (ConstantesRecursos.Velocidad, 0.4f);
 			var alienRace = new UnitRace (
-				                "Alien",
-				                new [] { warriorClass },
-				                new ReadOnlyDictionary<string, float> (new Dictionary<string, float> ()),
+				                "Imp",
+				                new [] { "Warrior" },
+				                new ReadOnlyDictionary<string, float> (warrStats),
 				                "swordman");
 			MyGame.ClassRaceManager = new UnitClassRaceManager (
 				new [] { warriorClass },
 				new [] { alienRace });
 
+			var rcJson = JsonConvert.SerializeObject (MyGame.ClassRaceManager, UnitClassRaceManager.JsonSets);
+			Console.WriteLine (rcJson);
 			var rule = new PopulationRule
 			{
 				Chance = 0.9f,

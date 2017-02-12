@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Units
 {
@@ -36,6 +38,40 @@ namespace Units
 		}
 
 		/// <summary>
+		/// The Default settings for json files
+		/// </summary>
+		[JsonIgnore]
+		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
+		{
+			TypeNameHandling = TypeNameHandling.None,
+			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
+			NullValueHandling = NullValueHandling.Ignore,
+			ReferenceLoopHandling = ReferenceLoopHandling.Error,
+			PreserveReferencesHandling = PreserveReferencesHandling.None,
+			ObjectCreationHandling = ObjectCreationHandling.Auto,
+			MetadataPropertyHandling = MetadataPropertyHandling.Default,
+			Formatting = Formatting.Indented,
+
+			Error = onError
+		};
+
+		static void onError (object sender,
+		                     Newtonsoft.Json.Serialization.ErrorEventArgs e)
+		{
+			var err = e.ErrorContext.Error;
+			Debug.WriteLine (err);
+			Debugger.Break ();
+		}
+
+		public static UnitClassRaceManager FromFile (string fileName)
+		{
+			var file = File.OpenText (fileName);
+			var jsonStr = file.ReadToEnd ();
+			file.Close ();
+			return JsonConvert.DeserializeObject<UnitClassRaceManager> (jsonStr, JsonSets);
+		}
+
+		/// <summary>
 		/// </summary>
 		[JsonConstructor]
 		public UnitClassRaceManager (UnitClass [] Class, UnitRace [] Race)
@@ -44,5 +80,4 @@ namespace Units
 			this.Race = Race;
 		}
 	}
-	
 }
