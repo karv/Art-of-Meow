@@ -309,7 +309,7 @@ namespace Cells
 		/// <summary>
 		/// Get or set the enemy generator
 		/// </summary>
-		public EnemySmartGenerator Factory { get; set; }
+		public Populator Factory { get; set; }
 
 		#endregion
 

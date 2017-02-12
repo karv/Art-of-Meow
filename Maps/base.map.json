@@ -1,39 +1,74 @@
 ﻿{
+  "$id": "1",
+  "$type": "Maps.Map, Art_of_Meow",
   "SizeY": 10,
   "SizeX": 10,
-  "Data": [
-    "WWWWWWWWWW",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "WWWWWWWWWW",
-  ],
-  "EnemyType": [
-    {
-      "Type": 0,
-      "Class": 0
+  "Data": {
+    "$type": "System.String[], mscorlib",
+    "$values": [
+      "WWWWWWWWWW",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "WWWWWWWWWW"
+    ]
+  },
+  "Populator": {
+    "$type": "Maps.Populator, Art_of_Meow",
+    "Rules": {
+      "$type": "Maps.PopulationRule[], Art_of_Meow",
+      "$values": [
+        {
+          "$type": "Maps.PopulationRule, Art_of_Meow",
+          "Stacks": {
+            "$type": "Maps.DistributedStack[], Art_of_Meow",
+            "$values": [
+              {
+                "$type": "Maps.DistributedStack, Art_of_Meow",
+                "RaceName": "Imp",
+                "UnitQuantityDistribution": {
+                  "$type": "Helper.IntegerInterval, Art_of_Meow",
+                  "Min": 1,
+                  "Max": 2
+                }
+              }
+            ]
+          },
+          "Chance": 1
+        }
+      ]
     }
-  ],
+  },
   "AddFeatures": true,
   "MapItemGroundItems": {
-    "Values": [
-      {
-        "Item": {
-          "$type": "Items.RandomItemRecipe, Art_of_Meow",
-          "MinItemVal": 0.0,
-          "MaxItemVal": 100.0,
-  				"AllowedItemNames": [
-      			"Cuchillo",
-      			"Lanza"
-  				]
-				},
-        "Weight": 1
-      }
-    ]
+    "$id": "6",
+    "$type": "Helper.ProbabilityInstanceSet`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow",
+    "Values": {
+      "$type": "System.Collections.Generic.List`1[[Helper.ItemWeightPair`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow]], mscorlib",
+      "$values": [
+        {
+          "$id": "7",
+          "$type": "Helper.ItemWeightPair`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow",
+          "Item": {
+            "$type": "Items.RandomItemRecipe, Art_of_Meow",
+            "MinItemVal": 0.0,
+            "MaxItemVal": 100.0,
+            "AllowedItemNames": {
+              "$type": "System.String[], mscorlib",
+              "$values": [
+                "Cuchillo",
+                "Lanza"
+              ]
+            }
+          },
+          "Weight": 1.0
+        }
+      ]
+    }
   }
 }

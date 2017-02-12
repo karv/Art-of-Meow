@@ -1,9 +1,12 @@
+using System;
+
 
 namespace Units
 {
 	/// <summary>
 	/// La clase de un enemigo para su creación
 	/// </summary>
+	[Obsolete]
 	public enum EnemyClass
 	{
 		/// <summary>

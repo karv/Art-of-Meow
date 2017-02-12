@@ -85,6 +85,7 @@
     <None Include="Maps\base.map.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\RaceClass.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -219,6 +220,10 @@
     <Compile Include="Items\AttributesNames.cs" />
     <Compile Include="Screens\ScreenExt.cs" />
     <Compile Include="Units\Movement.cs" />
+    <Compile Include="Units\UnitClass.cs" />
+    <Compile Include="Maps\Populator.cs" />
+    <Compile Include="Maps\PopulationRule.cs" />
+    <Compile Include="Units\UnitClassRaceManager.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

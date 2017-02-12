@@ -5,6 +5,7 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Textures;
+using Units;
 
 namespace AoM
 {
@@ -33,6 +34,11 @@ namespace AoM
 		/// </summary>
 		/// <value>The items.</value>
 		public ItemDatabase Items { get; set; }
+
+		/// <summary>
+		/// Gets the class and race manager
+		/// </summary>
+		public UnitClassRaceManager ClassRaceManager { get; set; }
 
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
@@ -75,6 +81,8 @@ namespace AoM
 				Map.JsonSets);
 
 			Items = ItemDatabase.FromFile ();
+
+			ClassRaceManager = UnitClassRaceManager.FromFile ();
 
 			if (ItemMods == null)
 				throw new IOException ("Cannot load ItemMods database");

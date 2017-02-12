@@ -13,8 +13,9 @@ namespace Maps
 		/// <summary>
 		/// Convert a map into a enumeration os string
 		/// </summary>
-		public static IEnumerable <string> DataToString (char [,] data)
+		public static string[] DataToString (char [,] data)
 		{
+			var ret = new List<string> ();
 			var sizeX = data.GetLength (0);
 			var sizeY = data.GetLength (1);
 
@@ -23,9 +24,10 @@ namespace Maps
 			{
 				for (int iy = 0; iy < sizeY; iy++)
 					line.Append (data [ix, iy]);
-				yield return line.ToString ();
+				ret.Add (line.ToString ());
 				line.Clear ();
 			}		
+			return ret.ToArray ();
 		}
 
 		static IEnumerable<char> EnumerateChars (this IEnumerable<IEnumerable<char>> obj)
@@ -72,5 +74,4 @@ namespace Maps
 			}
 		}
 	}
-	
 }

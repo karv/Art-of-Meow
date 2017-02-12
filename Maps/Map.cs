@@ -74,15 +74,8 @@ namespace Maps
 		/// <summary>
 		/// Gets or sets the distribution used to produce items
 		/// </summary>
-		[JsonProperty (Order = 4)]
+		[JsonProperty (Order = 5)]
 		public ProbabilityInstanceSet<IItemFactory> MapItemGroundItems { get; set; }
-
-		/// <summary>
-		/// Gets or sets the type of enemies in this map
-		/// </summary>
-		/// <value>The type of the enemy.</value>
-		[JsonProperty (Order = 3)]
-		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
 
 		#endregion
 
@@ -101,6 +94,12 @@ namespace Maps
 		}
 
 		/// <summary>
+		/// The populator has the capacity of generate new unts for this map
+		/// </summary>
+		[JsonProperty (Order = 3)]
+		public Populator Populator;
+
+		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
 		/// <param name="enemyExp">La experiencia de cada enemigo en el grid</param>
@@ -109,12 +108,9 @@ namespace Maps
 			var ret = buildBaseGrid ();
 			makeStairs (ret);
 
-			var factory = new UnidadFactory (ret);
-			ret.Factory = new EnemySmartGenerator (factory, enemyExp);
-
-			foreach (var x in EnemyType)
-				ret.Factory.AddEnemyType (x);
-			ret.Factory.PopulateGrid ();
+			ret.Factory = Populator;
+			var enemies = Populator.BuildPop (ret, enemyExp);
+			populateWith (enemies, ret); 
 
 			if (AddFeatures)
 				addRandomFlavorFeatures (ret);
@@ -123,6 +119,21 @@ namespace Maps
 				addDropItems (ret);
 
 			return ret;
+		}
+
+		static readonly Color enemyColor = Color.Blue;
+
+		static void populateWith (IEnumerable<Unidad> unids, LogicGrid grid)
+		{
+			var enemyTeam = new TeamManager (enemyColor);
+			foreach (var enemy in unids)
+			{
+				enemy.Team = enemyTeam;
+
+				var point = grid.GetRandomEmptyCell ();
+				enemy.Location = point;
+				grid [point].Add (enemy);
+			}
 		}
 
 		void addDropItems (LogicGrid grid)
@@ -271,11 +282,11 @@ namespace Maps
 		[JsonConstructor]
 		Map (int sizeX, int sizeY,
 		     IEnumerable<string> data,
-		     IEnumerable<EnemySmartGenerator.EnemyGenerationData> enemyType)
+		     Populator Populator)
 			: this (new Size (sizeX, sizeY))
 		{
 			Data = data;
-			EnemyType = enemyType;
+			this.Populator = Populator;
 		}
 
 		#endregion
@@ -297,24 +308,6 @@ namespace Maps
 			var _r = new Random ();
 
 			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
-			return ret;
-		}
-
-		// What does this do? No references
-		internal static Map HardCreateNew ()
-		{
-			var ret = new Map (new Size (50, 50));
-			for (int i = 0; i < 50 * 50; i++)
-			{
-				ret._data [i % 50, i / 50] = ' ';
-			}
-			ret._data [0, 0] = 'W';
-			ret.EnemyType = new []
-			{
-				new EnemySmartGenerator.EnemyGenerationData (
-					Units.EnemyType.Imp,
-					EnemyClass.Warrior)
-			};
 			return ret;
 		}
 
