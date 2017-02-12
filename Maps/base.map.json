@@ -19,39 +19,27 @@
     ]
   },
   "Populator": {
-    "$id": "2",
     "$type": "Maps.Populator, Art_of_Meow",
     "Rules": {
       "$type": "Maps.PopulationRule[], Art_of_Meow",
       "$values": [
         {
-          "$id": "3",
           "$type": "Maps.PopulationRule, Art_of_Meow",
           "Stacks": {
             "$type": "Maps.DistributedStack[], Art_of_Meow",
             "$values": [
               {
-                "$id": "4",
                 "$type": "Maps.DistributedStack, Art_of_Meow",
                 "RaceName": "Alien",
                 "UnitQuantityDistribution": {
-                  "$id": "5",
                   "$type": "Helper.IntegerInterval, Art_of_Meow",
-                  "Min": 3,
-                  "Max": 5
-                },
-                "Race": {
-                  "$type": "Units.UnitRace, Art_of_Meow",
-                  "Name": "Alien",
-                  "PossibleClasses": {
-                    "$type": "Units.UnitClass[], Art_of_Meow",
-                    "$values": []
-                  }
+                  "Min": 1,
+                  "Max": 2
                 }
               }
             ]
           },
-          "Chance": 0.9
+          "Chance": 1
         }
       ]
     }
