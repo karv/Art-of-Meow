@@ -56,6 +56,7 @@ namespace Maps
 		/// <summary>
 		/// Gets the race using <see cref="Juego.ClassRaceManager"/>
 		/// </summary>
+		[JsonIgnore]
 		public UnitRace Race
 		{
 			get
