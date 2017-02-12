@@ -5,6 +5,8 @@ using Maps;
 using Helper;
 using Newtonsoft.Json;
 using Units;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AoM
 {
@@ -27,9 +29,14 @@ namespace AoM
 			Debug.Listeners.Add (lg);
 
 			#region Test
-			var alienRace = new UnitRace ("Alien", new UnitClass[] { }, null, null);
+			var warriorClass = new UnitClass ("Warrior", new Dictionary<string, float> ());
+			var alienRace = new UnitRace (
+				                "Alien",
+				                new [] { warriorClass },
+				                new ReadOnlyDictionary<string, float> (new Dictionary<string, float> ()),
+				                "swordman");
 			MyGame.ClassRaceManager = new UnitClassRaceManager (
-				new UnitClass[] { },
+				new [] { warriorClass },
 				new [] { alienRace });
 
 			var rule = new PopulationRule
