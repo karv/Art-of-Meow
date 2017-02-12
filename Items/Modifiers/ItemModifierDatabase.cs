@@ -24,7 +24,7 @@ namespace Items.Modifiers
 		{
 			get
 			{
-				return Mods.First (z => string.Compare (z.Name, name, true));
+				return Mods.First (z => string.Compare (z.Name, name, true) == 0);
 			}
 		}
 
