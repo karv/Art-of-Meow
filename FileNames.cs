@@ -15,6 +15,9 @@
 		/// </summary>
 		public const string Items = @"Data/Items.json";
 
+		/// <summary>
+		/// Race and classes definitions file name
+		/// </summary>
 		public const string RaceClass = @"Data/RaceClass.json";
 	}
 }

@@ -46,6 +46,9 @@ namespace Units
 		/// </summary>
 		public readonly string Name;
 
+		/// <summary>
+		/// The names of the possible classes for this class
+		/// </summary>
 		public readonly string [] PossibleClasses;
 
 		/// <summary>
@@ -59,6 +62,9 @@ namespace Units
 			return ret;
 		}
 
+		/// <summary>
+		/// Gets the reference to the class in the <see cref="PossibleClasses"/> on an index.
+		/// </summary>
 		public UnitClass PossibleClass (int i)
 		{
 			return Program.MyGame.ClassRaceManager.GetClass (PossibleClasses [i]);

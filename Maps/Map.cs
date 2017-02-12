@@ -93,6 +93,9 @@ namespace Maps
 			return ret;
 		}
 
+		/// <summary>
+		/// The populator has the capacity of generate new unts for this map
+		/// </summary>
 		[JsonProperty (Order = 3)]
 		public Populator Populator;
 

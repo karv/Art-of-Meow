@@ -64,6 +64,9 @@ namespace Units
 			Debugger.Break ();
 		}
 
+		/// <summary>
+		/// Gets the <see cref="UnitClassRaceManager"/> from a file
+		/// </summary>
 		public static UnitClassRaceManager FromFile (string fileName = FileNames.RaceClass)
 		{
 			var file = File.OpenText (fileName);
