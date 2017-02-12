@@ -82,6 +82,8 @@ namespace AoM
 
 			Items = ItemDatabase.FromFile ();
 
+			ClassRaceManager = UnitClassRaceManager.FromFile ();
+
 			if (ItemMods == null)
 				throw new IOException ("Cannot load ItemMods database");
 		}

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using AoM;
 
 namespace Units
 {
@@ -63,7 +64,7 @@ namespace Units
 			Debugger.Break ();
 		}
 
-		public static UnitClassRaceManager FromFile (string fileName)
+		public static UnitClassRaceManager FromFile (string fileName = FileNames.RaceClass)
 		{
 			var file = File.OpenText (fileName);
 			var jsonStr = file.ReadToEnd ();
