@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace Helper
 {
@@ -34,6 +35,7 @@ namespace Helper
 		/// </summary>
 		/// <param name="min">Minimum.</param>
 		/// <param name="max">Maximum</param>
+		[JsonConstructor]
 		public IntegerInterval (int min, int max)
 		{
 			if (min > max)

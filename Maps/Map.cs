@@ -94,7 +94,7 @@ namespace Maps
 		}
 
 		[JsonProperty (Order = 3)]
-		readonly Populator Populator;
+		public Populator Populator;
 
 		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>

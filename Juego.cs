@@ -35,6 +35,9 @@ namespace AoM
 		/// <value>The items.</value>
 		public ItemDatabase Items { get; set; }
 
+		/// <summary>
+		/// Gets the class and race manager
+		/// </summary>
 		public UnitClassRaceManager ClassRaceManager { get; set; }
 
 		/// <summary>

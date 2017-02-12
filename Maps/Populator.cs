@@ -17,6 +17,11 @@ namespace Maps
 		[JsonIgnore]
 		static readonly Random _r = new Random ();
 
+		/// <summary>
+		/// Gets a list of <see cref="Unidad"/> whose elements are new units.
+		/// </summary>
+		/// <param name="grid">Grid where to place them</param>
+		/// <param name="totalExp">Combined experience</param>
 		public IList<Unidad> BuildPop (LogicGrid grid, float totalExp = 0)
 		{
 			var ret = new List<Unidad> ();
@@ -27,7 +32,7 @@ namespace Maps
 					// build 'qt' copies of this race
 					for (int i = 0; i < qt; i++)
 					{
-						// TODO: calculate properly the exp of this un
+						// TODO: calculate properly the exp of this unit
 						var un = st.Race.MakeEnemy (grid, totalExp);
 						ret.Add (un);
 					}
@@ -41,6 +46,10 @@ namespace Maps
 				r.LinkWith (this);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Maps.Populator"/> class.
+		/// </summary>
+		/// <param name="Rules">A set of generation rules</param>
 		[JsonConstructor]
 		public Populator (PopulationRule [] Rules)
 		{
@@ -48,5 +57,4 @@ namespace Maps
 			linkRules ();
 		}
 	}
-	
 }

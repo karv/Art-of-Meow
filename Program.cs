@@ -27,9 +27,9 @@ namespace AoM
 			Debug.Listeners.Add (lg);
 
 			#region Test
-			var alienRace = new UnitRace ("Alien", new [] { }, null, null);
-			MyGame.ClassRaceManager = new Units.UnitClassRaceManager (
-				new [] { },
+			var alienRace = new UnitRace ("Alien", new UnitClass[] { }, null, null);
+			MyGame.ClassRaceManager = new UnitClassRaceManager (
+				new UnitClass[] { },
 				new [] { alienRace });
 
 			var rule = new PopulationRule
@@ -47,8 +47,12 @@ namespace AoM
 			var pop = new Populator (new [] { rule });
 
 			var json = JsonConvert.SerializeObject (pop, Map.JsonSets);
+			//Debug.WriteLine (json);
+			var mp = Map.ReadFromFile (Map.MapDir + @"/base.map.json");
+			mp.Populator = pop;
+			json = JsonConvert.SerializeObject (mp, Map.JsonSets);
 			Debug.WriteLine (json);
-			var clone = JsonConvert.DeserializeObject<Populator> (json, Map.JsonSets);
+			var clone = JsonConvert.DeserializeObject<Map> (json, Map.JsonSets);
 			#endregion
 			var MapThread = MyGame.ScreenManager.AddNewThread ();
 			MapThread.Stack (new Screens.MapMainScreen (MyGame));

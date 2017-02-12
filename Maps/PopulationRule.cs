@@ -29,6 +29,9 @@ namespace Maps
 		/// </summary>
 		public DistributedStack [] Stacks;
 
+		/// <summary>
+		/// Links this rule to a <see cref="Populator"/>
+		/// </summary>
 		public void LinkWith (Populator populator)
 		{
 			if (populator == null)
@@ -40,10 +43,19 @@ namespace Maps
 		}
 	}
 
+	/// <summary>
+	/// Represents a pain Race-distribution
+	/// </summary>
 	public class DistributedStack
 	{
+		/// <summary>
+		/// The name of the race
+		/// </summary>
 		public string RaceName;
 
+		/// <summary>
+		/// Gets the race using <see cref="Juego.ClassRaceManager"/>
+		/// </summary>
 		public UnitRace Race
 		{
 			get
@@ -52,6 +64,9 @@ namespace Maps
 			}
 		}
 
+		/// <summary>
+		/// The distribution on the unit's quantity
+		/// </summary>
 		public IDistribution<int> UnitQuantityDistribution;
 	}
 }

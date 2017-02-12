@@ -1,39 +1,86 @@
 ﻿{
+  "$id": "1",
+  "$type": "Maps.Map, Art_of_Meow",
   "SizeY": 10,
   "SizeX": 10,
-  "Data": [
-    "WWWWWWWWWW",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "W        W",
-    "WWWWWWWWWW",
-  ],
-  "EnemyType": [
-    {
-      "Type": 0,
-      "Class": 0
+  "Data": {
+    "$type": "System.String[], mscorlib",
+    "$values": [
+      "WWWWWWWWWW",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "W        W",
+      "WWWWWWWWWW"
+    ]
+  },
+  "Populator": {
+    "$id": "2",
+    "$type": "Maps.Populator, Art_of_Meow",
+    "Rules": {
+      "$type": "Maps.PopulationRule[], Art_of_Meow",
+      "$values": [
+        {
+          "$id": "3",
+          "$type": "Maps.PopulationRule, Art_of_Meow",
+          "Stacks": {
+            "$type": "Maps.DistributedStack[], Art_of_Meow",
+            "$values": [
+              {
+                "$id": "4",
+                "$type": "Maps.DistributedStack, Art_of_Meow",
+                "RaceName": "Alien",
+                "UnitQuantityDistribution": {
+                  "$id": "5",
+                  "$type": "Helper.IntegerInterval, Art_of_Meow",
+                  "Min": 3,
+                  "Max": 5
+                },
+                "Race": {
+                  "$type": "Units.UnitRace, Art_of_Meow",
+                  "Name": "Alien",
+                  "PossibleClasses": {
+                    "$type": "Units.UnitClass[], Art_of_Meow",
+                    "$values": []
+                  }
+                }
+              }
+            ]
+          },
+          "Chance": 0.9
+        }
+      ]
     }
-  ],
+  },
   "AddFeatures": true,
   "MapItemGroundItems": {
-    "Values": [
-      {
-        "Item": {
-          "$type": "Items.RandomItemRecipe, Art_of_Meow",
-          "MinItemVal": 0.0,
-          "MaxItemVal": 100.0,
-  				"AllowedItemNames": [
-      			"Cuchillo",
-      			"Lanza"
-  				]
-				},
-        "Weight": 1
-      }
-    ]
+    "$id": "6",
+    "$type": "Helper.ProbabilityInstanceSet`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow",
+    "Values": {
+      "$type": "System.Collections.Generic.List`1[[Helper.ItemWeightPair`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow]], mscorlib",
+      "$values": [
+        {
+          "$id": "7",
+          "$type": "Helper.ItemWeightPair`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow",
+          "Item": {
+            "$type": "Items.RandomItemRecipe, Art_of_Meow",
+            "MinItemVal": 0.0,
+            "MaxItemVal": 100.0,
+            "AllowedItemNames": {
+              "$type": "System.String[], mscorlib",
+              "$values": [
+                "Cuchillo",
+                "Lanza"
+              ]
+            }
+          },
+          "Weight": 1.0
+        }
+      ]
+    }
   }
 }
