@@ -8,6 +8,7 @@ namespace Helper
 	/// </summary>
 	public struct IntegerInterval : IDistribution<int>
 	{
+		[JsonIgnore]
 		readonly Random _r;
 
 		/// <summary>
@@ -33,16 +34,16 @@ namespace Helper
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Helper.IntegerInterval"/> struct.
 		/// </summary>
-		/// <param name="min">Minimum.</param>
-		/// <param name="max">Maximum</param>
+		/// <param name="Min">Minimum.</param>
+		/// <param name="Max">Maximum</param>
 		[JsonConstructor]
-		public IntegerInterval (int min, int max)
+		public IntegerInterval (int Min, int Max)
 		{
-			if (min > max)
+			if (Min > Max)
 				throw new Exception ();
 
-			Min = min;
-			Max = max;
+			this.Min = Min;
+			this.Max = Max;
 			_r = new Random ();
 		}
 	}

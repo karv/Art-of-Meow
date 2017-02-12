@@ -5,7 +5,7 @@ namespace Units
 	/// <summary>
 	/// Enumera los tipos de enemigos
 	/// </summary>
-	[ObsoleteAttribute]
+	[Obsolete]
 	public enum EnemyType
 	{
 		/// <summary>

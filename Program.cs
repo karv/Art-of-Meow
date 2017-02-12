@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using Debugging;
-using Helper;
-using Maps;
-using Newtonsoft.Json;
-using Units;
 
 namespace AoM
 {
@@ -26,10 +22,6 @@ namespace AoM
 			var lg = new Logger ("debug.log");
 			Debug.Listeners.Add (lg);
 
-			#region Test
-
-
-			#endregion
 			var MapThread = MyGame.ScreenManager.AddNewThread ();
 			MapThread.Stack (new Screens.MapMainScreen (MyGame));
 			MyGame.Run ();
