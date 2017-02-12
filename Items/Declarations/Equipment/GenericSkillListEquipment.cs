@@ -4,7 +4,7 @@ using Units.Skills;
 namespace Items.Declarations.Equipment
 {
 	/// <summary>
-	/// Arma genérica de rango
+	/// Weapon that has a inner skills
 	/// </summary>
 	public class GenericSkillListEquipment : Equipment, ISkillEquipment
 	{
@@ -38,6 +38,19 @@ namespace Items.Declarations.Equipment
 			InvokedSkills = invokedSkill;
 			Slot = slot;
 			TextureName = textureName;
+		}
+
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
+		public override object Clone ()
+		{
+			return new GenericSkillListEquipment (NombreBase, InvokedSkills, Slot)
+			{
+				TextureName = TextureName,
+				Texture = Texture,
+				Color = Color
+			};
 		}
 
 		/// <summary>

@@ -16,10 +16,18 @@ using Units.Recursos;
 namespace Componentes
 {
 	/// <summary>
-	/// The Griod system
+	/// The Grid system
 	/// </summary>
 	public class GridControl : DSBC
 	{
+		#region Data & Internal
+
+		const string damageFont = "Fonts//damage";
+
+		#endregion
+
+		#region Grid
+
 		/// <summary>
 		/// Devuelve el tablero lógico
 		/// </summary>
@@ -35,6 +43,10 @@ namespace Componentes
 			Grid = newGrid;
 			reInitialize ();
 		}
+
+		#endregion
+
+		#region Initializers
 
 		void reInitialize ()
 		{
@@ -54,14 +66,15 @@ namespace Componentes
 			}
 		}
 
-		const string damageFont = "Fonts//damage";
-
 		[Obsolete]
 		void hp_damage_done_event (object sender, float e)
 		{
 			return;
 		}
 
+		#endregion
+
+		#region Objects & Units
 
 		IEnumerable<Unidad> AIPlayers
 		{ 
@@ -69,6 +82,10 @@ namespace Componentes
 		}
 
 		IEnumerable<IGridObject> _objects { get { return Grid.Objects; } }
+
+		#endregion
+
+		#region Control size and location
 
 		/// <summary>
 		/// The size of a cell (Draw)
@@ -103,17 +120,6 @@ namespace Componentes
 		}
 
 		/// <summary>
-		/// Devuelve la posición de un spot de celda (por lo tanto coordenadas absolutas)
-		/// </summary>
-		/// <param name="p">coordenadas del spot</param>
-		public Point CellSpotLocation (Point p)
-		{
-			var _x = ControlTopLeft.X + CellSize.Width * (p.X - CurrentVisibleTopLeft.X);
-			var _y = ControlTopLeft.Y + CellSize.Height * (p.Y - CurrentVisibleTopLeft.Y);
-			return new Point (_x, _y);
-		}
-
-		/// <summary>
 		/// Gets the bounds
 		/// </summary>
 		/// <value>The bounds.</value>
@@ -125,28 +131,19 @@ namespace Componentes
 			}
 		}
 
+
 		/// <summary>
-		/// Devuelve la posición de un spot de celda (por lo tanto coordenadas absolutas)
+		/// Devuelve el límite gráfico del control.
 		/// </summary>
-		/// <param name="x">Coordenada X</param>
-		/// <param name="y">Coordenada Y</param>
-		public Point CellSpotLocation (int x, int y)
+		/// <returns>The bounds.</returns>
+		protected override IShapeF GetBounds ()
 		{
-			return CellSpotLocation (new Point (x, y));
+			return Bounds;
 		}
 
-		/// <summary>
-		/// Devuelve o establece la unidad que debe de seguir el control
-		/// </summary>
-		public Unidad CameraUnidad { get; set; }
+		#endregion
 
-		/// <summary>
-		/// Devuelve el punto de visibilidad (ie, la localización de <see cref="CameraUnidad"/>
-		/// </summary>
-		public Point VisibilityPoint
-		{ 
-			get{ return CameraUnidad.Location; }
-		}
+		#region Draw
 
 		/// <summary>
 		/// Dibuja el control.
@@ -177,14 +174,9 @@ namespace Componentes
 			}
 		}
 
-		/// <summary>
-		/// Devuelve el límite gráfico del control.
-		/// </summary>
-		/// <returns>The bounds.</returns>
-		protected override IShapeF GetBounds ()
-		{
-			return Bounds;
-		}
+		#endregion
+
+		#region Memory
 
 		/// <summary>
 		/// Agrega el contenido a la biblitoeca
@@ -195,6 +187,25 @@ namespace Componentes
 			foreach (var x in _objects)
 				x.LoadContent (manager);
 		}
+
+		/// <summary>
+		/// Releases all resource used by the <see cref="GridControl"/> object.
+		/// Unsusbribe to Grid's events; so it can be collected by GC.
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="GridControl"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="GridControl"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="GridControl"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="GridControl"/> was occupying.</remarks>
+		protected override void Dispose ()
+		{
+			Grid.ObjectAdded -= itemAdded;
+			base.Dispose ();
+		}
+
+
+		#endregion
+
+		#region Behavior
 
 		/// <summary>
 		/// Update lógico
@@ -211,24 +222,46 @@ namespace Componentes
 		public override void Initialize ()
 		{
 			base.Initialize ();
-			Grid.AddedObject += itemAdded;
+			Grid.ObjectAdded += itemAdded;
+		}
+
+		#endregion
+
+		#region Camera
+
+		/// <summary>
+		/// Devuelve la posición de un spot de celda (por lo tanto coordenadas absolutas)
+		/// </summary>
+		/// <param name="p">coordenadas del spot</param>
+		public Point CellSpotLocation (Point p)
+		{
+			var _x = ControlTopLeft.X + CellSize.Width * (p.X - CurrentVisibleTopLeft.X);
+			var _y = ControlTopLeft.Y + CellSize.Height * (p.Y - CurrentVisibleTopLeft.Y);
+			return new Point (_x, _y);
 		}
 
 		/// <summary>
-		/// Releases all resource used by the <see cref="GridControl"/> object.
-		/// Unsusbribe to Grid's events; so it can be collected by GC.
+		/// Devuelve la posición de un spot de celda (por lo tanto coordenadas absolutas)
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="GridControl"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="GridControl"/> in an unusable state. After calling
-		/// <see cref="Dispose"/>, you must release all references to the <see cref="GridControl"/> so the garbage
-		/// collector can reclaim the memory that the <see cref="GridControl"/> was occupying.</remarks>
-		protected override void Dispose ()
+		/// <param name="x">Coordenada X</param>
+		/// <param name="y">Coordenada Y</param>
+		public Point CellSpotLocation (int x, int y)
 		{
-			Grid.AddedObject -= itemAdded;
-			base.Dispose ();
+			return CellSpotLocation (new Point (x, y));
 		}
 
-		#region Cámara
+		/// <summary>
+		/// Devuelve o establece la unidad que debe de seguir el control
+		/// </summary>
+		public Unidad CameraUnidad { get; set; }
+
+		/// <summary>
+		/// Devuelve el punto de visibilidad (ie, la localización de <see cref="CameraUnidad"/>
+		/// </summary>
+		public Point VisibilityPoint
+		{ 
+			get{ return CameraUnidad.Location; }
+		}
 
 		/// <summary>
 		/// Centra el campo visible en la dirección de una celda.
@@ -293,7 +326,7 @@ namespace Componentes
 
 		#endregion
 
-		#region CollectionObserve
+		#region Events
 
 		void itemAdded (object sender, IGridObject e)
 		{
@@ -307,6 +340,8 @@ namespace Componentes
 
 		#endregion
 
+		#region Ctor
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="GridControl"/> class.
 		/// </summary>
@@ -317,5 +352,7 @@ namespace Componentes
 		{
 			Grid = grid;
 		}
+
+		#endregion
 	}
 }

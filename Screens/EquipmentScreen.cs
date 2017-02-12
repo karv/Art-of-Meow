@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using AoM;
 using Items;
+using Items.Declarations.Equipment;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
@@ -16,6 +18,11 @@ namespace Screens
 	/// </summary>
 	public class EquipmentScreen : Screen
 	{
+		/// <summary>
+		/// Gets the control that show the item stats
+		/// </summary>
+		public EtiquetaMultiLínea CursorItemInfo { get; }
+
 		/// <summary>
 		/// The inventory of the <see cref="IUnidad"/>
 		/// </summary>
@@ -50,10 +57,12 @@ namespace Screens
 		/// </summary>
 		protected override void DoInitialization ()
 		{
+			CursorItemInfo.Initialize ();
 			base.DoInitialization ();
 			//cargarContenido ();
 			buildEquipmentList ();
 			rebuildSelection ();
+			rebuildCursorItemInfo ();
 		}
 
 		void cargarContenido ()
@@ -175,8 +184,55 @@ namespace Screens
 				EnterKey = GlobalKeys.Accept [0],
 			};
 
+			CursorItemInfo = new EtiquetaMultiLínea (this)
+			{
+				MaxWidth = 300,
+				TextColor = Color.WhiteSmoke,
+				TopLeft = new Point (30, Contenedor.ControlBounds ().Bottom + 30),
+				UseFont = "Fonts//itemfont",
+				BackgroundColor = Color.Black
+			};
+
 			AddComponent (Contenedor);
+			AddComponent (CursorItemInfo);
+
 			Contenedor.Activado += Contenedor_cambio_selección;
+			Contenedor.CursorChanged += cursorChanged;
+		}
+
+		void rebuildCursorItemInfo ()
+		{
+			var selEquipment = Contenedor.FocusedItem as IEquipment;
+			if (selEquipment != null)
+			{
+				var tooltipString = new StringBuilder ();
+				var fullName = selEquipment.Modifiers.GetName ();
+				tooltipString.Append (fullName + "\t\t");
+
+				var mEq = selEquipment as MeleeWeapon;
+				if (mEq != null)
+				{
+					tooltipString.Append (string.Format (
+						"Damage: {0}\tAccuracy: {1}\tSpeed: {2}\t",
+						mEq.BaseDamage,
+						mEq.BaseHit,
+						mEq.BaseSpeed));
+				}
+
+				foreach (var mod in selEquipment.Modifiers.SquashMods ())
+					tooltipString.AppendFormat (
+						"{0} : {1}\t",
+						mod.AttributeChangeName,
+						mod.Delta);
+
+				CursorItemInfo.Texto = tooltipString.ToString ();
+			}
+
+		}
+
+		void cursorChanged (object sender, System.EventArgs e)
+		{
+			rebuildCursorItemInfo ();
 		}
 	}
 }

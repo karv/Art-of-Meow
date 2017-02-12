@@ -22,15 +22,35 @@ namespace Screens
 	/// </summary>
 	public class MapMainScreen : Screen
 	{
+		#region Properties
+
 		/// <summary>
 		/// Color de fondo
 		/// </summary>
 		/// <value>The color of the background.</value>
 		public override Color? BgColor { get { return Color.Black; } }
 
+		#endregion
+
+		#region Controls, components and services
+
 		PlayerInfoControl PlayerInfoControl;
 
 		PlayerKeyListener SpecialKeyListener;
+
+		#endregion
+
+		#region Data & internal
+
+		/// <summary>
+		/// AI players
+		/// </summary>
+		public List<IUnidad> AIPlayers = new List<IUnidad> ();
+
+		/// <summary>
+		/// The human player
+		/// </summary>
+		public Unidad Player;
 
 		/// <summary>
 		/// Devuelve el tablero logico.
@@ -54,22 +74,24 @@ namespace Screens
 				{
 					_gameGrid = value;
 					_gameGrid.CameraUnidad = Player;
-//					foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
-//						str.AlActivar += on_stair_down;
 					return;
 				}
-
+				
 				Components.RemoveAll (z => z is GridControl);
 				(_gameGrid as IDisposable)?.Dispose ();
 				_gameGrid = value;
-
+				
 				_gameGrid.Initialize ();
 				AddComponent (_gameGrid);
-
+				
 				// Cargar el posiblemente nuevo contenido
 				LoadAllContent ();
 			}
 		}
+
+		#endregion
+
+		#region Dynamic
 
 		/// <summary>
 		/// Cambia de grid y posición el jugador (y a la pantalla)
@@ -88,31 +110,20 @@ namespace Screens
 			Player.Reinitialize ();
 		}
 
-		/*
-		void on_stair_down (object sender, EventArgs e)
+		#endregion
+
+		#region Drawing
+
+		void recenterCameraOnPlayer (object sender, EventArgs e)
 		{
-			var newGrid = Map.GenerateGrid (Grid.DownMap);
-			ChangeGrid (newGrid);
-
-			// Recibir la experiencia
-			Player.Exp.Flush ();
-
-			// Mover al jugador
-			// Poner aquí al jugador
-			Player.Location = newGrid.GetRandomEmptyCell ();
-			Player.Grid = newGrid;
-			PlayerInfoControl.ReloadStats ();
-
-			foreach (var str in _gameGrid.Grid.Objects.OfType<StairsGridObject> ())
-				str.AlActivar += on_stair_down;
-			
-			Grid.AddCellObject (Player);
+			GridControl.CenterIfNeeded (Player);
 		}
-		*/
+
 		/// <summary>
-		/// The human player
+		/// El área de dibujo del tablero
 		/// </summary>
-		public Unidad Player;
+		public static Rectangle GridDrawingRectangle = 
+			new Rectangle (30, 30, 1000, 700);
 
 		/// <summary>
 		/// Dibuja la pantalla
@@ -141,39 +152,6 @@ namespace Screens
 		}
 
 		/// <summary>
-		/// Cargar contenido de cada control incluido.
-		/// </summary>
-		public override void LoadAllContent ()
-		{
-			solidTexture = (Juego as Juego).SimpleTextureGenerator.SolidTexture (
-				new Size (1, 1),
-				Color.White);
-			base.LoadAllContent ();
-		}
-
-		/// <summary>
-		/// Ciclo de la lógica
-		/// </summary>
-		/// <param name="gameTime">Game time.</param>
-		/// <param name="currentThread">Current thread.</param>
-		public override void Update (GameTime gameTime, ScreenThread currentThread)
-		{
-			base.Update (gameTime, currentThread);
-			Grid?.Update (gameTime);
-		}
-
-		/// <summary>
-		/// AI players
-		/// </summary>
-		public List<IUnidad> AIPlayers = new List<IUnidad> ();
-
-		/// <summary>
-		/// El área de dibujo del tablero
-		/// </summary>
-		public static Rectangle GridDrawingRectangle = 
-			new Rectangle (30, 30, 1000, 700);
-
-		/// <summary>
 		/// Calculates the grid size to make it fir correctly
 		/// </summary>
 		void generateGridSizes ()
@@ -186,46 +164,24 @@ namespace Screens
 			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, ScreenOffsY / 2) + GridDrawingRectangle.Location;
 		}
 
-		/// <summary>
-		/// Initializes the human player's control
-		/// </summary>
-		void inicializarJugador ()
-		{
-			PlayerInfoControl = new PlayerInfoControl (this, Player);
-			PlayerInfoControl.DrawingArea = new Rectangle (
-				GridDrawingRectangle.Right, 0, 300, 900);
+		#endregion
 
-			// Evento de movimiento para centrar cámara
-			Player.OnRelocation += recenterCameraOnPlayer;
-		}
-
-		void recenterCameraOnPlayer (object sender, EventArgs e)
-		{
-			GridControl.CenterIfNeeded (Player);
-		}
+		#region Memory
 
 		/// <summary>
-		/// Realiza la inicialización
+		/// Cargar contenido de cada control incluido.
 		/// </summary>
-		protected override void DoInitialization ()
+		public override void LoadAllContent ()
 		{
-			var grd = GameInitializer.InitializeNewWorld (out Player);
-			GridControl = new GridControl (grd, this);
-
-			inicializarJugador ();
-
-			base.DoInitialization ();
-			generateGridSizes ();
-
-			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
-			// los nuevos objetos.
-
-			GridControl.TryCenterOn (Player.Location);
-
-			SpecialKeyListener = new PlayerKeyListener (this);
-
-			LoadAllContent ();
+			solidTexture = (Juego as Juego).SimpleTextureGenerator.SolidTexture (
+				new Size (1, 1),
+				Color.White);
+			base.LoadAllContent ();
 		}
+
+		#endregion
+
+		#region Screen logic
 
 		/// <summary>
 		/// Rebice señal del teclado
@@ -261,13 +217,68 @@ namespace Screens
 		{
 			if (SpecialKeyListener.RecibirSeñal (keyArg))
 				return;
-			
+
 			var key = keyArg.Key;
 
 			var playerCell = Grid.GetCell (Player.Location);
 			foreach (var x in playerCell.EnumerateObjects ().OfType<IReceptor<KeyboardEventArgs>> ())
 				x.RecibirSeñal (keyArg);
 		}
+
+		/// <summary>
+		/// Ciclo de la lógica
+		/// </summary>
+		/// <param name="gameTime">Game time.</param>
+		/// <param name="currentThread">Current thread.</param>
+		public override void Update (GameTime gameTime, ScreenThread currentThread)
+		{
+			base.Update (gameTime, currentThread);
+			Grid?.Update (gameTime);
+		}
+
+		#endregion
+
+		#region Initializers
+
+		/// <summary>
+		/// Initializes the human player's control
+		/// </summary>
+		void inicializarJugador ()
+		{
+			PlayerInfoControl = new PlayerInfoControl (this, Player);
+			PlayerInfoControl.DrawingArea = new Rectangle (
+				GridDrawingRectangle.Right, 0, 300, 900);
+
+			// Evento de movimiento para centrar cámara
+			Player.OnRelocation += recenterCameraOnPlayer;
+		}
+
+		/// <summary>
+		/// Realiza la inicialización
+		/// </summary>
+		protected override void DoInitialization ()
+		{
+			var grd = GameInitializer.InitializeNewWorld (out Player);
+			GridControl = new GridControl (grd, this);
+
+			inicializarJugador ();
+
+			base.DoInitialization ();
+			generateGridSizes ();
+
+			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
+			// los nuevos objetos.
+
+			GridControl.TryCenterOn (Player.Location);
+
+			SpecialKeyListener = new PlayerKeyListener (this);
+
+			LoadAllContent ();
+		}
+
+		#endregion
+
+		#region Ctor
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Screens.MapMainScreen"/> class.
@@ -289,65 +300,7 @@ namespace Screens
 			: base (game)
 		{
 		}
-	}
 
-	/// <summary>
-	/// Extensiones de Screen
-	/// </summary>
-	public static class ScreenExt
-	{
-		/// <summary>
-		/// Opciones tipo Dialo
-		/// </summary>
-		public static readonly ScreenThread.ScreenStackOptions DialogOpt;
-		/// <summary>
-		/// Opciones default
-		/// </summary>
-		public static readonly ScreenThread.ScreenStackOptions NewScreen;
-
-		/// <summary>
-		/// Ejecuta un screen
-		/// </summary>
-		public static void Execute (this IScreen scr,
-		                            ScreenThread thread,
-		                            ScreenThread.ScreenStackOptions opt)
-		{
-			scr.Initialize ();
-			scr.LoadContent (scr.Content);
-			thread.Stack (scr, opt);
-		}
-
-		/// <summary>
-		/// Ejecuta un screen
-		/// </summary>
-		public static void Execute (this IScreen scr,
-		                            ScreenThreadManager threadMan,
-		                            ScreenThread.ScreenStackOptions opt)
-		{
-			Execute (scr, threadMan.ActiveThread, opt);
-		}
-
-		/// <summary>
-		/// Ejecuta un screen
-		/// </summary>
-		public static void Execute (this IScreen scr,
-		                            ScreenThread.ScreenStackOptions opt)
-		{
-			Execute (scr, scr.Juego.ScreenManager, opt);
-		}
-
-		static ScreenExt ()
-		{
-			DialogOpt = new ScreenThread.ScreenStackOptions
-			{
-				ActualizaBase = false,
-				DibujaBase = true
-			};
-			NewScreen = new ScreenThread.ScreenStackOptions
-			{
-				ActualizaBase = false,
-				DibujaBase = false
-			};
-		}
+		#endregion
 	}
 }

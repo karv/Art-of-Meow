@@ -1,0 +1,34 @@
+﻿{
+  "Class": [
+    {
+      "Name": "Warrior",
+      "AttributesDistribution": {
+        "melee_prec": 0.16,
+        "dex": 0.16,
+        "melee_eva": 0.08,
+        "range_eva": 0.04,
+        "str": 0.24,
+        "hp": 0.16,
+        "vel": 0.08
+      }
+    }
+  ],
+  "Race": [
+    {
+      "Name": "Imp",
+      "PossibleClasses": [
+				"Warrior"
+      ],
+      "AttributesDistribution": {
+        "melee_prec": 1.0,
+        "dex": 0.7,
+        "melee_eva": 1.0,
+        "range_eva": 0.8,
+        "str": 0.2,
+        "hp": 0.4,
+        "vel": 0.4
+      },
+      "TextureString": "swordman"
+    }
+  ]
+}

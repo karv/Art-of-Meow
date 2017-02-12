@@ -21,7 +21,30 @@ namespace Maps
 	/// </summary>
 	public class Map
 	{
+		#region Data & internals
+
 		char [,] _data;
+
+		/// <summary>
+		/// Gets the horizontal size
+		/// </summary>
+		[JsonProperty (Order = 1)]
+		public int SizeX { get { return _data.GetLength (0); } }
+
+		/// <summary>
+		/// Gets the vertical size
+		/// </summary>
+		[JsonProperty (Order = 0)]
+		public int SizeY { get { return _data.GetLength (1); } }
+
+		/// <summary>
+		/// Gets the size of this map
+		/// </summary>
+		[JsonIgnore]
+		public Size Size
+		{ 
+			get { return new Size (SizeX, SizeY); } 
+		}
 
 		readonly Random _r;
 
@@ -49,6 +72,34 @@ namespace Maps
 		public bool AddFeatures = true;
 
 		/// <summary>
+		/// Gets or sets the distribution used to produce items
+		/// </summary>
+		[JsonProperty (Order = 5)]
+		public ProbabilityInstanceSet<IItemFactory> MapItemGroundItems { get; set; }
+
+		#endregion
+
+		#region Generator
+
+		LogicGrid buildBaseGrid ()
+		{
+			var ret = new LogicGrid (Size);
+			for (int ix = 0; ix < SizeX; ix++)
+				for (int iy = 0; iy < SizeY; iy++)
+				{
+					var newObj = MakeObject (_data [ix, iy], ret, new Point (ix, iy));
+					ret.AddCellObject (newObj);
+				}
+			return ret;
+		}
+
+		/// <summary>
+		/// The populator has the capacity of generate new unts for this map
+		/// </summary>
+		[JsonProperty (Order = 3)]
+		public Populator Populator;
+
+		/// <summary>
 		/// Generates a <see cref="LogicGrid"/>
 		/// </summary>
 		/// <param name="enemyExp">La experiencia de cada enemigo en el grid</param>
@@ -57,20 +108,32 @@ namespace Maps
 			var ret = buildBaseGrid ();
 			makeStairs (ret);
 
-			var factory = new UnidadFactory (ret);
-			ret.Factory = new EnemySmartGenerator (factory, enemyExp);
-
-			foreach (var x in EnemyType)
-				ret.Factory.AddEnemyType (x);
-			ret.Factory.PopulateGrid ();
+			ret.Factory = Populator;
+			var enemies = Populator.BuildPop (ret, enemyExp);
+			populateWith (enemies, ret); 
 
 			if (AddFeatures)
 				addRandomFlavorFeatures (ret);
 
 			if (MapItemGroundItems != null)
 				addDropItems (ret);
-			
+
 			return ret;
+		}
+
+		static readonly Color enemyColor = Color.Blue;
+
+		static void populateWith (IEnumerable<Unidad> unids, LogicGrid grid)
+		{
+			var enemyTeam = new TeamManager (enemyColor);
+			foreach (var enemy in unids)
+			{
+				enemy.Team = enemyTeam;
+
+				var point = grid.GetRandomEmptyCell ();
+				enemy.Location = point;
+				grid [point].Add (enemy);
+			}
 		}
 
 		void addDropItems (LogicGrid grid)
@@ -79,25 +142,12 @@ namespace Maps
 			foreach (var x in items)
 			{
 				var loc = grid.GetRandomEmptyCell ();
-				var newItem = ItemFactory.CreateItem (x);
+				var newItem = x.Create ();
 				var groundItem = new GroundItem (newItem, grid);
 				groundItem.Location = loc;
 				grid.AddCellObject (groundItem);
 			}
 		}
-
-		/// <summary>
-		/// Gets or sets the distribution used to produce items
-		/// </summary>
-		[JsonProperty (Order = 4)]
-		public ProbabilityInstanceSet<ItemType> MapItemGroundItems { get; set; }
-
-		/// <summary>
-		/// Gets or sets the type of enemies in this map
-		/// </summary>
-		/// <value>The type of the enemy.</value>
-		[JsonProperty (Order = 3)]
-		public IEnumerable<EnemySmartGenerator.EnemyGenerationData> EnemyType { get; set; }
 
 		/// <summary>
 		/// Makes a object from a given <c>char</c>
@@ -128,16 +178,6 @@ namespace Maps
 					return null;
 			}
 			throw new FormatException ("Unknown accepted map symbol " + c);
-		}
-
-		static char [] goodSymbols = { ' ', 'W', '\n', '\r' };
-
-		/// <summary>
-		/// Determines if a <c>char</c> represents is a map symbol representing an object
-		/// </summary>
-		public static bool ExistSymbol (char c)
-		{
-			return goodSymbols.Contains (c);
 		}
 
 		/// <summary>
@@ -180,70 +220,18 @@ namespace Maps
 			return map.GenerateGrid (enemyExp);
 		}
 
+		#endregion
+
+		#region Symbol language
+
+		static char [] goodSymbols = { ' ', 'W', '\n', '\r' };
+
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Maps.Map"/> class
+		/// Determines if a <c>char</c> represents is a map symbol representing an object
 		/// </summary>
-		/// <param name="size">Size</param>
-		public Map (Size size)
+		public static bool ExistSymbol (char c)
 		{
-			_r = new Random ();
-			_data = new char[size.Width, size.Height];
-		}
-
-		/// <summary>
-		/// El directorio de los mapas
-		/// </summary>
-		public const string MapDir = "Maps";
-
-		/// <summary>
-		/// Devuelve un mapa aleatorio del directorio de mapas
-		/// </summary>
-		public static Map GetRandomMap ()
-		{
-			var mapDir = new DirectoryInfo (MapDir);
-			var maps = mapDir.GetFiles ("dung*.map");
-			var _r = new Random ();
-
-			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
-			return ret;
-		}
-
-		internal static Map HardCreateNew ()
-		{
-			var ret = new Map (new Size (50, 50));
-			for (int i = 0; i < 50 * 50; i++)
-			{
-				ret._data [i % 50, i / 50] = ' ';
-			}
-			ret._data [0, 0] = 'W';
-			ret.EnemyType = new []
-			{
-				new EnemySmartGenerator.EnemyGenerationData (
-					Units.EnemyType.Imp,
-					EnemyClass.Warrior)
-			};
-			return ret;
-		}
-
-		/// <summary>
-		/// Gets the horizontal size
-		/// </summary>
-		[JsonProperty (Order = 1)]
-		public int SizeX { get { return _data.GetLength (0); } }
-
-		/// <summary>
-		/// Gets the vertical size
-		/// </summary>
-		[JsonProperty (Order = 0)]
-		public int SizeY { get { return _data.GetLength (1); } }
-
-		/// <summary>
-		/// Gets the size of this map
-		/// </summary>
-		[JsonIgnore]
-		public Size Size
-		{ 
-			get { return new Size (SizeX, SizeY); } 
+			return goodSymbols.Contains (c);
 		}
 
 		void parseMapObjects (string data)
@@ -277,15 +265,60 @@ namespace Maps
 			}		
 		}
 
-		// TODO: Move to some more generic class or namespace
+		#endregion
+
+		#region Ctor
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Maps.Map"/> class
+		/// </summary>
+		/// <param name="size">Size</param>
+		public Map (Size size)
+		{
+			_r = new Random ();
+			_data = new char[size.Width, size.Height];
+		}
+
+		[JsonConstructor]
+		Map (int sizeX, int sizeY,
+		     IEnumerable<string> data,
+		     Populator Populator)
+			: this (new Size (sizeX, sizeY))
+		{
+			Data = data;
+			this.Populator = Populator;
+		}
+
+		#endregion
+
+		#region IO & Json
+
+		/// <summary>
+		/// El directorio de los mapas
+		/// </summary>
+		public const string MapDir = "Maps";
+
+		/// <summary>
+		/// Devuelve un mapa aleatorio del directorio de mapas
+		/// </summary>
+		public static Map GetRandomMap ()
+		{
+			var mapDir = new DirectoryInfo (MapDir);
+			var maps = mapDir.GetFiles ("*.map.json");
+			var _r = new Random ();
+
+			var ret = Map.ReadFromFile (maps [_r.Next (maps.Length)].FullName);
+			return ret;
+		}
+
 		/// <summary>
 		/// The Default settings for json files
 		/// </summary>
 		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
-			TypeNameHandling = TypeNameHandling.Auto,
+			TypeNameHandling = TypeNameHandling.All,
 			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
-			NullValueHandling = NullValueHandling.Include,
+			NullValueHandling = NullValueHandling.Ignore,
 			ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
 			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
 			ObjectCreationHandling = ObjectCreationHandling.Auto,
@@ -329,19 +362,8 @@ namespace Maps
 			var file = File.OpenText (fileName);
 			var jsonStr = file.ReadToEnd ();
 			file.Close ();
+			Debug.WriteLine (jsonStr, Debugging.DebugCategories.MapGeneration);
 			return Map.ReadFromJSON (jsonStr);
-		}
-
-		LogicGrid buildBaseGrid ()
-		{
-			var ret = new LogicGrid (Size);
-			for (int ix = 0; ix < SizeX; ix++)
-				for (int iy = 0; iy < SizeY; iy++)
-				{
-					var newObj = MakeObject (_data [ix, iy], ret, new Point (ix, iy));
-					ret.AddCellObject (newObj);
-				}
-			return ret;
 		}
 
 		/// <summary>
@@ -362,7 +384,7 @@ namespace Maps
 				var spl = line.Split (':');
 				if (spl.Length > 0 && spl [0].Trim () == "Tag")
 				{
-					
+
 					Debug.Assert (spl.Length == 2);
 					if (spl [1].Trim () == Tag)
 						return true;
@@ -371,14 +393,6 @@ namespace Maps
 			return false;
 		}
 
-		[JsonConstructor]
-		Map (int sizeX, int sizeY,
-		     IEnumerable<string> data,
-		     IEnumerable<EnemySmartGenerator.EnemyGenerationData> enemyType)
-			: this (new Size (sizeX, sizeY))
-		{
-			Data = data;
-			EnemyType = enemyType;
-		}
+		#endregion
 	}
 }

@@ -53,25 +53,57 @@
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
   ],
-  "EnemyType": [
-    {
-      "Type": 0,
-      "Class": 0
+  "Populator": {
+    "$type": "Maps.Populator, Art_of_Meow",
+    "Rules": {
+      "$type": "Maps.PopulationRule[], Art_of_Meow",
+      "$values": [
+        {
+          "$type": "Maps.PopulationRule, Art_of_Meow",
+          "Stacks": {
+            "$type": "Maps.DistributedStack[], Art_of_Meow",
+            "$values": [
+              {
+                "$type": "Maps.DistributedStack, Art_of_Meow",
+                "RaceName": "Imp",
+                "UnitQuantityDistribution": {
+                  "$type": "Helper.IntegerInterval, Art_of_Meow",
+                  "Min": 3,
+                  "Max": 5
+                }
+              }
+            ]
+          },
+          "Chance": 0.9
+        }
+      ]
     }
-  ],
+  },
   "AddFeatures": true,
-  "MapItemGroundItems":
-  {
+  "MapItemGroundItems": {
     "Values": [
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2},
-      {"Item":4,"Weight":0.2}
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedItemNames": [
+            "Lanza", "Cuchillo", "Espada"
+          ]
+        },
+        "Weight": 1
+      },
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedItemNames": [
+            "Lanza", "Cuchillo", "Espada"
+          ]
+        },
+        "Weight": 1
+      }
     ]
+  }
 }

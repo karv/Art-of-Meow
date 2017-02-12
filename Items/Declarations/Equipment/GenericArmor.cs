@@ -32,6 +32,19 @@ namespace Items.Declarations.Equipment
 		}
 
 		/// <summary>
+		/// Clone this instance.
+		/// </summary>
+		public override object Clone ()
+		{
+			return new GenericArmor (NombreBase, Slot)
+			{
+				TextureName = TextureName,
+				Texture = Texture,
+				Color = Color
+			};
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.GenericArmor"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre</param>

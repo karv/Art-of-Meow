@@ -1,0 +1,64 @@
+﻿{
+  "SizeY": 5,
+  "SizeX": 30,
+  "Data": [
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+"W                            W"
+"W                            W"
+"W                            W"
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+  ],
+  "Populator": {
+    "$type": "Maps.Populator, Art_of_Meow",
+    "Rules": {
+      "$type": "Maps.PopulationRule[], Art_of_Meow",
+      "$values": [
+        {
+          "$type": "Maps.PopulationRule, Art_of_Meow",
+          "Stacks": {
+            "$type": "Maps.DistributedStack[], Art_of_Meow",
+            "$values": [
+              {
+                "$type": "Maps.DistributedStack, Art_of_Meow",
+                "RaceName": "Imp",
+                "UnitQuantityDistribution": {
+                  "$type": "Helper.IntegerInterval, Art_of_Meow",
+                  "Min": 3,
+                  "Max": 5
+                }
+              }
+            ]
+          },
+          "Chance": 0.9
+        }
+      ]
+    }
+  },
+  "AddFeatures": true,
+  "MapItemGroundItems": {
+    "Values": [
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedItemNames": [
+            "Lanza", "Cuchillo", "Espada"
+          ]
+        },
+        "Weight": 1
+      },
+      {
+        "Item": {
+          "$type": "Items.RandomItemRecipe, Art_of_Meow",
+          "MinItemVal": 0.0,
+          "MaxItemVal": 100.0,
+          "AllowedItemNames": [
+            "Lanza", "Cuchillo", "Espada"
+          ]
+        },
+        "Weight": 0.9
+      }
+    ]
+  }
+}

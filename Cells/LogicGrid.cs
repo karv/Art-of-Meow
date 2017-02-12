@@ -19,8 +19,20 @@ namespace Cells
 	/// </summary>
 	public class LogicGrid : IComponent, IUpdate
 	{
-		//readonly HashSet<IGridObject> _objects = new HashSet<IGridObject> ();
+		#region Data & internals
+
 		readonly Cell [,] _cells;
+		readonly Random _r = new Random ();
+		readonly CollisionSystem _collisionSystem;
+
+		/// <summary>
+		/// Gets the dimentions lenght of the world, in Grid-long
+		/// </summary>
+		public Size Size { get; }
+
+		#endregion
+
+		#region Accesors
 
 		/// <summary>
 		/// Gets the <see cref="Cell"/> at a specified grid-point
@@ -55,38 +67,6 @@ namespace Cells
 			}
 		}
 
-		readonly CollisionSystem _collisionSystem;
-
-		readonly Random _r = new Random ();
-
-		#region IComponent implementation
-
-		void IComponent.LoadContent (ContentManager manager)
-		{
-		}
-
-		#endregion
-
-		#region IUpdateable implementation
-
-		/// <summary>
-		/// Update the specified gameTime.
-		/// </summary>
-		public void Update (GameTime gameTime)
-		{
-			TimeManager.ExecuteNext ();
-		}
-
-		#endregion
-
-		#region IGameComponent implementation
-
-		void IGameComponent.Initialize ()
-		{
-		}
-
-		#endregion
-
 		/// <summary>
 		/// Builds a <see cref="Cell"/> of the current state of a given point
 		/// </summary>
@@ -94,23 +74,6 @@ namespace Cells
 		public Cell GetCell (Point p)
 		{
 			return this [p];
-		}
-
-		/// <summary>
-		/// Determina si un punto (en grid) es visible desde otro punto
-		/// </summary>
-		/// <param name="source">Source.</param>
-		/// <param name="target">Target.</param>
-		public bool IsVisibleFrom (Point source, Point target)
-		{
-			var line = Geometry.EnumerateLine (source, target);
-			foreach (var x in line)
-			{
-				var pCell = GetCell (x);
-				if (pCell.BlocksVisibility ())
-					return false;
-			}
-			return true;
 		}
 
 		/// <summary>
@@ -143,20 +106,54 @@ namespace Cells
 			}
 		}
 
-		/// <summary>
-		/// The time manager.
-		/// </summary>
-		public GameTimeManager TimeManager;
+		#endregion
+
+		#region IComponent implementation
+
+		void IComponent.LoadContent (ContentManager manager)
+		{
+		}
+
+		#endregion
+
+		#region IUpdateable implementation
 
 		/// <summary>
-		/// Gets the dimentions lenght of the world, in Grid-long
+		/// Update the specified gameTime.
 		/// </summary>
-		public Size Size { get; }
+		public void Update (GameTime gameTime)
+		{
+			TimeManager.ExecuteNext ();
+		}
+
+		#endregion
+
+		#region IGameComponent implementation
+
+		void IGameComponent.Initialize ()
+		{
+		}
+
+		#endregion
+
+		#region Cell finder
 
 		/// <summary>
-		/// Gets the currently active object
+		/// Determina si un punto (en grid) es visible desde otro punto
 		/// </summary>
-		public IUpdateGridObject CurrentObject { get { return TimeManager.Actual; } }
+		/// <param name="source">Source.</param>
+		/// <param name="target">Target.</param>
+		public bool IsVisibleFrom (Point source, Point target)
+		{
+			var line = Geometry.EnumerateLine (source, target);
+			foreach (var x in line)
+			{
+				var pCell = GetCell (x);
+				if (pCell.BlocksVisibility ())
+					return false;
+			}
+			return true;
+		}
 
 		/// <summary>
 		/// Gets a random point of a cell inside this grid
@@ -167,28 +164,6 @@ namespace Cells
 			return new Point (
 				1 + _r.Next (size.Width - 2),
 				1 + _r.Next (size.Height - 2));
-		}
-
-		/// <summary>
-		/// Agrega un objeto al grid.
-		/// </summary>
-		/// <param name="obj">Object.</param>
-		public void AddCellObject (IGridObject obj)
-		{
-			if (obj == null)
-				throw new ArgumentNullException ("obj");
-			var cell = this [obj.Location];
-			cell.Add (obj);
-			AddedObject?.Invoke (this, obj);
-		}
-
-		/// <summary>
-		/// Removes an object from the grid
-		/// </summary>
-		/// <param name="obj">Object to remove</param>
-		public void RemoveObject (IGridObject obj)
-		{
-			this [obj.Location].Remove (obj);
 		}
 
 		/// <summary>
@@ -227,25 +202,25 @@ namespace Cells
 				return unitInCell != null && !unid.Team.Equals (unitInCell.Team);
 			};
 			return ClosestCellThat (selector, unid.Location);
-			
 		}
+
+		#endregion
+
+		#region Time system
 
 		/// <summary>
-		/// Libera toda suscripción a esta clase, y también invoca <see cref="Dispose"/> a los objetos de este tablero que 
-		/// son <see cref="IDisposable"/>
+		/// The time manager.
 		/// </summary>
-		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.LogicGrid"/>. The
-		/// <see cref="Dispose"/> method leaves the <see cref="Cells.LogicGrid"/> in an unusable state. After calling
-		/// <see cref="Dispose"/>, you must release all references to the <see cref="Cells.LogicGrid"/> so the garbage
-		/// collector can reclaim the memory that the <see cref="Cells.LogicGrid"/> was occupying.</remarks>
-		public void Dispose ()
-		{
-			AddedObject = null;
-			foreach (var i in Objects.OfType<IDisposable> ())
-				i.Dispose ();
-		}
+		public GameTimeManager TimeManager;
 
-		#region Movimiento
+		/// <summary>
+		/// Gets the currently active object
+		/// </summary>
+		public IUpdateGridObject CurrentObject { get { return TimeManager.Actual; } }
+
+		#endregion
+
+		#region Dynamic cell control
 
 		/// <summary>
 		/// Mueve un objeto, considerando colisiones.
@@ -258,7 +233,7 @@ namespace Cells
 		{
 			if (dir == MovementDirectionEnum.NoMov)
 				return false;
-			
+
 			var moveDir = dir.AsDirectionalPoint ();
 			var endLoc = objeto.Location + moveDir;
 
@@ -277,9 +252,50 @@ namespace Cells
 			return false;
 		}
 
+		/// <summary>
+		/// Agrega un objeto al grid.
+		/// </summary>
+		/// <param name="obj">Object.</param>
+		public void AddCellObject (IGridObject obj)
+		{
+			if (obj == null)
+				throw new ArgumentNullException ("obj");
+			var cell = this [obj.Location];
+			cell.Add (obj);
+			ObjectAdded?.Invoke (this, obj);
+		}
+
+		/// <summary>
+		/// Removes an object from the grid
+		/// </summary>
+		/// <param name="obj">Object to remove</param>
+		public void RemoveObject (IGridObject obj)
+		{
+			this [obj.Location].Remove (obj);
+		}
+
 		#endregion
 
-		#region Mundo
+		#region Memory
+
+		/// <summary>
+		/// Libera toda suscripción a esta clase, y también invoca <see cref="Dispose"/> a los objetos de este tablero que 
+		/// son <see cref="IDisposable"/>
+		/// </summary>
+		/// <remarks>Call <see cref="Dispose"/> when you are finished using the <see cref="Cells.LogicGrid"/>. The
+		/// <see cref="Dispose"/> method leaves the <see cref="Cells.LogicGrid"/> in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the <see cref="Cells.LogicGrid"/> so the garbage
+		/// collector can reclaim the memory that the <see cref="Cells.LogicGrid"/> was occupying.</remarks>
+		public void Dispose ()
+		{
+			ObjectAdded = null;
+			foreach (var i in Objects.OfType<IDisposable> ())
+				i.Dispose ();
+		}
+
+		#endregion
+
+		#region World
 
 		/// <summary>
 		/// Devuelve el conector de tableros
@@ -288,19 +304,25 @@ namespace Cells
 
 		#endregion
 
+		#region Factory
+
 		/// <summary>
 		/// Get or set the enemy generator
 		/// </summary>
-		public EnemySmartGenerator Factory { get; set; }
+		public Populator Factory { get; set; }
+
+		#endregion
+
+		#region Events
 
 		/// <summary>
 		/// Ocurre al agregar un objeto
 		/// </summary>
-		public event EventHandler<IGridObject> AddedObject;
+		public event EventHandler<IGridObject> ObjectAdded;
 
-		void initializeCells ()
-		{
-		}
+		#endregion
+
+		#region Ctor
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.LogicGrid"/> class.
@@ -328,4 +350,6 @@ namespace Cells
 		{
 		}
 	}
+
+	#endregion
 }
