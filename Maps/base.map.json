@@ -30,7 +30,7 @@
             "$values": [
               {
                 "$type": "Maps.DistributedStack, Art_of_Meow",
-                "RaceName": "Alien",
+                "RaceName": "Imp",
                 "UnitQuantityDistribution": {
                   "$type": "Helper.IntegerInterval, Art_of_Meow",
                   "Min": 1,
