@@ -1,25 +1,56 @@
 ﻿{
-  "$id": "1",
-  "Mods": [
+	"Mods": [
     {
-      "$id": "2",
       "Name": "Broken",
-      "NameUsage": 1,
+      "NameUsage": 0,
       "Modifications": [
         {
-          "$id": "3",
           "AttributeChangeName": "att",
           "Delta": -1.2
         },
         {
-          "$id": "4",
           "AttributeChangeName": "hit",
           "Delta": -0.1
         }
       ]
     },
-    {
-      "$ref": "2"
+		{
+      "Name": "Light",
+      "NameUsage": 0,
+      "Modifications": [
+        {
+          "AttributeChangeName": "att",
+          "Delta": -0.3
+        },
+        {
+          "AttributeChangeName": "speed",
+          "Delta": 0.4
+        }
+      ]
+    },
+		{
+      "Name": "of Knockout",
+      "NameUsage": 1,
+      "Modifications": [
+        {
+          "AttributeChangeName": "att",
+          "Delta": 2
+        },
+        {
+          "AttributeChangeName": "speed",
+          "Delta": -1
+        }
+      ]
+    },
+		{
+      "Name": "of penetration",
+      "NameUsage": 1,
+      "Modifications": [
+        {
+          "AttributeChangeName": "att",
+          "Delta": 1
+        }
+      ]
     }
   ]
 }

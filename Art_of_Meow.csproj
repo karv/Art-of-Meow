@@ -62,27 +62,14 @@
     <None Include="Content\*.xnb">
       <Link>Content\*.xnb</Link>
     </None>
-    <None Include="OpenTK.dll.config" />
-    <None Include="Data\*">
+    <None Include="OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\Items.json" />
-    <None Include="Maps\dung00.map.json">
+    <None Include="Maps\*.map.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Maps\dung01.map.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Maps\dung02.map.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Maps\dung03.map.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Maps\dung04.map.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Maps\base.map.json">
+    <None Include="Data\Modifiers.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\RaceClass.json" />
