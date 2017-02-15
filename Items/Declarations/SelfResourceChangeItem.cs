@@ -1,7 +1,7 @@
+using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using Skills;
 using Units;
-using Newtonsoft.Json;
-using Microsoft.Xna.Framework;
 
 namespace Items.Declarations
 {

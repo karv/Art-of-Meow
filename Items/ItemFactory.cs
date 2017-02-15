@@ -1,7 +1,6 @@
 ﻿using System;
 using Items.Declarations.Equipment;
 using Items.Declarations.Equipment.Skills;
-using Items.Declarations;
 using Microsoft.Xna.Framework;
 
 namespace Items
