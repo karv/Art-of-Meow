@@ -47,6 +47,24 @@
       },
       "NombreBase": "Lanza",
       "Modifiers": []
+    },
+		{
+      "$type": "Items.Declarations.SelfResourceChangeItem, Art_of_Meow",
+      "QtDelta": 10,
+      "ResourceName": "hp",
+			"ShowDeltaInGui": true,
+      "BaseSpeed": 1.3,
+      "Slot": 3,
+      "TextureName": "Items//katana",
+      "Color": {
+        "B": 0,
+        "G": 139,
+        "R": 0,
+        "A": 255
+      },
+      "NombreBase": "HpPotion",
+			"Texture": "heal",
+      "Modifiers": []
     }
   ]
 }

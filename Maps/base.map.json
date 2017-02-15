@@ -46,13 +46,11 @@
   },
   "AddFeatures": true,
   "MapItemGroundItems": {
-    "$id": "6",
     "$type": "Helper.ProbabilityInstanceSet`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow",
     "Values": {
       "$type": "System.Collections.Generic.List`1[[Helper.ItemWeightPair`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow]], mscorlib",
       "$values": [
         {
-          "$id": "7",
           "$type": "Helper.ItemWeightPair`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow",
           "Item": {
             "$type": "Items.RandomItemRecipe, Art_of_Meow",
@@ -64,10 +62,25 @@
                 "Cuchillo",
                 "Lanza"
               ]
-            }
+            },
           },
           "Weight": 1.0
-        }
+        },
+				{
+				  "$type": "Helper.ItemWeightPair`1[[Items.IItemFactory, Art_of_Meow]], Art_of_Meow",
+          "Item": {
+            "$type": "Items.RandomItemRecipe, Art_of_Meow",
+            "MinItemVal": 0.0,
+            "MaxItemVal": 100.0,
+            "AllowedItemNames": {
+              "$type": "System.String[], mscorlib",
+              "$values": [
+                "HpPotion"
+              ]
+            },
+          },
+          "Weight": 1.0
+				}
       ]
     }
   }

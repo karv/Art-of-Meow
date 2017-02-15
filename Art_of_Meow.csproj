@@ -111,7 +111,6 @@
     <Compile Include="Items\IItem.cs" />
     <Compile Include="Items\IInventory.cs" />
     <Compile Include="Items\GroundItem.cs" />
-    <Compile Include="Items\Declarations\Pots\HealingPotion.cs" />
     <Compile Include="Items\Declarations\CommonItemBase.cs" />
     <Compile Include="Units\Recursos\StatRecurso.cs" />
     <Compile Include="IInternalUpdate.cs" />
@@ -224,6 +223,8 @@
     <Compile Include="Maps\Populator.cs" />
     <Compile Include="Maps\PopulationRule.cs" />
     <Compile Include="Units\UnitClassRaceManager.cs" />
+    <Compile Include="Items\Declarations\UsableItem.cs" />
+    <Compile Include="Items\Declarations\SelfResourceChangeItem.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
