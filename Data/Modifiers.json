@@ -15,6 +15,20 @@
       ]
     },
 		{
+      "Name": "Light",
+      "NameUsage": 0,
+      "Modifications": [
+        {
+          "AttributeChangeName": "att",
+          "Delta": -0.3
+        },
+        {
+          "AttributeChangeName": "speed",
+          "Delta": 0.4
+        }
+      ]
+    },
+		{
       "Name": "of penetration",
       "NameUsage": 1,
       "Modifications": [

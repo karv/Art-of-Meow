@@ -14,5 +14,9 @@ namespace Items
 		/// Hit%
 		/// </summary>
 		public const string Hit = "hit";
+		/// <summary>
+		/// Speed.
+		/// </summary>
+		public const string Speed = "speed";
 	}
 }
