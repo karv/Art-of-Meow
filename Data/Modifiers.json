@@ -29,6 +29,20 @@
       ]
     },
 		{
+      "Name": "of Knockout",
+      "NameUsage": 1,
+      "Modifications": [
+        {
+          "AttributeChangeName": "att",
+          "Delta": 2
+        },
+        {
+          "AttributeChangeName": "speed",
+          "Delta": -1
+        }
+      ]
+    },
+		{
       "Name": "of penetration",
       "NameUsage": 1,
       "Modifications": [
