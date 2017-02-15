@@ -24,8 +24,15 @@ namespace Items.Declarations
 		/// <param name="user">User.</param>
 		protected abstract void GetInstance (IUnidad user);
 
+		/// <summary>
+		/// Determines whether this instance is castable by the specified user.
+		/// ie. Is Enabled?
+		/// </summary>
 		protected abstract bool IsCastable (IUnidad user);
 
+		/// <summary>
+		/// Determines whether this instance is visible for the specified user.
+		/// </summary>
 		protected abstract bool IsVisible (IUnidad user);
 
 		void ISkill.GetInstance (IUnidad user)
@@ -43,10 +50,12 @@ namespace Items.Declarations
 			return IsVisible (user);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Items.Declarations.UsableItem"/> class.
+		/// </summary>
 		protected UsableItem (string name)
 			: base (name)
 		{
-			
 		}
 	}
 }

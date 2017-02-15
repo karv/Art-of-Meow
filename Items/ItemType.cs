@@ -25,11 +25,6 @@ namespace Items
 		/// </summary>
 		Bow,
 		/// <summary>
-		/// Potion
-		/// </summary>
-		/// <seealso cref="Items.Declarations.Pots.HealingPotion"/>
-		HealingPotion,
-		/// <summary>
 		/// Armadura de cuero
 		/// </summary>
 		LeatherArmor,
