@@ -32,7 +32,6 @@ namespace Items.Declarations.Equipment
 		/// <value>The base hit.</value>
 		public float BaseHit { get; set; }
 
-
 		/// <summary>
 		/// Calcula el hit chance neto
 		/// </summary>
@@ -51,8 +50,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public float Speed ()
 		{
-			// TODO
-			return BaseSpeed;// + Modifiers.GetTotalModificationOf (ConstantesAtributos.Hit);
+			return BaseSpeed + Modifiers.GetTotalModificationOf (AttributesNames.Speed);
 		}
 
 		#region IEquipment & Melee
