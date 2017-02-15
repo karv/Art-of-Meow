@@ -1,7 +1,6 @@
 ﻿using System;
 using Items.Declarations.Equipment;
 using Items.Declarations.Equipment.Skills;
-using Items.Declarations.Pots;
 using Microsoft.Xna.Framework;
 
 namespace Items
@@ -60,10 +59,6 @@ namespace Items
 						EquipSlot.MainHand, 
 						"Items//bow_orange"
 					);
-					break;
-
-				case ItemType.HealingPotion:
-					ret = new HealingPotion ();
 					break;
 
 				case ItemType.LeatherArmor:
