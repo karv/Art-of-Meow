@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using AoM;
 using Cells;
 using Debugging;
 using Newtonsoft.Json;
-using AoM;
 
 namespace Units
 {
@@ -97,11 +97,11 @@ namespace Units
 			ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
 			ret.Nombre = Name;
 
-			// TODO: Add drops
+			ret.Inventory = uClass.DropDistribution.MakeDrops (exp);
+			// TODO: add items from race
 
 			DebugAllInfo (ret);
 			return ret;
-
 		}
 
 		/// <summary>

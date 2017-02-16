@@ -53,6 +53,14 @@ namespace Items.Declarations.Equipment
 			return BaseSpeed + Modifiers.GetTotalModificationOf (AttributesNames.Speed);
 		}
 
+		public override float Value
+		{
+			get
+			{
+				return base.Value + BaseSpeed * BaseDamage * BaseHit;
+			}
+		}
+
 		#region IEquipment & Melee
 
 		/// <summary>

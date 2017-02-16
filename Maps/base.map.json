@@ -75,7 +75,7 @@
             "AllowedItemNames": {
               "$type": "System.String[], mscorlib",
               "$values": [
-                "HpPotion"
+                "HpPoción"
               ]
             },
           },

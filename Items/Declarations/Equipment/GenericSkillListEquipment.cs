@@ -23,6 +23,17 @@ namespace Items.Declarations.Equipment
 			return InvokedSkills;
 		}
 
+		public override float Value
+		{
+			get
+			{
+				var ret = base.Value;
+				foreach (var sk in InvokedSkills)
+					ret += sk.Value;
+				return ret;
+			}
+		}
+
 		/// <summary>
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>

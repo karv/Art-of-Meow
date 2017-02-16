@@ -169,5 +169,12 @@ namespace Helper
 		{
 			support = new List<ItemWeightPair<TItem>> ();
 		}
+
+		public PickOneProbabilityDictionary (IEnumerable<KeyValuePair<TItem, float>> items)
+		{
+			support = new List<ItemWeightPair<TItem>> ();
+			foreach (var z in items)
+				support.Add (new ItemWeightPair<TItem> (z.Key, z.Value));
+		}
 	}
 }

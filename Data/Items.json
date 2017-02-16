@@ -62,7 +62,7 @@
         "R": 0,
         "A": 255
       },
-      "NombreBase": "HpPotion",
+      "NombreBase": "HpPoción",
 			"Texture": "heal",
       "Modifiers": []
     }

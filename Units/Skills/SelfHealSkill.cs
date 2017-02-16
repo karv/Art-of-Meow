@@ -18,6 +18,9 @@ namespace Units.Skills
 		const float _heal = 10f;
 		const float _mpCost = 3f;
 
+		float ISkill.Value //TODO
+		{ get { return 100; } }
+
 		/// <summary>
 		/// Devuelve la última instancia generada.
 		/// </summary>

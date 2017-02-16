@@ -22,6 +22,9 @@ namespace Items.Declarations.Equipment.Skills
 	{
 		const string defaultInfoboxText = "Info box";
 
+		float ISkill.Value //TODO
+		{ get { return 100; } }
+
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
 			

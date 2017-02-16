@@ -24,5 +24,10 @@ namespace Items
 		/// Gets the default color
 		/// </summary>
 		Color DefaultColor { get; }
+
+		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
+		float Value { get; }
 	}
 }

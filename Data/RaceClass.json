@@ -10,7 +10,11 @@
         "str": 0.24,
         "hp": 0.16,
         "vel": 0.08
-      }
+      },
+			"DropDistribution": {
+				"HpPoción": 1.0,
+				"Espada": 0.1
+			}
     }
   ],
   "Race": [
