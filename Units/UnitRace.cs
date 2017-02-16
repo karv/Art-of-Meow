@@ -107,7 +107,7 @@ namespace Units
 			var dDist = new DropAssignment ();
 			dDist.MergeWith (uClass.DropDistribution);
 			dDist.MergeWith (DropDistribution);
-			ret.Inventory = dDist.MakeDrops (exp);
+			ret.Inventory = dDist.MakeDrops (10 + exp);
 
 			DebugAllInfo (ret);
 			return ret;
