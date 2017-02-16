@@ -210,8 +210,7 @@
     <Compile Include="Maps\Populator.cs" />
     <Compile Include="Maps\PopulationRule.cs" />
     <Compile Include="Units\UnitClassRaceManager.cs" />
-    <Compile Include="Items\Declarations\UsableItem.cs" />
-    <Compile Include="Items\Declarations\SelfResourceChangeItem.cs" />
+    <Compile Include="Units\UnitRace.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -235,7 +234,6 @@
     <Folder Include="Units\Inteligencia\" />
     <Folder Include="Items\" />
     <Folder Include="Items\Declarations\" />
-    <Folder Include="Items\Declarations\Pots\" />
     <Folder Include="Debugging\" />
     <Folder Include="Units\Buffs\" />
     <Folder Include="Helper\" />
