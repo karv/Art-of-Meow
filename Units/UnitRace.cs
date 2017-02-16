@@ -5,6 +5,7 @@ using System.Diagnostics;
 using AoM;
 using Cells;
 using Debugging;
+using Items;
 using Newtonsoft.Json;
 
 namespace Units
@@ -35,6 +36,12 @@ namespace Units
 				ret [i] = Program.MyGame.ClassRaceManager.GetClass (PossibleClasses [i]);
 			return ret;
 		}
+
+		/// <summary>
+		/// Assignment from item name to drop weight.
+		/// </summary>
+		[JsonIgnore]
+		public readonly DropAssignment DropDistribution;
 
 		/// <summary>
 		/// Gets the reference to the class in the <see cref="PossibleClasses"/> on an index.
@@ -97,8 +104,10 @@ namespace Units
 			ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
 			ret.Nombre = Name;
 
-			ret.Inventory = uClass.DropDistribution.MakeDrops (exp);
-			// TODO: add items from race
+			var dDist = new DropAssignment ();
+			dDist.MergeWith (uClass.DropDistribution);
+			dDist.MergeWith (DropDistribution);
+			ret.Inventory = dDist.MakeDrops (exp);
 
 			DebugAllInfo (ret);
 			return ret;
@@ -111,12 +120,14 @@ namespace Units
 		public UnitRace (string Name,
 		                 string [] PossibleClasses,
 		                 ReadOnlyDictionary<string, float> AttributesDistribution,
+		                 Dictionary<string, float> DropDistribution,
 		                 string TextureString)
 		{
 			this.Name = Name;
 			this.PossibleClasses = PossibleClasses;
 			this.AttributesDistribution = AttributesDistribution;
 			this.TextureString = TextureString;
+			this.DropDistribution = new DropAssignment (DropDistribution);
 		}
 
 		/// <summary>

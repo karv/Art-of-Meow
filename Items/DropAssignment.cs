@@ -41,6 +41,11 @@ namespace Items
 			}
 		}
 
+		public DropAssignment ()
+		{
+			nameDictionary = new Dictionary<string, float> ();
+		}
+
 		public DropAssignment (Dictionary<string, float> assignment)
 		{
 			if (assignment == null)
