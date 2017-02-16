@@ -11,7 +11,6 @@ namespace Items
 
 		public Inventory MakeDrops (float totalDropValue)
 		{
-			totalDropValue = 100;
 			var ret = new Inventory ();
 			while (true)
 			{
