@@ -32,7 +32,8 @@
         "hp": 0.4,
         "vel": 0.4
       },
-      "TextureString": "swordman"
+      "TextureString": "swordman",
+			"DropDistribution": {}
     }
   ]
 }
