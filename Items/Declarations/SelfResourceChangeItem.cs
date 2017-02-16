@@ -26,6 +26,18 @@ namespace Items.Declarations
 		public bool ShowDeltaInGUI;
 
 		/// <summary>
+		/// Gets the value.
+		/// </summary>
+		public override float Value
+		{
+			get
+			{
+				// TODO
+				return QtDelta;
+			}
+		}
+
+		/// <summary>
 		/// Determines whether this instance is castable by the specified user.
 		/// ie. Is Enabled?
 		/// </summary>

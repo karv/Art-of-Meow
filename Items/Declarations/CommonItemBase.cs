@@ -19,6 +19,11 @@ namespace Items.Declarations
 		/// <value>The name of the texture.</value>
 		public string TextureName { get; protected set; }
 
+		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
+		public abstract float Value { get; }
+
 		Texture2D _texture;
 
 		/// <summary>

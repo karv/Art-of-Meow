@@ -25,7 +25,6 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public override EquipSlot Slot { get; }
 
-
 		IEnumerable<KeyValuePair<string, float>> IBuffGenerating.GetDeltaStat ()
 		{
 			return DeltaDict;

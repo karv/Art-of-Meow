@@ -340,7 +340,7 @@ namespace Units
 		/// <summary>
 		/// Gets the inventory of this unit
 		/// </summary>
-		public Inventory Inventory { get; }
+		public Inventory Inventory { get; set; }
 
 		float hpRelativeValue
 		{

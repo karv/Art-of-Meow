@@ -24,6 +24,20 @@ namespace Items.Declarations.Equipment
 		}
 
 		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
+		public override float Value
+		{
+			get
+			{
+				var ret = base.Value;
+				foreach (var sk in InvokedSkills)
+					ret += sk.Value;
+				return ret;
+			}
+		}
+
+		/// <summary>
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
 		/// <param name="invokedSkill">Invoked skill list.</param>

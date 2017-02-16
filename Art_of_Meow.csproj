@@ -65,14 +65,18 @@
     <None Include="OpenTK.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Items.json" />
+    <None Include="Data\Items.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Maps\*.map.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\Modifiers.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\RaceClass.json" />
+    <None Include="Data\RaceClass.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -211,6 +215,9 @@
     <Compile Include="Maps\PopulationRule.cs" />
     <Compile Include="Units\UnitClassRaceManager.cs" />
     <Compile Include="Units\UnitRace.cs" />
+    <Compile Include="Items\DropAssignment.cs" />
+    <Compile Include="Items\Declarations\SelfResourceChangeItem.cs" />
+    <Compile Include="Items\Declarations\UsableItem.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

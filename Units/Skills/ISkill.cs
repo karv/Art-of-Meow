@@ -36,5 +36,10 @@ namespace Units.Skills
 		/// <returns><c>true</c> if this instance is visible by the specified user; otherwise, <c>false</c></returns>
 		/// <param name="user">User</param>
 		bool IsVisible (IUnidad user);
+
+		/// <summary>
+		/// Gets the value of the skill
+		/// </summary>
+		float Value { get; }
 	}
 }

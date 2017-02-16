@@ -16,6 +16,20 @@ namespace Items.Declarations.Equipment
 		public abstract EquipSlot Slot { get; }
 
 		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
+		public override float Value
+		{
+			get
+			{
+				var ret = 0f;
+				foreach (var x in Modifiers.SquashMods ())
+					ret += x.Delta;
+				return ret;
+			}
+		}
+
+		/// <summary>
 		/// Gets or sets the equipment manager where this equipment belongs
 		/// </summary>
 		public Units.Equipment.EquipmentManager Owner { get; set; }
