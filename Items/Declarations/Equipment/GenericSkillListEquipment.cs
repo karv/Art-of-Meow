@@ -23,6 +23,9 @@ namespace Items.Declarations.Equipment
 			return InvokedSkills;
 		}
 
+		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
 		public override float Value
 		{
 			get

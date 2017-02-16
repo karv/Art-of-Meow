@@ -37,6 +37,9 @@ namespace Units.Skills
 		/// <param name="user">User</param>
 		bool IsVisible (IUnidad user);
 
+		/// <summary>
+		/// Gets the value of the skill
+		/// </summary>
 		float Value { get; }
 	}
 }

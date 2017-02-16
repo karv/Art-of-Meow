@@ -25,6 +25,9 @@ namespace Items.Declarations
 		/// </summary>
 		public bool ShowDeltaInGUI;
 
+		/// <summary>
+		/// Gets the value.
+		/// </summary>
 		public override float Value
 		{
 			get

@@ -5,10 +5,17 @@ using Helper;
 
 namespace Items
 {
+	/// <summary>
+	/// Assignment from items to weigth. Can create an inventory from that assignemnt.
+	/// </summary>
 	public class DropAssignment
 	{
 		readonly Dictionary<string, float> nameDictionary;
 
+		/// <summary>
+		/// Creates an <see cref="Inventory"/> from the weigth distribution 
+		/// </summary>
+		/// <param name="totalDropValue">The expected worth of the full inventory</param>
 		public Inventory MakeDrops (float totalDropValue)
 		{
 			var ret = new Inventory ();
@@ -29,6 +36,9 @@ namespace Items
 			}
 		}
 
+		/// <summary>
+		/// Merges this assignment with some other <see cref="DropAssignment"/>
+		/// </summary>
 		public void MergeWith (DropAssignment dropAsg)
 		{
 			foreach (var x in dropAsg.nameDictionary)
@@ -40,11 +50,16 @@ namespace Items
 			}
 		}
 
+		/// <summary>
+		/// </summary>
 		public DropAssignment ()
 		{
 			nameDictionary = new Dictionary<string, float> ();
 		}
 
+		/// <summary>
+		///Initializes a new instance of the <see cref="Items.DropAssignment"/> class. Coyping the values from a dictionary
+		/// </summary>
 		public DropAssignment (Dictionary<string, float> assignment)
 		{
 			if (assignment == null)

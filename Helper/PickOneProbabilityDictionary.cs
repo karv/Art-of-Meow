@@ -146,8 +146,11 @@ namespace Helper
 				throw new InvalidCastException ();
 
 			if (newWeight == 0)
+			{
 				support.Clear ();
-			
+				return;
+			}
+
 			Normalize ();
 			foreach (var x in support)
 				x.Weight *= newWeight;
@@ -170,6 +173,9 @@ namespace Helper
 			support = new List<ItemWeightPair<TItem>> ();
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Helper.PickOneProbabilityDictionary{T}"/> class.
+		/// </summary>
 		public PickOneProbabilityDictionary (IEnumerable<KeyValuePair<TItem, float>> items)
 		{
 			support = new List<ItemWeightPair<TItem>> ();

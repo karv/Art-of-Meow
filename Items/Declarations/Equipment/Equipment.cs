@@ -15,11 +15,13 @@ namespace Items.Declarations.Equipment
 		/// <value>The slot.</value>
 		public abstract EquipSlot Slot { get; }
 
+		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
 		public override float Value
 		{
 			get
 			{
-				// TODO
 				var ret = 0f;
 				foreach (var x in Modifiers.SquashMods ())
 					ret += x.Delta;
