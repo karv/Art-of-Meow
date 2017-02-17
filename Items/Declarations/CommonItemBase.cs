@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Items.Modifiers;
+using AoM;
 
 namespace Items.Declarations
 {
@@ -22,7 +24,15 @@ namespace Items.Declarations
 		/// <summary>
 		/// Gets the value or worth of the item
 		/// </summary>
-		public abstract float Value { get; }
+		public virtual float Value { get { return GetModValue (); } }
+
+		public float GetModValue ()
+		{
+			var ret = 0f;
+			foreach (var x in Modifiers.SquashMods ())
+				ret += x.Delta;
+			return ret;
+		}
 
 		Texture2D _texture;
 
@@ -47,6 +57,31 @@ namespace Items.Declarations
 		/// </summary>
 		/// <value>The color.</value>
 		public Color Color { get; set; }
+
+		public string[] AllowedModNames { get; }
+
+		ItemModifier[] IItem.AllowedMods
+		{
+			get
+			{
+				var ret = new ItemModifier[AllowedModNames.Length];
+				for (int i = 0; i < AllowedModNames.Length; i++)
+					ret [i] = Program.MyGame.ItemMods [AllowedModNames [i]];
+				return ret;
+			}
+		}
+
+		/// <summary>
+		/// Devuelve los modificadores del objeto
+		/// </summary>
+		[JsonIgnore]
+		public ItemModifiersManager Modifiers { get; }
+
+		[JsonProperty ("Modifiers")]
+		ItemModifier[] _mods
+		{
+			get{ return Modifiers.Modifiers.ToArray (); }
+		}
 
 		/// <summary>
 		/// Determines if this item is initialized
@@ -138,6 +173,7 @@ namespace Items.Declarations
 		protected CommonItemBase (string nombre)
 		{
 			NombreBase = nombre;
+			Modifiers = new ItemModifiersManager (this);
 		}
 	}
 }
