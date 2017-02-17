@@ -13,7 +13,8 @@
       },
 			"DropDistribution": {
 				"HpPoción": 1.0,
-				"Espada": 0.1
+				"Espada": 0.2,
+				"Armadura de cuero" : 0.3
 			}
     }
   ],

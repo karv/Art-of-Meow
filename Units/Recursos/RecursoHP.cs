@@ -100,7 +100,7 @@ namespace Units.Recursos
 		/// </summary>
 		public float Max
 		{
-			get{ return Value.Max; }
+			get{ return Value.Max + Unidad.Recursos.RecursoExtra ("hp.max"); }
 			set { Value.Max = value; }
 		}
 
