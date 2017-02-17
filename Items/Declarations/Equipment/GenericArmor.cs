@@ -39,7 +39,8 @@ namespace Items.Declarations.Equipment
 			{
 				TextureName = TextureName,
 				Texture = Texture,
-				Color = Color
+				Color = Color,
+				AllowedModNames = AllowedModNames
 			};
 		}
 

@@ -33,7 +33,7 @@ namespace Items.Declarations
 			get
 			{
 				// TODO
-				return QtDelta;
+				return QtDelta + base.Value;
 			}
 		}
 
@@ -63,8 +63,9 @@ namespace Items.Declarations
 				LastGeneratedInstance = new SkillInstance (this, user);
 				LastGeneratedInstance.Effects.AddEffect (
 					new RemoveItemEffect (user, user, this));
+				var delta = QtDelta * (Modifiers.GetTotalModificationOf (AttributesNames.ItemEffect) + 1);
 				LastGeneratedInstance.Effects.AddEffect (
-					new ChangeRecurso (user, user, ResourceName, QtDelta){ ShowDeltaLabel = ShowDeltaInGUI });
+					new ChangeRecurso (user, user, ResourceName, delta){ ShowDeltaLabel = ShowDeltaInGUI });
 			}
 		}
 
@@ -75,7 +76,8 @@ namespace Items.Declarations
 		{
 			return new SelfResourceChangeItem (NombreBase, QtDelta, ResourceName, TextureName)
 			{
-				ShowDeltaInGUI = ShowDeltaInGUI
+				ShowDeltaInGUI = ShowDeltaInGUI,
+				AllowedModNames = AllowedModNames
 			};
 		}
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using AoM;
 using Debugging;
+using Items.Modifiers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
-using Items.Modifiers;
-using AoM;
 
 namespace Items.Declarations
 {
@@ -26,6 +26,10 @@ namespace Items.Declarations
 		/// </summary>
 		public virtual float Value { get { return GetModValue (); } }
 
+		/// <summary>
+		/// Gets the calculated value from modifications only
+		/// </summary>
+		/// <returns>The mod value.</returns>
 		public float GetModValue ()
 		{
 			var ret = 0f;
@@ -58,7 +62,7 @@ namespace Items.Declarations
 		/// <value>The color.</value>
 		public Color Color { get; set; }
 
-		public string[] AllowedModNames { get; }
+		public string[] AllowedModNames { get; set; }
 
 		ItemModifier[] IItem.AllowedMods
 		{
@@ -170,10 +174,11 @@ namespace Items.Declarations
 		/// Initializes a new instance of the <see cref="Items.Declarations.CommonItemBase"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
-		protected CommonItemBase (string nombre)
+		protected CommonItemBase (string nombre, string [] AllowedModNames = null)
 		{
 			NombreBase = nombre;
 			Modifiers = new ItemModifiersManager (this);
+			this.AllowedModNames = AllowedModNames ?? new string[]{ };
 		}
 	}
 }
