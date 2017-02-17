@@ -77,6 +77,24 @@
     <None Include="Data\RaceClass.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Maps\base.map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\dung00.map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\dung01.map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\dung02.map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\dung03.map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Maps\dung04.map.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -255,6 +273,7 @@
     <Folder Include="Skills\" />
     <Folder Include="Items\Modifiers\" />
     <Folder Include="Data\" />
+    <Folder Include="Data\Maps\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Moggle\Controles_Moggle.csproj">

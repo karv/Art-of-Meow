@@ -1,5 +1,4 @@
 ﻿using System;
-using Maps;
 using NUnit.Framework;
 
 namespace Test
@@ -10,10 +9,10 @@ namespace Test
 		[Test]
 		public void ReadMaps ()
 		{
-			var files = System.IO.Directory.EnumerateFiles (Map.MapDir, "*.map");
+			var files = System.IO.Directory.EnumerateFiles (AoM.FileNames.MapFolder, "*.json");
 			foreach (var file in files) {
 				Console.WriteLine ("Testing " + file);
-				var map = Map.ReadFromFile (file);
+				var map = Maps.Map.ReadFromFile (file);
 				map.GenerateGrid (0);
 			}
 		}

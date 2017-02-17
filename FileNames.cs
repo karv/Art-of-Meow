@@ -19,5 +19,10 @@
 		/// Race and classes definitions file name
 		/// </summary>
 		public const string RaceClass = @"Data/RaceClass.json";
+
+		/// <summary>
+		/// Defines the folder of the maps
+		/// </summary>
+		public const string MapFolder = @"Data/Maps";
 	}
 }

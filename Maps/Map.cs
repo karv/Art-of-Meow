@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using AoM;
 using Cells;
 using Cells.CellObjects;
 using Helper;
@@ -294,16 +295,11 @@ namespace Maps
 		#region IO & Json
 
 		/// <summary>
-		/// El directorio de los mapas
-		/// </summary>
-		public const string MapDir = "Maps";
-
-		/// <summary>
 		/// Devuelve un mapa aleatorio del directorio de mapas
 		/// </summary>
 		public static Map GetRandomMap ()
 		{
-			var mapDir = new DirectoryInfo (MapDir);
+			var mapDir = new DirectoryInfo (FileNames.MapFolder);
 			var maps = mapDir.GetFiles ("*.map.json");
 			var _r = new Random ();
 

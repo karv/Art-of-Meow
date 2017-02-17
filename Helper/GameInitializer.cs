@@ -16,7 +16,7 @@ namespace Helper
 		/// <summary>
 		/// Gets the name of the first map
 		/// </summary>
-		public const string FirstMap = Map.MapDir + "/base.map.json";
+		public const string FirstMap = FileNames.MapFolder + @"/base.map.json";
 
 		static Unidad buildPlayer (LogicGrid grid)
 		{
