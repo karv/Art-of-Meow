@@ -55,25 +55,12 @@ namespace Items.Declarations.Equipment
 		}
 
 		/// <summary>
-		/// Devuelve los modificadores del objeto
-		/// </summary>
-		[JsonIgnore]
-		public ItemModifiersManager Modifiers { get; }
-
-		[JsonProperty ("Modifiers")]
-		ItemModifier[] _mods
-		{
-			get{ return Modifiers.Modifiers.ToArray (); }
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.Equipment"/> class.
 		/// </summary>
 		/// <param name="nombre">Name of the equipment.</param>
 		protected Equipment (string nombre)
 			: base (nombre)
 		{
-			Modifiers = new ItemModifiersManager (this);
 		}
 	}
 }

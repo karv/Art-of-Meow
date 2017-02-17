@@ -18,5 +18,10 @@ namespace Items
 		/// Speed.
 		/// </summary>
 		public const string Speed = "speed";
+
+		/// <summary>
+		/// Modifies an item's effects
+		/// </summary>
+		public const string ItemEffect = "effect";
 	}
 }

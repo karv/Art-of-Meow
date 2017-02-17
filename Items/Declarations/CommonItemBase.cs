@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using AoM;
 using Debugging;
+using Items.Modifiers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +24,19 @@ namespace Items.Declarations
 		/// <summary>
 		/// Gets the value or worth of the item
 		/// </summary>
-		public abstract float Value { get; }
+		public virtual float Value { get { return GetModValue (); } }
+
+		/// <summary>
+		/// Gets the calculated value from modifications only
+		/// </summary>
+		/// <returns>The mod value.</returns>
+		public float GetModValue ()
+		{
+			var ret = 0f;
+			foreach (var x in Modifiers.SquashMods ())
+				ret += x.Delta;
+			return ret;
+		}
 
 		Texture2D _texture;
 
@@ -47,6 +61,34 @@ namespace Items.Declarations
 		/// </summary>
 		/// <value>The color.</value>
 		public Color Color { get; set; }
+
+		/// <summary>
+		/// Gets or sets the names of the allowed modifications for this item
+		/// </summary>
+		public string[] AllowedModNames { get; set; }
+
+		ItemModifier[] IItem.AllowedMods
+		{
+			get
+			{
+				var ret = new ItemModifier[AllowedModNames.Length];
+				for (int i = 0; i < AllowedModNames.Length; i++)
+					ret [i] = Program.MyGame.ItemMods [AllowedModNames [i]];
+				return ret;
+			}
+		}
+
+		/// <summary>
+		/// Devuelve los modificadores del objeto
+		/// </summary>
+		[JsonIgnore]
+		public ItemModifiersManager Modifiers { get; }
+
+		[JsonProperty ("Modifiers")]
+		ItemModifier[] _mods
+		{
+			get{ return Modifiers.Modifiers.ToArray (); }
+		}
 
 		/// <summary>
 		/// Determines if this item is initialized
@@ -135,9 +177,13 @@ namespace Items.Declarations
 		/// Initializes a new instance of the <see cref="Items.Declarations.CommonItemBase"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
-		protected CommonItemBase (string nombre)
+		/// <param name = "allowedModNames">The array with the names of allowed 
+		/// modification for this item. null is passed as as empty array</param>
+		protected CommonItemBase (string nombre, string [] allowedModNames = null)
 		{
 			NombreBase = nombre;
+			Modifiers = new ItemModifiersManager (this);
+			AllowedModNames = allowedModNames ?? new string[]{ };
 		}
 	}
 }

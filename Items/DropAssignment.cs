@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AoM;
 using Helper;
@@ -10,6 +11,8 @@ namespace Items
 	/// </summary>
 	public class DropAssignment
 	{
+		const float probAddMod = 0.20f;
+		static Random _r = new Random ();
 		readonly Dictionary<string, float> nameDictionary;
 
 		/// <summary>
@@ -28,6 +31,14 @@ namespace Items
 					picker.Normalize ();
 					var picked = picker.Pick ();
 					var newItem = Program.MyGame.Items.CreateItem<IItem> (picked);
+					while (_r.NextDouble () < probAddMod)
+					{
+						// TODO: Do not allow duplicated mod
+						// Add a new item modification
+						var newMod = newItem.AllowedMods [_r.Next (newItem.AllowedMods.Length)];
+
+						newItem.Modifiers.Modifiers.Add (newMod);
+					}
 					ret.Add (newItem);
 					totalDropValue -= newItem.Value;
 				}
@@ -63,7 +74,7 @@ namespace Items
 		public DropAssignment (Dictionary<string, float> assignment)
 		{
 			if (assignment == null)
-				throw new System.ArgumentNullException ("assignment");
+				throw new ArgumentNullException ("assignment");
 			nameDictionary = assignment;
 		}
 	}
