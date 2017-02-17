@@ -62,6 +62,9 @@ namespace Items.Declarations
 		/// <value>The color.</value>
 		public Color Color { get; set; }
 
+		/// <summary>
+		/// Gets or sets the names of the allowed modifications for this item
+		/// </summary>
 		public string[] AllowedModNames { get; set; }
 
 		ItemModifier[] IItem.AllowedMods
@@ -174,11 +177,13 @@ namespace Items.Declarations
 		/// Initializes a new instance of the <see cref="Items.Declarations.CommonItemBase"/> class.
 		/// </summary>
 		/// <param name="nombre">Nombre.</param>
-		protected CommonItemBase (string nombre, string [] AllowedModNames = null)
+		/// <param name = "allowedModNames">The array with the names of allowed 
+		/// modification for this item. null is passed as as empty array</param>
+		protected CommonItemBase (string nombre, string [] allowedModNames = null)
 		{
 			NombreBase = nombre;
 			Modifiers = new ItemModifiersManager (this);
-			this.AllowedModNames = AllowedModNames ?? new string[]{ };
+			AllowedModNames = allowedModNames ?? new string[]{ };
 		}
 	}
 }

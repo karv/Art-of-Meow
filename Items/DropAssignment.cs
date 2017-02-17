@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AoM;
 using Helper;
-using System;
 
 namespace Items
 {
@@ -74,7 +74,7 @@ namespace Items
 		public DropAssignment (Dictionary<string, float> assignment)
 		{
 			if (assignment == null)
-				throw new System.ArgumentNullException ("assignment");
+				throw new ArgumentNullException ("assignment");
 			nameDictionary = assignment;
 		}
 	}

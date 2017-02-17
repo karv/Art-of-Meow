@@ -1,7 +1,7 @@
 using System;
+using Items.Modifiers;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
-using Items.Modifiers;
 
 namespace Items
 {
@@ -31,8 +31,14 @@ namespace Items
 		/// </summary>
 		float Value { get; }
 
+		/// <summary>
+		/// Gets the allowed modifications for this item
+		/// </summary>
 		ItemModifier[] AllowedMods { get; }
 
+		/// <summary>
+		/// Gets the modifier manager
+		/// </summary>
 		ItemModifiersManager Modifiers { get; }
 	}
 }
