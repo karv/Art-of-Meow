@@ -18,7 +18,7 @@ namespace Items.Declarations.Equipment.Skills
 	/// <summary>
 	/// Skill de ataque de rango de esta clase.
 	/// </summary>
-	public class RangedDamage : ISkill
+	public class RangedSkill : ISkill
 	{
 		const string defaultInfoboxText = "Info box";
 
