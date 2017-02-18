@@ -14,7 +14,7 @@
         "R": 0,
         "A": 255
       },
-			"AllowedModNames": ["Broken", "Light", "of Knockout", "of penetration"]
+			"AllowedModNames": ["Broken", "Light", "of penetration"]
     },
 		{
       "$type": "Items.Declarations.Equipment.MeleeWeapon, Art_of_Meow",
