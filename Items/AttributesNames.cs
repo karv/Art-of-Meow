@@ -18,8 +18,6 @@ namespace Items
 		/// Speed.
 		/// </summary>
 		public const string Speed = "speed";
-		public const string MaxHp = "hp.max";
-
 		/// <summary>
 		/// Modifies an item's effects
 		/// </summary>

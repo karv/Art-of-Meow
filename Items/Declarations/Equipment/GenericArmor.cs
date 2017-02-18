@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using Units.Buffs;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
+using Units.Buffs;
 
 namespace Items.Declarations.Equipment
 {
@@ -27,10 +27,14 @@ namespace Items.Declarations.Equipment
 			return DeltaDict;
 		}
 
+		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
 		public override float Value
 		{
 			get
 			{
+				// TODO: Calcular bien
 				return base.Value + DeltaDict.Values.Sum ();
 			}
 		}
@@ -54,6 +58,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		/// <param name="NombreBase">Nombre</param>
 		/// <param name="Slot">Slot</param>
+		/// <param name = "DeltaDict">The attributes that this item modifies</param>
 		[JsonConstructor]
 		public GenericArmor (string NombreBase, EquipSlot Slot, Dictionary<string, float> DeltaDict = null)
 			: base (NombreBase)

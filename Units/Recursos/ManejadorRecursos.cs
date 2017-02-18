@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
-using System;
 using Units.Buffs;
-using System.Diagnostics;
 
 namespace Units.Recursos
 {
