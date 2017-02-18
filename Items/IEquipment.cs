@@ -12,19 +12,19 @@ namespace Items
 		/// <summary>
 		/// Cannot be equiped
 		/// </summary>
-		None,
+		None = 0,
 		/// <summary>
 		/// The head.
 		/// </summary>
-		Head,
+		Head = 1,
 		/// <summary>
 		/// Body
 		/// </summary>
-		Body,
+		Body = 2,
 		/// <summary>
 		/// The dominant hand
 		/// </summary>
-		MainHand
+		MainHand = 3
 	}
 
 	/// <summary>

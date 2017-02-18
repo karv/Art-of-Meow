@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 using Units.Buffs;
 
 namespace Items.Declarations.Equipment
@@ -16,11 +18,6 @@ namespace Items.Declarations.Equipment
 		protected Dictionary<string, float> DeltaDict { get; }
 
 		/// <summary>
-		/// Devuelve o establece el nombre de la textura a usar
-		/// </summary>
-		public string TextureNameGeneric { get { return TextureName; } set { TextureName = value; } }
-
-		/// <summary>
 		/// Slot que ocupa esta armadura
 		/// </summary>
 		public override EquipSlot Slot { get; }
@@ -31,29 +28,43 @@ namespace Items.Declarations.Equipment
 		}
 
 		/// <summary>
+		/// Gets the value or worth of the item
+		/// </summary>
+		public override float Value
+		{
+			get
+			{
+				// TODO: Calcular bien
+				return base.Value + DeltaDict.Values.Sum ();
+			}
+		}
+
+		/// <summary>
 		/// Clone this instance.
 		/// </summary>
 		public override object Clone ()
 		{
-			return new GenericArmor (NombreBase, Slot)
+			return new GenericArmor (NombreBase, Slot, DeltaDict)
 			{
 				TextureName = TextureName,
 				Texture = Texture,
 				Color = Color,
-				AllowedModNames = AllowedModNames
+				AllowedModNames = AllowedModNames,
 			};
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.Equipment.GenericArmor"/> class.
 		/// </summary>
-		/// <param name="nombre">Nombre</param>
-		/// <param name="slot">Slot</param>
-		public GenericArmor (string nombre, EquipSlot slot)
-			: base (nombre)
+		/// <param name="NombreBase">Nombre</param>
+		/// <param name="Slot">Slot</param>
+		/// <param name = "DeltaDict">The attributes that this item modifies</param>
+		[JsonConstructor]
+		public GenericArmor (string NombreBase, EquipSlot Slot, Dictionary<string, float> DeltaDict = null)
+			: base (NombreBase)
 		{
-			DeltaDict = new Dictionary<string, float> ();
-			Slot = slot;
+			this.DeltaDict = DeltaDict ?? new Dictionary<string, float> ();
+			this.Slot = Slot;
 		}
 	}
 }

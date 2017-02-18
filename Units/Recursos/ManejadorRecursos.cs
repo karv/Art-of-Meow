@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
-using System;
 using Units.Buffs;
 
 namespace Units.Recursos
@@ -46,6 +46,8 @@ namespace Units.Recursos
 		public float RecursoExtra (string nombre)
 		{
 			var ret = 0f;
+			if (nombre == "hp.max")
+				Console.Write ("");
 			foreach (var buff in Unidad.Buffs.BuffOfType<IStatsBuff> ())
 				ret += buff.StatDelta (nombre);
 			return ret;

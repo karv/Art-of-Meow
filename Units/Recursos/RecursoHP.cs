@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using AoM;
+using Debugging;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
@@ -62,9 +64,8 @@ namespace Units.Recursos
 		}
 
 		/// <summary>
-		/// Gets the name of the unique.
+		/// Gets the unique name
 		/// </summary>
-		/// <returns>The unique name.</returns>
 		protected override string GetUniqueName ()
 		{
 			return NombreÚnico;
@@ -85,14 +86,34 @@ namespace Units.Recursos
 		/// </summary>
 		public string NombreLargo { get { return "Hit points"; } }
 
+		float _currValue;
+
 		/// <summary>
 		/// Gets or sets the current value of HP
 		/// </summary>
 		/// <value>The valor.</value>
 		public override float Valor
 		{
-			get { return Value.Value; }
-			set { Value.Value = value; }
+			get { return _currValue; }
+			set
+			{ 
+				value = Math.Max (Math.Min (value, Max), 0);
+				if (_currValue == value)
+					return;
+				var prevVal = _currValue;
+				_currValue = value; 
+
+				ValorChanged?.Invoke (this, prevVal);
+				if (value == 0)
+					ReachedZero?.Invoke (this, EventArgs.Empty);
+				else if (value == Max)
+					ReachedMax?.Invoke (this, EventArgs.Empty);
+			}
+		}
+
+		void _re_bound_value ()
+		{
+			Valor = Valor;
 		}
 
 		/// <summary>
@@ -100,8 +121,12 @@ namespace Units.Recursos
 		/// </summary>
 		public float Max
 		{
-			get{ return Value.Max; }
-			set { Value.Max = value; }
+			get { return _Max.ModifiedValue; }
+			set
+			{ 
+				_Max.Valor = value; 
+				_re_bound_value ();// This updates the value to its new bound.
+			}
 		}
 
 		/// <summary>
@@ -127,7 +152,7 @@ namespace Units.Recursos
 
 		RegenParam Regen { get; }
 
-		ValueParam Value { get; }
+		MaxHpParam _Max { get; }
 
 		bool IVisibleRecurso.Visible { get { return true; } }
 
@@ -135,29 +160,17 @@ namespace Units.Recursos
 		/// Ocurre cuando su valor cambia,
 		/// su argumento dice su valor antes del cambio
 		/// </summary>
-		public event EventHandler<float> ValorChanged
-		{
-			add{ Value.ValorChanged += value;}
-			remove{ Value.ValorChanged -= value;}
-		}
+		public event EventHandler<float> ValorChanged;
 
 		/// <summary>
 		/// Occurs when reached zero.
 		/// </summary>
-		public event EventHandler ReachedZero
-		{
-			add{ Value.ReachedZero += value;}
-			remove{ Value.ReachedZero -= value;}
-		}
+		public event EventHandler ReachedZero;
 
 		/// <summary>
 		/// Occurs when reached max.
 		/// </summary>
-		public event EventHandler ReachedMax
-		{
-			add{ Value.ReachedMax += value;}
-			remove{ Value.ReachedMax -= value;}
-		}
+		public event EventHandler ReachedMax;
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="Units.Recursos.RecursoHP"/>.
@@ -166,11 +179,10 @@ namespace Units.Recursos
 		public override string ToString ()
 		{
 			return string.Format (
-				"{3}::{0}: {1}/{2}",
+				"{0}: {1}/{2}",
 				NombreCorto,
 				Valor,
-				Max, 
-				base.ToString ());
+				Max);
 		}
 
 
@@ -183,35 +195,47 @@ namespace Units.Recursos
 			: base (unidad)
 		{
 			Regen = new RegenParam (this);
-			Value = new ValueParam (this);
+			_Max = new MaxHpParam (this);
 			Parámetros.Add (Regen);
-			Parámetros.Add (Value);
+			Parámetros.Add (_Max);
 		}
 
-		class ValueParam : MaxParameter
+		class MaxHpParam : IParámetroRecurso
 		{
-			public override void ReceiveExperience (float exp)
+			public void ReceiveExperience (float exp)
 			{
-				Max += 10 * exp;
+				Valor += 100 * exp;
+				Debug.WriteLine ("MaxHp += " + 100 * exp, DebugCategories.Experience);
 			}
 
 			const float expGainThreshold = 0.25f;
 			const float expGameRate = 0.9f;
 
-			public override void Update (float gameTime)
+			IRecurso _recurso { get; }
+
+			IRecurso IParámetroRecurso.Recurso{ get { return _recurso; } }
+
+			public IUnidad Unidad { get { return Recurso.Unidad; } }
+
+			public float ModifiedValue
+			{ get { return Valor + Unidad.Recursos.RecursoExtra (ConstantesRecursos.HP + ".max"); } }
+
+			public float Valor { get; set; }
+
+			public void Update (float gameTime)
 			{
 				// pedir exp
-				if (recursoHP.RelativeHp < expGainThreshold)
-					Recurso.Unidad.Exp.AddAssignation (this, gameTime * expGameRate);
+				if (Recurso.RelativeHp < expGainThreshold)
+					_recurso.Unidad.Exp.AddAssignation (this, gameTime * expGameRate);
 			}
 
-			RecursoHP recursoHP { get { return Recurso as RecursoHP; } }
+			public RecursoHP Recurso { get { return _recurso as RecursoHP; } }
 
-			public override string NombreÚnico { get { return "value"; } }
+			public string NombreÚnico { get { return "max"; } }
 
-			public ValueParam (RecursoHP recurso)
-				: base (recurso)
+			public MaxHpParam (RecursoHP recurso)
 			{
+				_recurso = recurso;
 			}
 		}
 

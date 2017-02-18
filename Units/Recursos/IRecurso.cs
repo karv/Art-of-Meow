@@ -86,4 +86,28 @@ namespace Units.Recursos
 		/// <param name="exp">Cantidad de experiencia recibida</param>
 		void ReceiveExperience (float exp);
 	}
+
+	/// <summary>
+	/// Extensions
+	/// </summary>
+	public static class ParamExt
+	{
+		/// <summary>
+		/// Gets the delta value of a parameter caused by buffs
+		/// </summary>
+		public static float DeltaValue (this IParámetroRecurso rec)
+		{
+			var unid = rec.Recurso.Unidad;
+			var delta = unid.Recursos.RecursoExtra (rec.Recurso.NombreÚnico + "." + rec.NombreÚnico);
+			return delta;
+		}
+
+		/// <summary>
+		/// Gets the value of a parameter modified by unit's buffs
+		/// </summary>
+		public static float ModifiedValue (this IParámetroRecurso rec)
+		{
+			return DeltaValue (rec) + rec.Valor;
+		}
+	}
 }

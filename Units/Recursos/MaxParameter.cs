@@ -30,7 +30,7 @@ namespace Units.Recursos
 		/// <summary>
 		/// Gets or sets the max value
 		/// </summary>
-		public float Max
+		public virtual float Max
 		{
 			get
 			{

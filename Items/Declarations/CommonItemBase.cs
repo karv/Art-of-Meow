@@ -15,11 +15,25 @@ namespace Items.Declarations
 	/// </summary>
 	public abstract class CommonItemBase : IItem
 	{
+		string textureName;
+
 		/// <summary>
 		/// Gets or sets the name of the texture
 		/// </summary>
 		/// <value>The name of the texture.</value>
-		public string TextureName { get; protected set; }
+		public string TextureName
+		{
+			get
+			{
+				return textureName;
+			}
+			set
+			{
+				if (value == null || IsInitialized)
+					throw new InvalidOperationException ();
+				textureName = value;
+			}
+		}
 
 		/// <summary>
 		/// Gets the value or worth of the item
