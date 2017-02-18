@@ -53,10 +53,27 @@
       "$type": "Items.Declarations.Equipment.GenericArmor, Art_of_Meow",
       "NombreBase": "Armadura de cuero",
 			"DeltaDict": {
-				"hp.max" : 10
+				"hp.max" : 10,
+				"speed" : -1
 			},
       "Slot": 2,
       "TextureName": "Items//body armor",
+      "Color": {
+        "B": 0,
+        "G": 50,
+        "R": 150,
+        "A": 255
+      },
+			"AllowedModNames": ["Broken"]
+    },
+		{
+      "$type": "Items.Declarations.Equipment.GenericArmor, Art_of_Meow",
+      "NombreBase": "Casco de cuero",
+			"DeltaDict": {
+				"hp.max" : 3
+			},
+      "Slot": 1,
+      "TextureName": "Items//helmet",
       "Color": {
         "B": 0,
         "G": 50,
