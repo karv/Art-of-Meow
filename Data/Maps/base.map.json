@@ -59,8 +59,8 @@
             "AllowedItemNames": {
               "$type": "System.String[], mscorlib",
               "$values": [
-                "Cuchillo",
-                "Lanza"
+                "Knife",
+                "Lance"
               ]
             },
           },
@@ -75,7 +75,7 @@
             "AllowedItemNames": {
               "$type": "System.String[], mscorlib",
               "$values": [
-                "HpPoción"
+                "Hp potion"
               ]
             },
           },

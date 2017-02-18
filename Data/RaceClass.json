@@ -12,10 +12,10 @@
         "vel": 0.08
       },
 			"DropDistribution": {
-				"HpPoción": 1.0,
-				"Espada": 0.1,
-				"Armadura de cuero" : 0.07,
-				"Casco de cuero" : 0.07,
+				"Hp potion": 1.0,
+				"Sword": 0.1,
+				"Leather armor" : 0.07,
+				"Leather cap" : 0.07,
 			}
     }
   ],

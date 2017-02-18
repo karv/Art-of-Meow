@@ -88,7 +88,7 @@
           "MinItemVal": 0.0,
           "MaxItemVal": 100.0,
           "AllowedItemNames": [
-            "Lanza", "Cuchillo", "Espada"
+            "Lance", "Knife", "Sword"
           ]
         },
         "Weight": 1
@@ -99,7 +99,7 @@
           "MinItemVal": 0.0,
           "MaxItemVal": 100.0,
           "AllowedItemNames": [
-            "Lanza", "Cuchillo", "Espada"
+            "Lance", "Knife", "Sword"
           ]
         },
         "Weight": 1
