@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Units.Skills;
+using Newtonsoft.Json;
+using AoM;
 
 namespace Items.Declarations.Equipment
 {
@@ -13,10 +15,19 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public override EquipSlot Slot { get; }
 
+		public readonly string [] InvokedSkillNames;
+
 		/// <summary>
 		/// Devuelve el skill que se invoca al usar este item
 		/// </summary>
-		public IEnumerable <ISkill> InvokedSkills { get; }
+		public IEnumerable <ISkill> InvokedSkills
+		{
+			get
+			{
+				foreach (var i in InvokedSkillNames)
+					yield return Program.MyGame.SkillList.GetSkill (i);
+			}
+		}
 
 		IEnumerable<ISkill> ISkillEquipment.GetEquipmentSkills ()
 		{
@@ -39,19 +50,20 @@ namespace Items.Declarations.Equipment
 
 		/// <summary>
 		/// </summary>
-		/// <param name="nombre">Nombre.</param>
-		/// <param name="invokedSkill">Invoked skill list.</param>
-		/// <param name="slot">Slot</param>
-		/// <param name="textureName">Texture</param>
-		public GenericSkillListEquipment (string nombre,
-		                                  IEnumerable<ISkill> invokedSkill, 
-		                                  EquipSlot slot,
-		                                  string textureName)
-			: base (nombre)
+		/// <param name="NombreBase">Nombre.</param>
+		/// <param name="InvokedSkill">Invoked skill list.</param>
+		/// <param name="Slot">Slot</param>
+		/// <param name="TextureName">Texture</param>
+		[JsonConstructor]
+		public GenericSkillListEquipment (string NombreBase,
+		                                  string [] InvokedSkill, 
+		                                  EquipSlot Slot,
+		                                  string TextureName)
+			: base (NombreBase)
 		{
-			InvokedSkills = invokedSkill;
-			Slot = slot;
-			TextureName = textureName;
+			InvokedSkillNames = InvokedSkill;
+			this.Slot = Slot;
+			this.TextureName = TextureName;
 		}
 
 		/// <summary>
@@ -59,7 +71,7 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public override object Clone ()
 		{
-			return new GenericSkillListEquipment (NombreBase, InvokedSkills, Slot)
+			return new GenericSkillListEquipment (NombreBase, InvokedSkillNames, Slot)
 			{
 				TextureName = TextureName,
 				Texture = Texture,
@@ -73,7 +85,7 @@ namespace Items.Declarations.Equipment
 		/// <param name="invokedSkill">Invoked skill list.</param>
 		/// <param name="slot">Slot</param>
 		public GenericSkillListEquipment (string nombre,
-		                                  IEnumerable<ISkill> invokedSkill, 
+		                                  string [] invokedSkill, 
 		                                  EquipSlot slot)
 			: this (nombre, invokedSkill, slot, nombre)
 		{

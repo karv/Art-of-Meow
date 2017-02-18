@@ -41,5 +41,10 @@ namespace Units.Skills
 		/// Gets the value of the skill
 		/// </summary>
 		float Value { get; }
+
+		/// <summary>
+		/// Gets the unique name
+		/// </summary>
+		string Name { get; }
 	}
 }

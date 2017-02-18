@@ -53,12 +53,14 @@ namespace Items
 					break;
 
 				case ItemType.Bow:
-					ret = new GenericSkillListEquipment (
+					return null;
+/*					ret = new GenericSkillListEquipment (
 						"Arco",
 						new Units.Skills.ISkill[] { new RangedSkill { TextureName = "Items//bow_orange" } },
 						EquipSlot.MainHand, 
 						"Items//bow_orange"
 					);
+					*/
 					break;
 
 				case ItemType.LeatherArmor:

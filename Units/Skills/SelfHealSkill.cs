@@ -13,6 +13,8 @@ namespace Units.Skills
 	/// </summary>
 	public class SelfHealSkill : ISkill
 	{
+		public  string Name { get; set; }
+
 		#region ISkill implementation
 
 		const float _heal = 10f;

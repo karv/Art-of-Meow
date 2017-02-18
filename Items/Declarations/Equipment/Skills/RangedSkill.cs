@@ -12,6 +12,7 @@ using Skills;
 using Units;
 using Units.Recursos;
 using Units.Skills;
+using Newtonsoft.Json;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -24,6 +25,8 @@ namespace Items.Declarations.Equipment.Skills
 
 		float ISkill.Value //TODO
 		{ get { return 100; } }
+
+		public string Name { get; }
 
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
@@ -64,6 +67,7 @@ namespace Items.Declarations.Equipment.Skills
 		/// Devuelve la última instancia generada.
 		/// </summary>
 		/// <value>The last generated instance.</value>
+		[JsonIgnore]
 		public SkillInstance LastGeneratedInstance { get; protected set; }
 
 		/// <summary>
@@ -186,11 +190,14 @@ namespace Items.Declarations.Equipment.Skills
 		/// Gets the icon.
 		/// </summary>
 		/// <value>The icon.</value>
+		[JsonIgnore]
 		protected Texture2D Icon { get; private set; }
+
+		protected string IconName { get; }
 
 		void IComponent.LoadContent (ContentManager manager)
 		{
-			Icon = manager.Load<Texture2D> (TextureName);
+			Icon = manager.Load<Texture2D> (IconName);
 		}
 
 		#endregion
@@ -203,5 +210,14 @@ namespace Items.Declarations.Equipment.Skills
 		{
 			bat.Draw (Icon, destinationRectangle: rect, layerDepth: Depths.SkillIcon);
 		}
+
+		[JsonConstructor]
+		public RangedSkill (string Name, string TextureName, string Icon)
+		{
+			this.Name = Name;
+			this.TextureName = TextureName;
+			IconName = Icon;
+		}
+		
 	}
 }

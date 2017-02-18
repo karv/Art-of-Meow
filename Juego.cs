@@ -40,6 +40,8 @@ namespace AoM
 		/// </summary>
 		public UnitClassRaceManager ClassRaceManager { get; set; }
 
+		public SkillCollection SkillList { get; set; }
+
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
 		/// </summary>
@@ -83,6 +85,8 @@ namespace AoM
 			Items = ItemDatabase.FromFile ();
 
 			ClassRaceManager = UnitClassRaceManager.FromFile ();
+
+			SkillList = SkillCollection.FromFile ();
 
 			if (ItemMods == null)
 				throw new IOException ("Cannot load ItemMods database");
