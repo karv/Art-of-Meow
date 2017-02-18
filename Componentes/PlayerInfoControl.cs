@@ -7,6 +7,7 @@ using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
 using Screens;
 using Units;
+using Units.Recursos;
 
 namespace Componentes
 {
@@ -111,10 +112,12 @@ namespace Componentes
 					Stats.Add (
 						smallFont,
 						string.Format (
-							"{0}.{1}:{2}",
+							"{0}.{1}:{2}[{3} + {4}]",
 							stat.NombreCorto ?? stat.NombreÚnico,
 							param.NombreÚnico,
-							param.Valor),
+							param.ModifiedValue (),
+							param.Valor,
+							param.DeltaValue ()),
 						Color.White);
 				}
 		}
