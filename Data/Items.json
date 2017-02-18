@@ -14,7 +14,6 @@
         "R": 0,
         "A": 255
       },
-      "Modifiers": [],
 			"AllowedModNames": ["Broken", "Light", "of Knockout", "of penetration"]
     },
 		{
@@ -31,7 +30,6 @@
         "R": 139,
         "A": 255
       },
-      "Modifiers": [],
 			"AllowedModNames": ["Broken", "Light", "of Knockout", "of penetration"]
     },
 		{
@@ -65,7 +63,6 @@
         "R": 150,
         "A": 255
       },
-      "Modifiers": [],
 			"AllowedModNames": ["Broken"]
     },
 		{
@@ -84,7 +81,6 @@
         "A": 255
       },
  			"Texture": "heal",
-      "Modifiers": [],
 			"AllowedModNames": ["Condensated"]
     }
   ]
