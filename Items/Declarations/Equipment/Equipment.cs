@@ -1,4 +1,3 @@
-using Items.Modifiers;
 using Newtonsoft.Json;
 using Units;
 

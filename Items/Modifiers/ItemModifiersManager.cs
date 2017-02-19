@@ -75,6 +75,9 @@ namespace Items.Modifiers
 			return ret.Values;
 		}
 
+		/// <summary>
+		/// Gets the sum of the values of all the modifications of this item.
+		/// </summary>
 		public float ValueSum ()
 		{
 			return Modifiers.Sum (z => z.Value);

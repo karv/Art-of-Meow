@@ -16,6 +16,9 @@ namespace Items.Modifiers
 		[JsonPropertyAttribute (Order = 1)]
 		public ItemModifierNameUsage NameUsage { get; }
 
+		/// <summary>
+		/// Gets the worth of this modification
+		/// </summary>
 		public float Value { get; }
 
 		[JsonIgnore]
