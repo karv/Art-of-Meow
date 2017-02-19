@@ -89,7 +89,9 @@ namespace Cells
 				ret = new Point (_r.Next (Size.Width), _r.Next (Size.Height));
 				cell = GetCell (ret);
 			}
-			while (cell.EnumerateObjects ().Any (z => z is ICollidableGridObject));
+			while (cell.EnumerateObjects ().Any (
+				       z => z is ICollidableGridObject ||
+				       z is StairsGridObject));
 			return ret;
 		}
 
