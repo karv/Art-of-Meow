@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using AoM;
 using Cells;
@@ -7,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using Newtonsoft.Json;
 using Screens;
 using Skills;
 using Units;
@@ -24,6 +26,17 @@ namespace Items.Declarations.Equipment.Skills
 
 		float ISkill.Value //TODO
 		{ get { return 100; } }
+
+		/// <summary>
+		/// Gets the unique name of the skill
+		/// </summary>
+		/// <value>The name.</value>
+		public string Name { get; }
+
+		/// <summary>
+		/// Gets the cooldown time for this skill
+		/// </summary>
+		public readonly float BaseCooldown;
 
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
@@ -55,7 +68,7 @@ namespace Items.Declarations.Equipment.Skills
 			var ret = new SkillInstance (this, user);
 			ret.Effects.Chance = chance;
 			ret.Effects.AddEffect (ef);
-			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, 1), true);
+			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, BaseCooldown), true);
 
 			return ret;
 		}
@@ -64,6 +77,7 @@ namespace Items.Declarations.Equipment.Skills
 		/// Devuelve la última instancia generada.
 		/// </summary>
 		/// <value>The last generated instance.</value>
+		[JsonIgnore]
 		public SkillInstance LastGeneratedInstance { get; protected set; }
 
 		/// <summary>
@@ -73,9 +87,17 @@ namespace Items.Declarations.Equipment.Skills
 		public void GetInstance (IUnidad user)
 		{
 			var dialSer = new Moggle.Screens.Dials.ScreenDialSerial ();
+			var grid = user.Grid;
+			var selScr = new SelectTargetScreen (Program.MyGame, grid);
+			selScr.GridSelector.CameraUnidad = user as Unidad;
 
-			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
-			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
+			var visEnemies = grid.GetVisibleAliveUnidad (user).Where (z => z.Team != user.Team);
+
+			// Put the cursor in the closest visible enemy (if any)
+			var ppos = visEnemies.Any () ? 
+				grid.GetClosestVisibleEnemy (user) : 
+				user.Location;
+			selScr.GridSelector.SetCursor (ppos, user);
 
 			var infoBox = new EtiquetaMultiLínea (selScr)
 			{
@@ -186,11 +208,17 @@ namespace Items.Declarations.Equipment.Skills
 		/// Gets the icon.
 		/// </summary>
 		/// <value>The icon.</value>
+		[JsonIgnore]
 		protected Texture2D Icon { get; private set; }
+
+		/// <summary>
+		/// Gets the name of the icon texture
+		/// </summary>
+		protected string IconName { get; }
 
 		void IComponent.LoadContent (ContentManager manager)
 		{
-			Icon = manager.Load<Texture2D> (TextureName);
+			Icon = manager.Load<Texture2D> (IconName);
 		}
 
 		#endregion
@@ -203,5 +231,15 @@ namespace Items.Declarations.Equipment.Skills
 		{
 			bat.Draw (Icon, destinationRectangle: rect, layerDepth: Depths.SkillIcon);
 		}
+
+		[JsonConstructor]
+		RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown)
+		{
+			this.Name = Name;
+			this.TextureName = TextureName;
+			IconName = Icon;
+			this.BaseCooldown = BaseCooldown;
+		}
+		
 	}
 }

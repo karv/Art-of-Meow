@@ -13,6 +13,11 @@ namespace Units.Skills
 	/// </summary>
 	public class SelfHealSkill : ISkill
 	{
+		/// <summary>
+		/// Gets the unique name
+		/// </summary>
+		public  string Name { get; set; }
+
 		#region ISkill implementation
 
 		const float _heal = 10f;

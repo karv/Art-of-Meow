@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Moggle.Screens;
 using MonoGame.Extended.InputListeners;
+using Units;
 
 namespace Screens
 {
@@ -28,7 +29,7 @@ namespace Screens
 			{
 				return cursorPosition;
 			}
-			set
+			protected set
 			{
 				// No permitir un valor fuera del universo de Grid
 				cursorPosition = new Point (
@@ -36,6 +37,18 @@ namespace Screens
 					Math.Min (Math.Max (value.Y, 0), Grid.Size.Height));
 				OnCursorMoved ();
 			}
+		}
+
+		/// <summary>
+		/// Sets the cursor position
+		/// </summary>
+		/// <param name="p">new position</param>
+		/// <param name="sigth">The soruce of sigth, it is used as a validator</param>
+		public void SetCursor (Point p, IUnidad sigth)
+		{
+			if (!sigth.CanSee (p))
+				return;
+			CursorPosition = p;
 		}
 
 		/// <summary>
@@ -69,7 +82,7 @@ namespace Screens
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			base.LoadContent (manager);
-			pixel = manager.Load <Texture2D> ("pixel");
+			pixel = Juego.Textures.SolidTexture;
 		}
 
 		/// <summary>
@@ -158,22 +171,22 @@ namespace Screens
 			var key = data.Item1.Key;
 			if (GlobalKeys.SelectUp.Contains (key))
 			{
-				GridSelector.CursorPosition += new Point (0, -1);
+				GridSelector.SetCursor (GridSelector.CursorPosition + new Point (0, -1), GridSelector.CameraUnidad);
 				return true;
 			}
 			if (GlobalKeys.SelectDownKey.Contains (key))
 			{
-				GridSelector.CursorPosition += new Point (0, 1);
+				GridSelector.SetCursor (GridSelector.CursorPosition + new Point (0, 1), GridSelector.CameraUnidad);
 				return true;
 			}
 			if (GlobalKeys.SelectLeft.Contains (key))
 			{
-				GridSelector.CursorPosition += new Point (-1, 0);
+				GridSelector.SetCursor (GridSelector.CursorPosition + new Point (-1, 0), GridSelector.CameraUnidad);
 				return true;
 			}
 			if (GlobalKeys.SelectRight.Contains (key))
 			{
-				GridSelector.CursorPosition += new Point (1, 0);
+				GridSelector.SetCursor (GridSelector.CursorPosition + new Point (1, 0), GridSelector.CameraUnidad);
 				return true;
 			}
 			if (GlobalKeys.Accept.Contains (key))
@@ -203,6 +216,5 @@ namespace Screens
 			GridSelector = new SelectableGridControl (Grid, this);
 			AddComponent (GridSelector);
 		}
-		
 	}
 }

@@ -1,6 +1,20 @@
 ﻿{
   "Collection": [
     {
+      "$type": "Items.Declarations.Equipment.GenericSkillListEquipment, Art_of_Meow",
+      "NombreBase": "Short bow",
+			"InvokedSkill": ["Bow instance"],
+      "Slot": 3,
+      "TextureName": "Items//katana",
+      "Color": {
+        "B": 255,
+        "G": 255,
+        "R": 255,
+        "A": 255
+      },
+			"AllowedModNames": ["Broken", "Light", "of penetration"]
+    },
+    {
       "$type": "Items.Declarations.Equipment.MeleeWeapon, Art_of_Meow",
       "NombreBase": "Knife",
       "BaseDamage": 0.8,

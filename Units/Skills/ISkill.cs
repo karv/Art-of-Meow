@@ -1,3 +1,4 @@
+using AoM;
 using Moggle.Controles;
 using Skills;
 
@@ -6,7 +7,7 @@ namespace Units.Skills
 	/// <summary>
 	/// Represents a skill
 	/// </summary>
-	public interface ISkill : IDibujable, IComponent
+	public interface ISkill : IDibujable, IComponent, IIdentificable
 	{
 		/// <summary>
 		/// Build a skill instance

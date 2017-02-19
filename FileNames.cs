@@ -16,6 +16,11 @@
 		public const string Items = @"Data/Items.json";
 
 		/// <summary>
+		/// Skill definitions
+		/// </summary>
+		public const string Skills = @"Data/Skills.json";
+
+		/// <summary>
 		/// Race and classes definitions file name
 		/// </summary>
 		public const string RaceClass = @"Data/RaceClass.json";

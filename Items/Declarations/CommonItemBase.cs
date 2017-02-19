@@ -35,6 +35,9 @@ namespace Items.Declarations
 			}
 		}
 
+		string IIdentificable.Name
+		{ get { return NombreBase; } }
+
 		/// <summary>
 		/// Gets the value or worth of the item
 		/// </summary>

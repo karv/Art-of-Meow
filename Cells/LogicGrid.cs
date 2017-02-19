@@ -204,6 +204,63 @@ namespace Cells
 			return ClosestCellThat (selector, unid.Location);
 		}
 
+		/// <summary>
+		/// Gets the closest point of a visible enemy from a given unidad
+		/// </summary>
+		public Point GetClosestVisibleEnemy (IUnidad unid)
+		{
+			Predicate<Cell> selector = delegate(Cell obj)
+			{
+				if (!unid.CanSee (obj.Location))
+					return false;
+				var unitInCell = obj.GetAliveUnidadHere ();
+				return unitInCell != null && !unid.Team.Equals (unitInCell.Team);
+			};
+			return ClosestCellThat (selector, unid.Location);
+		}
+
+		/// <summary>
+		/// Enumrates the visible cells that are visible for a given unidad
+		/// </summary>
+		public IEnumerable<Cell> GetVisibleCells (IUnidad source)
+		{
+			return source.VisiblePoints ().Select (GetCell);
+		}
+
+		/// <summary>
+		/// Enumrates the visible unidades that are alive and visible for a given unidad
+		/// </summary>
+		public IEnumerable<IUnidad> GetVisibleAliveUnidad (IUnidad source)
+		{
+			foreach (var cell in GetVisibleCells (source))
+			{
+				var un = cell.GetAliveUnidadHere ();
+				if (un != null)
+					yield return un;
+			}
+		}
+
+		/// <summary>
+		/// Gets the closest object from a source
+		/// </summary>
+		public IGridObject GetClosest (IGridObject source, IEnumerable<IGridObject> objects)
+		{
+			IGridObject ret = null;
+			float lastDist = 0;
+			foreach (var ob in objects)
+			{
+				var cDist = Geometry.SquaredEucludeanDistance (source.Location, ob.Location);
+				if (ret == null || cDist < lastDist)
+				{
+					lastDist = cDist;
+					ret = ob;
+				}
+			}
+			if (ret == null)
+				throw new InvalidOperationException ("Collection empty.");
+			return ret;
+		}
+
 		#endregion
 
 		#region Time system

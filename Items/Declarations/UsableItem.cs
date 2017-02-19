@@ -10,7 +10,6 @@ namespace Items.Declarations
 	public abstract class UsableItem : CommonItemBase, 
 	ISkill // Hace usable este item
 	{
-
 		/// <summary>
 		/// Devuelve la última instancia generada.
 		/// </summary>
