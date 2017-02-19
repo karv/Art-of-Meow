@@ -32,10 +32,9 @@ namespace Helper
 			#region Cheat
 			var bow = Program.MyGame.Items.CreateItem<GenericSkillListEquipment> ("Short bow");
 			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("Knife");
-			player.Inventory.Add (bow);
 			player.Inventory.Add (eq);
-			//eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
-			player.Equipment.EquipItem (bow);
+			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
+			player.Equipment.EquipItem (eq);
 			#endregion
 
 			player.Initialize ();
