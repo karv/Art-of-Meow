@@ -39,6 +39,11 @@ namespace Screens
 			}
 		}
 
+		/// <summary>
+		/// Sets the cursor position
+		/// </summary>
+		/// <param name="p">new position</param>
+		/// <param name="sigth">The soruce of sigth, it is used as a validator</param>
 		public void SetCursor (Point p, IUnidad sigth)
 		{
 			if (!sigth.CanSee (p))

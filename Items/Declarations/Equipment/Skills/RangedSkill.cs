@@ -8,12 +8,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using Newtonsoft.Json;
 using Screens;
 using Skills;
 using Units;
 using Units.Recursos;
 using Units.Skills;
-using Newtonsoft.Json;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -27,8 +27,15 @@ namespace Items.Declarations.Equipment.Skills
 		float ISkill.Value //TODO
 		{ get { return 100; } }
 
+		/// <summary>
+		/// Gets the unique name of the skill
+		/// </summary>
+		/// <value>The name.</value>
 		public string Name { get; }
 
+		/// <summary>
+		/// Gets the cooldown time for this skill
+		/// </summary>
 		public readonly float BaseCooldown;
 
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
@@ -204,6 +211,9 @@ namespace Items.Declarations.Equipment.Skills
 		[JsonIgnore]
 		protected Texture2D Icon { get; private set; }
 
+		/// <summary>
+		/// Gets the name of the icon texture
+		/// </summary>
 		protected string IconName { get; }
 
 		void IComponent.LoadContent (ContentManager manager)
@@ -223,7 +233,7 @@ namespace Items.Declarations.Equipment.Skills
 		}
 
 		[JsonConstructor]
-		public RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown)
+		RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown)
 		{
 			this.Name = Name;
 			this.TextureName = TextureName;

@@ -1,6 +1,5 @@
 ﻿using System;
 using Items.Declarations.Equipment;
-using Items.Declarations.Equipment.Skills;
 using Microsoft.Xna.Framework;
 
 namespace Items
@@ -60,8 +59,8 @@ namespace Items
 						EquipSlot.MainHand, 
 						"Items//bow_orange"
 					);
-					*/
 					break;
+					*/
 
 				case ItemType.LeatherArmor:
 					ret = new GenericArmor ("Leather Armor", EquipSlot.Body)

@@ -240,6 +240,7 @@
     <Compile Include="Items\Declarations\SelfResourceChangeItem.cs" />
     <Compile Include="Items\Declarations\UsableItem.cs" />
     <Compile Include="Units\SkillCollection.cs" />
+    <Compile Include="IIdentificable.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

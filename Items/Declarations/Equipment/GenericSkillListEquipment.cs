@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Units.Skills;
-using Newtonsoft.Json;
 using AoM;
+using Newtonsoft.Json;
+using Units.Skills;
 
 namespace Items.Declarations.Equipment
 {
@@ -15,6 +15,9 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		public override EquipSlot Slot { get; }
 
+		/// <summary>
+		/// The name of the skills that can be used when this item is worn
+		/// </summary>
 		public readonly string [] InvokedSkillNames;
 
 		/// <summary>

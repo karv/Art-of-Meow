@@ -1,4 +1,5 @@
 using System;
+using AoM;
 using Items.Modifiers;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
@@ -8,7 +9,7 @@ namespace Items
 	/// <summary>
 	/// Representa la instancia de un objeto
 	/// </summary>
-	public interface IItem : IComponent, IDibujable, ICloneable
+	public interface IItem : IComponent, IDibujable, ICloneable, IIdentificable
 	{
 		/// <summary>
 		/// Gets the name for the item

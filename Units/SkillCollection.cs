@@ -7,10 +7,19 @@ using Units.Skills;
 
 namespace Units
 {
+	/// <summary>
+	/// Manager and database of all defined skills
+	/// </summary>
 	public class SkillCollection
 	{
+		/// <summary>
+		/// Collection of skills
+		/// </summary>
 		public readonly ISkill [] Skills;
 
+		/// <summary>
+		/// Gets the skill with a specified name.
+		/// </summary>
 		public ISkill GetSkill (string name)
 		{
 			return Skills.First (z => z.Name == name);

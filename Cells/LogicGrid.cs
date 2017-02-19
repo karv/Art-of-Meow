@@ -204,6 +204,9 @@ namespace Cells
 			return ClosestCellThat (selector, unid.Location);
 		}
 
+		/// <summary>
+		/// Gets the closest point of a visible enemy from a given unidad
+		/// </summary>
 		public Point GetClosestVisibleEnemy (IUnidad unid)
 		{
 			Predicate<Cell> selector = delegate(Cell obj)
@@ -216,11 +219,17 @@ namespace Cells
 			return ClosestCellThat (selector, unid.Location);
 		}
 
+		/// <summary>
+		/// Enumrates the visible cells that are visible for a given unidad
+		/// </summary>
 		public IEnumerable<Cell> GetVisibleCells (IUnidad source)
 		{
 			return source.VisiblePoints ().Select (GetCell);
 		}
 
+		/// <summary>
+		/// Enumrates the visible unidades that are alive and visible for a given unidad
+		/// </summary>
 		public IEnumerable<IUnidad> GetVisibleAliveUnidad (IUnidad source)
 		{
 			foreach (var cell in GetVisibleCells (source))
@@ -231,6 +240,9 @@ namespace Cells
 			}
 		}
 
+		/// <summary>
+		/// Gets the closest object from a source
+		/// </summary>
 		public IGridObject GetClosest (IGridObject source, IEnumerable<IGridObject> objects)
 		{
 			IGridObject ret = null;
