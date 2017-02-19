@@ -116,7 +116,8 @@ namespace Items.Declarations.Equipment
 				Texture = Texture,
 				TextureName = TextureName,
 				BaseSpeed = BaseSpeed,
-				Color = Color
+				Color = Color,
+				AllowedModNames = AllowedModNames
 			};
 		}
 
