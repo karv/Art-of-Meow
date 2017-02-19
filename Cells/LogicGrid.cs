@@ -204,6 +204,51 @@ namespace Cells
 			return ClosestCellThat (selector, unid.Location);
 		}
 
+		public Point GetClosestVisibleEnemy (IUnidad unid)
+		{
+			Predicate<Cell> selector = delegate(Cell obj)
+			{
+				if (!unid.CanSee (obj.Location))
+					return false;
+				var unitInCell = obj.GetAliveUnidadHere ();
+				return unitInCell != null && !unid.Team.Equals (unitInCell.Team);
+			};
+			return ClosestCellThat (selector, unid.Location);
+		}
+
+		public IEnumerable<Cell> GetVisibleCells (IUnidad source)
+		{
+			return source.VisiblePoints ().Select (GetCell);
+		}
+
+		public IEnumerable<IUnidad> GetVisibleAliveUnidad (IUnidad source)
+		{
+			foreach (var cell in GetVisibleCells (source))
+			{
+				var un = cell.GetAliveUnidadHere ();
+				if (un != null)
+					yield return un;
+			}
+		}
+
+		public IGridObject GetClosest (IGridObject source, IEnumerable<IGridObject> objects)
+		{
+			IGridObject ret = null;
+			float lastDist = 0;
+			foreach (var ob in objects)
+			{
+				var cDist = Geometry.SquaredEucludeanDistance (source.Location, ob.Location);
+				if (ret == null || cDist < lastDist)
+				{
+					lastDist = cDist;
+					ret = ob;
+				}
+			}
+			if (ret == null)
+				throw new InvalidOperationException ("Collection empty.");
+			return ret;
+		}
+
 		#endregion
 
 		#region Time system

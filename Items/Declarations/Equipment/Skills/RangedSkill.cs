@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using AoM;
 using Cells;
@@ -79,10 +80,17 @@ namespace Items.Declarations.Equipment.Skills
 		public void GetInstance (IUnidad user)
 		{
 			var dialSer = new Moggle.Screens.Dials.ScreenDialSerial ();
-
-			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
+			var grid = user.Grid;
+			var selScr = new SelectTargetScreen (Program.MyGame, grid);
 			selScr.GridSelector.CameraUnidad = user as Unidad;
-			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
+
+			var visEnemies = grid.GetVisibleAliveUnidad (user).Where (z => z.Team != user.Team);
+
+			// Put the cursor in the closest visible enemy (if any)
+			var ppos = visEnemies.Any () ? 
+				grid.GetClosestVisibleEnemy (user) : 
+				user.Location;
+			selScr.GridSelector.SetCursor (ppos, user);
 
 			var infoBox = new EtiquetaMultiLínea (selScr)
 			{
