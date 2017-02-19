@@ -69,7 +69,7 @@ namespace Screens
 		protected override void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			base.LoadContent (manager);
-			pixel = manager.Load <Texture2D> ("pixel");
+			pixel = Juego.Textures.SolidTexture;
 		}
 
 		/// <summary>
@@ -203,6 +203,5 @@ namespace Screens
 			GridSelector = new SelectableGridControl (Grid, this);
 			AddComponent (GridSelector);
 		}
-		
 	}
 }
