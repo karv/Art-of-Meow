@@ -75,6 +75,11 @@ namespace Items.Modifiers
 			return ret.Values;
 		}
 
+		public float ValueSum ()
+		{
+			return Modifiers.Sum (z => z.Value);
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModifiersManager"/> class.
 		/// </summary>

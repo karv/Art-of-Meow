@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AoM;
 using Newtonsoft.Json;
 using Units.Skills;
@@ -44,10 +45,7 @@ namespace Items.Declarations.Equipment
 		{
 			get
 			{
-				var ret = base.Value;
-				foreach (var sk in InvokedSkills)
-					ret += sk.Value;
-				return ret;
+				return base.Value + InvokedSkills.Sum (z => z.Value);
 			}
 		}
 

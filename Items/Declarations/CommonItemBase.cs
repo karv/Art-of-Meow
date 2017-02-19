@@ -49,10 +49,7 @@ namespace Items.Declarations
 		/// <returns>The mod value.</returns>
 		public float GetModValue ()
 		{
-			var ret = 0f;
-			foreach (var x in Modifiers.SquashMods ())
-				ret += x.Delta;
-			return ret;
+			return Modifiers.ValueSum ();
 		}
 
 		Texture2D _texture;
