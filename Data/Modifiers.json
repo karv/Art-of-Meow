@@ -3,6 +3,7 @@
     {
       "Name": "Broken",
       "NameUsage": 0,
+			"Value": -30,
       "Modifications": [
         {
           "AttributeChangeName": "att",
@@ -17,6 +18,7 @@
     {
       "Name": "Condensated",
       "NameUsage": 0,
+			"Value": 5,
       "Modifications": [
         {
           "AttributeChangeName": "effect",
@@ -27,6 +29,7 @@
 		{
       "Name": "Light",
       "NameUsage": 0,
+			"Value": 20,
       "Modifications": [
         {
           "AttributeChangeName": "att",
@@ -41,6 +44,7 @@
 		{
       "Name": "of Knockout",
       "NameUsage": 1,
+			"Value": 30,
       "Modifications": [
         {
           "AttributeChangeName": "att",
@@ -55,6 +59,7 @@
 		{
       "Name": "of penetration",
       "NameUsage": 1,
+			"Value": 30,
       "Modifications": [
         {
           "AttributeChangeName": "att",

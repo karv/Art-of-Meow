@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace Items.Modifiers
 {
@@ -10,20 +11,21 @@ namespace Items.Modifiers
 		/// <summary>
 		/// Devuelve el nombre del atributo que es afectado
 		/// </summary>
-		public string AttributeChangeName { get; set; }
+		public string AttributeChangeName { get; }
 
 		/// <summary>
 		/// Devuelve el valor absoluto de la modificación
 		/// </summary>
-		public float Delta { get; set; }
+		public float Delta { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModification"/> struct.
 		/// </summary>
-		public ItemModification (string attrChangeName, float delta)
+		[JsonConstructor]
+		public ItemModification (string AttributeChangeName, float Delta)
 		{
-			AttributeChangeName = attrChangeName;
-			Delta = delta;
+			this.AttributeChangeName = AttributeChangeName;
+			this.Delta = Delta;
 		}
 
 		/// <param name="left">Left.</param>
