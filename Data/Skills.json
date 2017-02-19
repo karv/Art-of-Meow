@@ -5,7 +5,8 @@
 			"$type": "Items.Declarations.Equipment.Skills.RangedSkill, Art_of_Meow",
 			"Name": "Bow instance",
 			"TextureName": "Items//bow_orange",
-			"Icon": "Items//bow_orange"
+			"Icon": "Items//bow_orange",
+			"BaseCooldown" : 0.4
     },
 	]
 }

@@ -28,6 +28,8 @@ namespace Items.Declarations.Equipment.Skills
 
 		public string Name { get; }
 
+		public readonly float BaseCooldown;
+
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
 			
@@ -58,7 +60,7 @@ namespace Items.Declarations.Equipment.Skills
 			var ret = new SkillInstance (this, user);
 			ret.Effects.Chance = chance;
 			ret.Effects.AddEffect (ef);
-			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, 1), true);
+			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, BaseCooldown), true);
 
 			return ret;
 		}
@@ -79,6 +81,7 @@ namespace Items.Declarations.Equipment.Skills
 			var dialSer = new Moggle.Screens.Dials.ScreenDialSerial ();
 
 			var selScr = new SelectTargetScreen (Program.MyGame, user.Grid);
+			selScr.GridSelector.CameraUnidad = user as Unidad;
 			selScr.GridSelector.CursorPosition = user.Grid.GetClosestEnemy (user);
 
 			var infoBox = new EtiquetaMultiLínea (selScr)
@@ -212,11 +215,12 @@ namespace Items.Declarations.Equipment.Skills
 		}
 
 		[JsonConstructor]
-		public RangedSkill (string Name, string TextureName, string Icon)
+		public RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown)
 		{
 			this.Name = Name;
 			this.TextureName = TextureName;
 			IconName = Icon;
+			this.BaseCooldown = BaseCooldown;
 		}
 		
 	}
