@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace Items.Modifiers
@@ -17,6 +15,11 @@ namespace Items.Modifiers
 		/// </summary>
 		[JsonPropertyAttribute (Order = 1)]
 		public ItemModifierNameUsage NameUsage { get; }
+
+		/// <summary>
+		/// Gets the worth of this modification
+		/// </summary>
+		public float Value { get; }
 
 		[JsonIgnore]
 		Dictionary<string, ItemModification> Modifications { get; set; }
@@ -86,11 +89,13 @@ namespace Items.Modifiers
 		[JsonConstructor]
 		ItemModifier (string name,
 		              ItemModifierNameUsage NameUsage,
-		              ItemModification [] Modifications)
+		              ItemModification [] Modifications, 
+		              float Value)
 		{
 			this.Modifications = new Dictionary<string, ItemModification> ();
 			Name = name;
 			this.NameUsage = NameUsage;
+			this.Value = Value;
 			foreach (var mod in Modifications)
 				this.Modifications.Add (mod.AttributeChangeName, mod);
 		}

@@ -76,6 +76,14 @@ namespace Items.Modifiers
 		}
 
 		/// <summary>
+		/// Gets the sum of the values of all the modifications of this item.
+		/// </summary>
+		public float ValueSum ()
+		{
+			return Modifiers.Sum (z => z.Value);
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Modifiers.ItemModifiersManager"/> class.
 		/// </summary>
 		public ItemModifiersManager (IItem item)

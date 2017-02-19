@@ -1,4 +1,3 @@
-using Items.Modifiers;
 using Newtonsoft.Json;
 using Units;
 
@@ -14,20 +13,6 @@ namespace Items.Declarations.Equipment
 		/// </summary>
 		/// <value>The slot.</value>
 		public abstract EquipSlot Slot { get; }
-
-		/// <summary>
-		/// Gets the value or worth of the item
-		/// </summary>
-		public override float Value
-		{
-			get
-			{
-				var ret = 0f;
-				foreach (var x in Modifiers.SquashMods ())
-					ret += x.Delta;
-				return ret;
-			}
-		}
 
 		/// <summary>
 		/// Gets or sets the equipment manager where this equipment belongs
