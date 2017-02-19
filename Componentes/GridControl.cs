@@ -11,7 +11,6 @@ using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
 using Units.Inteligencia;
-using Units.Recursos;
 
 namespace Componentes
 {
@@ -53,23 +52,6 @@ namespace Componentes
 			Initialize ();
 			var cont = Screen.Content;
 			LoadContent (cont);
-		}
-
-		[Obsolete]
-		void suscribtions ()
-		{
-			// Suscribirse a las unidades
-			foreach (var x in AIPlayers)
-			{
-				var hpRec = x.Recursos.GetRecurso (ConstantesRecursos.HP) as RecursoHP;
-				hpRec.ValorChanged += hp_damage_done_event;
-			}
-		}
-
-		[Obsolete]
-		void hp_damage_done_event (object sender, float e)
-		{
-			return;
 		}
 
 		#endregion

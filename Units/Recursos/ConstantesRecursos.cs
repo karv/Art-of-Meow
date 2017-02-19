@@ -23,11 +23,6 @@ namespace Units.Recursos
 		/// </summary>
 		public const string Fuerza = "str";
 		/// <summary>
-		/// The daño melee.
-		/// </summary>
-		[ObsoleteAttribute]
-		public const string DañoMelee = "melee_dmg";
-		/// <summary>
 		/// The HP
 		/// </summary>
 		public const string HP = "hp";

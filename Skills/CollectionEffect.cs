@@ -115,16 +115,6 @@ namespace Skills
 		}
 
 		/// <summary>
-		/// Ejecuta todos los efectos
-		/// </summary>
-		[Obsolete]
-		public void ExecuteAll ()
-		{
-			for (int i = 0; i < _effects.Count; i++)
-				_effects [i].Execute ();
-		}
-
-		/// <summary>
 		/// Devuelve la información detallada en forma de lista
 		/// </summary>
 		public override string DetailedInfo ()

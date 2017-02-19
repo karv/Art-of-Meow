@@ -284,18 +284,6 @@ namespace Screens
 		/// Initializes a new instance of the <see cref="Screens.MapMainScreen"/> class.
 		/// </summary>
 		/// <param name="game">Game.</param>
-		/// <param name="map">Map.</param>
-		[Obsolete]
-		MapMainScreen (Moggle.Game game, Map map)
-			: base (game)
-		{
-			GridControl = new GridControl (map.GenerateGrid (0), this);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Screens.MapMainScreen"/> class.
-		/// </summary>
-		/// <param name="game">Game.</param>
 		public MapMainScreen (Moggle.Game game)
 			: base (game)
 		{
