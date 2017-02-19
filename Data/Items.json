@@ -5,7 +5,7 @@
       "NombreBase": "Short bow",
 			"InvokedSkill": ["Bow instance"],
       "Slot": 3,
-      "TextureName": "Items//katana",
+      "TextureName": "Items//bow",
       "Color": {
         "B": 255,
         "G": 255,
