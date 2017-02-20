@@ -233,6 +233,7 @@
     <Compile Include="Items\Declarations\UsableItem.cs" />
     <Compile Include="Units\SkillCollection.cs" />
     <Compile Include="IIdentificable.cs" />
+    <Compile Include="DamageAttribute.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
