@@ -29,5 +29,7 @@
 		/// Defines the folder of the maps
 		/// </summary>
 		public const string MapFolder = @"Data/Maps";
+
+		public const string DamageAttributes = @"Data/Attributes.json";
 	}
 }

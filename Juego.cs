@@ -45,6 +45,8 @@ namespace AoM
 		/// </summary>
 		public SkillCollection SkillList { get; private set; }
 
+		public DamageAttributesManager DamageAttrs { get; private set; }
+
 		/// <summary>
 		/// Carga el contenido del juego, incluyendo los controles universales.
 		/// </summary>
@@ -91,8 +93,7 @@ namespace AoM
 
 			SkillList = SkillCollection.FromFile ();
 
-			if (ItemMods == null)
-				throw new IOException ("Cannot load ItemMods database");
+			DamageAttrs = DamageAttributesManager.FromFile ();
 		}
 
 		/// <summary>

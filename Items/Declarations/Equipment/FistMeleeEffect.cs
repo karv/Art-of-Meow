@@ -23,12 +23,12 @@ namespace Items.Declarations.Equipment
 			var ret = MeleeEffectHelper.BuildDefaultMeleeEffect (
 				          user,
 				          target,
-				          0.4f,
+				          0.4f, 
 				          baseHit);
 			
 			Debug.WriteLine (
 				string.Format (
-					"Melee effect from {0} to {1} causing\n{2}",
+					"Melee effect from {0} to {1} causing:\n{2}",
 					user,
 					target,
 					ret.DetailedInfo ()),

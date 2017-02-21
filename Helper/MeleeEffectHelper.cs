@@ -23,6 +23,30 @@ namespace Helper
 		                                                        IUnidad target,
 		                                                        float baseDamage,
 		                                                        float baseHit,
+		                                                        bool addDefaultCooldownTime = true)
+		{
+			return BuildDefaultMeleeEffect (
+				user,
+				target,
+				baseDamage,
+				baseHit,
+				Program.MyGame.DamageAttrs ["Physical"],
+				addDefaultCooldownTime);
+		}
+
+		/// <summary>
+		/// Devuelve el efecto default de daño melee
+		/// </summary>
+		/// <returns>Un <see cref="CollectionEffect"/></returns>
+		/// <param name="user">Unidad que causa el efecto</param>
+		/// <param name="target">Unidad que recibe el efecto</param>
+		/// <param name="baseDamage">Daño base</param>
+		/// <param name="baseHit">Probabilidad base de acierto</param>
+		/// <param name = "addDefaultCooldownTime">Determina si debe agregar cooldown como efecto</param>
+		public static CollectionEffect BuildDefaultMeleeEffect (IUnidad user,
+		                                                        IUnidad target,
+		                                                        float baseDamage,
+		                                                        float baseHit,
 		                                                        DamageAttribute attribute,
 		                                                        bool addDefaultCooldownTime = true)
 		{

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Microsoft.Xna.Framework;
 
 namespace AoM
 {
@@ -7,12 +8,22 @@ namespace AoM
 	/// </summary>
 	public class DamageAttribute : IIdentificable
 	{
+		/// <summary>
+		/// Gets the unique name
+		/// </summary>
 		public string Name { get; }
 
+		/// <summary>
+		/// Gets the prefered color for display
+		/// </summary>
+
+		public Color DisplayColor { get; }
+
 		[JsonConstructor]
-		DamageAttribute (string Name)
+		DamageAttribute (string Name, Color DisplayColor)
 		{
 			this.Name = Name;
+			this.DisplayColor = DisplayColor;
 		}
 	}
 }

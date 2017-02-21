@@ -1,0 +1,15 @@
+﻿{
+	"Collection" :
+	[
+		{
+			"$type": "AoM.DamageAttribute, Art_of_Meow",
+			"Name": "Physical",
+			"DisplayColor": {
+        "B": 42,
+        "G": 42,
+        "R": 165,
+        "A": 255
+      },
+    },
+	]
+}
