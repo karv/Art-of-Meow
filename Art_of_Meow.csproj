@@ -98,6 +98,9 @@
     <None Include="Data\Skills.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Attributes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />
@@ -233,6 +236,9 @@
     <Compile Include="Items\Declarations\UsableItem.cs" />
     <Compile Include="Units\SkillCollection.cs" />
     <Compile Include="IIdentificable.cs" />
+    <Compile Include="DamageAttribute.cs" />
+    <Compile Include="IdentificableManager.cs" />
+    <Compile Include="DamageAttributesManager.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

@@ -205,7 +205,7 @@ namespace Maps
 		static void makeStairs (LogicGrid grid)
 		{
 			var down = grid.GetRandomEmptyCell ();
-			var stairDown = new StairsGridObject (grid) { Location = down };
+			var stairDown = new StairsGridObject (grid) { Location = down, UseColor = Color.Green };
 			grid.AddCellObject (stairDown);
 			grid.LocalTopology.AddConnection (down);
 		}

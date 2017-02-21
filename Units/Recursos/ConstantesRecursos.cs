@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Units.Recursos
+﻿namespace Units.Recursos
 {
 	/// <summary>
 	/// Contains constant strings for resource names
@@ -50,10 +48,21 @@ namespace Units.Recursos
 		/// Persición de rango
 		/// </summary>
 		public const string EvasiónMelee = "melee_eva";
-
 		/// <summary>
 		/// Rango de visión
 		/// </summary>
 		public const string Visión = "visión";
+		/// <summary>
+		/// Prefix for attribute names
+		/// </summary>
+		public const string AttrPrefix = "attrib";
+		/// <summary>
+		/// sufix for proficiency
+		/// </summary>
+		public const string AttrAttSuf = "att";
+		/// <summary>
+		/// Sufix for resist
+		/// </summary>
+		public const string AttrResSuf = "res";
 	}
 }

@@ -30,7 +30,6 @@ namespace Helper
 			player.Inteligencia = new HumanIntelligence (player);
 
 			#region Cheat
-			var bow = Program.MyGame.Items.CreateItem<GenericSkillListEquipment> ("Short bow");
 			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("Knife");
 			player.Inventory.Add (eq);
 			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
