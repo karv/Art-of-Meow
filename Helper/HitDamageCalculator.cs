@@ -103,7 +103,9 @@ namespace Helper
 			targetRes.Unidad.Exp.AddAssignation (targetRes, 0.2f);
 
 			var diffStat = Math.Max (0, 2 * attStr - defAC);
-			return diffStat * 0.35f;
+			const float relVar = 0.2f;
+			var coefRnd = (1 - relVar / 2) + (float)_r.NextDouble () * relVar;
+			return diffStat * 0.35f * coefRnd;
 		}
 
 		/// <summary>
