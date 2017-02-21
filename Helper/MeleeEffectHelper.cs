@@ -1,6 +1,7 @@
 using Skills;
 using Units;
 using Units.Recursos;
+using AoM;
 
 namespace Helper
 {
@@ -21,9 +22,11 @@ namespace Helper
 		public static CollectionEffect BuildDefaultMeleeEffect (IUnidad user,
 		                                                        IUnidad target,
 		                                                        float baseDamage,
-		                                                        float baseHit, 
+		                                                        float baseHit,
+		                                                        DamageAttribute attribute,
 		                                                        bool addDefaultCooldownTime = true)
 		{
+			// TODO:implement the attribute
 			var pct = HitDamageCalculator.GetPctHit (
 				          user,
 				          target,
