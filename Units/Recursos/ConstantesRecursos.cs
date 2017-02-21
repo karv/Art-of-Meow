@@ -50,10 +50,12 @@ namespace Units.Recursos
 		/// Persición de rango
 		/// </summary>
 		public const string EvasiónMelee = "melee_eva";
-
 		/// <summary>
 		/// Rango de visión
 		/// </summary>
 		public const string Visión = "visión";
+		public const string AttrPrefix = "attrib";
+		public const string AttrAttSuf = "att";
+		public const string AttrResSuf = "res";
 	}
 }

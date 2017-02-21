@@ -50,7 +50,9 @@ namespace Helper
 		                                                        DamageAttribute attribute,
 		                                                        bool addDefaultCooldownTime = true)
 		{
-			// TODO:implement the attribute
+			// TODO: implement the attribute
+
+
 			var pct = HitDamageCalculator.GetPctHit (
 				          user,
 				          target,
@@ -75,11 +77,10 @@ namespace Helper
 					-RecursoEquilibro.ReduceValue,
 					1){ ShowDeltaLabel = false },
 				true);
-
 			var damage = baseDamage * HitDamageCalculator.Damage (
 				             user, target,
 				             ConstantesRecursos.Fuerza,
-				             ConstantesRecursos.Destreza);
+				             ConstantesRecursos.Destreza, attribute.Name);
 
 			ret.AddEffect (
 				new ChangeRecurso (user, target, ConstantesRecursos.HP, -damage, 1));

@@ -38,6 +38,8 @@ namespace Items.Declarations.Equipment.Skills
 		/// </summary>
 		public readonly float BaseCooldown;
 
+		public readonly string Attribute;
+
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
 			
@@ -57,7 +59,7 @@ namespace Items.Declarations.Equipment.Skills
 				          user,
 				          target,
 				          ConstantesRecursos.Fuerza,
-				          ConstantesRecursos.Fuerza);
+				          ConstantesRecursos.Fuerza, Attribute);
 			var ef = new ChangeRecurso (
 				         user,
 				         target,

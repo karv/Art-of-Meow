@@ -461,8 +461,6 @@ namespace Units
 
 		#endregion
 
-
-
 		#region Draw
 
 		/// <summary>

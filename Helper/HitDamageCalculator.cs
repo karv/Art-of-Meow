@@ -76,15 +76,30 @@ namespace Helper
 		public static float Damage (IUnidad att,
 		                            IUnidad def,
 		                            string attDmgRecurso,
-		                            string defDefRecurso)
+		                            string defDefRecurso,
+		                            string attrName)
 		{
 			if (def == null)
 				throw new ArgumentNullException ("def");
 			if (att == null)
 				throw new ArgumentNullException ("att");
+
+			if (string.IsNullOrWhiteSpace (attrName))
+				attrName = "Physical";
 			
-			var attStr = att.Recursos.GetRecurso (attDmgRecurso).Valor;
-			var defAC = def.Recursos.GetRecurso (defDefRecurso).Valor;
+			var userProf = att.Recursos.GetRecurso (
+				               string.Format ("{0}.{1}.{2}",
+					               ConstantesRecursos.AttrPrefix, attrName, ConstantesRecursos.AttrAttSuf));
+
+			var targetRes = def.Recursos.GetRecurso (
+				                string.Format ("{0}.{1}.{2}",
+					                ConstantesRecursos.AttrPrefix, attrName, ConstantesRecursos.AttrResSuf));
+
+			var attStr = att.Recursos.GetRecurso (attDmgRecurso).Valor * (1 + userProf.Valor);
+			var defAC = def.Recursos.GetRecurso (defDefRecurso).Valor * (1 + targetRes.Valor);
+
+			userProf.Unidad.Exp.AddAssignation (userProf, 0.2f);
+			targetRes.Unidad.Exp.AddAssignation (targetRes, 0.2f);
 
 			var diffStat = Math.Max (0, 2 * attStr - defAC);
 			return diffStat * 0.35f;
