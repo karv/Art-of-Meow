@@ -30,6 +30,9 @@
 		/// </summary>
 		public const string MapFolder = @"Data/Maps";
 
+		/// <summary>
+		/// The damage attributes
+		/// </summary>
 		public const string DamageAttributes = @"Data/Attributes.json";
 	}
 }

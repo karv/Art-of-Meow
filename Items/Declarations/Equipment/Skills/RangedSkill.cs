@@ -38,6 +38,9 @@ namespace Items.Declarations.Equipment.Skills
 		/// </summary>
 		public readonly float BaseCooldown;
 
+		/// <summary>
+		/// The attribute if the skill
+		/// </summary>
 		public readonly string Attribute;
 
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
@@ -235,13 +238,13 @@ namespace Items.Declarations.Equipment.Skills
 		}
 
 		[JsonConstructor]
-		RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown)
+		RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown, string Attribute)
 		{
 			this.Name = Name;
 			this.TextureName = TextureName;
 			IconName = Icon;
 			this.BaseCooldown = BaseCooldown;
+			this.Attribute = Attribute;
 		}
-		
 	}
 }

@@ -1,7 +1,6 @@
-using Newtonsoft.Json;
-using Microsoft.Xna.Framework;
-using System.Linq;
 using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace AoM
 {
@@ -11,6 +10,9 @@ namespace AoM
 	public abstract class IdentificableManager<T>
 		where T : IIdentificable
 	{
+		/// <summary>
+		/// The collection of items
+		/// </summary>
 		protected readonly T [] Collection;
 
 		/// <summary>
@@ -24,11 +26,17 @@ namespace AoM
 			return Collection.OfType<S> ().First (z => z.Name == name);
 		}
 
+		/// <summary>
+		/// Gets the item with a specified name
+		/// </summary>
 		protected T Get (string name)
 		{
 			return Collection.First (z => z.Name == name);
 		}
 
+		/// <summary>
+		/// </summary>
+		/// <param name="Collection">The collection of items</param>
 		protected IdentificableManager (T [] Collection)
 		{
 			this.Collection = Collection;
@@ -40,6 +48,7 @@ namespace AoM
 		/// </summary>
 		/// <returns>The file.</returns>
 		/// <param name="fileName">File name.</param>
+		/// <param name = "settings">Json conversion settings</param>
 		public static S FromFile<S> (string fileName, JsonSerializerSettings settings)
 			where S : IdentificableManager<T>
 		{
@@ -60,5 +69,4 @@ namespace AoM
 			return ret;
 		}
 	}
-	
 }

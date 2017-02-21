@@ -45,6 +45,9 @@ namespace AoM
 		/// </summary>
 		public SkillCollection SkillList { get; private set; }
 
+		/// <summary>
+		/// Attribute database
+		/// </summary>
 		public DamageAttributesManager DamageAttrs { get; private set; }
 
 		/// <summary>

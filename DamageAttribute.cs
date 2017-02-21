@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 
 namespace AoM
 {

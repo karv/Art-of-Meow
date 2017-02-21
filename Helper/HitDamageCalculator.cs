@@ -73,6 +73,7 @@ namespace Helper
 		/// <param name="def">Defensor</param>
 		/// <param name="attDmgRecurso">Nombre del recurso de habilidad de ataque</param>
 		/// <param name="defDefRecurso">Nombre del recurso de habilidad de defensa</param>
+		/// <param name = "attrName">Name of the damage attribute</param>
 		public static float Damage (IUnidad att,
 		                            IUnidad def,
 		                            string attDmgRecurso,

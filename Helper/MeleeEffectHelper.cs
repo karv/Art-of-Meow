@@ -1,7 +1,7 @@
+using AoM;
 using Skills;
 using Units;
 using Units.Recursos;
-using AoM;
 
 namespace Helper
 {
@@ -42,6 +42,7 @@ namespace Helper
 		/// <param name="target">Unidad que recibe el efecto</param>
 		/// <param name="baseDamage">Daño base</param>
 		/// <param name="baseHit">Probabilidad base de acierto</param>
+		/// <param name = "attribute">Attribute of the damage</param>
 		/// <param name = "addDefaultCooldownTime">Determina si debe agregar cooldown como efecto</param>
 		public static CollectionEffect BuildDefaultMeleeEffect (IUnidad user,
 		                                                        IUnidad target,
@@ -50,9 +51,6 @@ namespace Helper
 		                                                        DamageAttribute attribute,
 		                                                        bool addDefaultCooldownTime = true)
 		{
-			// TODO: implement the attribute
-
-
 			var pct = HitDamageCalculator.GetPctHit (
 				          user,
 				          target,
