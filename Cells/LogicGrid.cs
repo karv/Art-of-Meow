@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
+using System.Diagnostics;
 
 namespace Cells
 {
@@ -19,6 +20,31 @@ namespace Cells
 	/// </summary>
 	public class LogicGrid : IComponent, IUpdate
 	{
+		#region Debug
+
+		[Conditional ("DEBUG")]
+		public void TestGridIntegrity ()
+		{
+			// Bound the map
+			for (int i = 0; i < Size.Width; i++)
+			{
+				if (!this [i, 0].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+				if (!this [i, Size.Height - 1].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+			}
+
+			for (int i = 1; i < Size.Height - 1; i++)
+			{
+				if (!this [0, i].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+				if (!this [Size.Width - 1, i].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+			}
+		}
+
+		#endregion
+
 		#region Data & internals
 
 		readonly Cell [,] _cells;
@@ -29,6 +55,16 @@ namespace Cells
 		/// Gets the dimentions lenght of the world, in Grid-long
 		/// </summary>
 		public Size Size { get; }
+
+		/// <summary>
+		/// Enumerates the cells
+		/// </summary>
+		public IEnumerable<Cell> EnumerateCells ()
+		{
+			for (int ix = 0; ix < Size.Width; ix++)
+				for (int iy = 0; iy < Size.Height; iy++)
+					yield return this [ix, iy];
+		}
 
 		#endregion
 
@@ -134,6 +170,7 @@ namespace Cells
 
 		void IGameComponent.Initialize ()
 		{
+			TestGridIntegrity ();
 		}
 
 		#endregion
