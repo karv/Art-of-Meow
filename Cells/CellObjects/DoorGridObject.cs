@@ -7,13 +7,30 @@ using Moggle.Controles;
 
 namespace Cells.CellObjects
 {
-	public class DoorGridObject : ICollidableGridObject
+	/// <summary>
+	/// It's a door
+	/// </summary>
+	public class DoorGridObject : ICollidableGridObject, IActivable
 	{
 		/// <summary>
 		/// Devuelve el Grid
 		/// </summary>
 		/// <value>The grid.</value>
 		public LogicGrid Grid { get; }
+
+		/// <summary>
+		/// Opens the door
+		/// </summary>
+		public void Open ()
+		{
+			IsOpen = true;
+		}
+
+		void IActivable.Activar ()
+		{
+			Open ();
+			AlActivar?.Invoke (this, EventArgs.Empty);
+		}
 
 		/// <summary>
 		/// Gets the current texture
@@ -29,8 +46,10 @@ namespace Cells.CellObjects
 		/// <value><c>true</c> if this door is open; otherwise, <c>false</c>.</value>
 		public bool IsOpen { get; set; }
 
-		const string StringTextureOpen = "open-door";
-		const string StringTextureClosed = "closed-door";
+		// "open-door";
+		const string StringTextureOpen = "clock";
+		//"closed-door";
+		const string StringTextureClosed = "heal";
 
 		/// <summary>
 		/// La profundidad de dibujo.
@@ -49,7 +68,7 @@ namespace Cells.CellObjects
 
 		System.Collections.Generic.IEnumerable<ICollisionRule> ICollidableGridObject.GetCollisionRules ()
 		{
-			yield return new DescriptCollitionRule (z => true);
+			yield return new DescriptCollitionRule (z => !IsOpen);
 		}
 
 		void IDibujable.Draw (SpriteBatch bat, Rectangle rect)
@@ -88,6 +107,11 @@ namespace Cells.CellObjects
 
 		IComponentContainerComponent<IControl> IControl.Container
 		{ get { return Grid as IComponentContainerComponent<IControl>; } }
+
+		/// <summary>
+		/// Ocurre cuando se activa.
+		/// </summary>
+		public event EventHandler AlActivar;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridWall"/> class.

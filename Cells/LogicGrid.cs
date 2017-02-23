@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using AoM;
 using Cells.CellObjects;
 using Cells.Collision;
+using Debugging;
 using Helper;
 using Maps;
 using Microsoft.Xna.Framework;
@@ -11,7 +13,6 @@ using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using MonoGame.Extended;
 using Units;
-using System.Diagnostics;
 
 namespace Cells
 {
@@ -345,7 +346,18 @@ namespace Cells
 				moveObj?.AfterMoving (endLoc);
 				return true;
 			}
-			return false;
+
+			var shouldReturnTrue = false;
+			// Check if the destination object is activable in case is currently collidable
+			foreach (var cell in destCell.EnumerateObjects ().OfType<IActivable> ())
+			{
+				cell.Activar ();
+				var strM = string.Format ("{0} was activated via melee + obstruction", cell);
+				Debug.WriteLine (strM, DebugCategories.GridItemsInteraction);
+				shouldReturnTrue = true;
+			}
+
+			return shouldReturnTrue;
 		}
 
 		/// <summary>
