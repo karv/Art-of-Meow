@@ -235,8 +235,8 @@ namespace Maps
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Maps.Map"/> class
 		/// </summary>
-		/// <param name="size">Size</param>
-		public Map (Size size)
+		[Obsolete]
+		public Map ()
 		{
 			_r = new Random ();
 		}
