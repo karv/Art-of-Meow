@@ -1,9 +1,105 @@
-let minLadoNivel = 75;
-let maxLadoNivel = 75;
-let cantidadDeSalas = 5;
-let minLadoSala = 5;
-let maxLadoSala = 15;
-let maxAnchoPasillo = 1; //mínimo 1
+//esta es la única función que vas a llamar desde C#
+function obtenerJSON(opciones) {
+	opciones = opciones || {};
+	let minLadoNivel = opciones.minLadoNivel || 75;
+	let maxLadoNivel = opciones.maxLadoNivel || 75;
+	let cantidadDeSalas = opciones.cantidadDeSalas || 10;
+	let minLadoSala = opciones.minLadoSala || 5;
+	let maxLadoSala = opciones.maxLadoSala || 15;
+	let maxAnchoPasillo = opciones.maxAnchoPasillo || 1 //mínimo 1, y los pasillos tienen la mitad de probabilidad de ser de ancho 1 que de otro número (por ejemplo, si maxAnchoPasillo === 3, las probabilidades de cada ancho son 1:20%, 2:40$, 3:40%)
+
+	if (maxLadoNivel < minLadoNivel) throw new Error('maxLadoNivel es menor a minLadoNivel');
+	if (!cantidadDeSalas) throw new Error('cantidadDeSalas es ' + cantidadDeSalas + '.');
+	if (maxLadoNivel < minLadoNivel) throw new Error('maxLadoNivel es menor a minLadoNivel');
+	maxAnchoPasillo--;
+	let nivel = []
+	let widthNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
+	let heightNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
+	//creo un nivel lleno de paredes
+	for (let i = 0; i < widthNivel; i++) {
+		nivel[i] = '';
+		for (let j = 0; j < heightNivel; j++) nivel[i] += 'W';
+	}
+	//creo las salas (el constructor de las salas sobreescribe las paredes creadas anteriormente)
+	let salas = [];
+	for (let i = 0; i < cantidadDeSalas; i++) {
+		let punto1 = new Punto(enteroAleatorioEntre(0, widthNivel - 1), enteroAleatorioEntre(0, heightNivel - 1));
+		let punto2 = new Punto(enteroAleatorioEntreVariosRangos([{
+			min: Math.max(0, punto1.x - maxLadoSala),
+			max: Math.max(0, punto1.x - minLadoSala)
+		}, {
+			min: Math.min(widthNivel - 1, punto1.x + minLadoSala),
+			max: Math.min(widthNivel - 1, punto1.x + maxLadoSala)
+		}]), enteroAleatorioEntreVariosRangos([{
+			min: Math.max(0, punto1.y - maxLadoSala),
+			max: Math.max(0, punto1.y - minLadoSala)
+		}, {
+			min: Math.min(heightNivel - 1, punto1.y + minLadoSala),
+			max: Math.min(heightNivel - 1, punto1.y + maxLadoSala)
+		}]));
+		salas.push(new Sala(punto1, punto2, nivel));
+	}
+	//creo los pasillos que conectan las salas
+	for (let i = 1; i < cantidadDeSalas; i++) {
+		let direccion = 'ambas';
+		let distanciaMinimaEncontrada = Infinity;
+		let salaMasCercanaEncontrada;
+		for (let j = 0; j < salas.length; j++) {
+			let sala = salas[j];
+			let resultado = salas[i].distanciaASala(sala);
+			if (!isNaN(resultado.horizontal) && isNaN(resultado.vertical) && resultado.horizontal < distanciaMinimaEncontrada) {
+				direccion = 'horizontal';
+				distanciaMinimaEncontrada = resultado.horizontal;
+				salaMasCercanaEncontrada = sala;
+			} else if (!isNaN(resultado.vertical) && isNaN(resultado.horizontal) && resultado.vertical < distanciaMinimaEncontrada) {
+				direccion = 'vertical';
+				distanciaMinimaEncontrada = resultado.vertical;
+				salaMasCercanaEncontrada = sala;
+			}
+			if (j === i - 1) j = cantidadDeSalas - 1; //no chequeo la sala actual ni las siguientes, sino que paso directamente a los pasillos
+		}
+		if (direccion === 'horizontal') {
+			let punto1 = new Punto(salas[i].xMin, enteroAleatorioEntre(Math.max(salas[i].yMin, salaMasCercanaEncontrada.yMin), Math.min(salas[i].yMax, salaMasCercanaEncontrada.yMax)));
+			let punto2 = new Punto(salaMasCercanaEncontrada.xMin, acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
+			let pasillo = new Sala(punto1, punto2, nivel);
+			salas.push(pasillo);
+		} else if (direccion === 'vertical') {
+			let punto1 = new Punto(enteroAleatorioEntre(Math.max(salas[i].xMin, salaMasCercanaEncontrada.xMin), Math.min(salas[i].xMax, salaMasCercanaEncontrada.xMax)), salas[i].yMin);
+			let punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), salaMasCercanaEncontrada.yMin);
+			let pasillo = new Sala(punto1, punto2, nivel);
+			salas.push(pasillo);
+		} else {
+			let sala1;
+			let sala2;
+			if (enteroAleatorioEntre(0, 1)) {
+				sala1 = salas[i];
+				sala2 = salas[i === 1 ? 0 : enteroAleatorioEntreVariosRangos([{
+					min: 0,
+					max: i - 1
+				}, {
+					min: cantidadDeSalas,
+					max: salas.length - 1 //se supone que al ser 1<i, cantidadDeSalas<=salas.length
+				}])];
+			} else {
+				sala1 = salas[i];
+				sala2 = salas[i === 1 ? 0 : enteroAleatorioEntreVariosRangos([{
+					min: 0,
+					max: i - 1
+				}, {
+					min: cantidadDeSalas,
+					max: salas.length - 1 //se supone que al ser 1<i, cantidadDeSalas<=salas.length
+				}])];
+			}
+			let punto1 = new Punto(enteroAleatorioEntre(sala1.xMin, sala1.xMax), enteroAleatorioEntre(sala2.yMin, sala2.yMax));
+			let punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
+			let pasillo1 = new Sala(punto1, new Punto(enteroAleatorioEntre(sala2.xMin, sala2.xMax), punto2.y), nivel);
+			let pasillo2 = new Sala(new Punto(punto1.x, enteroAleatorioEntre(sala1.yMin, sala1.yMax)), punto2, nivel);
+			salas.push(pasillo1);
+			salas.push(pasillo2);
+		}
+	}
+	return JSON.stringify(nivel);
+}
 
 class Punto {
 	constructor(x, y) {
@@ -53,17 +149,14 @@ class Segmento {
 }
 
 class Sala {
-	constructor(punto1, punto2) {
+	constructor(punto1, punto2, nivel) {
 		if (punto1 instanceof Punto && punto2 instanceof Punto) {
-			this.id = Sala.prototype.id++;
 			let punto3 = new Punto(punto1.x, punto2.y);
 			let punto4 = new Punto(punto2.x, punto1.y);
 			this.xMin = Math.min(punto1.x, punto2.x);
 			this.xMax = Math.max(punto1.x, punto2.x);
 			this.yMin = Math.min(punto1.y, punto2.y);
 			this.yMax = Math.max(punto1.y, punto2.y);
-			this.conectadaA = null;
-			this.conectadaPor = null;
 			this.lados = [
 				new Segmento(punto1, punto3),
 				new Segmento(punto3, punto2),
@@ -73,24 +166,11 @@ class Sala {
 			for (let x = this.xMin; x <= this.xMax; x++) {
 				nivel[x] = nivel[x].substring(0, this.yMin) + ' '.repeat(1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
 			}
-			this.borrar();
 		}
 	}
 
 	puntoAleatorio() {
 		return new Punto(enteroAleatorioEntre(this.xMin, this.xMax), enteroAleatorioEntre(this.yMin, this.yMax));
-	}
-
-	pintar() {
-		for (let x = this.xMin; x <= this.xMax; x++) {
-			nivel[x] = nivel[x].substring(0, this.yMin) + 'o'.repeat(1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
-		}
-	}
-
-	borrar() {
-		for (let x = this.xMin; x <= this.xMax; x++) {
-			nivel[x] = nivel[x].substring(0, this.yMin) + ' '.repeat(1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
-		}
 	}
 
 	distanciaASala(sala) {
@@ -121,8 +201,6 @@ class Sala {
 		} else throw new Error('No estoy pasándole un segmento al método distanciaHorizontalA de la clase Segmento.');
 	}
 }
-
-Sala.prototype.id = 0;
 
 function enteroAleatorioEntre(a, b) {
 	a = parseInt(a);
@@ -178,104 +256,3 @@ function acotarEntre(min, numero, max) {
 	if (isFinite(min) && isFinite(numero) && isFinite(max) && min <= max) return Math.max(min, Math.min(numero, max));
 	else throw new Error('Algún argumento pasado a la función acotarEntre no es un número, o el min es mayor al max.')
 }
-
-function print() {
-	let output = document.getElementById('output');
-	output.cols = widthNivel + 5;
-	output.rows = heightNivel + 2;
-	output.value = '[\n';
-	for (let row of nivel) output.value += '  ' + JSON.stringify(row) + ',\n';
-	output.value += ']'
-}
-
-if (maxLadoNivel < minLadoNivel) throw new Error('maxLadoNivel es menor a minLadoNivel');
-if (!cantidadDeSalas) throw new Error('cantidadDeSalas es ' + cantidadDeSalas + '.');
-if (maxLadoNivel < minLadoNivel) throw new Error('maxLadoNivel es menor a minLadoNivel');
-maxAnchoPasillo--;
-let nivel = []
-let widthNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
-let heightNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
-//creo un nivel lleno de paredes
-for (let i = 0; i < widthNivel; i++) {
-	nivel[i] = '';
-	for (let j = 0; j < heightNivel; j++) nivel[i] += 'W';
-}
-//creo las salas (el constructor de las salas sobreescribe las paredes creadas anteriormente)
-let salas = [];
-for (let i = 0; i < cantidadDeSalas; i++) {
-	let punto1 = new Punto(enteroAleatorioEntre(0, widthNivel - 1), enteroAleatorioEntre(0, heightNivel - 1));
-	let punto2 = new Punto(enteroAleatorioEntreVariosRangos([{
-		min: Math.max(0, punto1.x - maxLadoSala),
-		max: Math.max(0, punto1.x - minLadoSala)
-	}, {
-		min: Math.min(widthNivel - 1, punto1.x + minLadoSala),
-		max: Math.min(widthNivel - 1, punto1.x + maxLadoSala)
-	}]), enteroAleatorioEntreVariosRangos([{
-		min: Math.max(0, punto1.y - maxLadoSala),
-		max: Math.max(0, punto1.y - minLadoSala)
-	}, {
-		min: Math.min(heightNivel - 1, punto1.y + minLadoSala),
-		max: Math.min(heightNivel - 1, punto1.y + maxLadoSala)
-	}]));
-	salas.push(new Sala(punto1, punto2));
-}
-//creo los pasillos que conectan las salas
-for (let i = 1; i < cantidadDeSalas; i++) {
-	let direccion = 'ambas';
-	let distanciaMinimaEncontrada = Infinity;
-	let salaMasCercanaEncontrada;
-	for (let j = 0; j < salas.length; j++) {
-		let sala = salas[j];
-		let resultado = salas[i].distanciaASala(sala);
-		if (!isNaN(resultado.horizontal) && isNaN(resultado.vertical) && resultado.horizontal < distanciaMinimaEncontrada) {
-			direccion = 'horizontal';
-			distanciaMinimaEncontrada = resultado.horizontal;
-			salaMasCercanaEncontrada = sala;
-		} else if (!isNaN(resultado.vertical) && isNaN(resultado.horizontal) && resultado.vertical < distanciaMinimaEncontrada) {
-			direccion = 'vertical';
-			distanciaMinimaEncontrada = resultado.vertical;
-			salaMasCercanaEncontrada = sala;
-		}
-		if (j === i - 1) j = cantidadDeSalas - 1; //no chequeo la sala actual ni las siguientes, sino que paso directamente a los pasillos
-	}
-	if (direccion === 'horizontal') {
-		let punto1 = new Punto(salas[i].xMin, enteroAleatorioEntre(Math.max(salas[i].yMin, salaMasCercanaEncontrada.yMin), Math.min(salas[i].yMax, salaMasCercanaEncontrada.yMax)));
-		let punto2 = new Punto(salaMasCercanaEncontrada.xMin, acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
-		let pasillo = new Sala(punto1, punto2);
-		salas.push(pasillo);
-	} else if (direccion === 'vertical') {
-		let punto1 = new Punto(enteroAleatorioEntre(Math.max(salas[i].xMin, salaMasCercanaEncontrada.xMin), Math.min(salas[i].xMax, salaMasCercanaEncontrada.xMax)), salas[i].yMin);
-		let punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), salaMasCercanaEncontrada.yMin);
-		let pasillo = new Sala(punto1, punto2);
-		salas.push(pasillo);
-	} else {
-		let sala1;
-		let sala2;
-		if (enteroAleatorioEntre(0, 1)) {
-			sala1 = salas[i];
-			sala2 = salas[i === 1 ? 0 : enteroAleatorioEntreVariosRangos([{
-				min: 0,
-				max: i - 1
-			}, {
-				min: cantidadDeSalas,
-				max: salas.length - 1 //se supone que al ser 1<i, cantidadDeSalas<=salas.length
-			}])];
-		} else {
-			sala1 = salas[i];
-			sala2 = salas[i === 1 ? 0 : enteroAleatorioEntreVariosRangos([{
-				min: 0,
-				max: i - 1
-			}, {
-				min: cantidadDeSalas,
-				max: salas.length - 1 //se supone que al ser 1<i, cantidadDeSalas<=salas.length
-			}])];
-		}
-		let punto1 = new Punto(enteroAleatorioEntre(sala1.xMin, sala1.xMax), enteroAleatorioEntre(sala2.yMin, sala2.yMax));
-		let punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
-		let pasillo1 = new Sala(punto1, new Punto(enteroAleatorioEntre(sala2.xMin, sala2.xMax), punto2.y));
-		let pasillo2 = new Sala(new Punto(punto1.x, enteroAleatorioEntre(sala1.yMin, sala1.yMax)), punto2);
-		salas.push(pasillo1);
-		salas.push(pasillo2);
-	}
-}
-window.addEventListener('load', print);
