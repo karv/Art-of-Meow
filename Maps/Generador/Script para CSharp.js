@@ -172,8 +172,10 @@ Sala.prototype.distanciaASala = function(sala) {
 	if (sala instanceof Sala) {
 		var distanciaHorizontal = NaN;
 		var distanciaVertical = NaN;
-		for (var ladoDeThis of this.lados) {
-			for (var ladoDeSala of sala.lados) {
+		for (var i = this.lados.length - 1; i >= 0; i--) {
+			var ladoDeThis = this.lados[i];
+			for (var j = sala.lados.length - 1; j >= 0; j--) {
+				var ladoDeSala = sala.lados[j];
 				if (ladoDeThis.tipo === 'vertical' && ladoDeSala.tipo === 'vertical') {
 					var distancia = ladoDeThis.distanciaHorizontalA(ladoDeSala);
 					if (!isNaN(distancia)) {
@@ -214,7 +216,8 @@ function ordenarPorPropMin(a, b) {
 function enteroAleatorioEntreVariosRangos(rangos) {
 	if (rangos instanceof Array) {
 		var numerosTotales = 0;
-		for (var rango of rangos) {
+		for (var i = rangos.length - 1; i >= 0; i--) {
+			var rango = rangos[i];
 			if (rango instanceof Object || isFinite(rango.min) || isFinite(rango.max)) {
 				rango.min = parseInt(rango.min);
 				rango.max = parseInt(rango.max);
