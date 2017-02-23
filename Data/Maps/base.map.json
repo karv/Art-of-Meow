@@ -13,11 +13,7 @@
               {
                 "$type": "Maps.DistributedStack, Art_of_Meow",
                 "RaceName": "Imp",
-                "UnitQuantityDistribution": {
-                  "$type": "Helper.IntegerInterval, Art_of_Meow",
-                  "Min": 1,
-                  "Max": 2
-                }
+								"SpawnProbPerCell": 0.002
               }
             ]
           },

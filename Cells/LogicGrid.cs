@@ -56,6 +56,16 @@ namespace Cells
 		/// </summary>
 		public Size Size { get; }
 
+		/// <summary>
+		/// Enumerates the cells
+		/// </summary>
+		public IEnumerable<Cell> EnumerateCells ()
+		{
+			for (int ix = 0; ix < Size.Width; ix++)
+				for (int iy = 0; iy < Size.Height; iy++)
+					yield return this [ix, iy];
+		}
+
 		#endregion
 
 		#region Accesors
