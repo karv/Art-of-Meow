@@ -101,106 +101,100 @@ function obtenerJSON(opciones) {
 	return JSON.stringify(nivel);
 }
 
-class Punto {
-	constructor(x, y) {
-		x = parseInt(x);
-		y = parseInt(y);
-		if (isFinite(x) && isFinite(y)) {
-			this.x = x;
-			this.y = y;
-		} else throw new Error('Alguna coordenada del punto que estoy intentando crear no es un número.');
-	}
+function Punto(x, y) {
+	x = parseInt(x);
+	y = parseInt(y);
+	if (isFinite(x) && isFinite(y)) {
+		this.x = x;
+		this.y = y;
+	} else throw new Error('Alguna coordenada del punto que estoy intentando crear no es un número.');
 }
 
-class Segmento {
-	constructor(p, q) {
-		if (p instanceof Punto && q instanceof Punto) {
-			if (p.x === q.x) {
-				this.tipo = 'vertical';
-				this.x = p.x;
-				this.yMin = Math.min(p.y, q.y);
-				this.yMax = Math.max(p.y, q.y);
-			} else if (p.y === q.y) {
-				this.tipo = 'horizontal';
-				this.xMin = Math.min(p.x, q.x);
-				this.xMax = Math.max(p.x, q.x);
-				this.y = p.y;
-			} else throw new Error('El segmento es diagonal.');
-		} else throw new Error('No estoy pasándole dos puntos al constructor del segmento.');
-	}
-
-	distanciaHorizontalA(segmento) {
-		if (segmento instanceof Segmento) {
-			if (this.tipo === 'vertical' && segmento.tipo === 'vertical') {
-				if (this.yMin <= segmento.yMin && segmento.yMin <= this.yMax || this.yMin <= segmento.yMax && segmento.yMax <= this.yMax || segmento.xMin <= this.yMin && this.yMin <= segmento.xMax) return Math.abs(this.x - segmento.x);
-				else return NaN;
-			} else throw new Error('Alguno de los segmentos pasados al método distanciaHorizontalA de la clase Segmento no es vertical.');
-		} else throw new Error('No estoy pasándole un segmento al método distanciaHorizontalA de la clase Segmento.');
-	}
-
-	distanciaVerticalA(segmento) {
-		if (segmento instanceof Segmento) {
-			if (this.tipo === 'horizontal' && segmento.tipo === 'horizontal') {
-				if (this.xMin <= segmento.xMin && segmento.xMin <= this.xMax || this.xMin <= segmento.xMax && segmento.xMax <= this.xMax || segmento.xMin <= this.xMin && this.xMin <= segmento.xMax) return Math.abs(this.y - segmento.y);
-				else return NaN;
-			} else throw new Error('Alguno de los segmentos pasados al método distanciaVerticalA de la clase Segmento no es horizontal.');
-		} else throw new Error('No estoy pasándole un segmento al método distanciaHorizontalA de la clase Segmento.');
-	}
+function Segmento(p, q) {
+	if (p instanceof Punto && q instanceof Punto) {
+		if (p.x === q.x) {
+			this.tipo = 'vertical';
+			this.x = p.x;
+			this.yMin = Math.min(p.y, q.y);
+			this.yMax = Math.max(p.y, q.y);
+		} else if (p.y === q.y) {
+			this.tipo = 'horizontal';
+			this.xMin = Math.min(p.x, q.x);
+			this.xMax = Math.max(p.x, q.x);
+			this.y = p.y;
+		} else throw new Error('El segmento es diagonal.');
+	} else throw new Error('No estoy pasándole dos puntos al constructor del segmento.');
 }
 
-class Sala {
-	constructor(punto1, punto2, nivel) {
-		if (punto1 instanceof Punto && punto2 instanceof Punto) {
-			var punto3 = new Punto(punto1.x, punto2.y);
-			var punto4 = new Punto(punto2.x, punto1.y);
-			this.xMin = Math.min(punto1.x, punto2.x);
-			this.xMax = Math.max(punto1.x, punto2.x);
-			this.yMin = Math.min(punto1.y, punto2.y);
-			this.yMax = Math.max(punto1.y, punto2.y);
-			this.lados = [
-				new Segmento(punto1, punto3),
-				new Segmento(punto3, punto2),
-				new Segmento(punto2, punto4),
-				new Segmento(punto4, punto1)
-			]
-			for (var x = this.xMin; x <= this.xMax; x++) {
-				nivel[x] = nivel[x].substring(0, this.yMin) + ' '.repeat(1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
-			}
+Segmento.prototype.distanciaHorizontalA = function(segmento) {
+	if (segmento instanceof Segmento) {
+		if (this.tipo === 'vertical' && segmento.tipo === 'vertical') {
+			if (this.yMin <= segmento.yMin && segmento.yMin <= this.yMax || this.yMin <= segmento.yMax && segmento.yMax <= this.yMax || segmento.xMin <= this.yMin && this.yMin <= segmento.xMax) return Math.abs(this.x - segmento.x);
+			else return NaN;
+		} else throw new Error('Alguno de los segmentos pasados al método distanciaHorizontalA de la clase Segmento no es vertical.');
+	} else throw new Error('No estoy pasándole un segmento al método distanciaHorizontalA de la clase Segmento.');
+};
+
+Segmento.prototype.distanciaVerticalA = function(segmento) {
+	if (segmento instanceof Segmento) {
+		if (this.tipo === 'horizontal' && segmento.tipo === 'horizontal') {
+			if (this.xMin <= segmento.xMin && segmento.xMin <= this.xMax || this.xMin <= segmento.xMax && segmento.xMax <= this.xMax || segmento.xMin <= this.xMin && this.xMin <= segmento.xMax) return Math.abs(this.y - segmento.y);
+			else return NaN;
+		} else throw new Error('Alguno de los segmentos pasados al método distanciaVerticalA de la clase Segmento no es horizontal.');
+	} else throw new Error('No estoy pasándole un segmento al método distanciaHorizontalA de la clase Segmento.');
+};
+
+function Sala(punto1, punto2, nivel) {
+	if (punto1 instanceof Punto && punto2 instanceof Punto) {
+		var punto3 = new Punto(punto1.x, punto2.y);
+		var punto4 = new Punto(punto2.x, punto1.y);
+		this.xMin = Math.min(punto1.x, punto2.x);
+		this.xMax = Math.max(punto1.x, punto2.x);
+		this.yMin = Math.min(punto1.y, punto2.y);
+		this.yMax = Math.max(punto1.y, punto2.y);
+		this.lados = [
+			new Segmento(punto1, punto3),
+			new Segmento(punto3, punto2),
+			new Segmento(punto2, punto4),
+			new Segmento(punto4, punto1)
+		]
+		for (var x = this.xMin; x <= this.xMax; x++) {
+			nivel[x] = nivel[x].substring(0, this.yMin) + ' '.repeat(1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
 		}
 	}
+}
 
-	puntoAleatorio() {
-		return new Punto(enteroAleatorioEntre(this.xMin, this.xMax), enteroAleatorioEntre(this.yMin, this.yMax));
-	}
+Sala.prototype.puntoAleatorio = function() {
+	return new Punto(enteroAleatorioEntre(this.xMin, this.xMax), enteroAleatorioEntre(this.yMin, this.yMax));
+};
 
-	distanciaASala(sala) {
-		if (sala instanceof Sala) {
-			var distanciaHorizontal = NaN;
-			var distanciaVertical = NaN;
-			for (var ladoDeThis of this.lados) {
-				for (var ladoDeSala of sala.lados) {
-					if (ladoDeThis.tipo === 'vertical' && ladoDeSala.tipo === 'vertical') {
-						var distancia = ladoDeThis.distanciaHorizontalA(ladoDeSala);
-						if (!isNaN(distancia)) {
-							if (isNaN(distanciaHorizontal)) distanciaHorizontal = distancia;
-							else distanciaHorizontal = Math.min(distancia, distanciaHorizontal);
-						}
-					} else if (ladoDeThis.tipo === 'horizontal' && ladoDeSala.tipo === 'horizontal') {
-						var distancia = ladoDeThis.distanciaVerticalA(ladoDeSala);
-						if (!isNaN(distancia)) {
-							if (isNaN(distanciaVertical)) distanciaVertical = distancia;
-							else distanciaVertical = Math.min(distancia, distanciaVertical);
-						}
+Sala.prototype.distanciaASala = function(sala) {
+	if (sala instanceof Sala) {
+		var distanciaHorizontal = NaN;
+		var distanciaVertical = NaN;
+		for (var ladoDeThis of this.lados) {
+			for (var ladoDeSala of sala.lados) {
+				if (ladoDeThis.tipo === 'vertical' && ladoDeSala.tipo === 'vertical') {
+					var distancia = ladoDeThis.distanciaHorizontalA(ladoDeSala);
+					if (!isNaN(distancia)) {
+						if (isNaN(distanciaHorizontal)) distanciaHorizontal = distancia;
+						else distanciaHorizontal = Math.min(distancia, distanciaHorizontal);
+					}
+				} else if (ladoDeThis.tipo === 'horizontal' && ladoDeSala.tipo === 'horizontal') {
+					var distancia = ladoDeThis.distanciaVerticalA(ladoDeSala);
+					if (!isNaN(distancia)) {
+						if (isNaN(distanciaVertical)) distanciaVertical = distancia;
+						else distanciaVertical = Math.min(distancia, distanciaVertical);
 					}
 				}
 			}
-			return {
-				horizontal: distanciaHorizontal,
-				vertical: distanciaVertical
-			};
-		} else throw new Error('No estoy pasándole un segmento al método distanciaHorizontalA de la clase Segmento.');
-	}
-}
+		}
+		return {
+			horizontal: distanciaHorizontal,
+			vertical: distanciaVertical
+		};
+	} else throw new Error('No estoy pasándole un segmento al método distanciaHorizontalA de la clase Segmento.');
+};
 
 function enteroAleatorioEntre(a, b) {
 	a = parseInt(a);
