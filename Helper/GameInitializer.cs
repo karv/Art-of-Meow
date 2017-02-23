@@ -67,12 +67,9 @@ namespace Helper
 */
 
 			var ret = map.GenerateGrid (0);
-			//var empty = ret.GetRandomEmptyCell ();
 
 			player = buildPlayer (ret);
 			ret.AddCellObject (player);
-			var empty = player.Location + new Point (1, 0);
-			ret [empty].Add (new DoorGridObject (ret){ Location = empty });
 			return ret;
 		}
 	}
