@@ -159,10 +159,16 @@ function Sala(punto1, punto2, nivel) {
 			new Segmento(punto4, punto1)
 		]
 		for (var x = this.xMin; x <= this.xMax; x++) {
-			nivel[x] = nivel[x].substring(0, this.yMin) + ' '.repeat(1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
+			nivel[x] = nivel[x].substring(0, this.yMin) + this.repeatSpace (1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
+			// (1 + this.yMax - this.yMin)
 		}
 	}
 }
+
+Sala.prototype.repeatSpace = function (times) {
+	if (times === 0) return '';
+	return ' ' + this.repeatSpace (times - 1);
+};
 
 Sala.prototype.puntoAleatorio = function() {
 	return new Punto(enteroAleatorioEntre(this.xMin, this.xMax), enteroAleatorioEntre(this.yMin, this.yMax));

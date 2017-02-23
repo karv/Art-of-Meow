@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Debugging;
+using System.IO;
 
 namespace AoM
 {
@@ -21,6 +22,7 @@ namespace AoM
 		{
 			var lg = new Logger ("debug.log");
 			Debug.Listeners.Add (lg);
+
 
 			var MapThread = MyGame.ScreenManager.AddNewThread ();
 			MapThread.Stack (new Screens.MapMainScreen (MyGame));

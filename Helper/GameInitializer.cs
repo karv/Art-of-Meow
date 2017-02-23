@@ -5,6 +5,7 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
+using System.IO;
 
 namespace Helper
 {
@@ -53,6 +54,17 @@ namespace Helper
 			//Debug.WriteLine (json);
 			//map = Map.ReadFromJSON (json);
 			map = Map.ReadFromFile (FirstMap);
+
+			/*
+			#region tmp
+			var code = File.ReadAllText (@"Data/Maps/Script para CSharp.js");
+			var eng = new Jurassic.ScriptEngine ();
+			var t = eng.Evaluate (code);
+			var r = eng.CallGlobalFunction ("obtenerJSON") as string;
+			map = Map.ReadFromJSON (r);
+			#endregion
+*/
+
 			var ret = map.GenerateGrid (0);
 
 			player = buildPlayer (ret);
