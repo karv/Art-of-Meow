@@ -22,6 +22,9 @@ namespace Cells
 	{
 		#region Debug
 
+		/// <summary>
+		/// Throws an exception if the map has flaws
+		/// </summary>
 		[Conditional ("DEBUG")]
 		public void TestGridIntegrity ()
 		{
