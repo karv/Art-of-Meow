@@ -1,30 +1,30 @@
 //esta es la única función que vas a llamar desde C#
 function obtenerJSON(opciones) {
 	opciones = opciones || {};
-	let minLadoNivel = opciones.minLadoNivel || 75;
-	let maxLadoNivel = opciones.maxLadoNivel || 75;
-	let cantidadDeSalas = opciones.cantidadDeSalas || 10;
-	let minLadoSala = opciones.minLadoSala || 5;
-	let maxLadoSala = opciones.maxLadoSala || 15;
-	let maxAnchoPasillo = opciones.maxAnchoPasillo || 1 //mínimo 1, y los pasillos tienen la mitad de probabilidad de ser de ancho 1 que de otro número (por ejemplo, si maxAnchoPasillo === 3, las probabilidades de cada ancho son 1:20%, 2:40$, 3:40%)
+	var minLadoNivel = opciones.minLadoNivel || 75;
+	var maxLadoNivel = opciones.maxLadoNivel || 75;
+	var cantidadDeSalas = opciones.cantidadDeSalas || 10;
+	var minLadoSala = opciones.minLadoSala || 5;
+	var maxLadoSala = opciones.maxLadoSala || 15;
+	var maxAnchoPasillo = opciones.maxAnchoPasillo || 1 //mínimo 1, y los pasillos tienen la mitad de probabilidad de ser de ancho 1 que de otro número (por ejemplo, si maxAnchoPasillo === 3, las probabilidades de cada ancho son 1:20%, 2:40$, 3:40%)
 
 	if (maxLadoNivel < minLadoNivel) throw new Error('maxLadoNivel es menor a minLadoNivel');
 	if (!cantidadDeSalas) throw new Error('cantidadDeSalas es ' + cantidadDeSalas + '.');
 	if (maxLadoNivel < minLadoNivel) throw new Error('maxLadoNivel es menor a minLadoNivel');
 	maxAnchoPasillo--;
-	let nivel = []
-	let widthNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
-	let heightNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
+	var nivel = []
+	var widthNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
+	var heightNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
 	//creo un nivel lleno de paredes
-	for (let i = 0; i < widthNivel; i++) {
+	for (var i = 0; i < widthNivel; i++) {
 		nivel[i] = '';
-		for (let j = 0; j < heightNivel; j++) nivel[i] += 'W';
+		for (var j = 0; j < heightNivel; j++) nivel[i] += 'W';
 	}
 	//creo las salas (el constructor de las salas sobreescribe las paredes creadas anteriormente)
-	let salas = [];
-	for (let i = 0; i < cantidadDeSalas; i++) {
-		let punto1 = new Punto(enteroAleatorioEntre(0, widthNivel - 1), enteroAleatorioEntre(0, heightNivel - 1));
-		let punto2 = new Punto(enteroAleatorioEntreVariosRangos([{
+	var salas = [];
+	for (var i = 0; i < cantidadDeSalas; i++) {
+		var punto1 = new Punto(enteroAleatorioEntre(0, widthNivel - 1), enteroAleatorioEntre(0, heightNivel - 1));
+		var punto2 = new Punto(enteroAleatorioEntreVariosRangos([{
 			min: Math.max(0, punto1.x - maxLadoSala),
 			max: Math.max(0, punto1.x - minLadoSala)
 		}, {
@@ -40,13 +40,13 @@ function obtenerJSON(opciones) {
 		salas.push(new Sala(punto1, punto2, nivel));
 	}
 	//creo los pasillos que conectan las salas
-	for (let i = 1; i < cantidadDeSalas; i++) {
-		let direccion = 'ambas';
-		let distanciaMinimaEncontrada = Infinity;
-		let salaMasCercanaEncontrada;
-		for (let j = 0; j < salas.length; j++) {
-			let sala = salas[j];
-			let resultado = salas[i].distanciaASala(sala);
+	for (var i = 1; i < cantidadDeSalas; i++) {
+		var direccion = 'ambas';
+		var distanciaMinimaEncontrada = Infinity;
+		var salaMasCercanaEncontrada;
+		for (var j = 0; j < salas.length; j++) {
+			var sala = salas[j];
+			var resultado = salas[i].distanciaASala(sala);
 			if (!isNaN(resultado.horizontal) && isNaN(resultado.vertical) && resultado.horizontal < distanciaMinimaEncontrada) {
 				direccion = 'horizontal';
 				distanciaMinimaEncontrada = resultado.horizontal;
@@ -59,18 +59,18 @@ function obtenerJSON(opciones) {
 			if (j === i - 1) j = cantidadDeSalas - 1; //no chequeo la sala actual ni las siguientes, sino que paso directamente a los pasillos
 		}
 		if (direccion === 'horizontal') {
-			let punto1 = new Punto(salas[i].xMin, enteroAleatorioEntre(Math.max(salas[i].yMin, salaMasCercanaEncontrada.yMin), Math.min(salas[i].yMax, salaMasCercanaEncontrada.yMax)));
-			let punto2 = new Punto(salaMasCercanaEncontrada.xMin, acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
-			let pasillo = new Sala(punto1, punto2, nivel);
+			var punto1 = new Punto(salas[i].xMin, enteroAleatorioEntre(Math.max(salas[i].yMin, salaMasCercanaEncontrada.yMin), Math.min(salas[i].yMax, salaMasCercanaEncontrada.yMax)));
+			var punto2 = new Punto(salaMasCercanaEncontrada.xMin, acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
+			var pasillo = new Sala(punto1, punto2, nivel);
 			salas.push(pasillo);
 		} else if (direccion === 'vertical') {
-			let punto1 = new Punto(enteroAleatorioEntre(Math.max(salas[i].xMin, salaMasCercanaEncontrada.xMin), Math.min(salas[i].xMax, salaMasCercanaEncontrada.xMax)), salas[i].yMin);
-			let punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), salaMasCercanaEncontrada.yMin);
-			let pasillo = new Sala(punto1, punto2, nivel);
+			var punto1 = new Punto(enteroAleatorioEntre(Math.max(salas[i].xMin, salaMasCercanaEncontrada.xMin), Math.min(salas[i].xMax, salaMasCercanaEncontrada.xMax)), salas[i].yMin);
+			var punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), salaMasCercanaEncontrada.yMin);
+			var pasillo = new Sala(punto1, punto2, nivel);
 			salas.push(pasillo);
 		} else {
-			let sala1;
-			let sala2;
+			var sala1;
+			var sala2;
 			if (enteroAleatorioEntre(0, 1)) {
 				sala1 = salas[i];
 				sala2 = salas[i === 1 ? 0 : enteroAleatorioEntreVariosRangos([{
@@ -90,10 +90,10 @@ function obtenerJSON(opciones) {
 					max: salas.length - 1 //se supone que al ser 1<i, cantidadDeSalas<=salas.length
 				}])];
 			}
-			let punto1 = new Punto(enteroAleatorioEntre(sala1.xMin, sala1.xMax), enteroAleatorioEntre(sala2.yMin, sala2.yMax));
-			let punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
-			let pasillo1 = new Sala(punto1, new Punto(enteroAleatorioEntre(sala2.xMin, sala2.xMax), punto2.y), nivel);
-			let pasillo2 = new Sala(new Punto(punto1.x, enteroAleatorioEntre(sala1.yMin, sala1.yMax)), punto2, nivel);
+			var punto1 = new Punto(enteroAleatorioEntre(sala1.xMin, sala1.xMax), enteroAleatorioEntre(sala2.yMin, sala2.yMax));
+			var punto2 = new Punto(acotarEntre(0, enteroAleatorioEntre(punto1.x - maxAnchoPasillo, punto1.x + maxAnchoPasillo), widthNivel - 1), acotarEntre(0, enteroAleatorioEntre(punto1.y - maxAnchoPasillo, punto1.y + maxAnchoPasillo), heightNivel - 1));
+			var pasillo1 = new Sala(punto1, new Punto(enteroAleatorioEntre(sala2.xMin, sala2.xMax), punto2.y), nivel);
+			var pasillo2 = new Sala(new Punto(punto1.x, enteroAleatorioEntre(sala1.yMin, sala1.yMax)), punto2, nivel);
 			salas.push(pasillo1);
 			salas.push(pasillo2);
 		}
@@ -151,8 +151,8 @@ class Segmento {
 class Sala {
 	constructor(punto1, punto2, nivel) {
 		if (punto1 instanceof Punto && punto2 instanceof Punto) {
-			let punto3 = new Punto(punto1.x, punto2.y);
-			let punto4 = new Punto(punto2.x, punto1.y);
+			var punto3 = new Punto(punto1.x, punto2.y);
+			var punto4 = new Punto(punto2.x, punto1.y);
 			this.xMin = Math.min(punto1.x, punto2.x);
 			this.xMax = Math.max(punto1.x, punto2.x);
 			this.yMin = Math.min(punto1.y, punto2.y);
@@ -163,7 +163,7 @@ class Sala {
 				new Segmento(punto2, punto4),
 				new Segmento(punto4, punto1)
 			]
-			for (let x = this.xMin; x <= this.xMax; x++) {
+			for (var x = this.xMin; x <= this.xMax; x++) {
 				nivel[x] = nivel[x].substring(0, this.yMin) + ' '.repeat(1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
 			}
 		}
@@ -175,18 +175,18 @@ class Sala {
 
 	distanciaASala(sala) {
 		if (sala instanceof Sala) {
-			let distanciaHorizontal = NaN;
-			let distanciaVertical = NaN;
-			for (let ladoDeThis of this.lados) {
-				for (let ladoDeSala of sala.lados) {
+			var distanciaHorizontal = NaN;
+			var distanciaVertical = NaN;
+			for (var ladoDeThis of this.lados) {
+				for (var ladoDeSala of sala.lados) {
 					if (ladoDeThis.tipo === 'vertical' && ladoDeSala.tipo === 'vertical') {
-						let distancia = ladoDeThis.distanciaHorizontalA(ladoDeSala);
+						var distancia = ladoDeThis.distanciaHorizontalA(ladoDeSala);
 						if (!isNaN(distancia)) {
 							if (isNaN(distanciaHorizontal)) distanciaHorizontal = distancia;
 							else distanciaHorizontal = Math.min(distancia, distanciaHorizontal);
 						}
 					} else if (ladoDeThis.tipo === 'horizontal' && ladoDeSala.tipo === 'horizontal') {
-						let distancia = ladoDeThis.distanciaVerticalA(ladoDeSala);
+						var distancia = ladoDeThis.distanciaVerticalA(ladoDeSala);
 						if (!isNaN(distancia)) {
 							if (isNaN(distanciaVertical)) distanciaVertical = distancia;
 							else distanciaVertical = Math.min(distancia, distanciaVertical);
@@ -205,8 +205,8 @@ class Sala {
 function enteroAleatorioEntre(a, b) {
 	a = parseInt(a);
 	b = parseInt(b);
-	let min = Math.min(a, b);
-	let max = Math.max(a, b);
+	var min = Math.min(a, b);
+	var max = Math.max(a, b);
 	if (isFinite(min) && isFinite(max)) {
 		return min + Math.floor(Math.random() * (max - min + 1));
 	} else throw new Error('Alguno de los argumentos pasados a enteroAleatorioEntre no es un número.');
@@ -219,8 +219,8 @@ function ordenarPorPropMin(a, b) {
 
 function enteroAleatorioEntreVariosRangos(rangos) {
 	if (rangos instanceof Array) {
-		let numerosTotales = 0;
-		for (let rango of rangos) {
+		var numerosTotales = 0;
+		for (var rango of rangos) {
 			if (rango instanceof Object || isFinite(rango.min) || isFinite(rango.max)) {
 				rango.min = parseInt(rango.min);
 				rango.max = parseInt(rango.max);
@@ -233,18 +233,18 @@ function enteroAleatorioEntreVariosRangos(rangos) {
 		}
 		rangos.sort(ordenarPorPropMin);
 		for (i = 0; i < rangos.length - 1; i++) {
-			let rango = rangos[i];
-			let siguienteRango = rangos[i + 1]
+			var rango = rangos[i];
+			var siguienteRango = rangos[i + 1]
 			if (rango.min <= siguienteRango.min && siguienteRango.min <= rango.max) return enteroAleatorioEntreVariosRangos(rangos.slice(0, i).concat([{
 				min: rango.min,
 				max: Math.max(rango.max, siguienteRango.max)
 			}].concat(rangos.slice(i + 2))));
 			rango.probabilidad = rango.numeros / numerosTotales;
 		}
-		let random = Math.random();
-		let numeroASumar = 0;
+		var random = Math.random();
+		var numeroASumar = 0;
 		for (i = 0; i < rangos.length - 1; i++) {
-			let rango = rangos[i];
+			var rango = rangos[i];
 			if (random < rango.probabilidad + numeroASumar) return enteroAleatorioEntre(rango.min, rango.max);
 			else numeroASumar += rango.probabilidad;
 		}
