@@ -18,6 +18,8 @@ namespace Cells.CellObjects
 		/// <value>The grid.</value>
 		public LogicGrid Grid { get; }
 
+		bool IGridObject.BlockVisibility { get { return true; } }
+
 		/// <summary>
 		/// Nombre de la textura
 		/// </summary>

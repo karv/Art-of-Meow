@@ -16,6 +16,11 @@ namespace Cells.CellObjects
 	ITarget
 	{
 		/// <summary>
+		/// Determines if this object will block visibility
+		/// </summary>
+		bool BlockVisibility { get; }
+
+		/// <summary>
 		/// Gets the cell-based localization.
 		/// </summary>
 		Point Location { get; set; }

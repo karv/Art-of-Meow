@@ -26,6 +26,8 @@ namespace Cells.CellObjects
 			IsOpen = true;
 		}
 
+		bool IGridObject.BlockVisibility { get { return !IsOpen; } }
+
 		void IActivable.Activar ()
 		{
 			Open ();

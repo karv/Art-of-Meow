@@ -52,6 +52,8 @@ namespace Units
 
 		#region Grid object
 
+		bool IGridObject.BlockVisibility { get { return false; } }
+
 		System.Collections.Generic.IEnumerable<ICollisionRule> ICollidableGridObject.GetCollisionRules ()
 		{
 			// Does not stack
