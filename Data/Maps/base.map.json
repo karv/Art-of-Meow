@@ -1,23 +1,5 @@
 ﻿{
-  "$id": "1",
   "$type": "Maps.Map, Art_of_Meow",
-  "SizeY": 10,
-  "SizeX": 10,
-  "Data": {
-    "$type": "System.String[], mscorlib",
-    "$values": [
-      "WWWWWWWWWW",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "WWWWWWWWWW"
-    ]
-  },
   "Populator": {
     "$type": "Maps.Populator, Art_of_Meow",
     "Rules": {
