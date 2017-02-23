@@ -164,14 +164,14 @@ namespace Maps
 				case (char)0:
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
-					var newObj = new GridWall ("brick-wall", grid);
-					newObj.Location = p;
-					return newObj;
+					return new GridWall ("brick-wall", grid){ Location = p };
+				case 'd':
+					return new DoorGridObject (grid){ Location = p };
 				case '\n':
 				case '\r':
 					return null;
 			}
-			throw new FormatException ("Unknown accepted map symbol " + c);
+			throw new FormatException ("invalid map symbol: " + c);
 		}
 
 		/// <summary>
