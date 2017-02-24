@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using AoM;
 
 namespace Items.Modifiers
 {
 	/// <summary>
 	/// Representa un modificador de items, que puede tener varias modificaciones a distintos atributos
 	/// </summary>
-	public sealed class ItemModifier
+	public sealed class ItemModifier : IIdentificable
 	{
 		/// <summary>
 		/// Devuelve un <see cref="ItemModifierNameUsage"/> que determina cómo concatenar el nombre del objeto

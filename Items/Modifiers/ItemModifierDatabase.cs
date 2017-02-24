@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using AoM;
 using Newtonsoft.Json;
 
 namespace Items.Modifiers
@@ -6,15 +6,8 @@ namespace Items.Modifiers
 	/// <summary>
 	/// Manages the entire collection of <see cref="ItemModifier"/>
 	/// </summary>
-	public class ItemModifierDatabase
+	public class ItemModifierDatabase : IdentificableManager<ItemModifier>
 	{
-		//THINK: Should be loaded from file every time or stored in memory?
-		/// <summary>
-		/// The array with all the modifications
-		/// </summary>
-		[JsonProperty ("Mods")]
-		public readonly ItemModifier [] Mods;
-
 		/// <summary>
 		/// Gets the modifier with a given name.
 		/// Case insensitive.
@@ -24,14 +17,14 @@ namespace Items.Modifiers
 		{
 			get
 			{
-				return Mods.First (z => string.Equals (z.Name, name, System.StringComparison.InvariantCultureIgnoreCase));
+				return Get (name);
 			}
 		}
 
 		[JsonConstructor]
 		ItemModifierDatabase (ItemModifier [] Mods)
+			: base (Mods)
 		{
-			this.Mods = Mods;
 		}
 	}
 }
