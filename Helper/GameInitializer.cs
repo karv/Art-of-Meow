@@ -33,7 +33,7 @@ namespace Helper
 			#region Cheat
 			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("Knife");
 			player.Inventory.Add (eq);
-			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
+			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["Broken"]);
 			player.Equipment.EquipItem (eq);
 			#endregion
 

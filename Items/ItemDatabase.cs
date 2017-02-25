@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using AoM;
 using Newtonsoft.Json;
 
@@ -8,7 +7,7 @@ namespace Items
 	/// <summary>
 	/// Manages the collection of all the items by maintaining them.
 	/// </summary>
-	public class ItemDatabase
+	public class ItemDatabase : IdentificableManager<IItem>
 	{
 		/// <summary>
 		/// The json settings
@@ -24,11 +23,6 @@ namespace Items
 			MetadataPropertyHandling = MetadataPropertyHandling.Default,
 			Formatting = Formatting.Indented
 		};
-
-		/// <summary>
-		/// Collection of items
-		/// </summary>
-		public readonly IItem [] Collection;
 
 		/// <summary>
 		/// Creates and returns an specified item.
@@ -47,8 +41,7 @@ namespace Items
 		public T CreateItem<T> (string itemName) 
 			where T : IItem
 		{
-			// REMARK: OfType is used to remove redundances as much as possible
-			return (T)Collection.OfType<T> ().First (z => z.NombreBase == itemName).Clone ();
+			return (T)Get<T> (itemName).Clone ();
 		}
 
 		/// <summary>
@@ -66,7 +59,7 @@ namespace Items
 		/// <param name="itemName">The name of the item</param>
 		public IItem CreateItem (string itemName)
 		{
-			return Collection.First (z => z.NombreBase == itemName).Clone () as IItem;
+			return (IItem)Get (itemName).Clone ();
 		}
 
 		/// <summary>
@@ -81,7 +74,6 @@ namespace Items
 			file.Close ();
 
 			var ret = JsonConvert.DeserializeObject<ItemDatabase> (jsonStr, JsonSettings);
-
 			return ret;
 		}
 
@@ -90,8 +82,8 @@ namespace Items
 		/// </summary>
 		[JsonConstructor]
 		public ItemDatabase (IItem [] Collection)
+			: base (Collection)
 		{
-			this.Collection = Collection;
 		}
 	}
 }
