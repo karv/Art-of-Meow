@@ -113,7 +113,7 @@
       },
  			"Texture": "heal",
 			"AllowedModNames": ["Condensated"]
-    }
+    },
 		{
 			"$type": "Items.Declarations.Arrow, Art_of_Meow",
 			"NombreBase": "Wooden arrow",
