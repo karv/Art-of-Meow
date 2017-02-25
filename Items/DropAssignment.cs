@@ -34,20 +34,23 @@ namespace Items
 					var stackItem = newItem as IStackingItem;
 					if (stackItem != null)
 					{
-						stackItem.Quantity = 1;
+						// Requiered to calculate the items value properly
+						stackItem.Quantity = 1; 
 
 						// Max stack size = 100
 						var maxStack = (int)Math.Min (totalDropValue / stackItem.Value, 100);
 						stackItem.Quantity = _r.Next (1, maxStack);
 					}
-					while (_r.NextDouble () < probAddMod)
-					{
-						// TODO: Do not allow duplicated mod
-						// Add a new item modification
-						var newMod = newItem.AllowedMods [_r.Next (newItem.AllowedMods.Length)];
+					if (newItem.AllowedMods.Length > 0)
+						// Add mods
+						while (_r.NextDouble () < probAddMod)
+						{
+							// TODO: Do not allow duplicated mod
+							// Add a new item modification
+							var newMod = newItem.AllowedMods [_r.Next (newItem.AllowedMods.Length)];
 
-						newItem.Modifiers.Modifiers.Add (newMod);
-					}
+							newItem.Modifiers.Modifiers.Add (newMod);
+						}
 					ret.Add (newItem);
 					totalDropValue -= newItem.Value;
 				}
