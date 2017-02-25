@@ -165,7 +165,7 @@ namespace Maps
 					return new BackgroundObject (p, "floor", grid);
 				case 'W':
 					return new GridWall ("brick-wall", grid){ Location = p };
-				case 'd':
+				case 'D':
 					return new DoorGridObject (grid){ Location = p };
 				case '\n':
 				case '\r':
