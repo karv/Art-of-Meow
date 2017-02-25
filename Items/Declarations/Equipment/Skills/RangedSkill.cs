@@ -45,7 +45,11 @@ namespace Items.Declarations.Equipment.Skills
 
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
-			
+			var quiver = user.Equipment.EnumerateEquipment (EquipSlot.Quiver).OfType<Arrow> ();
+			if (!quiver.Any ())
+				return null;
+			var arrow = quiver.First ();
+
 			if (target == null)
 				throw new ArgumentNullException ("target");
 			if (user == null)
@@ -74,6 +78,7 @@ namespace Items.Declarations.Equipment.Skills
 			ret.Effects.Chance = chance;
 			ret.Effects.AddEffect (ef);
 			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, BaseCooldown), true);
+			ret.Effects.AddEffect (new RemoveItemEffect (user, user, arrow, 1));
 
 			return ret;
 		}

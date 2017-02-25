@@ -24,7 +24,11 @@ namespace Items
 		/// <summary>
 		/// The dominant hand
 		/// </summary>
-		MainHand = 3
+		MainHand = 3,
+		/// <summary>
+		/// Arrow, etc
+		/// </summary>
+		Quiver = 4,
 	}
 
 	/// <summary>

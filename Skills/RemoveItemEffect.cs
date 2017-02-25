@@ -10,12 +10,17 @@ namespace Skills
 	/// </summary>
 	public class RemoveItemEffect : Effect, ITargetEffect
 	{
+		readonly int quantity;
+
 		/// <summary>
 		/// Se invoca cuando acierta, elimina el item
 		/// </summary>
 		protected override void WhenHit ()
 		{
-			if (!Target.Inventory.Items.Remove (RemovingItem))
+			var stackItem = RemoveItemEffect as IStackingItem;
+			if (stackItem?.Quantity >= quantity ?? false)
+				stackItem.Quantity -= quantity;
+			else if (!Target.Inventory.Items.Remove (RemovingItem))
 				throw new Exception ("Cannot execute effect");
 		}
 
@@ -60,6 +65,19 @@ namespace Skills
 			Target = target;
 			RemovingItem = removingItem;
 			Chance = 1;
+			quantity = 1;
+		}
+
+		public RemoveItemEffect (IEffectAgent source,
+		                         IUnidad target,
+		                         IStackingItem removingItem, 
+		                         int removeQuantity)
+			: base (source)
+		{
+			Target = target;
+			RemovingItem = removingItem;
+			Chance = 1;
+			quantity = removeQuantity;
 		}
 	}
 }

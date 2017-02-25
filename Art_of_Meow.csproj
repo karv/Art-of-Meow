@@ -231,6 +231,9 @@
     <Compile Include="DamageAttribute.cs" />
     <Compile Include="IdentificableManager.cs" />
     <Compile Include="DamageAttributesManager.cs" />
+    <Compile Include="Items\IStackingItem.cs" />
+    <Compile Include="Items\Declarations\Arrow.cs" />
+    <Compile Include="Items\Declarations\StackingItem.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
