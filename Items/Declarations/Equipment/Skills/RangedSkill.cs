@@ -38,14 +38,9 @@ namespace Items.Declarations.Equipment.Skills
 		/// </summary>
 		public readonly float BaseCooldown;
 
-		/// <summary>
-		/// The attribute if the skill
-		/// </summary>
-		public readonly string Attribute;
-
 		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
 		{
-			var quiver = user.Equipment.EnumerateEquipment (EquipSlot.Quiver).OfType<Arrow> ();
+			var quiver = user.Equipment.EquipmentInSlot (EquipSlot.Quiver).OfType<Arrow> ();
 			if (!quiver.Any ())
 				return null;
 			var arrow = quiver.First ();
@@ -55,7 +50,7 @@ namespace Items.Declarations.Equipment.Skills
 			if (user == null)
 				throw new ArgumentNullException ("user");
 			
-			const double baseHit = 0.7;
+			var baseHit = arrow.BaseHit;
 			var chance = HitDamageCalculator.GetPctHit (
 				             user,
 				             target,
@@ -66,7 +61,9 @@ namespace Items.Declarations.Equipment.Skills
 				          user,
 				          target,
 				          ConstantesRecursos.Fuerza,
-				          ConstantesRecursos.Fuerza, Attribute);
+				          ConstantesRecursos.Fuerza, arrow.Attribute);
+			dmg *= arrow.DamageMultiplier;
+
 			var ef = new ChangeRecurso (
 				         user,
 				         target,
@@ -249,7 +246,6 @@ namespace Items.Declarations.Equipment.Skills
 			this.TextureName = TextureName;
 			IconName = Icon;
 			this.BaseCooldown = BaseCooldown;
-			this.Attribute = Attribute;
 		}
 	}
 }

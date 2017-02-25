@@ -1,5 +1,4 @@
 using Items;
-using Items.Declarations;
 
 namespace Items.Declarations
 {

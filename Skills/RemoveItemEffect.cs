@@ -17,11 +17,11 @@ namespace Skills
 		/// </summary>
 		protected override void WhenHit ()
 		{
-			var stackItem = RemoveItemEffect as IStackingItem;
-			if (stackItem?.Quantity >= quantity ?? false)
+			var stackItem = RemovingItem as IStackingItem;
+			if (stackItem != null && stackItem.Quantity >= quantity)
 				stackItem.Quantity -= quantity;
 			else if (!Target.Inventory.Items.Remove (RemovingItem))
-				throw new Exception ("Cannot execute effect");
+				throw new Exception ("Cannot execute effect ");
 		}
 
 		/// <summary>
@@ -29,6 +29,7 @@ namespace Skills
 		/// </summary>
 		protected override void WhenMiss ()
 		{
+			// Does nothing
 		}
 
 		/// <summary>
@@ -68,6 +69,13 @@ namespace Skills
 			quantity = 1;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Skills.RemoveItemEffect"/> class.
+		/// </summary>
+		/// <param name="source">Source.</param>
+		/// <param name="target">Target.</param>
+		/// <param name="removingItem">Removing item.</param>
+		/// <param name = "removeQuantity">Quantity to remove</param>
 		public RemoveItemEffect (IEffectAgent source,
 		                         IUnidad target,
 		                         IStackingItem removingItem, 
