@@ -48,8 +48,8 @@ namespace Items.Declarations
 		}
 
 		[JsonConstructor]
-		Arrow (string nombre, string [] allowedModNames)
-			: base (nombre, allowedModNames)
+		Arrow (string nombre, string [] AllowedModNames)
+			: base (nombre, AllowedModNames)
 		{
 		}
 	}
