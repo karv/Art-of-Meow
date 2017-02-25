@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Generador de mapas de Art of Meow</title>
+	<script type="text/javascript" src="RandomMapDataScript.js"></script>
+	<script type="text/javascript">
+		function obtenerJSONFormateado(opciones){
+			let array=JSON.parse(obtenerJSON(opciones));
+			let string='[\n';
+			for(let row of array) string+='    '+row+'\n';
+			return string+']';
+		}
+	</script>
+</head>
+<body></body>
+</html>

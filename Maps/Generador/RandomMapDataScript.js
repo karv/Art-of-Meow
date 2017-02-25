@@ -16,9 +16,9 @@ function obtenerJSON(opciones) {
 	var widthNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
 	var heightNivel = enteroAleatorioEntre(minLadoNivel, maxLadoNivel);
 	//creo un nivel lleno de paredes
-	for (var i = 0; i < widthNivel; i++) {
+	for (var i = 0; i < heightNivel; i++) {
 		nivel[i] = '';
-		for (var j = 0; j < heightNivel; j++) nivel[i] += 'W';
+		for (var j = 0; j < widthNivel; j++) nivel[i] += 'W';
 	}
 	//creo las salas (el constructor de las salas sobreescribe las paredes creadas anteriormente)
 	var salas = [];
@@ -98,6 +98,16 @@ function obtenerJSON(opciones) {
 			salas.push(pasillo2);
 		}
 	}
+	//agrego las puertas
+	for (var i = 0; i < cantidadDeSalas; i++) {
+		var sala = salas[i];
+		var nombresDeFunciones = ['agregarPuertasArriba', 'agregarPuertasAbajo', 'agregarPuertasALaIzquierda', 'agregarPuertasALaDerecha'];
+		//aplico los métodos agregarPuertas en orden aleatorio
+		sala[quitarElementoAleatorioDe(nombresDeFunciones)]();
+		sala[quitarElementoAleatorioDe(nombresDeFunciones)]();
+		sala[quitarElementoAleatorioDe(nombresDeFunciones)]();
+		sala[quitarElementoAleatorioDe(nombresDeFunciones)]();
+	}
 	return JSON.stringify(nivel);
 }
 
@@ -152,22 +162,70 @@ function Sala(punto1, punto2, nivel) {
 		this.xMax = Math.max(punto1.x, punto2.x);
 		this.yMin = Math.min(punto1.y, punto2.y);
 		this.yMax = Math.max(punto1.y, punto2.y);
+		this.nivel = nivel;
 		this.lados = [
 			new Segmento(punto1, punto3),
 			new Segmento(punto3, punto2),
 			new Segmento(punto2, punto4),
 			new Segmento(punto4, punto1)
 		]
-		for (var x = this.xMin; x <= this.xMax; x++) {
-			nivel[x] = nivel[x].substring(0, this.yMin) + this.repeatSpace (1 + this.yMax - this.yMin) + nivel[x].substring(this.yMax + 1);
-			// (1 + this.yMax - this.yMin)
-		}
+		for (var y = this.yMin; y <= this.yMax; y++) nivel[y] = nivel[y].substring(0, this.xMin) + this.repeatSpace(1 + this.xMax - this.xMin) + nivel[y].substring(this.xMax + 1);
 	}
 }
 
-Sala.prototype.repeatSpace = function (times) {
+Sala.prototype.repeatSpace = function(times) {
 	if (times === 0) return '';
-	return ' ' + this.repeatSpace (times - 1);
+	return ' ' + this.repeatSpace(times - 1);
+};
+
+Sala.prototype.agregarPuertasALaIzquierda = function() {
+	for (var y = this.yMin; y <= this.yMax; y++)
+		if (
+			this.nivel[y - 1] &&
+			this.nivel[y + 1] &&
+			this.nivel[y][this.xMin - 1] === ' ' &&
+			this.nivel[y - 1][this.xMin - 1] === 'W' &&
+			this.nivel[y + 1][this.xMin - 1] === 'W' &&
+			this.nivel[y][this.xMin - 2] === ' ' &&
+			this.nivel[y][this.xMin - 3] === ' '
+		) this.nivel[y] = this.nivel[y].substring(0, this.xMin - 1) + 'D' + this.nivel[y].substring(this.xMin);
+};
+
+Sala.prototype.agregarPuertasALaDerecha = function() {
+	for (var y = this.yMin; y <= this.yMax; y++)
+		if (
+			this.nivel[y - 1] &&
+			this.nivel[y + 1] &&
+			this.nivel[y][this.xMax + 1] === ' ' &&
+			this.nivel[y - 1][this.xMax + 1] === 'W' &&
+			this.nivel[y + 1][this.xMax + 1] === 'W' &&
+			this.nivel[y][this.xMax + 2] === ' ' &&
+			this.nivel[y][this.xMax + 3] === ' '
+		) this.nivel[y] = this.nivel[y].substring(0, this.xMax + 1) + 'D' + this.nivel[y].substring(this.xMax + 2);
+};
+
+Sala.prototype.agregarPuertasArriba = function() {
+	for (var x = this.xMin; x <= this.xMax; x++)
+		if (
+			this.nivel[this.yMin - 3] &&
+			this.nivel[this.yMin - 1][x] === ' ' &&
+			this.nivel[this.yMin - 1][x - 1] === 'W' &&
+			this.nivel[this.yMin - 1][x + 1] === 'W' &&
+			this.nivel[this.yMin - 2][x] === ' ' &&
+			this.nivel[this.yMin - 3][x] === ' '
+		) this.nivel[this.yMin - 1] = this.nivel[this.yMin - 1].substring(0, x) + 'D' + this.nivel[this.yMin - 1].substring(x + 1);
+};
+
+Sala.prototype.agregarPuertasAbajo = function() {
+	for (var x = this.xMin; x <= this.xMax; x++)
+		if (
+			this.nivel[this.yMax + 3] &&
+			this.nivel[this.yMax + 1][x] === ' ' &&
+			this.nivel[this.yMax + 1][x - 1] === 'W' &&
+			this.nivel[this.yMax + 1][x + 1] === 'W' &&
+			this.nivel[this.yMax + 2][x] === ' ' &&
+			this.nivel[this.yMax + 3][x] === ' '
+		) this.nivel[this.yMax + 1] = this.nivel[this.yMax + 1].substring(0, x) + 'D' + this.nivel[this.yMax + 1].substring(x + 1);
 };
 
 Sala.prototype.puntoAleatorio = function() {
@@ -258,4 +316,8 @@ function enteroAleatorioEntreVariosRangos(rangos) {
 function acotarEntre(min, numero, max) {
 	if (isFinite(min) && isFinite(numero) && isFinite(max) && min <= max) return Math.max(min, Math.min(numero, max));
 	else throw new Error('Algún argumento pasado a la función acotarEntre no es un número, o el min es mayor al max.')
+}
+
+function quitarElementoAleatorioDe(array) {
+	return array.splice(enteroAleatorioEntre(0, array.length - 1), 1)[0];;
 }
