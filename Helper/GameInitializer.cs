@@ -5,7 +5,6 @@ using Maps;
 using Microsoft.Xna.Framework;
 using Units;
 using Units.Inteligencia;
-using System.IO;
 
 namespace Helper
 {
@@ -33,7 +32,7 @@ namespace Helper
 			#region Cheat
 			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("Knife");
 			player.Inventory.Add (eq);
-			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["broken"]);
+			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["Broken"]);
 			player.Equipment.EquipItem (eq);
 			#endregion
 
