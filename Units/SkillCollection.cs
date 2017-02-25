@@ -1,6 +1,4 @@
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using AoM;
 using Newtonsoft.Json;
 using Units.Skills;
@@ -10,19 +8,14 @@ namespace Units
 	/// <summary>
 	/// Manager and database of all defined skills
 	/// </summary>
-	public class SkillCollection
+	public class SkillCollection : IdentificableManager<ISkill>
 	{
-		/// <summary>
-		/// Collection of skills
-		/// </summary>
-		public readonly ISkill [] Skills;
-
 		/// <summary>
 		/// Gets the skill with a specified name.
 		/// </summary>
 		public ISkill GetSkill (string name)
 		{
-			return Skills.First (z => z.Name == name);
+			return Get (name);
 		}
 
 		/// <summary>
@@ -40,20 +33,12 @@ namespace Units
 			Formatting = Formatting.Indented
 		};
 
-		static void onError (object sender,
-		                     Newtonsoft.Json.Serialization.ErrorEventArgs e)
-		{
-			var err = e.ErrorContext.Error;
-			Debug.WriteLine (err);
-			Debugger.Break ();
-		}
-
 		/// <summary>
 		/// </summary>
 		[JsonConstructor]
 		public SkillCollection (ISkill [] Skills)
+			: base (Skills)
 		{
-			this.Skills = Skills;
 		}
 
 		/// <summary>
