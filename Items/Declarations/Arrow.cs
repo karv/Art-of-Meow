@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Skills;
+using System;
 
 namespace Items.Declarations
 {
@@ -43,13 +44,14 @@ namespace Items.Declarations
 				Quantity = Quantity, 
 				Attribute = Attribute,
 				DamageMultiplier = DamageMultiplier, 
-				BaseHit = BaseHit
+				BaseHit = BaseHit,
+				TextureName = TextureName
 			};
 		}
 
 		[JsonConstructor]
-		Arrow (string nombre, string [] AllowedModNames)
-			: base (nombre, AllowedModNames)
+		Arrow (string NombreBase, string [] AllowedModNames)
+			: base (NombreBase, AllowedModNames)
 		{
 		}
 	}
