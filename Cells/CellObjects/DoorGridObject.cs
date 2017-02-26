@@ -49,9 +49,9 @@ namespace Cells.CellObjects
 		public bool IsOpen { get; set; }
 
 		// "open-door";
-		const string StringTextureOpen = "clock";
+		const string StringTextureOpen = "open door";
 		//"closed-door";
-		const string StringTextureClosed = "heal";
+		const string StringTextureClosed = "closed door";
 
 		/// <summary>
 		/// La profundidad de dibujo.
