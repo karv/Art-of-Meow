@@ -79,7 +79,8 @@ namespace Maps
 				for (int iy = 0; iy < sizeY; iy++)
 				{
 					var newObj = MakeObject (data [ix, iy], ret, new Point (ix, iy));
-					ret.AddCellObject (newObj);
+					foreach (var ob in newObj)
+						ret.AddCellObject (ob);
 				}
 			return ret;
 		}
@@ -150,9 +151,9 @@ namespace Maps
 		/// <param name="c">A <c>char</c> value representing the <see cref="IGridObject"/></param>
 		/// <param name="grid">Grid.</param>
 		/// <param name="p">Location grid-wise of the item to add</param>
-		public IGridObject MakeObject (char c,
-		                               LogicGrid grid,
-		                               Point p)
+		public IGridObject[] MakeObject (char c,
+		                                 LogicGrid grid,
+		                                 Point p)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
@@ -162,16 +163,19 @@ namespace Maps
 			{
 				case ' ':
 				case (char)0:
-					return new BackgroundObject (p, "floor", grid);
+					return new [] { new BackgroundObject (p, "floor", grid) };
 				case 'W':
-					var newObj = new GridWall ("brick-wall", grid);
-					newObj.Location = p;
-					return newObj;
+					return new [] { new GridWall ("brick-wall", grid){ Location = p } };
+				case 'D':
+					return new IGridObject[]
+					{ new DoorGridObject (grid){ Location = p },
+						new BackgroundObject (p, "floor", grid)
+					};
 				case '\n':
 				case '\r':
 					return null;
 			}
-			throw new FormatException ("Unknown accepted map symbol " + c);
+			throw new FormatException ("invalid map symbol: " + c);
 		}
 
 		/// <summary>

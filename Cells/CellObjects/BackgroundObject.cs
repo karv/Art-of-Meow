@@ -31,6 +31,11 @@ namespace Cells.CellObjects
 		{
 		}
 
+		bool IGridObject.BlockVisibility
+		{
+			get			{ return false; }
+		}
+
 		/// <summary>
 		/// Gets the grid.
 		/// </summary>

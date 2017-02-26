@@ -231,6 +231,7 @@
     <Compile Include="DamageAttribute.cs" />
     <Compile Include="IdentificableManager.cs" />
     <Compile Include="DamageAttributesManager.cs" />
+    <Compile Include="Cells\CellObjects\DoorGridObject.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

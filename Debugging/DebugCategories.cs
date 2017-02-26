@@ -51,6 +51,11 @@ namespace Debugging
 		/// Map generation
 		/// </summary>
 		public const string MapGeneration = "Map";
+
+		/// <summary>
+		/// Interaction with grid objects, such as doors and stairs
+		/// </summary>
+		public const string GridItemsInteraction = "Interaction";
 	}
 }
 #endif
