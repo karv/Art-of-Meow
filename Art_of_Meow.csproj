@@ -234,6 +234,9 @@
     <Compile Include="Items\IStackingItem.cs" />
     <Compile Include="Items\Declarations\Arrow.cs" />
     <Compile Include="Items\Declarations\StackingItem.cs" />
+    <Compile Include="Units\Inteligencia\AIException.cs" />
+    <Compile Include="Units\Inteligencia\AI.cs" />
+    <Compile Include="Units\Inteligencia\RangedIntelligence.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

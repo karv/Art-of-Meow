@@ -7,6 +7,7 @@ using Cells;
 using Debugging;
 using Items;
 using Newtonsoft.Json;
+using Items.Declarations;
 
 namespace Units
 {
@@ -101,7 +102,15 @@ namespace Units
 			ret.Exp.Flush ();
 
 			ret.RecursoHP.Fill ();
-			ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
+
+			// temporal
+			ret.Equipment.EquipItem (Program.MyGame.Items.CreateItem<ISkillEquipment> ("Short bow"));
+			var arrows = Program.MyGame.Items.CreateItem<Arrow> ("Wooden arrow");
+			arrows.Quantity = 100;
+			ret.Equipment.EquipItem (arrows);
+
+			var ai = new Inteligencia.RangedIntelligence ();
+			ai.LinkWith (ret);
 			ret.Nombre = Name;
 
 			var dDist = new DropAssignment ();

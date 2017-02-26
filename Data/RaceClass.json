@@ -42,7 +42,7 @@
     {
       "Name": "Imp",
       "PossibleClasses": [
-				"Warrior", "Archer"
+				"Archer"
       ],
       "AttributesDistribution": {
         "melee_prec": 1.0,
