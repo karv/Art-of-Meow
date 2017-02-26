@@ -2,6 +2,7 @@
   "Class": [
     {
       "Name": "Warrior",
+			"AI": "Chase",
       "AttributesDistribution": {
         "melee_prec": 0.16,
         "dex": 0.16,
@@ -20,6 +21,7 @@
     },
 		{
 			"Name": "Archer",
+			"AI": "Ranged",
       "AttributesDistribution": {
         "melee_prec": 0.02,
         "dex": 0.41,
@@ -42,7 +44,7 @@
     {
       "Name": "Imp",
       "PossibleClasses": [
-				"Archer"
+				"Archer", "Warrior"
       ],
       "AttributesDistribution": {
         "melee_prec": 1.0,

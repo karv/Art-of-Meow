@@ -20,6 +20,14 @@ namespace Units.Inteligencia
 				Target = GetTarget ();
 		}
 
+		public override object Clone ()
+		{
+			return new RangedIntelligence
+			{
+				MaxRangeDist = MaxRangeDist
+			};
+		}
+
 		public int MaxRangeDist = 5;
 		RangedSkill skill;
 

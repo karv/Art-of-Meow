@@ -4,7 +4,7 @@ using Cells.CellObjects;
 
 namespace Units.Inteligencia
 {
-	public abstract class AI : IUnidadController
+	public abstract class AI : IUnidadController, ICloneable
 	{
 		/// <summary>
 		/// Gets the map grid.
@@ -28,6 +28,8 @@ namespace Units.Inteligencia
 			unidad.Inteligencia = this;
 			AfterUnidadLink ();
 		}
+
+		public abstract object Clone ();
 
 		protected virtual void AfterUnidadLink ()
 		{

@@ -8,6 +8,7 @@ using Debugging;
 using Items;
 using Newtonsoft.Json;
 using Items.Declarations;
+using Units.Inteligencia;
 
 namespace Units
 {
@@ -96,6 +97,8 @@ namespace Units
 			var ret = new Unidad (grid, TextureString);
 			var uClass = PossibleClassesRef () [_r.Next (PossibleClasses.Length)];
 
+			var ai = (uClass.Int as AI)?.Clone () as AI;
+
 			foreach (var x in mergeAttrDists (this, uClass))
 				ret.Exp.AddAssignation (x.Key, x.Value);
 			ret.Exp.ExperienciaAcumulada = exp;
@@ -103,13 +106,6 @@ namespace Units
 
 			ret.RecursoHP.Fill ();
 
-			// temporal
-			ret.Equipment.EquipItem (Program.MyGame.Items.CreateItem<ISkillEquipment> ("Short bow"));
-			var arrows = Program.MyGame.Items.CreateItem<Arrow> ("Wooden arrow");
-			arrows.Quantity = 100;
-			ret.Equipment.EquipItem (arrows);
-
-			var ai = new Inteligencia.RangedIntelligence ();
 			ai.LinkWith (ret);
 			ret.Nombre = Name;
 
@@ -117,6 +113,8 @@ namespace Units
 			dDist.MergeWith (uClass.DropDistribution);
 			dDist.MergeWith (DropDistribution);
 			ret.Inventory = dDist.MakeDrops (10 + exp);
+			foreach (var i in ret.Inventory.ItemsOfType<IEquipment> ())
+				ret.Equipment.EquipItem (i);
 
 			DebugAllInfo (ret);
 			return ret;

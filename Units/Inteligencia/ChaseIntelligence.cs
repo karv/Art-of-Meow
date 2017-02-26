@@ -15,6 +15,10 @@ namespace Units.Inteligencia
 			return MapGrid.Objects.OfType<Unidad> ().FirstOrDefault (IsSelectableAsTarget);
 		}
 
+		public override object Clone ()
+		{
+			return new ChaseIntelligence ();
+		}
 
 		void TryUpdateTarget ()
 		{

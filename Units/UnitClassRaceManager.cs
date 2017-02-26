@@ -44,7 +44,7 @@ namespace Units
 		[JsonIgnore]
 		public static JsonSerializerSettings JsonSets = new JsonSerializerSettings
 		{
-			TypeNameHandling = TypeNameHandling.None,
+			TypeNameHandling = TypeNameHandling.All,
 			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
 			NullValueHandling = NullValueHandling.Ignore,
 			ReferenceLoopHandling = ReferenceLoopHandling.Error,
