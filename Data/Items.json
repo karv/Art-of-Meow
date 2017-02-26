@@ -104,7 +104,7 @@
 			"ShowDeltaInGui": true,
       "BaseSpeed": 1.3,
       "Slot": 3,
-      "TextureName": "heal",
+      "TextureName": "Items//bottle",
       "Color": {
         "B": 0,
         "G": 0,
