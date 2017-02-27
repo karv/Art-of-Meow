@@ -106,16 +106,26 @@ namespace Units
 
 			ret.RecursoHP.Fill ();
 
-			ai.LinkWith (ret);
 			ret.Nombre = Name;
 
 			var dDist = new DropAssignment ();
 			dDist.MergeWith (uClass.DropDistribution);
 			dDist.MergeWith (DropDistribution);
 			ret.Inventory = dDist.MakeDrops (10 + exp);
+
+			foreach (var eq in uClass.StartingEquipment)
+			{
+				var eqInstance = Program.MyGame.Items.CreateItem (eq);
+				var stack = eqInstance as IStackingItem;
+				if (stack != null)
+					stack.Quantity = 100;
+				ret.Inventory.Add (eqInstance);
+			}			
 			foreach (var i in ret.Inventory.ItemsOfType<IEquipment> ())
 				ret.Equipment.EquipItem (i);
 
+			// Invoke this after unit is equiped
+			ai.LinkWith (ret);
 			DebugAllInfo (ret);
 			return ret;
 		}

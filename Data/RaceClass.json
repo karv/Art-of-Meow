@@ -3,6 +3,8 @@
     {
       "Name": "Warrior",
 			"AI": "Chase",
+			"StartingEquipment": 
+				[],
       "AttributesDistribution": {
         "melee_prec": 0.16,
         "dex": 0.16,
@@ -22,6 +24,8 @@
 		{
 			"Name": "Archer",
 			"AI": "Ranged",
+			"StartingEquipment": 
+				["Short bow", "Wooden arrow"],
       "AttributesDistribution": {
         "melee_prec": 0.02,
         "dex": 0.41,

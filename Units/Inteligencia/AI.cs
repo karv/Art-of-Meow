@@ -48,6 +48,19 @@ namespace Units.Inteligencia
 			return otro != null && ControlledUnidad.IsEnemyOf (otro);
 		}
 
+		public static AI GetAIByName (string name)
+		{
+			switch (name)
+			{
+				case "Chase":
+					return new ChaseIntelligence ();
+				case "Ranged":
+					return new RangedIntelligence ();
+				default:
+					throw new Exception ();
+			}
+		}
+
 		void IUnidadController.DoAction ()
 		{
 			checks ();

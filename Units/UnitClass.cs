@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using Units.Inteligencia;
-using System;
 
 namespace Units
 {
@@ -23,25 +23,13 @@ namespace Units
 		/// </summary>
 		public readonly ReadOnlyDictionary<string, float> AttributesDistribution;
 
+		public string [] StartingEquipment = new string[0];
+
 		/// <summary>
 		/// Assignment from item name to drop weight.
 		/// </summary>
 		[JsonIgnore]
 		public readonly Items.DropAssignment DropDistribution;
-
-		public static AI GetAIByName (string name)
-		{
-			switch (name)
-			{
-				case "Chase":
-					return new ChaseIntelligence ();
-				case "Ranged":
-					return new RangedIntelligence ();
-				default:
-					throw new Exception ();
-			}
-
-		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Units.UnitClass"/> class.
@@ -50,19 +38,21 @@ namespace Units
 		public UnitClass (string Name,
 		                  Dictionary<string, float> AttributesDistribution,
 		                  Dictionary<string, float> DropDistribution,
-		                  string AI)
+		                  string AI,
+		                  string [] StartingEquipment)
 		{
 			if (AI == null)
-				throw new System.ArgumentNullException ("AI");
+				throw new ArgumentNullException ("AI");
 			if (Name == null)
-				throw new System.ArgumentNullException ("Name");
+				throw new ArgumentNullException ("Name");
 			if (AttributesDistribution == null)
-				throw new System.ArgumentNullException ("AttributesDistribution");
+				throw new ArgumentNullException ("AttributesDistribution");
 			if (DropDistribution == null)
-				throw new System.ArgumentNullException ("DropDistribution");
+				throw new ArgumentNullException ("DropDistribution");
 
+			this.StartingEquipment = StartingEquipment;
 			this.Name = Name;
-			Int = GetAIByName (AI);
+			Int = Units.Inteligencia.AI.GetAIByName (AI);
 			this.AttributesDistribution = new ReadOnlyDictionary<string, float> (AttributesDistribution);
 			this.DropDistribution = new Items.DropAssignment (DropDistribution);
 		}
