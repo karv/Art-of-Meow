@@ -93,6 +93,15 @@ namespace Units.Equipment
 		}
 
 		/// <summary>
+		/// Unequip all
+		/// </summary>
+		public void Clear ()
+		{
+			foreach (var item in equipment.ToArray ())
+				UnequipItem (item);
+		}
+
+		/// <summary>
 		/// Devuelve el número de items equipados en un slot dado.
 		/// </summary>
 		public int CurrentSlotCount (EquipSlot slot)
