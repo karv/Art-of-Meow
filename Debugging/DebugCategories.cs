@@ -1,5 +1,4 @@
-﻿#if DEBUG
-
+﻿
 namespace Debugging
 {
 	/// <summary>
@@ -58,4 +57,3 @@ namespace Debugging
 		public const string GridItemsInteraction = "Interaction";
 	}
 }
-#endif
