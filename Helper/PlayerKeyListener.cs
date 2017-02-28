@@ -68,7 +68,14 @@ namespace Helper
 					ManagerScreen.ChangeGrid (endPoint.Value);
 				return true;
 			}
-
+			if (GlobalKeys.ZoomIn.Contains (key))
+			{
+				ManagerScreen.GridControl.ZoomIn ();
+			}
+			if (GlobalKeys.ZoomOut.Contains (key))
+			{
+				ManagerScreen.GridControl.ZoomOut ();
+			}
 			return false;
 		}
 

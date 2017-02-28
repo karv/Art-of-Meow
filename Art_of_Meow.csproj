@@ -37,14 +37,11 @@
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="AdvMath">
-      <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Extended">
       <HintPath>packages\MonoGame.Extended.0.6.0.0\lib\MonoGame.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="AdvMath">
+      <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\MonoGame.Framework.dll</HintPath>
@@ -55,18 +52,17 @@
     <Reference Include="OpenTK">
       <HintPath>packages\MonoGame.Framework.Linux.3.5.0.1678\lib\net40\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Jurassic">
       <HintPath>packages\Jurassic.2.2.1\lib\net35\Jurassic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <MonoGameContentReference Include="content.mgcb" />
     <None Include="Content\*.xnb">
       <Link>Content\*.xnb</Link>
-    </None>
-    <None Include="OpenTK.dll.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\Items.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -93,6 +89,8 @@
       <Link>Data\Maps\RandomMapDataScript.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
+    <None Include="OpenTK.dll.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Juego.cs" />

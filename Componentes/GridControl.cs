@@ -306,6 +306,26 @@ namespace Componentes
 			return edge.Contains (p);
 		}
 
+		public void ZoomIn()
+		{
+			if (VisibleCells.Width % 2 == 0 && VisibleCells.Height % 2 == 0)
+			{
+				VisibleCells = new Size (VisibleCells.Width / 2, VisibleCells.Height / 2);
+				CellSize= new Size (CellSize.Width * 2, CellSize.Height * 2);
+				TryCenterOn ((Screen as Screens.MapMainScreen).Player.Location);
+			}
+		}
+
+		public void ZoomOut()
+		{
+			if (CellSize.Width % 2 == 0 && CellSize.Height % 2 == 0)
+			{
+				VisibleCells = new Size (VisibleCells.Width * 2, VisibleCells.Height * 2);
+				CellSize= new Size (CellSize.Width / 2, CellSize.Height / 2);
+				TryCenterOn ((Screen as Screens.MapMainScreen).Player.Location);
+			}
+		}
+
 		#endregion
 
 		#region Events
