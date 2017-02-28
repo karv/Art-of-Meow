@@ -66,7 +66,9 @@ namespace Helper
 					               HumanPlayer.Exp.ExperienciaTotal * 0.8f);
 				if (endPoint.HasValue)
 					ManagerScreen.ChangeGrid (endPoint.Value);
+				return true;
 			}
+
 			return false;
 		}
 
