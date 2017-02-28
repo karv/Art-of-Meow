@@ -20,8 +20,8 @@ namespace Skills
 			var stackItem = RemovingItem as IStackingItem;
 			if (stackItem != null && stackItem.Quantity >= quantity)
 				stackItem.Quantity -= quantity;
-			else if (!Target.Inventory.Items.Remove (RemovingItem))
-				throw new Exception ("Cannot execute effect ");
+			if (!Target.Inventory.Items.Remove (RemovingItem))
+				throw new Exception ("Cannot execute effect.\nItem does not exist.");
 		}
 
 		/// <summary>

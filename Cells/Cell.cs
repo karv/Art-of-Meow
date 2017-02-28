@@ -27,7 +27,7 @@ namespace Cells
 		/// </summary>
 		public bool BlocksVisibility ()
 		{
-			return Objects.OfType<GridWall> ().Any ();
+			return Objects.Any (z => z.BlockVisibility);
 		}
 
 		/// <summary>

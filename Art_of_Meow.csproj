@@ -237,6 +237,7 @@
     <Compile Include="Units\Inteligencia\AIException.cs" />
     <Compile Include="Units\Inteligencia\AI.cs" />
     <Compile Include="Units\Inteligencia\RangedIntelligence.cs" />
+    <Compile Include="Cells\CellObjects\DoorGridObject.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

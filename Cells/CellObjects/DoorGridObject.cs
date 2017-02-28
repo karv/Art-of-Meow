@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Cells.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -8,9 +8,9 @@ using Moggle.Controles;
 namespace Cells.CellObjects
 {
 	/// <summary>
-	/// Representa un muro de Grid
+	/// It's a door
 	/// </summary>
-	public class GridWall : ICollidableGridObject
+	public class DoorGridObject : ICollidableGridObject, IActivable
 	{
 		/// <summary>
 		/// Devuelve el Grid
@@ -18,12 +18,40 @@ namespace Cells.CellObjects
 		/// <value>The grid.</value>
 		public LogicGrid Grid { get; }
 
-		bool IGridObject.BlockVisibility { get { return true; } }
+		/// <summary>
+		/// Opens the door
+		/// </summary>
+		public void Open ()
+		{
+			IsOpen = true;
+		}
+
+		bool IGridObject.BlockVisibility { get { return !IsOpen; } }
+
+		void IActivable.Activar ()
+		{
+			Open ();
+			AlActivar?.Invoke (this, EventArgs.Empty);
+		}
 
 		/// <summary>
-		/// Nombre de la textura
+		/// Gets the current texture
 		/// </summary>
-		public readonly string StringTexture;
+		public Texture2D CurrentTexture 
+		{ get { return IsOpen ? TextureOpen : TextureClosed; } }
+
+		Texture2D IGridObject.Texture { get { return CurrentTexture; } }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this door is open (or closed)
+		/// </summary>
+		/// <value><c>true</c> if this door is open; otherwise, <c>false</c>.</value>
+		public bool IsOpen { get; set; }
+
+		// "open-door";
+		const string StringTextureOpen = "open door";
+		//"closed-door";
+		const string StringTextureClosed = "closed door";
 
 		/// <summary>
 		/// La profundidad de dibujo.
@@ -33,21 +61,27 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// La textura de dibujo
 		/// </summary>
-		public Texture2D Texture { get; private set; }
+		public Texture2D TextureOpen { get; private set; }
+
+		/// <summary>
+		/// La textura de dibujo
+		/// </summary>
+		public Texture2D TextureClosed { get; private set; }
 
 		System.Collections.Generic.IEnumerable<ICollisionRule> ICollidableGridObject.GetCollisionRules ()
 		{
-			yield return new DescriptCollitionRule (z => true);
+			yield return new DescriptCollitionRule (z => !IsOpen);
 		}
 
 		void IDibujable.Draw (SpriteBatch bat, Rectangle rect)
 		{
-			bat.Draw (Texture, destinationRectangle: rect, layerDepth: Depth);
+			bat.Draw (CurrentTexture, destinationRectangle: rect, layerDepth: Depth);
 		}
 
 		void IComponent.LoadContent (ContentManager manager)
 		{
-			Texture = manager.Load<Texture2D> (StringTexture);
+			TextureOpen = manager.Load<Texture2D> (StringTextureOpen);
+			TextureClosed = manager.Load<Texture2D> (StringTextureClosed);
 		}
 
 		void IDisposable.Dispose ()
@@ -64,7 +98,7 @@ namespace Cells.CellObjects
 		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Cells.CellObjects.GridWall"/>.</returns>
 		public override string ToString ()
 		{
-			return string.Format ("Wall@{0}", Location);
+			return string.Format ("{1} door@{0}", Location, IsOpen ? "Open" : "Closed");
 		}
 
 		/// <summary>
@@ -77,14 +111,15 @@ namespace Cells.CellObjects
 		{ get { return Grid as IComponentContainerComponent<IControl>; } }
 
 		/// <summary>
+		/// Ocurre cuando se activa.
+		/// </summary>
+		public event EventHandler AlActivar;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.CellObjects.GridWall"/> class.
 		/// </summary>
-		/// <param name="stringTexture">Name of the texture</param>
-		/// <param name="grid">Grid.</param>
-		public GridWall (string stringTexture,
-		                 LogicGrid grid)
+		public DoorGridObject (LogicGrid grid)
 		{
-			StringTexture = stringTexture;
 			Grid = grid;
 		}
 	}
