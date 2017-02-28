@@ -354,10 +354,12 @@ namespace Cells
 			// Check if the destination object is activable in case is currently collidable
 			foreach (var cell in destCell.EnumerateObjects ().OfType<IActivable> ())
 			{
-				cell.Activar ();
-				var strM = string.Format ("{0} was activated via melee + obstruction", cell);
-				Debug.WriteLine (strM, DebugCategories.GridItemsInteraction);
-				shouldReturnTrue = true;
+				if (cell.Activar ())
+				{					
+					var strM = string.Format ("{0} was activated via melee + obstruction", cell);
+					Debug.WriteLine (strM, DebugCategories.GridItemsInteraction);
+					shouldReturnTrue = true;
+				}
 			}
 
 			return shouldReturnTrue;
