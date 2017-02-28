@@ -63,8 +63,14 @@ namespace AoM
 		/// </summary>
 		public static Keys [] Center = { Keys.C };
 
+		/// <summary>
+		/// Zoom in key
+		/// </summary>
 		public static Keys [] ZoomIn = { Keys.Add, Keys.OemPlus };
 
+		/// <summary>
+		/// Zoom out key
+		/// </summary>
 		public static Keys [] ZoomOut = { Keys.Subtract, Keys.OemMinus };
 
 		#endregion
