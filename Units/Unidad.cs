@@ -310,6 +310,7 @@ namespace Units
 		/// </summary>
 		public void DropAllItems ()
 		{
+			Equipment.Clear ();
 			foreach (var it in Inventory.Items)
 			{
 				var obj = new GroundItem (it, Grid);
@@ -328,6 +329,7 @@ namespace Units
 				// Agregar el objeto al grid
 				obj.AddToGrid ();
 			}
+
 
 			// Eliminar todo del contenido
 			Inventory.Items.Clear ();

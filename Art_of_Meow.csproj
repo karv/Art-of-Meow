@@ -37,9 +37,6 @@
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="AdvMath">
-      <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -57,6 +54,9 @@
     </Reference>
     <Reference Include="Jurassic">
       <HintPath>packages\Jurassic.2.2.1\lib\net35\Jurassic.dll</HintPath>
+    </Reference>
+    <Reference Include="AdvMath">
+      <HintPath>packages\AdvMath.0.1\lib\AdvMath.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +231,12 @@
     <Compile Include="DamageAttribute.cs" />
     <Compile Include="IdentificableManager.cs" />
     <Compile Include="DamageAttributesManager.cs" />
+    <Compile Include="Items\IStackingItem.cs" />
+    <Compile Include="Items\Declarations\Arrow.cs" />
+    <Compile Include="Items\Declarations\StackingItem.cs" />
+    <Compile Include="Units\Inteligencia\AIException.cs" />
+    <Compile Include="Units\Inteligencia\AI.cs" />
+    <Compile Include="Units\Inteligencia\RangedIntelligence.cs" />
     <Compile Include="Cells\CellObjects\DoorGridObject.cs" />
   </ItemGroup>
   <ProjectExtensions>

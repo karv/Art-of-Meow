@@ -7,6 +7,8 @@ using Cells;
 using Debugging;
 using Items;
 using Newtonsoft.Json;
+using Items.Declarations;
+using Units.Inteligencia;
 
 namespace Units
 {
@@ -95,13 +97,15 @@ namespace Units
 			var ret = new Unidad (grid, TextureString);
 			var uClass = PossibleClassesRef () [_r.Next (PossibleClasses.Length)];
 
+			var ai = (uClass.Int as AI)?.Clone () as AI;
+
 			foreach (var x in mergeAttrDists (this, uClass))
 				ret.Exp.AddAssignation (x.Key, x.Value);
 			ret.Exp.ExperienciaAcumulada = exp;
 			ret.Exp.Flush ();
 
 			ret.RecursoHP.Fill ();
-			ret.Inteligencia = new Inteligencia.ChaseIntelligence (ret);
+
 			ret.Nombre = Name;
 
 			var dDist = new DropAssignment ();
@@ -109,6 +113,19 @@ namespace Units
 			dDist.MergeWith (DropDistribution);
 			ret.Inventory = dDist.MakeDrops (10 + exp);
 
+			foreach (var eq in uClass.StartingEquipment)
+			{
+				var eqInstance = Program.MyGame.Items.CreateItem (eq);
+				var stack = eqInstance as IStackingItem;
+				if (stack != null)
+					stack.Quantity = 100;
+				ret.Inventory.Add (eqInstance);
+			}			
+			foreach (var i in ret.Inventory.ItemsOfType<IEquipment> ())
+				ret.Equipment.EquipItem (i);
+
+			// Invoke this after unit is equiped
+			ai.LinkWith (ret);
 			DebugAllInfo (ret);
 			return ret;
 		}

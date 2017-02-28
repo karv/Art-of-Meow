@@ -31,6 +31,16 @@ namespace Items
 					picker.Normalize ();
 					var picked = picker.Pick ();
 					var newItem = Program.MyGame.Items.CreateItem<IItem> (picked);
+					var stackItem = newItem as IStackingItem;
+					if (stackItem != null)
+					{
+						// Requiered to calculate the items value properly
+						stackItem.Quantity = 1; 
+
+						// Max stack size = 100
+						var maxStack = (int)Math.Min (totalDropValue / stackItem.Value, 100);
+						stackItem.Quantity = _r.Next (1, maxStack);
+					}
 					if (newItem.AllowedMods.Length > 0)
 						// Add mods
 						while (_r.NextDouble () < probAddMod)

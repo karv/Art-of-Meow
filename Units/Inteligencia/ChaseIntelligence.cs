@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using Cells;
-using Cells.CellObjects;
 using Units.Order;
 
 namespace Units.Inteligencia
@@ -8,30 +6,21 @@ namespace Units.Inteligencia
 	/// <summary>
 	/// Unidad's controllers. Chase and attack the human player
 	/// </summary>
-	public class ChaseIntelligence : IUnidadController
+	public class ChaseIntelligence : AI
 	{
-		/// <summary>
-		/// Gets the map grid.
-		/// </summary>
-		/// <value>The map grid.</value>
-		public LogicGrid MapGrid { get { return ControlledUnidad.Grid; } }
-
-		/// <summary>
-		/// Gets the controlled unidad
-		/// </summary>
-		public readonly Unidad ControlledUnidad;
-
 		Unidad Target;
 
 		Unidad GetTarget ()
 		{
-			return MapGrid.Objects.OfType<Unidad> ().FirstOrDefault (isSelectableAsTarget);
+			return MapGrid.Objects.OfType<Unidad> ().FirstOrDefault (IsSelectableAsTarget);
 		}
 
-		bool isSelectableAsTarget (IGridObject obj)
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
+		public override object Clone ()
 		{
-			var otro = obj as IUnidad;
-			return otro != null && ControlledUnidad.IsEnemyOf (otro);
+			return new ChaseIntelligence ();
 		}
 
 		void TryUpdateTarget ()
@@ -40,9 +29,12 @@ namespace Units.Inteligencia
 				Target = GetTarget ();
 		}
 
-		void IUnidadController.DoAction ()
+		/// <summary>
+		/// Do the intelligence part.
+		/// This is invoked every grid update to control the will of <see cref="AI.ControlledUnidad"/>
+		/// </summary>
+		protected override void DoAction ()
 		{
-			ControlledUnidad.assertIsIdle ();
 			TryUpdateTarget ();
 			if (Target == null)
 				return; // Si no encuentra enemigo, debe ser porque la instancia de mapa se está desechando
@@ -67,15 +59,6 @@ namespace Units.Inteligencia
 				"[ChaseIntelligence: Yo={0}, Target={1}]",
 				ControlledUnidad.Nombre,
 				Target.Nombre);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Units.Inteligencia.ChaseIntelligence"/> class.
-		/// </summary>
-		/// <param name="yo">The controlled unidad</param>
-		public ChaseIntelligence (Unidad yo)
-		{
-			ControlledUnidad = yo;
 		}
 	}
 }

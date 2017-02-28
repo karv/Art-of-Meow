@@ -2,12 +2,15 @@
   "Class": [
     {
       "Name": "Warrior",
+			"AI": "Chase",
+			"StartingEquipment": 
+				[],
       "AttributesDistribution": {
         "melee_prec": 0.16,
         "dex": 0.16,
+        "str": 0.24,
         "melee_eva": 0.08,
         "range_eva": 0.04,
-        "str": 0.24,
         "hp": 0.16,
         "vel": 0.08
       },
@@ -17,13 +20,35 @@
 				"Leather armor" : 0.07,
 				"Leather cap" : 0.07,
 			}
-    }
+    },
+		{
+			"Name": "Archer",
+			"AI": "Ranged",
+			"StartingEquipment": 
+				["Short bow", "Wooden arrow"],
+      "AttributesDistribution": {
+        "melee_prec": 0.02,
+        "dex": 0.41,
+        "str": 0.18,
+        "melee_eva": 0.07,
+        "range_eva": 0.05,
+        "hp": 0.15,
+        "vel": 0.12
+      },
+			"DropDistribution": {
+				"Hp potion": 1.0,
+				"Wooden arrow": 0.8,
+				"Leather armor": 0.03,
+				"Leather cap": 0.03,
+				"Short bow": 0.1
+			}
+		}
   ],
   "Race": [
     {
       "Name": "Imp",
       "PossibleClasses": [
-				"Warrior"
+				"Archer", "Warrior"
       ],
       "AttributesDistribution": {
         "melee_prec": 1.0,
