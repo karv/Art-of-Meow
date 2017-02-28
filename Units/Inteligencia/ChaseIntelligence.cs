@@ -31,7 +31,7 @@ namespace Units.Inteligencia
 
 		/// <summary>
 		/// Do the intelligence part.
-		/// This is invoked every grid update to control the will of <see cref="ControlledUnidad"/>
+		/// This is invoked every grid update to control the will of <see cref="AI.ControlledUnidad"/>
 		/// </summary>
 		protected override void DoAction ()
 		{
