@@ -16,7 +16,7 @@ namespace Skills
 		protected override void WhenHit ()
 		{
 			if (!Target.Inventory.Items.Remove (RemovingItem))
-				throw new Exception ("Cannot execute effect");
+				throw new Exception ("Cannot execute effect.\nItem does not exist.");
 		}
 
 		/// <summary>
