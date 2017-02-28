@@ -15,6 +15,9 @@ namespace Units.Inteligencia
 			return MapGrid.Objects.OfType<Unidad> ().FirstOrDefault (IsSelectableAsTarget);
 		}
 
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
 		public override object Clone ()
 		{
 			return new ChaseIntelligence ();
@@ -26,6 +29,10 @@ namespace Units.Inteligencia
 				Target = GetTarget ();
 		}
 
+		/// <summary>
+		/// Do the intelligence part.
+		/// This is invoked every grid update to control the will of <see cref="ControlledUnidad"/>
+		/// </summary>
 		protected override void DoAction ()
 		{
 			TryUpdateTarget ();

@@ -5,6 +5,9 @@ using Units.Order;
 
 namespace Units.Inteligencia
 {
+	/// <summary>
+	/// The intelligence for ranged classes
+	/// </summary>
 	public class RangedIntelligence : AI
 	{
 		Unidad Target;
@@ -20,6 +23,9 @@ namespace Units.Inteligencia
 				Target = GetTarget ();
 		}
 
+		/// <summary>
+		/// Clone this instance.
+		/// </summary>
 		public override object Clone ()
 		{
 			return new RangedIntelligence
@@ -28,6 +34,9 @@ namespace Units.Inteligencia
 			};
 		}
 
+		/// <summary>
+		/// The optimal distance for attacking
+		/// </summary>
 		public int MaxRangeDist = 5;
 		RangedSkill skill;
 
@@ -42,23 +51,18 @@ namespace Units.Inteligencia
 			{
 				throw new AIException ("Ranged AI cannot access ranged skill.", ex);
 			}
-			/*
-			var wpn = ControlledUnidad.Equipment.EquipmentInSlot (EquipSlot.MainHand).OfType<ISkillEquipment> ();
-			foreach (var w in wpn)
-				foreach (var skl in w.GetEquipmentSkills ())
-				{
-					var rangedSkill = skl as RangedSkill;
-					if (rangedSkill != null)
-						return rangedSkill;
-				}
-				*/
 		}
 
+		/// <summary>
+		/// Afters the unidad link.
+		/// </summary>
 		protected override void AfterUnidadLink ()
 		{
 			skill = getSkill ();
 		}
 
+		/// <summary>
+		/// </summary>
 		protected override void DoAction ()
 		{
 			TryUpdateTarget ();

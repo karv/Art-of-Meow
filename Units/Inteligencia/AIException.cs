@@ -2,10 +2,19 @@ using System;
 
 namespace Units.Inteligencia
 {
+	/// <summary>
+	/// Exception of the artifical intelligence
+	/// </summary>
 	[Serializable]
 	public class AIException : Exception
 	{
+		/// <summary>
+		/// Unidad that the AI is controlling
+		/// </summary>
 		public IUnidad unidad;
+		/// <summary>
+		/// The AI
+		/// </summary>
 		public AI AI;
 
 		/// <summary>

@@ -16,13 +16,19 @@ namespace Units
 		/// </summary>
 		public readonly string Name;
 
+		/// <summary>
+		/// This field will be cloned and used on the unidad of this class
+		/// </summary>
 		public readonly IUnidadController Int;
 
 		/// <summary>
-		/// Attributes of this job
+		/// Attributes assignation of this class
 		/// </summary>
 		public readonly ReadOnlyDictionary<string, float> AttributesDistribution;
 
+		/// <summary>
+		/// Enumerates the names of the minimal equipment
+		/// </summary>
 		public string [] StartingEquipment = new string[0];
 
 		/// <summary>

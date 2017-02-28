@@ -38,6 +38,11 @@ namespace Items.Declarations.Equipment.Skills
 		/// </summary>
 		public readonly float BaseCooldown;
 
+		/// <summary>
+		/// Builds the instance
+		/// </summary>
+		/// <param name="user">User.</param>
+		/// <param name="target">Target.</param>
 		public SkillInstance BuildSkillInstance (IUnidad user, IUnidad target)
 		{
 			var quiver = user.Equipment.EquipmentInSlot (EquipSlot.Quiver).OfType<Arrow> ();
