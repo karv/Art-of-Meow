@@ -16,9 +16,10 @@ namespace Cells.CellObjects
 		/// <summary>
 		/// Usa la escalera
 		/// </summary>
-		void IActivable.Activar ()
+		bool IActivable.Activar ()
 		{
 			_AlActivar (EventArgs.Empty);
+			return true;
 		}
 
 		bool IReceptor<KeyboardEventArgs>.RecibirSeñal (KeyboardEventArgs key)

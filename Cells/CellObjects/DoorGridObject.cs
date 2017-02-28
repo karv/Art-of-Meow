@@ -28,10 +28,13 @@ namespace Cells.CellObjects
 
 		bool IGridObject.BlockVisibility { get { return !IsOpen; } }
 
-		void IActivable.Activar ()
+		bool IActivable.Activar ()
 		{
+			if (IsOpen)
+				return false;
 			Open ();
 			AlActivar?.Invoke (this, EventArgs.Empty);
+			return true;
 		}
 
 		/// <summary>
