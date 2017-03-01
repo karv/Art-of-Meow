@@ -224,8 +224,6 @@ namespace Componentes
 
 		#region Behavior
 
-		Boolean Inicializado=false;
-
 		/// <summary>
 		/// Update lógico
 		/// </summary>
@@ -240,10 +238,9 @@ namespace Componentes
 		/// </summary>
 		public override void Initialize()
 		{
-			if(!Inicializado) VisibleCells=new Size(50, 20);
+			if(!IsInitialized) VisibleCells=new Size(50, 20);
 			base.Initialize ();
 			Grid.ObjectAdded += itemAdded;
-			Inicializado = true;
 		}
 
 		#endregion
