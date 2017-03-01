@@ -33,7 +33,7 @@ namespace Screens
 		/// </summary>
 		public EquipmentManager Equipment { get { return Unidad.Equipment; } }
 
-		List<IItem> selectableEquipment;
+		HashSet<IItem> selectableEquipment;
 
 		/// <summary>
 		/// La unidad del equipment
@@ -83,10 +83,8 @@ namespace Screens
 
 		void buildEquipmentList ()
 		{
-			selectableEquipment = new List<IItem> ();
+			selectableEquipment = new HashSet<IItem> ();
 			foreach (var eq in Inventory.Items)
-				selectableEquipment.Add (eq);
-			foreach (var eq in Equipment.EnumerateEquipment ())
 				selectableEquipment.Add (eq);
 
 			foreach (var eq in selectableEquipment)
