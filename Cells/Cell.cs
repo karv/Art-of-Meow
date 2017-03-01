@@ -35,7 +35,13 @@ namespace Cells
 		/// </summary>
 		public MemorizedCell GetMemorizationClone ()
 		{
-			return new MemorizedCell (Objects.OrderBy (z => z.Depth).Select (z => z.Texture));
+			return new MemorizedCell (Objects.OrderBy (z => z.Depth).Select (z => z.Texture), getMinimapColor ());
+		}
+
+		Color getMinimapColor ()
+		{
+			var mmap = Objects.OfType<IMinimapVisible> ();
+			return mmap.OrderBy (z => z.Depth).FirstOrDefault ()?.MinimapColor ?? MemorizedCell.DefaultMinimapColor;
 		}
 
 		/// <summary>

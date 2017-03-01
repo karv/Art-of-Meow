@@ -20,6 +20,10 @@ namespace Cells
 		{
 		}
 
+		public static Color DefaultMinimapColor = Color.Black;
+
+		public Color MinimapColor { get; }
+
 		/// <summary>
 		/// Devuelve o establece la transparencia
 		/// </summary>
@@ -48,6 +52,15 @@ namespace Cells
 		{
 			objects = new List<Texture2D> (data);
 			Alpha = alpha;
+			MinimapColor = DefaultMinimapColor;
+		}
+
+
+		internal MemorizedCell (IEnumerable<Texture2D> data, Color color, float alpha = 0.3f)
+		{
+			objects = new List<Texture2D> (data);
+			Alpha = alpha;
+			MinimapColor = color;
 		}
 
 		static MemorizedCell ()
