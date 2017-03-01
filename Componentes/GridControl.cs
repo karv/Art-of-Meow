@@ -69,10 +69,49 @@ namespace Componentes
 
 		#region Control size and location
 
+		Size _gameSize=new Size (1200, 480);
+
+		Size _cellSize;
+
+		Size _visibleCells;
+
 		/// <summary>
 		/// The size of a cell (Draw)
 		/// </summary>
-		public Size CellSize = new Size (24, 24);
+		public Size CellSize
+		{
+			get
+			{
+				return _cellSize;
+			}
+			set
+			{
+				if(_gameSize.Width%value.Width==0&&_gameSize.Height%value.Height==0)
+				{
+					_cellSize=value;
+					_visibleCells=new Size(_gameSize.Width/value.Width, _gameSize.Height/value.Height);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the number of visible cells
+		/// </summary>
+		public Size VisibleCells
+		{
+			get
+			{
+				return _visibleCells;
+			}
+			set
+			{
+				if (_gameSize.Width % value.Width == 0 && _gameSize.Height % value.Height == 0)
+				{
+					_visibleCells = value;
+					_cellSize = new Size (_gameSize.Width / value.Width, _gameSize.Height / value.Height);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Celda de _data que se muestra en celda visible (0,0)
@@ -83,10 +122,6 @@ namespace Componentes
 		/// Posición top left del control.
 		/// </summary>
 		public Point ControlTopLeft = Point.Zero;
-		/// <summary>
-		/// Gets the number of visible cells
-		/// </summary>
-		public Size VisibleCells = new Size (50, 20);
 
 		/// <summary>
 		/// Gets the size of this grid, as a <see cref="IControl"/>
@@ -189,6 +224,8 @@ namespace Componentes
 
 		#region Behavior
 
+		Boolean Inicializado=false;
+
 		/// <summary>
 		/// Update lógico
 		/// </summary>
@@ -201,10 +238,12 @@ namespace Componentes
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		public override void Initialize ()
+		public override void Initialize()
 		{
+			if(!Inicializado) VisibleCells=new Size(50, 20);
 			base.Initialize ();
 			Grid.ObjectAdded += itemAdded;
+			Inicializado = true;
 		}
 
 		#endregion
@@ -314,7 +353,6 @@ namespace Componentes
 			if (VisibleCells.Width % 2 == 0 && VisibleCells.Height % 2 == 0)
 			{
 				VisibleCells = new Size (VisibleCells.Width / 2, VisibleCells.Height / 2);
-				CellSize = new Size (CellSize.Width * 2, CellSize.Height * 2);
 				TryCenterOn ((Screen as Screens.MapMainScreen).Player.Location);
 			}
 		}
@@ -326,7 +364,6 @@ namespace Componentes
 		{
 			if (CellSize.Width % 2 == 0 && CellSize.Height % 2 == 0)
 			{
-				VisibleCells = new Size (VisibleCells.Width * 2, VisibleCells.Height * 2);
 				CellSize = new Size (CellSize.Width / 2, CellSize.Height / 2);
 				TryCenterOn ((Screen as Screens.MapMainScreen).Player.Location);
 			}
