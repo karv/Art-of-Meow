@@ -1,4 +1,5 @@
-﻿using Skills;
+﻿using System;
+using Skills;
 using Units;
 using Units.Skills;
 
@@ -15,6 +16,11 @@ namespace Items.Declarations
 		/// </summary>
 		/// <value>The last generated instance.</value>
 		public SkillInstance LastGeneratedInstance { get; protected set; }
+
+		/// <summary>
+		/// The base cooldown for the user
+		/// </summary>
+		public float CoolDownBase { get; }
 
 		/// <summary>
 		/// Gets the instance.
@@ -34,6 +40,19 @@ namespace Items.Declarations
 		/// </summary>
 		protected abstract bool IsVisible (IUnidad user);
 
+		/// <summary>
+		/// Adds the cooldown effect to a <see cref="CollectionEffect"/>
+		/// </summary>
+		protected void AddCooldownEffect (IUnidad user, CollectionEffect effects)
+		{
+			if (CoolDownBase == 0)
+				return;
+			if (CoolDownBase < 0)
+				throw new Exception ();
+			// TODO: check for user's speed or something
+			effects.AddEffect (new GenerateCooldownEffect (user, user, CoolDownBase), true);
+		}
+
 		void ISkill.GetInstance (IUnidad user)
 		{
 			GetInstance (user);
@@ -52,9 +71,10 @@ namespace Items.Declarations
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.UsableItem"/> class.
 		/// </summary>
-		protected UsableItem (string name)
+		protected UsableItem (string name, float cooldown)
 			: base (name)
 		{
+			CoolDownBase = cooldown;
 		}
 	}
 }
