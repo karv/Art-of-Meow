@@ -66,6 +66,15 @@ namespace Helper
 					               HumanPlayer.Exp.ExperienciaTotal * 0.8f);
 				if (endPoint.HasValue)
 					ManagerScreen.ChangeGrid (endPoint.Value);
+				return true;
+			}
+			if (GlobalKeys.ZoomIn.Contains (key))
+			{
+				ManagerScreen.GridControl.ZoomIn ();
+			}
+			if (GlobalKeys.ZoomOut.Contains (key))
+			{
+				ManagerScreen.GridControl.ZoomOut ();
 			}
 			return false;
 		}

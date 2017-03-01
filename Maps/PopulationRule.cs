@@ -1,6 +1,5 @@
 using System;
 using AoM;
-using Helper;
 using Newtonsoft.Json;
 using Units;
 
@@ -67,6 +66,6 @@ namespace Maps
 		/// <summary>
 		/// The distribution on the unit's quantity
 		/// </summary>
-		public IDistribution<int> UnitQuantityDistribution;
+		public float SpawnProbPerCell;
 	}
 }

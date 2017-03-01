@@ -44,6 +44,14 @@ namespace Units.Equipment
 			return melees.Any () ? melees.First () : new FistMeleeEffect ();
 		}
 
+		/// <summary>
+		/// Enumerates the equipment in a slot
+		/// </summary>
+		public IEnumerable<IEquipment> EquipmentInSlot (EquipSlot slot)
+		{
+			return equipment.Where (z => z.Slot == slot);
+		}
+
 		List<IEquipment> equipment { get; }
 
 		/// <summary>
@@ -82,6 +90,15 @@ namespace Units.Equipment
 
 			// Mandar item desequipado a Inventory
 			Owner.Inventory.Items.Add (equip);
+		}
+
+		/// <summary>
+		/// Unequip all
+		/// </summary>
+		public void Clear ()
+		{
+			foreach (var item in equipment.ToArray ())
+				UnequipItem (item);
 		}
 
 		/// <summary>
@@ -153,6 +170,7 @@ namespace Units.Equipment
 			SlotSize.Add (EquipSlot.Head, 1);
 			SlotSize.Add (EquipSlot.Body, 1);
 			SlotSize.Add (EquipSlot.MainHand, 1);
+			SlotSize.Add (EquipSlot.Quiver, 1);
 		}
 
 		#endregion

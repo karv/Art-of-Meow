@@ -39,19 +39,23 @@ namespace Items.Declarations.Equipment.Skills
 		public readonly float BaseCooldown;
 
 		/// <summary>
-		/// The attribute if the skill
+		/// Builds the instance
 		/// </summary>
-		public readonly string Attribute;
-
-		SkillInstance buildSkillInstance (IUnidad user, IUnidad target)
+		/// <param name="user">User.</param>
+		/// <param name="target">Target.</param>
+		public SkillInstance BuildSkillInstance (IUnidad user, IUnidad target)
 		{
-			
+			var quiver = user.Equipment.EquipmentInSlot (EquipSlot.Quiver).OfType<Arrow> ();
+			if (!quiver.Any ())
+				throw new Exception ("Cannot invoke ranged skill without ammo.");
+			var arrow = quiver.First ();
+
 			if (target == null)
 				throw new ArgumentNullException ("target");
 			if (user == null)
 				throw new ArgumentNullException ("user");
 			
-			const double baseHit = 0.7;
+			var baseHit = arrow.BaseHit;
 			var chance = HitDamageCalculator.GetPctHit (
 				             user,
 				             target,
@@ -62,7 +66,9 @@ namespace Items.Declarations.Equipment.Skills
 				          user,
 				          target,
 				          ConstantesRecursos.Fuerza,
-				          ConstantesRecursos.Fuerza, Attribute);
+				          ConstantesRecursos.Fuerza, arrow.Attribute);
+			dmg *= arrow.DamageMultiplier;
+
 			var ef = new ChangeRecurso (
 				         user,
 				         target,
@@ -74,6 +80,7 @@ namespace Items.Declarations.Equipment.Skills
 			ret.Effects.Chance = chance;
 			ret.Effects.AddEffect (ef);
 			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, BaseCooldown), true);
+			ret.Effects.AddEffect (new RemoveItemEffect (user, user, arrow, 1));
 
 			return ret;
 		}
@@ -126,7 +133,7 @@ namespace Items.Declarations.Equipment.Skills
 				var tg = user.Grid [pt].GetAliveUnidadHere ();
 				if (tg == null)
 					return;
-				LastGeneratedInstance = buildSkillInstance (user, tg);
+				LastGeneratedInstance = BuildSkillInstance (user, tg);
 				LastGeneratedInstance.Effects.Executed += delegate(object sender2,
 				                                                   EffectResultEnum efRes)
 				{
@@ -168,7 +175,7 @@ namespace Items.Declarations.Equipment.Skills
 				infoBox.Texto = defaultInfoboxText;
 				return;
 			}
-			var skInst = buildSkillInstance (user, tg);
+			var skInst = BuildSkillInstance (user, tg);
 			var infoStrBuilding = new StringBuilder ();
 			foreach (var eff in skInst.Effects)
 				infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
@@ -244,7 +251,6 @@ namespace Items.Declarations.Equipment.Skills
 			this.TextureName = TextureName;
 			IconName = Icon;
 			this.BaseCooldown = BaseCooldown;
-			this.Attribute = Attribute;
 		}
 	}
 }

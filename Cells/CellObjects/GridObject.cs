@@ -33,6 +33,10 @@ namespace Cells.CellObjects
 		/// </summary>
 		public Texture2D Texture { get; private set; }
 
+		/// <summary>
+		/// Determines if this object will block visibility
+		/// </summary>
+		public bool BlockVisibility { get; set; }
 
 		/// <summary>
 		/// Desarga el contenido gráfico.

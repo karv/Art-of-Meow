@@ -66,6 +66,7 @@ namespace Items.Declarations
 				var delta = QtDelta * (Modifiers.GetTotalModificationOf (AttributesNames.ItemEffect) + 1);
 				LastGeneratedInstance.Effects.AddEffect (
 					new ChangeRecurso (user, user, ResourceName, delta){ ShowDeltaLabel = ShowDeltaInGUI });
+				AddCooldownEffect (user, LastGeneratedInstance.Effects);
 			}
 		}
 
@@ -74,7 +75,7 @@ namespace Items.Declarations
 		/// </summary>
 		public override object Clone ()
 		{
-			return new SelfResourceChangeItem (NombreBase, QtDelta, ResourceName, TextureName)
+			return new SelfResourceChangeItem (NombreBase, QtDelta, ResourceName, TextureName, CoolDownBase)
 			{
 				ShowDeltaInGUI = ShowDeltaInGUI,
 				AllowedModNames = AllowedModNames
@@ -85,8 +86,8 @@ namespace Items.Declarations
 		/// Initializes a new instance of the <see cref="Items.Declarations.SelfResourceChangeItem"/> class.
 		/// </summary>
 		[JsonConstructor]
-		public SelfResourceChangeItem (string NombreBase, float QtDelta, string ResourceName, string Texture)
-			: base (NombreBase)
+		public SelfResourceChangeItem (string NombreBase, float QtDelta, string ResourceName, string Texture, float Cooldown)
+			: base (NombreBase, Cooldown)
 		{
 			this.QtDelta = QtDelta;
 			this.ResourceName = ResourceName;

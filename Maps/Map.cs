@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using AoM;
 using Cells;
 using Cells.CellObjects;
@@ -24,47 +23,36 @@ namespace Maps
 	{
 		#region Data & internals
 
-		char [,] _data;
+		static char [,] generateData ()
+		{
+			const string jsScriptRandomMapFileName = @"Data/Maps/RandomMapDataScript.js";
+			const string functionName = "obtenerJSON";
 
-		/// <summary>
-		/// Gets the horizontal size
-		/// </summary>
-		[JsonProperty (Order = 1)]
-		public int SizeX { get { return _data.GetLength (0); } }
+			var code = File.ReadAllText (jsScriptRandomMapFileName);
+			var eng = new Jurassic.ScriptEngine ();
+			eng.Evaluate (code);
+			var r = eng.CallGlobalFunction (functionName) as string;
 
-		/// <summary>
-		/// Gets the vertical size
-		/// </summary>
-		[JsonProperty (Order = 0)]
-		public int SizeY { get { return _data.GetLength (1); } }
+			string [] strs = JsonConvert.DeserializeObject<string []> (r);
+			var ret = toMatrix (strs);
 
-		/// <summary>
-		/// Gets the size of this map
-		/// </summary>
-		[JsonIgnore]
-		public Size Size
-		{ 
-			get { return new Size (SizeX, SizeY); } 
+			// Bound the map
+			for (int i = 0; i < ret.GetLength (0); i++)
+			{
+				ret [i, 0] = 'W';
+				ret [i, ret.GetLength (1) - 1] = 'W';
+			}
+
+			for (int i = 1; i < ret.GetLength (1) - 1; i++)
+			{
+				ret [0, i] = 'W';
+				ret [ret.GetLength (0) - 1, i] = 'W';
+			}
+
+			return ret;
 		}
 
 		readonly Random _r;
-
-		/// <summary>
-		/// Sets the data as a string
-		/// </summary>
-		/// <value>The data.</value>
-		[JsonProperty (Order = 2)]
-		public IEnumerable<string> Data
-		{
-			set
-			{ 
-				MapParser.StringToData (value, _data); 
-			}
-			get
-			{ 
-				return MapParser.DataToString (_data);
-			}
-		}
 
 		/// <summary>
 		/// Should add flavor features, like plants on the ground
@@ -82,14 +70,17 @@ namespace Maps
 
 		#region Generator
 
-		LogicGrid buildBaseGrid ()
+		LogicGrid buildBaseGrid (char [,] data)
 		{
-			var ret = new LogicGrid (Size);
-			for (int ix = 0; ix < SizeX; ix++)
-				for (int iy = 0; iy < SizeY; iy++)
+			var sizeX = data.GetLength (0);
+			var sizeY = data.GetLength (1);
+			var ret = new LogicGrid (sizeX, sizeY);
+			for (int ix = 0; ix < sizeX; ix++)
+				for (int iy = 0; iy < sizeY; iy++)
 				{
-					var newObj = MakeObject (_data [ix, iy], ret, new Point (ix, iy));
-					ret.AddCellObject (newObj);
+					var newObj = MakeObject (data [ix, iy], ret, new Point (ix, iy));
+					foreach (var ob in newObj)
+						ret.AddCellObject (ob);
 				}
 			return ret;
 		}
@@ -106,7 +97,9 @@ namespace Maps
 		/// <param name="enemyExp">La experiencia de cada enemigo en el grid</param>
 		public LogicGrid GenerateGrid (float enemyExp)
 		{
-			var ret = buildBaseGrid ();
+			var data = generateData ();
+			var ret = buildBaseGrid (data);
+
 			makeStairs (ret);
 
 			ret.Factory = Populator;
@@ -119,6 +112,7 @@ namespace Maps
 			if (MapItemGroundItems != null)
 				addDropItems (ret);
 
+			ret.TestGridIntegrity ();
 			return ret;
 		}
 
@@ -157,9 +151,9 @@ namespace Maps
 		/// <param name="c">A <c>char</c> value representing the <see cref="IGridObject"/></param>
 		/// <param name="grid">Grid.</param>
 		/// <param name="p">Location grid-wise of the item to add</param>
-		public IGridObject MakeObject (char c,
-		                               LogicGrid grid,
-		                               Point p)
+		public IGridObject[] MakeObject (char c,
+		                                 LogicGrid grid,
+		                                 Point p)
 		{
 			if (grid == null)
 				throw new ArgumentNullException ("grid");
@@ -169,16 +163,19 @@ namespace Maps
 			{
 				case ' ':
 				case (char)0:
-					return new BackgroundObject (p, "floor", grid);
+					return new [] { new BackgroundObject (p, "floor", grid) };
 				case 'W':
-					var newObj = new GridWall ("brick-wall", grid);
-					newObj.Location = p;
-					return newObj;
+					return new [] { new GridWall ("brick-wall", grid){ Location = p } };
+				case 'D':
+					return new IGridObject[]
+					{ new DoorGridObject (grid){ Location = p },
+						new BackgroundObject (p, "floor", grid)
+					};
 				case '\n':
 				case '\r':
 					return null;
 			}
-			throw new FormatException ("Unknown accepted map symbol " + c);
+			throw new FormatException ("invalid map symbol: " + c);
 		}
 
 		/// <summary>
@@ -235,37 +232,6 @@ namespace Maps
 			return goodSymbols.Contains (c);
 		}
 
-		void parseMapObjects (string data)
-		{
-			var i = 0;
-			var j = 0;
-			var mapSize = SizeX * SizeY;
-			while (i < mapSize)
-			{
-				var ix = i % SizeX;
-				var iy = i / SizeX;
-				var chr = data [j];
-				//var obj = MakeObject (chr, ret, new Point (ix, iy));
-				if (ExistSymbol (chr))
-				{
-					_data [ix, iy] = data [j++];
-					i++;
-				}
-			}
-		}
-
-		IEnumerable <string> unparseMapObjects ()
-		{
-			var line = new StringBuilder ();
-			for (int ix = 0; ix < SizeX; ix++)
-			{
-				for (int iy = 0; iy < SizeY; iy++)
-					line.Append (_data [ix, iy]);
-				yield return line.ToString ();
-				line.Clear ();
-			}		
-		}
-
 		#endregion
 
 		#region Ctor
@@ -273,22 +239,37 @@ namespace Maps
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Maps.Map"/> class
 		/// </summary>
-		/// <param name="size">Size</param>
-		public Map (Size size)
+		[Obsolete]
+		public Map ()
 		{
 			_r = new Random ();
-			_data = new char[size.Width, size.Height];
 		}
 
 		[JsonConstructor]
-		Map (int sizeX, int sizeY,
-		     IEnumerable<string> data,
-		     Populator Populator)
-			: this (new Size (sizeX, sizeY))
+		Map (Populator Populator)
 		{
-			Data = data;
+			_r = new Random ();
+
 			this.Populator = Populator;
 		}
+
+		static char[,] toMatrix (string [] strs)
+		{
+			try
+			{
+				var ret = new char[strs [0].Length, strs.Length];
+				for (var ix = 0; ix < strs [0].Length; ix++)
+					for (var iy = 0; iy < strs.Length; iy++)
+						ret [ix, iy] = strs [iy] [ix];
+				return ret;
+				
+			}
+			catch (Exception ex)
+			{
+				throw new Exception ("Error trying to generate a random map", ex);
+			}
+		}
+
 
 		#endregion
 

@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using AoM;
 using Cells.CellObjects;
 using Cells.Collision;
+using Debugging;
 using Helper;
 using Maps;
 using Microsoft.Xna.Framework;
@@ -19,6 +21,34 @@ namespace Cells
 	/// </summary>
 	public class LogicGrid : IComponent, IUpdate
 	{
+		#region Debug
+
+		/// <summary>
+		/// Throws an exception if the map has flaws
+		/// </summary>
+		[Conditional ("DEBUG")]
+		public void TestGridIntegrity ()
+		{
+			// Bound the map
+			for (int i = 0; i < Size.Width; i++)
+			{
+				if (!this [i, 0].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+				if (!this [i, Size.Height - 1].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+			}
+
+			for (int i = 1; i < Size.Height - 1; i++)
+			{
+				if (!this [0, i].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+				if (!this [Size.Width - 1, i].EnumerateObjects ().OfType<GridWall> ().Any ())
+					throw new Exception ();
+			}
+		}
+
+		#endregion
+
 		#region Data & internals
 
 		readonly Cell [,] _cells;
@@ -29,6 +59,16 @@ namespace Cells
 		/// Gets the dimentions lenght of the world, in Grid-long
 		/// </summary>
 		public Size Size { get; }
+
+		/// <summary>
+		/// Enumerates the cells
+		/// </summary>
+		public IEnumerable<Cell> EnumerateCells ()
+		{
+			for (int ix = 0; ix < Size.Width; ix++)
+				for (int iy = 0; iy < Size.Height; iy++)
+					yield return this [ix, iy];
+		}
 
 		#endregion
 
@@ -134,6 +174,7 @@ namespace Cells
 
 		void IGameComponent.Initialize ()
 		{
+			TestGridIntegrity ();
 		}
 
 		#endregion
@@ -308,7 +349,20 @@ namespace Cells
 				moveObj?.AfterMoving (endLoc);
 				return true;
 			}
-			return false;
+
+			var shouldReturnTrue = false;
+			// Check if the destination object is activable in case is currently collidable
+			foreach (var cell in destCell.EnumerateObjects ().OfType<IActivable> ())
+			{
+				if (cell.Activar ())
+				{					
+					var strM = string.Format ("{0} was activated via melee + obstruction", cell);
+					Debug.WriteLine (strM, DebugCategories.GridItemsInteraction);
+					shouldReturnTrue = true;
+				}
+			}
+
+			return shouldReturnTrue;
 		}
 
 		/// <summary>

@@ -31,14 +31,26 @@ namespace Items
 					picker.Normalize ();
 					var picked = picker.Pick ();
 					var newItem = Program.MyGame.Items.CreateItem<IItem> (picked);
-					while (_r.NextDouble () < probAddMod)
+					var stackItem = newItem as IStackingItem;
+					if (stackItem != null)
 					{
-						// TODO: Do not allow duplicated mod
-						// Add a new item modification
-						var newMod = newItem.AllowedMods [_r.Next (newItem.AllowedMods.Length)];
+						// Requiered to calculate the items value properly
+						stackItem.Quantity = 1; 
 
-						newItem.Modifiers.Modifiers.Add (newMod);
+						// Max stack size = 100
+						var maxStack = (int)Math.Min (totalDropValue / stackItem.Value, 100);
+						stackItem.Quantity = _r.Next (1, maxStack);
 					}
+					if (newItem.AllowedMods.Length > 0)
+						// Add mods
+						while (_r.NextDouble () < probAddMod)
+						{
+							// TODO: Do not allow duplicated mod
+							// Add a new item modification
+							var newMod = newItem.AllowedMods [_r.Next (newItem.AllowedMods.Length)];
+
+							newItem.Modifiers.Modifiers.Add (newMod);
+						}
 					ret.Add (newItem);
 					totalDropValue -= newItem.Value;
 				}

@@ -4,6 +4,7 @@ using System.Linq;
 using Cells;
 using Newtonsoft.Json;
 using Units;
+using System.Security.Policy;
 
 namespace Maps
 {
@@ -28,7 +29,7 @@ namespace Maps
 			foreach (var rule in Rules.Where (rule => _r.NextDouble () < rule.Chance))
 				foreach (var st in rule.Stacks)
 				{
-					var qt = st.UnitQuantityDistribution.Pick ();
+					var qt = grid.Size.Width * grid.Size.Height * st.SpawnProbPerCell;
 					// build 'qt' copies of this race
 					for (int i = 0; i < qt; i++)
 					{

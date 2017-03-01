@@ -1,23 +1,5 @@
 ﻿{
-  "$id": "1",
   "$type": "Maps.Map, Art_of_Meow",
-  "SizeY": 10,
-  "SizeX": 10,
-  "Data": {
-    "$type": "System.String[], mscorlib",
-    "$values": [
-      "WWWWWWWWWW",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "W        W",
-      "WWWWWWWWWW"
-    ]
-  },
   "Populator": {
     "$type": "Maps.Populator, Art_of_Meow",
     "Rules": {
@@ -31,11 +13,7 @@
               {
                 "$type": "Maps.DistributedStack, Art_of_Meow",
                 "RaceName": "Imp",
-                "UnitQuantityDistribution": {
-                  "$type": "Helper.IntegerInterval, Art_of_Meow",
-                  "Min": 1,
-                  "Max": 2
-                }
+                "SpawnProbPerCell": 0.002
               }
             ]
           },

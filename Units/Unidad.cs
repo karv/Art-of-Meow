@@ -52,6 +52,8 @@ namespace Units
 
 		#region Grid object
 
+		bool IGridObject.BlockVisibility { get { return false; } }
+
 		System.Collections.Generic.IEnumerable<ICollisionRule> ICollidableGridObject.GetCollisionRules ()
 		{
 			// Does not stack
@@ -308,6 +310,7 @@ namespace Units
 		/// </summary>
 		public void DropAllItems ()
 		{
+			Equipment.Clear ();
 			foreach (var it in Inventory.Items)
 			{
 				var obj = new GroundItem (it, Grid);
@@ -326,6 +329,7 @@ namespace Units
 				// Agregar el objeto al grid
 				obj.AddToGrid ();
 			}
+
 
 			// Eliminar todo del contenido
 			Inventory.Items.Clear ();
