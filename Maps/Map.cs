@@ -163,7 +163,7 @@ namespace Maps
 			{
 				case ' ':
 				case (char)0:
-					return new [] { new BackgroundObject (p, "floor", grid) };
+					return new [] { new BackgroundObject (p, "floor", grid, Color.DarkGray) };
 				case 'W':
 					return new [] { new GridWall ("brick-wall", grid){ Location = p } };
 				case 'D':

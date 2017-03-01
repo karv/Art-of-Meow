@@ -7,7 +7,7 @@ namespace Cells.CellObjects
 	/// <summary>
 	/// Un objeto de <see cref="Grid"/> que no interactúa
 	/// </summary>
-	public class BackgroundObject : IGridObject
+	public class BackgroundObject : IGridObject, IMinimapVisible
 	{
 		/// <summary>
 		/// The name of the texture
@@ -31,9 +31,13 @@ namespace Cells.CellObjects
 		{
 		}
 
+		protected Color MinimapColor { get; set; }
+
+		Color IMinimapVisible.MinimapColor { get { return MinimapColor; } }
+
 		bool IGridObject.BlockVisibility
 		{
-			get			{ return false; }
+			get { return false; }
 		}
 
 		/// <summary>
@@ -119,6 +123,14 @@ namespace Cells.CellObjects
 			StringTexture = texture;
 			Location = loc;
 			Grid = grid;
+		}
+
+		public BackgroundObject (Point loc,
+		                         string texture, 
+		                         LogicGrid grid, Color minimapColor)
+			: this (loc, texture, grid)
+		{
+			MinimapColor = minimapColor;
 		}
 	}
 }

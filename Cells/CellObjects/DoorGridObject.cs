@@ -10,7 +10,7 @@ namespace Cells.CellObjects
 	/// <summary>
 	/// It's a door
 	/// </summary>
-	public class DoorGridObject : ICollidableGridObject, IActivable
+	public class DoorGridObject : ICollidableGridObject, IActivable, IMinimapVisible
 	{
 		/// <summary>
 		/// Devuelve el Grid
@@ -27,6 +27,8 @@ namespace Cells.CellObjects
 		}
 
 		bool IGridObject.BlockVisibility { get { return !IsOpen; } }
+
+		Color IMinimapVisible.MinimapColor { get { return Color.Orange; } }
 
 		bool IActivable.Activar ()
 		{

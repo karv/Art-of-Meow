@@ -10,7 +10,7 @@ namespace Cells.CellObjects
 	/// <summary>
 	/// Representa un muro de Grid
 	/// </summary>
-	public class GridWall : ICollidableGridObject
+	public class GridWall : ICollidableGridObject, IMinimapVisible
 	{
 		/// <summary>
 		/// Devuelve el Grid
@@ -29,6 +29,8 @@ namespace Cells.CellObjects
 		/// La profundidad de dibujo.
 		/// </summary>
 		public float Depth { get { return Depths.Foreground; } }
+
+		Color IMinimapVisible.MinimapColor { get { return Color.Black; } }
 
 		/// <summary>
 		/// La textura de dibujo
