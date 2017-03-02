@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
+using AoM;
 
 namespace Componentes
 {
@@ -16,6 +17,8 @@ namespace Componentes
 		/// Gets the memory grid linked to this minimap
 		/// </summary>
 		public MemoryGrid DisplayingGrid { get; set; }
+
+		Texture2D borderTexture;
 
 		/// <summary>
 		/// Produces a texture based on <see cref="DisplayingGrid"/>
@@ -97,9 +100,14 @@ namespace Componentes
 			RegenerateTexture ();
 		}
 
+		Color _outColor = Color.White;
+		Color _inColor = Color.DarkGray * 0.1f;
+
 		public void RegenerateTexture ()
 		{
 			LastGeneratedTexture = ProduceTexture ();
+			var size = new Size (Location.Width, Location.Height);
+			borderTexture = (Game as Juego).SimpleTextureGenerator.OutlineTexture (size, _outColor, _inColor);
 		}
 
 		/// <summary>
@@ -108,6 +116,7 @@ namespace Componentes
 		protected override void Draw ()
 		{
 			var bat = Screen.Batch;
+			bat.Draw (borderTexture, Location, Color.White);
 			bat.Draw (LastGeneratedTexture, Location, Color.White);
 		}
 

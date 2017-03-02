@@ -184,7 +184,7 @@ namespace Componentes
 
 			Minimap = new MinimapControl (cont)
 			{
-				Location = new Rectangle (700, 500, 200, 200),
+				Location = new Rectangle (1050, 500, 200, 200),
 				DisplayingGrid = (Player.Inteligencia as HumanIntelligence).Memory
 			};
 
