@@ -12,9 +12,8 @@ using Moggle.Comm;
 using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
-using Units;
-using OpenTK.Graphics;
 using MonoGame.Extended.ViewportAdapters;
+using Units;
 
 namespace Screens
 {

@@ -58,7 +58,6 @@ namespace Componentes
 			Unidad = unit;
 			TextureFondoName = "Interface//win_bg";
 			GridSize = new MonoGame.Extended.Size (3, 3);
-			TamañoBotón = new MonoGame.Extended.Size (100, 100);
 			UpdateObjetcs ();
 			BgColor = Color.Red * 0.3f;
 		}

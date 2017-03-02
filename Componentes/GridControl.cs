@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
@@ -11,8 +12,6 @@ using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
 using Units.Inteligencia;
-using AoM;
-using Screens;
 
 namespace Componentes
 {
@@ -134,7 +133,10 @@ namespace Componentes
 
 		#region Draw
 
-		public Color BackgroundColor = Color.DarkRed * 0.15f;
+		/// <summary>
+		/// Gets the color of the background
+		/// </summary>
+		public readonly Color BackgroundColor = Color.DarkRed * 0.15f;
 
 		/// <summary>
 		/// Dibuja el control.
