@@ -7,8 +7,8 @@ using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Shapes;
 using Screens;
 using Units;
-using Units.Recursos;
 using Units.Inteligencia;
+using Units.Recursos;
 
 namespace Componentes
 {
@@ -54,6 +54,9 @@ namespace Componentes
 		/// </summary>
 		public RecursoView RecursoView { get; private set; }
 
+		/// <summary>
+		/// Gets the minimap
+		/// </summary>
 		public MinimapControl Minimap { get; private set; }
 
 		/// <summary>

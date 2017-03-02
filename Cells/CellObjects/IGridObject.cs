@@ -6,11 +6,6 @@ using Skills;
 
 namespace Cells.CellObjects
 {
-	public interface IMinimapVisible : IGridObject
-	{
-		Color MinimapColor { get; }
-	}
-
 	/// <summary>
 	/// Representa un objeto como miembro de un <see cref="Grid"/>
 	/// </summary>

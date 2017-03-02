@@ -31,6 +31,9 @@ namespace Cells.CellObjects
 		{
 		}
 
+		/// <summary>
+		/// Gets or sets the color of the minimap.
+		/// </summary>
 		protected Color MinimapColor { get; set; }
 
 		Color IMinimapVisible.MinimapColor { get { return MinimapColor; } }
@@ -125,6 +128,9 @@ namespace Cells.CellObjects
 			Grid = grid;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Cells.CellObjects.BackgroundObject"/> class.
+		/// </summary>
 		public BackgroundObject (Point loc,
 		                         string texture, 
 		                         LogicGrid grid, Color minimapColor)

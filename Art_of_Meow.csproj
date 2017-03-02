@@ -237,6 +237,7 @@
     <Compile Include="Units\Inteligencia\RangedIntelligence.cs" />
     <Compile Include="Cells\CellObjects\DoorGridObject.cs" />
     <Compile Include="Componentes\MinimapControl.cs" />
+    <Compile Include="Cells\CellObjects\IMinimapVisible.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

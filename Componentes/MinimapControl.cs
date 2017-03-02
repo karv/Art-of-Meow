@@ -1,10 +1,10 @@
-﻿using Cells;
+﻿using AoM;
+using Cells;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
 using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
-using AoM;
 
 namespace Componentes
 {
@@ -103,6 +103,9 @@ namespace Componentes
 		Color _outColor = Color.White;
 		Color _inColor = Color.DarkGray * 0.1f;
 
+		/// <summary>
+		/// Rebuild the miniap texture, updates <see cref="LastGeneratedTexture"/>
+		/// </summary>
 		public void RegenerateTexture ()
 		{
 			LastGeneratedTexture = ProduceTexture ();
@@ -120,10 +123,17 @@ namespace Componentes
 			bat.Draw (LastGeneratedTexture, Location, Color.White);
 		}
 
+		/// <summary>
+		/// Update lógico
+		/// </summary>
 		public override void Update (GameTime gameTime)
 		{
 		}
 
+		/// <summary>
+		/// Devuelve el límite gráfico del control.
+		/// </summary>
+		/// <returns>The bounds.</returns>
 		protected override IShapeF GetBounds ()
 		{
 			return Location.ToRectangleF ();

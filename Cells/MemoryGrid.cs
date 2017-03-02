@@ -65,6 +65,9 @@ namespace Cells
 		{
 		}
 
+		/// <summary>
+		/// Occurs when the memory is updated.
+		/// </summary>
 		public event EventHandler Updated;
 
 		/// <summary>

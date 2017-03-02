@@ -20,8 +20,14 @@ namespace Cells
 		{
 		}
 
-		public static Color DefaultMinimapColor = Color.Black;
+		/// <summary>
+		/// The default color of a minimap pixel
+		/// </summary>
+		public readonly static Color DefaultMinimapColor = Color.Black;
 
+		/// <summary>
+		/// Gets the color of this pixel in a minimap.
+		/// </summary>
 		public Color MinimapColor { get; }
 
 		/// <summary>
