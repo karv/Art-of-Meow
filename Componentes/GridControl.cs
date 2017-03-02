@@ -11,6 +11,7 @@ using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
 using Units.Inteligencia;
+using AoM;
 
 namespace Componentes
 {
@@ -170,6 +171,12 @@ namespace Componentes
 			var bat = Screen.Batch;
 
 			var box = GetVisibilityBox ();
+			bat.Draw (
+				(Game as Juego).SimpleTextureGenerator.SolidTexture (new Size (1, 1), Color.White),
+				destinationRectangle: new Rectangle (ControlTopLeft, ControlSize),
+				color: Color.DarkRed * 0.15f,
+				layerDepth: Depths.Background);
+			
 			var intel = CameraUnidad.Inteligencia as HumanIntelligence;
 			for (int ix = box.Left; ix <= box.Right; ix++)
 			{

@@ -148,6 +148,7 @@ namespace Screens
 		[Obsolete]
 		protected void DrawGridBackground ()
 		{
+			return;
 			Batch.Draw (
 				solidTexture,
 				destinationRectangle: GridDrawingRectangle,
