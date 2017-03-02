@@ -12,6 +12,7 @@ using Moggle.Comm;
 using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
+using MonoGame.Extended.ViewportAdapters;
 using Units;
 using Units.Inteligencia;
 
@@ -122,66 +123,16 @@ namespace Screens
 			GridControl.CenterIfNeeded (Player);
 		}
 
-		/// <summary>
-		/// El área de dibujo del tablero
-		/// </summary>
-		public static Rectangle GridDrawingRectangle = 
-			new Rectangle (30, 30, 1000, 700);
+		ViewportAdapter viewport;
 
 		/// <summary>
 		/// Dibuja la pantalla
 		/// </summary>
 		public override void Draw ()
 		{
-			Batch.Begin (SpriteSortMode.BackToFront);
+			Batch.Begin (SpriteSortMode.BackToFront, transformMatrix : viewport.GetScaleMatrix ());
 			EntreBatches ();
-			DrawGridBackground ();
 			Batch.End ();
-		}
-
-		Texture2D solidTexture;
-		Color gridBackgroundColor = Color.DarkRed * 0.15f;
-
-		/// <summary>
-		/// Dibuja el fondo de GridControl
-		/// </summary>
-		[Obsolete]
-		protected void DrawGridBackground ()
-		{
-			return;
-			Batch.Draw (
-				solidTexture,
-				destinationRectangle: GridDrawingRectangle,
-				color: gridBackgroundColor,
-				layerDepth: Depths.Background);
-		}
-
-		/// <summary>
-		/// Calculates the grid size to make it fir correctly
-		/// </summary>
-		void generateGridSizes ()
-		{
-			int visCellX = GridDrawingRectangle.Width / GridControl.CellSize.Width;
-			int visCellY = GridDrawingRectangle.Height / GridControl.CellSize.Height;
-			GridControl.VisibleCells = new Size (visCellX, visCellY);
-			int ScreenOffsX = GridDrawingRectangle.Width - (GridControl.CellSize.Width * visCellX);
-			int ScreenOffsY = GridDrawingRectangle.Height - (GridControl.CellSize.Height * visCellY);
-			GridControl.ControlTopLeft = new Point (ScreenOffsX / 2, ScreenOffsY / 2) + GridDrawingRectangle.Location;
-		}
-
-		#endregion
-
-		#region Memory
-
-		/// <summary>
-		/// Cargar contenido de cada control incluido.
-		/// </summary>
-		public override void LoadAllContent ()
-		{
-			solidTexture = (Juego as Juego).SimpleTextureGenerator.SolidTexture (
-				new Size (1, 1),
-				Color.White);
-			base.LoadAllContent ();
 		}
 
 		#endregion
@@ -250,10 +201,6 @@ namespace Screens
 		/// </summary>
 		void inicializarJugador ()
 		{
-			PlayerInfoControl = new PlayerInfoControl (this, Player);
-			PlayerInfoControl.DrawingArea = new Rectangle (
-				GridDrawingRectangle.Right, 0, 300, 900);
-
 			// Evento de movimiento para centrar cámara
 			Player.OnRelocation += recenterCameraOnPlayer;
 		}
@@ -263,13 +210,22 @@ namespace Screens
 		/// </summary>
 		protected override void DoInitialization ()
 		{
+			viewport = new BoxingViewportAdapter (Juego.Window, Device, 1600, 900);
 			var grd = GameInitializer.InitializeNewWorld (out Player);
-			GridControl = new GridControl (grd, this);
 
+			GridControl = new GridControl (grd, this)
+			{
+				ControlSize = new Size (1160, 860),
+				ControlTopLeft = new Point (20, 20),
+				CellSize = new Size (32, 24)
+			};
+			
 			inicializarJugador ();
 
+			PlayerInfoControl = new PlayerInfoControl (this, Player)
+			{ DrawingArea = new Rectangle (1210, 0, 380, 900) };
+
 			base.DoInitialization ();
-			generateGridSizes ();
 
 			// Observe que esto debe ser al final, ya que de lo contrario no se inicializarán
 			// los nuevos objetos.

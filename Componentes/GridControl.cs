@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AoM;
 using Cells;
 using Cells.CellObjects;
 using Microsoft.Xna.Framework;
@@ -11,7 +12,6 @@ using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
 using Units.Inteligencia;
-using AoM;
 
 namespace Componentes
 {
@@ -70,27 +70,11 @@ namespace Componentes
 
 		#region Control size and location
 
-		Size _gameSize;
-
-		Size _cellSize;
-
-		Size _visibleCells;
 
 		/// <summary>
 		/// The size of a cell (Draw)
 		/// </summary>
-		public Size CellSize
-		{
-			get
-			{
-				return _cellSize;
-			}
-			set
-			{
-				_cellSize = value;
-				_visibleCells = new Size (_gameSize.Width / value.Width, _gameSize.Height / value.Height);
-			}
-		}
+		public Size CellSize { get; set; }
 
 		/// <summary>
 		/// Gets the number of visible cells
@@ -99,12 +83,11 @@ namespace Componentes
 		{
 			get
 			{
-				return _visibleCells;
+				return new Size (ControlSize.Width / CellSize.Width, ControlSize.Height / CellSize.Height);
 			}
 			set
 			{
-				_visibleCells = value;
-				_cellSize = new Size (_gameSize.Width / value.Width, _gameSize.Height / value.Height);
+				CellSize = new Size (ControlSize.Width / value.Width, ControlSize.Height / value.Height);
 			}
 		}
 
@@ -119,21 +102,10 @@ namespace Componentes
 		public Point ControlTopLeft = Point.Zero;
 
 		/// <summary>
-		/// Gets the number of visible cells
-		/// </summary>
-
-		/// <summary>
 		/// Gets the size of this grid, as a <see cref="IControl"/>
 		/// </summary>
 		/// <value>The size of the control.</value>
-		public Size ControlSize
-		{
-			get
-			{
-				return new Size (VisibleCells.Width * CellSize.Width,
-					VisibleCells.Height * CellSize.Height);
-			}
-		}
+		public Size ControlSize { get; set; }
 
 		/// <summary>
 		/// Gets the bounds
@@ -162,6 +134,11 @@ namespace Componentes
 		#region Draw
 
 		/// <summary>
+		/// Gets the color of the background
+		/// </summary>
+		public readonly Color BackgroundColor = Color.DarkRed * 0.15f;
+
+		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
 		protected override void Draw ()
@@ -174,13 +151,13 @@ namespace Componentes
 			bat.Draw (
 				(Game as Juego).SimpleTextureGenerator.SolidTexture (new Size (1, 1), Color.White),
 				destinationRectangle: new Rectangle (ControlTopLeft, ControlSize),
-				color: Color.DarkRed * 0.15f,
+				color: BackgroundColor,
 				layerDepth: Depths.Background);
 			
 			var intel = CameraUnidad.Inteligencia as HumanIntelligence;
-			for (int ix = box.Left; ix <= box.Right; ix++)
+			for (int ix = box.Left; ix < box.Right; ix++)
 			{
-				for (int iy = box.Top; iy <= box.Bottom; iy++)
+				for (int iy = box.Top; iy < box.Bottom; iy++)
 				{
 					var p = new Point (ix, iy);
 					var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
@@ -243,14 +220,6 @@ namespace Componentes
 		/// </summary>
 		public override void Initialize ()
 		{
-			if (!IsInitialized)
-			{
-				_gameSize = new Size (
-					Game.GraphicsDevice.Adapter.CurrentDisplayMode.Width - 450,
-					Game.GraphicsDevice.Adapter.CurrentDisplayMode.Height - 100);
-				//VisibleCells = new Size (40, 20);
-				CellSize = new Size (16, 16);
-			}
 			base.Initialize ();
 			Grid.ObjectAdded += itemAdded;
 		}
@@ -362,7 +331,6 @@ namespace Componentes
 			if (VisibleCells.Width % 2 == 0 && VisibleCells.Height % 2 == 0)
 			{
 				VisibleCells = new Size (VisibleCells.Width / 2, VisibleCells.Height / 2);
-				CellSize = new Size (CellSize.Width * 2, CellSize.Height * 2);
 				TryCenterOn ((Screen as Screens.MapMainScreen).Player.Location);
 			}
 		}
@@ -374,7 +342,6 @@ namespace Componentes
 		{
 			if (CellSize.Width % 2 == 0 && CellSize.Height % 2 == 0)
 			{
-				VisibleCells = new Size (VisibleCells.Width * 2, VisibleCells.Height * 2);
 				CellSize = new Size (CellSize.Width / 2, CellSize.Height / 2);
 				TryCenterOn ((Screen as Screens.MapMainScreen).Player.Location);
 			}

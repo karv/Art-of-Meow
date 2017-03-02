@@ -180,14 +180,14 @@ namespace Componentes
 				},
 				TamañoBotón = new Size (16, 16),
 				TipoOrden = Contenedor<IDibujable>.TipoOrdenEnum.ColumnaPrimero,
-				Posición = DrawingArea.Location + new Point (30, 30)
+				Posición = new Point (30, 30)
 			};
 
 			RecursoView = new RecursoView (cont, Player.Recursos);
 
 			Minimap = new MinimapControl (cont)
 			{
-				Location = new Rectangle (1050, 500, 200, 200),
+				Location = new Rectangle (new Point (1250, 600), new Size (200, 200)),
 				DisplayingGrid = (Player.Inteligencia as HumanIntelligence).Memory
 			};
 
