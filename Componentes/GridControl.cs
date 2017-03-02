@@ -218,8 +218,6 @@ namespace Componentes
 		/// </summary>
 		public override void Initialize ()
 		{
-			if (!IsInitialized)
-				VisibleCells = new Size (50, 20);
 			base.Initialize ();
 			Grid.ObjectAdded += itemAdded;
 		}
