@@ -155,9 +155,9 @@ namespace Componentes
 				layerDepth: Depths.Background);
 			
 			var intel = CameraUnidad.Inteligencia as HumanIntelligence;
-			for (int ix = box.Left; ix <= box.Right; ix++)
+			for (int ix = box.Left; ix < box.Right; ix++)
 			{
-				for (int iy = box.Top; iy <= box.Bottom; iy++)
+				for (int iy = box.Top; iy < box.Bottom; iy++)
 				{
 					var p = new Point (ix, iy);
 					var rectOutput = new Rectangle (CellSpotLocation (p), CellSize);
