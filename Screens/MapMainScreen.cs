@@ -120,7 +120,7 @@ namespace Screens
 			GridControl.CenterIfNeeded (Player);
 		}
 
-		BoxingViewportAdapter viewport;
+		ViewportAdapter viewport;
 
 		/// <summary>
 		/// Dibuja la pantalla
@@ -246,7 +246,7 @@ namespace Screens
 			{
 				ControlSize = new Size (1160, 860),
 				ControlTopLeft = new Point (20, 20),
-				CellSize = new Size (24, 24)
+				CellSize = new Size (32, 24)
 			};
 			
 			inicializarJugador ();
