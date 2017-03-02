@@ -11,6 +11,8 @@ using MonoGame.Extended;
 using MonoGame.Extended.Shapes;
 using Units;
 using Units.Inteligencia;
+using AoM;
+using Screens;
 
 namespace Componentes
 {
@@ -69,30 +71,11 @@ namespace Componentes
 
 		#region Control size and location
 
-		Size _gameSize = new Size (1200, 480);
-
-		Size _cellSize;
-
-		Size _visibleCells;
 
 		/// <summary>
 		/// The size of a cell (Draw)
 		/// </summary>
-		public Size CellSize
-		{
-			get
-			{
-				return _cellSize;
-			}
-			set
-			{
-				if (_gameSize.Width % value.Width == 0 && _gameSize.Height % value.Height == 0)
-				{
-					_cellSize = value;
-					_visibleCells = new Size (_gameSize.Width / value.Width, _gameSize.Height / value.Height);
-				}
-			}
-		}
+		public Size CellSize { get; set; }
 
 		/// <summary>
 		/// Gets the number of visible cells
@@ -101,15 +84,11 @@ namespace Componentes
 		{
 			get
 			{
-				return _visibleCells;
+				return new Size (ControlSize.Width / CellSize.Width, ControlSize.Height / CellSize.Height);
 			}
 			set
 			{
-				if (_gameSize.Width % value.Width == 0 && _gameSize.Height % value.Height == 0)
-				{
-					_visibleCells = value;
-					_cellSize = new Size (_gameSize.Width / value.Width, _gameSize.Height / value.Height);
-				}
+				CellSize = new Size (ControlSize.Width / value.Width, ControlSize.Height / value.Height);
 			}
 		}
 
@@ -127,14 +106,7 @@ namespace Componentes
 		/// Gets the size of this grid, as a <see cref="IControl"/>
 		/// </summary>
 		/// <value>The size of the control.</value>
-		public Size ControlSize
-		{
-			get
-			{
-				return new Size (VisibleCells.Width * CellSize.Width,
-					VisibleCells.Height * CellSize.Height);
-			}
-		}
+		public Size ControlSize { get; set; }
 
 		/// <summary>
 		/// Gets the bounds
@@ -162,6 +134,8 @@ namespace Componentes
 
 		#region Draw
 
+		public Color BackgroundColor = Color.DarkRed * 0.15f;
+
 		/// <summary>
 		/// Dibuja el control.
 		/// </summary>
@@ -172,6 +146,12 @@ namespace Componentes
 			var bat = Screen.Batch;
 
 			var box = GetVisibilityBox ();
+			bat.Draw (
+				(Game as Juego).SimpleTextureGenerator.SolidTexture (new Size (1, 1), Color.White),
+				destinationRectangle: new Rectangle (ControlTopLeft, ControlSize),
+				color: BackgroundColor,
+				layerDepth: Depths.Background);
+			
 			var intel = CameraUnidad.Inteligencia as HumanIntelligence;
 			for (int ix = box.Left; ix <= box.Right; ix++)
 			{
