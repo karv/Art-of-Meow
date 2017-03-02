@@ -145,6 +145,7 @@ namespace Screens
 		/// <summary>
 		/// Dibuja el fondo de GridControl
 		/// </summary>
+		[Obsolete]
 		protected void DrawGridBackground ()
 		{
 			Batch.Draw (

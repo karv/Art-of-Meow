@@ -106,6 +106,8 @@ namespace AoM
 		{
 			Content.RootDirectory = @"Content/Content";
 			Graphics.IsFullScreen = true;
+			Graphics.PreferredBackBufferHeight = 1200;
+			Graphics.PreferredBackBufferWidth = 800;
 		}
 
 		/// <summary>
