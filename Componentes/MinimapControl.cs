@@ -1,4 +1,5 @@
-﻿using AoM;
+﻿using System;
+using AoM;
 using Cells;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,10 +14,28 @@ namespace Componentes
 	/// </summary>
 	public class MinimapControl : DSBC
 	{
+		MemoryGrid displayingGrid;
+
 		/// <summary>
 		/// Gets the memory grid linked to this minimap
 		/// </summary>
-		public MemoryGrid DisplayingGrid { get; set; }
+		public MemoryGrid DisplayingGrid
+		{
+			get
+			{
+				return displayingGrid;
+			}
+			set
+			{
+				if (value == null && IsInitialized)
+					throw new ArgumentNullException ("value");
+				if (displayingGrid != null)
+					displayingGrid.Updated -= update;
+				displayingGrid = value;
+				displayingGrid.Updated += update;
+				RegenerateTexture ();
+			}
+		}
 
 		Texture2D borderTexture;
 
@@ -82,11 +101,11 @@ namespace Componentes
 		/// the garbage collector can reclaim the memory that the <see cref="Componentes.MinimapControl"/> was occupying.</remarks>
 		protected override void Dispose ()
 		{
-			DisplayingGrid.Updated += update;
+			DisplayingGrid.Updated -= update;
 			base.Dispose ();
 		}
 
-		void update (object sender, System.EventArgs e)
+		void update (object sender, EventArgs e)
 		{
 			RegenerateTexture ();
 		}

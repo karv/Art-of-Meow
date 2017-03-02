@@ -5,7 +5,6 @@ using AoM;
 using Cells;
 using Componentes;
 using Helper;
-using Maps;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +13,7 @@ using Moggle.Screens;
 using MonoGame.Extended;
 using MonoGame.Extended.InputListeners;
 using Units;
+using Units.Inteligencia;
 
 namespace Screens
 {
@@ -108,6 +108,9 @@ namespace Screens
 			GridControl.TryCenterOn (Player.Location);
 			PlayerInfoControl.ReloadStats ();
 			Player.Reinitialize ();
+
+			// update the minimap
+			PlayerInfoControl.Minimap.DisplayingGrid = (Player.Inteligencia as HumanIntelligence).Memory;
 		}
 
 		#endregion
