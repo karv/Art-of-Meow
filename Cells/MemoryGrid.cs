@@ -53,6 +53,7 @@ namespace Cells
 			var vPoints = Unidad.VisiblePoints ();
 			foreach (var p in vPoints)
 				storeCellInfo (MemorizingGrid [p]);
+			Updated?.Invoke (this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -63,6 +64,8 @@ namespace Cells
 			: this (unid.Grid, unid)
 		{
 		}
+
+		public event EventHandler Updated;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Cells.MemoryGrid"/> class.

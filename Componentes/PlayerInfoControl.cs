@@ -8,6 +8,7 @@ using MonoGame.Extended.Shapes;
 using Screens;
 using Units;
 using Units.Recursos;
+using Units.Inteligencia;
 
 namespace Componentes
 {
@@ -52,6 +53,8 @@ namespace Componentes
 		/// Resource view manager
 		/// </summary>
 		public RecursoView RecursoView { get; private set; }
+
+		public MinimapControl Minimap { get; private set; }
 
 		/// <summary>
 		/// Devuelve el control que muestra los stats
@@ -178,6 +181,12 @@ namespace Componentes
 			};
 
 			RecursoView = new RecursoView (cont, Player.Recursos);
+
+			Minimap = new MinimapControl (cont)
+			{
+				Location = new Rectangle (700, 500, 200, 200),
+				DisplayingGrid = (Player.Inteligencia as HumanIntelligence).Memory
+			};
 
 			Stats = new MultiEtiqueta (cont)
 			{
