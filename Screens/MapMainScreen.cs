@@ -120,7 +120,7 @@ namespace Screens
 			GridControl.CenterIfNeeded (Player);
 		}
 
-		ScalingViewportAdapter viewport;
+		BoxingViewportAdapter viewport;
 
 		/// <summary>
 		/// Dibuja la pantalla
@@ -239,20 +239,20 @@ namespace Screens
 		/// </summary>
 		protected override void DoInitialization ()
 		{
-			viewport = new ScalingViewportAdapter (Device, 4000, 3000);
+			viewport = new BoxingViewportAdapter (Juego.Window, Device, 1600, 900);
 			var grd = GameInitializer.InitializeNewWorld (out Player);
 
 			GridControl = new GridControl (grd, this)
 			{
-				ControlSize = new Size (3450, 2950),
-				ControlTopLeft = new Point (50, 50),
+				ControlSize = new Size (1160, 860),
+				ControlTopLeft = new Point (20, 20),
 				CellSize = new Size (24, 24)
 			};
 			
 			inicializarJugador ();
 
 			PlayerInfoControl = new PlayerInfoControl (this, Player)
-			{ DrawingArea = new Rectangle (3550, 0, 450, 3000) };
+			{ DrawingArea = new Rectangle (1210, 0, 380, 900) };
 
 			base.DoInitialization ();
 
