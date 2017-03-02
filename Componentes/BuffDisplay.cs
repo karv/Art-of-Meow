@@ -31,6 +31,7 @@ namespace Componentes
 		/// </summary>
 		public override void Initialize ()
 		{
+			Unidad.Buffs.ListChanged += updateObjetcs;
 			UpdateObjetcs ();
 		}
 
@@ -58,7 +59,6 @@ namespace Componentes
 			TextureFondoName = "Interface//win_bg";
 			GridSize = new MonoGame.Extended.Size (3, 3);
 			UpdateObjetcs ();
-			Unidad.Buffs.ListChanged += updateObjetcs;
 			BgColor = Color.Red * 0.3f;
 		}
 	}
