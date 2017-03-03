@@ -98,12 +98,12 @@ namespace Componentes
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		///  No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		public override void Initialize ()
+		protected override void ForceInitialization ()
 		{
-			PlayerHooks.Initialize ();
+			base.ForceInitialization ();
+			((IGameComponent)PlayerHooks).Initialize ();
 			RecursoView.TopLeft = PlayerHooks.Posición + new Point (0, 60);
 			(RecursoView as IComponent).Initialize ();
-
 		}
 
 		/// <summary>

@@ -92,7 +92,7 @@ namespace Skills
 				            txt,
 				            TimeSpan.FromMilliseconds (900));
 			scr.AddComponent (label);
-			label.Initialize ();
+			(label as IGameComponent).Initialize ();
 
 			label.FontName = "Fonts//damage";
 			(label as IComponent).LoadContent (scr.Content);

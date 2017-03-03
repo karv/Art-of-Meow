@@ -84,9 +84,9 @@ namespace Componentes
 		/// <summary>
 		/// initializes this minimap, and susbribes to the DisplayingGrid update event
 		/// </summary>
-		public override void Initialize ()
+		protected override void ForceInitialization ()
 		{
-			base.Initialize ();
+			base.ForceInitialization ();
 			DisplayingGrid.Updated += update;
 			RegenerateTexture ();
 		}

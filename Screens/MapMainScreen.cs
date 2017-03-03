@@ -82,7 +82,7 @@ namespace Screens
 				(_gameGrid as IDisposable)?.Dispose ();
 				_gameGrid = value;
 				
-				_gameGrid.Initialize ();
+				((IGameComponent)_gameGrid).Initialize ();
 				AddComponent (_gameGrid);
 				
 				// Cargar el posiblemente nuevo contenido
