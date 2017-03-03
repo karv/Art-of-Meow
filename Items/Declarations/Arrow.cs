@@ -19,6 +19,14 @@ namespace Items.Declarations
 		}
 
 		/// <summary>
+		/// Gets the tooltip info (shown in equipment screen)
+		/// </summary>
+		public override string GetTooltipInfo ()
+		{
+			return string.Format ("Hit: {0}\tDamage: {1}", BaseHit, DamageMultiplier);
+		}
+
+		/// <summary>
 		/// The damage mutiplier
 		/// </summary>
 		public float DamageMultiplier = 1;

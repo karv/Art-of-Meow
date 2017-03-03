@@ -35,6 +35,14 @@ namespace Items.Declarations
 			}
 		}
 
+		/// <summary>
+		/// Gets the tooltip info (shown in equipment screen)
+		/// </summary>
+		public virtual string GetTooltipInfo ()
+		{
+			return string.Empty;
+		}
+
 		string IIdentificable.Name
 		{ get { return NombreBase; } }
 

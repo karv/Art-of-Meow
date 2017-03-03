@@ -27,6 +27,18 @@ namespace Items.Declarations.Equipment
 		}
 
 		/// <summary>
+		/// Gets the tooltip info (shown in equipment screen)
+		/// </summary>
+		public override string GetTooltipInfo ()
+		{
+			return string.Format (
+				"Damage: {0}\tAccuracy: {1}\tSpeed: {2}\t",
+				BaseDamage,
+				BaseHit,
+				BaseSpeed);
+		}
+
+		/// <summary>
 		/// Devuelve la certeza base
 		/// </summary>
 		/// <value>The base hit.</value>

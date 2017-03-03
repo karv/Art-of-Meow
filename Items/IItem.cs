@@ -9,7 +9,12 @@ namespace Items
 	/// <summary>
 	/// Representa la instancia de un objeto
 	/// </summary>
-	public interface IItem : IComponent, IDibujable, ICloneable, IIdentificable
+	public interface IItem : 
+	IComponent, 
+	IDibujable,
+	ICloneable, 
+	IIdentificable, 
+	ITooltipSource
 	{
 		/// <summary>
 		/// Gets the name for the item

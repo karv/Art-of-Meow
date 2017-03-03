@@ -32,9 +32,16 @@ namespace Items.Declarations
 		{
 			get
 			{
-				// TODO
 				return QtDelta + base.Value;
 			}
+		}
+
+		/// <summary>
+		/// Gets the tooltip info (shown in equipment screen
+		/// </summary>
+		public override string GetTooltipInfo ()
+		{
+			return string.Format ("{0}+={1}", ResourceName, QtDelta);
 		}
 
 		/// <summary>

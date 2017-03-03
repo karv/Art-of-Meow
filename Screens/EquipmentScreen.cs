@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using AoM;
 using Items;
-using Items.Declarations.Equipment;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
@@ -192,32 +191,19 @@ namespace Screens
 
 		void rebuildCursorItemInfo ()
 		{
-			var selEquipment = Contenedor.FocusedItem as IEquipment;
-			if (selEquipment != null)
-			{
-				var tooltipString = new StringBuilder ();
-				var fullName = selEquipment.Modifiers.GetName ();
-				tooltipString.Append (fullName + "\t\t");
+			var selEquipment = Contenedor.FocusedItem;
+			var tooltipString = new StringBuilder ();
+			var fullName = selEquipment.Modifiers.GetName ();
+			tooltipString.Append (fullName + "\t\t");
+			tooltipString.Append (selEquipment.GetTooltipInfo () + "\t\t");
 
-				var mEq = selEquipment as MeleeWeapon;
-				if (mEq != null)
-				{
-					tooltipString.Append (string.Format (
-						"Damage: {0}\tAccuracy: {1}\tSpeed: {2}\t",
-						mEq.BaseDamage,
-						mEq.BaseHit,
-						mEq.BaseSpeed));
-				}
+			foreach (var mod in selEquipment.Modifiers.SquashMods ())
+				tooltipString.AppendFormat (
+					"{0} : {1}\t",
+					mod.AttributeChangeName,
+					mod.Delta);
 
-				foreach (var mod in selEquipment.Modifiers.SquashMods ())
-					tooltipString.AppendFormat (
-						"{0} : {1}\t",
-						mod.AttributeChangeName,
-						mod.Delta);
-
-				CursorItemInfo.Texto = tooltipString.ToString ();
-			}
-
+			CursorItemInfo.Texto = tooltipString.ToString ();
 		}
 
 		void cursorChanged (object sender, System.EventArgs e)
