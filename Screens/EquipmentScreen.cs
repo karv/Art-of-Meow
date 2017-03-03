@@ -58,6 +58,11 @@ namespace Screens
 		protected override void DoInitialization ()
 		{
 			base.DoInitialization ();
+
+			// Set contenedor options
+			Contenedor.Selection.AllowMultiple = true;
+			Contenedor.Selection.AllowEmpty = true;
+
 			buildEquipmentList ();
 			rebuildSelection ();
 			rebuildCursorItemInfo ();
@@ -82,14 +87,12 @@ namespace Screens
 		void buildEquipmentList ()
 		{
 			selectableEquipment = new HashSet<IItem> ();
+			Contenedor.Clear ();
 			foreach (var eq in Inventory.Items)
 				selectableEquipment.Add (eq);
 
 			foreach (var eq in selectableEquipment)
 				Contenedor.Add (eq);
-
-			Contenedor.Selection.AllowMultiple = true;
-			Contenedor.Selection.AllowEmpty = true;
 		}
 
 		void rebuildSelection ()
