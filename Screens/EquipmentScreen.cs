@@ -9,7 +9,6 @@ using Moggle.Controles;
 using Moggle.Screens;
 using Units;
 using Units.Equipment;
-using Units.Skills;
 
 namespace Screens
 {
@@ -88,7 +87,7 @@ namespace Screens
 		{
 			selectableEquipment = new HashSet<IItem> ();
 			Contenedor.Clear ();
-			foreach (var eq in Inventory.Items)
+			foreach (var eq in Inventory.Items.OrderByDescending (z => z is IEquipment))
 				selectableEquipment.Add (eq);
 
 			foreach (var eq in selectableEquipment)
@@ -132,14 +131,6 @@ namespace Screens
 					Equipment.EquipItem (itemEquip);
 				rebuildSelection ();
 				return;
-			}
-
-			// Si es skill
-			var itemSkill = item as ISkill;
-			if (itemSkill?.IsCastable (Unidad) ?? false)
-			{
-				itemSkill.GetInstance (Equipment.Owner);
-				itemSkill.LastGeneratedInstance.Execute ();
 			}
 		}
 
