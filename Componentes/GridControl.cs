@@ -50,7 +50,7 @@ namespace Componentes
 
 		void reInitialize ()
 		{
-			Initialize ();
+			(this as IGameComponent).Initialize ();
 			var cont = Screen.Content;
 			LoadContent (cont);
 		}
@@ -69,7 +69,6 @@ namespace Componentes
 		#endregion
 
 		#region Control size and location
-
 
 		/// <summary>
 		/// The size of a cell (Draw)
@@ -218,9 +217,9 @@ namespace Componentes
 		/// Se ejecuta antes del ciclo, pero después de saber un poco sobre los controladores.
 		/// No invoca LoadContent por lo que es seguro agregar componentes
 		/// </summary>
-		public override void Initialize ()
+		protected override void ForceInitialization ()
 		{
-			base.Initialize ();
+			base.ForceInitialization ();
 			Grid.ObjectAdded += itemAdded;
 		}
 

@@ -57,9 +57,7 @@ namespace Screens
 		/// </summary>
 		protected override void DoInitialization ()
 		{
-			CursorItemInfo.Initialize ();
 			base.DoInitialization ();
-			//cargarContenido ();
 			buildEquipmentList ();
 			rebuildSelection ();
 			rebuildCursorItemInfo ();

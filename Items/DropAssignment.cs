@@ -12,6 +12,7 @@ namespace Items
 	public class DropAssignment
 	{
 		const float probAddMod = 0.20f;
+		const int maxDropsCount = 5;
 		static Random _r = new Random ();
 		readonly Dictionary<string, float> nameDictionary;
 
@@ -22,7 +23,7 @@ namespace Items
 		public Inventory MakeDrops (float totalDropValue)
 		{
 			var ret = new Inventory ();
-			while (true)
+			for (int c = 0; c < maxDropsCount; c++)
 			{
 				var posDrops = nameDictionary.Where (z => z.Value <= totalDropValue);
 				if (posDrops.Any ())
@@ -45,7 +46,6 @@ namespace Items
 						// Add mods
 						while (_r.NextDouble () < probAddMod)
 						{
-							// TODO: Do not allow duplicated mod
 							// Add a new item modification
 							var newMod = newItem.AllowedMods [_r.Next (newItem.AllowedMods.Length)];
 
@@ -54,9 +54,8 @@ namespace Items
 					ret.Add (newItem);
 					totalDropValue -= newItem.Value;
 				}
-				else
-					return ret;
 			}
+			return ret;
 		}
 
 		/// <summary>
