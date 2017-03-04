@@ -81,6 +81,8 @@ namespace Units.Skills
 
 		public void AddSkill (ISkill skill)
 		{
+			if (skill == null)
+				throw new System.ArgumentNullException ("skill");
 			skills.Add (new SkillAbility (skill, this));
 		}
 

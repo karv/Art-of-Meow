@@ -54,7 +54,7 @@ namespace Skills
 			AccumulatedKnowledge += exp;
 		}
 
-		bool shouldLearn { get { return AccumulatedKnowledge <= NeededKnowledge; } }
+		bool shouldLearn { get { return AccumulatedKnowledge <= NeededKnowledge && CurrentlyLearning != null; } }
 
 		public void CheckAndApply ()
 		{

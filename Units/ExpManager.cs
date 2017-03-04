@@ -83,6 +83,11 @@ namespace Units
 				x.Key.ReceiveExperience (ExperienciaAcumulada * x.Value);
 			_distribuciónExp.Clear ();
 
+			// Skill system
+			Unidad.Skills.Learning.AddKnowledge (ExperienciaAcumulada);
+			Unidad.Skills.Learning.CheckAndApply ();
+
+			// Set to zero
 			ExperienciaTotal += ExperienciaAcumulada;
 			ExperienciaAcumulada = 0;
 		}
