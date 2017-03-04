@@ -65,5 +65,10 @@ namespace Skills
 				AccumulatedKnowledge -= NeededKnowledge;
 			}
 		}
+
+		public LearningSystem (Unidad unidad)
+		{
+			Unidad = unidad;
+		}
 	}
 }

@@ -22,6 +22,8 @@ namespace Units.Skills
 		/// <value>The skills.</value>
 		List<SkillAbility> skills { get; }
 
+		public readonly LearningSystem Learning;
+
 		public IEnumerable<ISkill> Skills { get { return skills.Select (z => z.Skill); } }
 
 		public float AbilityOf (ISkill skill)
@@ -90,6 +92,7 @@ namespace Units.Skills
 		{
 			Unidad = unid;
 			skills = new List<SkillAbility> ();
+			Learning = new LearningSystem (Unidad);
 		}
 	}
 }
