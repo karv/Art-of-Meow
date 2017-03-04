@@ -203,6 +203,10 @@ namespace Items.Declarations.Equipment.Skills
 			return true;
 		}
 
+		bool ISkill.IsLearnable { get { return false; } }
+
+		string[] ISkill.RequieredSkills { get { return new string[]{ }; } }
+
 		/// <summary>
 		/// Occurs when the eexecution finishes completly
 		/// </summary>

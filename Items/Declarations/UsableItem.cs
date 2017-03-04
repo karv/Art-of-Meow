@@ -68,6 +68,10 @@ namespace Items.Declarations
 			return IsVisible (user);
 		}
 
+		public bool IsLearnable { get { return false; } }
+
+		public string[] RequieredSkills { get { return new string[] { }; } }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.UsableItem"/> class.
 		/// </summary>

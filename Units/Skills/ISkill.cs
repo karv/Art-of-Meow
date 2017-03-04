@@ -42,5 +42,15 @@ namespace Units.Skills
 		/// Gets the value of the skill
 		/// </summary>
 		float Value { get; }
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is learnable.
+		/// </summary>
+		bool IsLearnable { get; }
+
+		/// <summary>
+		/// Gets the requiered skills names to learn this skill via <see cref="LearningSystem"/>
+		/// </summary>
+		string[] RequieredSkills { get; }
 	}
 }

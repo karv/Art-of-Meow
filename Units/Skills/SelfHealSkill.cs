@@ -89,6 +89,10 @@ namespace Units.Skills
 			return true;
 		}
 
+		public bool IsLearnable { get { return true; } }
+
+		public string[] RequieredSkills{ get { return new string[]{ }; } }
+
 		/// <summary>
 		/// Occurs when the eexecution finishes completly
 		/// </summary>

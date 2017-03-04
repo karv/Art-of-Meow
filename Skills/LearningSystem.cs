@@ -25,7 +25,7 @@ namespace Skills
 
 	public class LearningSystem
 	{
-		public Unidad Unidad { get; private set; }
+		public IUnidad Unidad { get; private set; }
 
 		public ISkill CurrentlyLearning { get; private set; }
 
@@ -66,7 +66,7 @@ namespace Skills
 			}
 		}
 
-		public LearningSystem (Unidad unidad)
+		public LearningSystem (IUnidad unidad)
 		{
 			Unidad = unidad;
 		}
