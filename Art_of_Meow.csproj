@@ -239,6 +239,7 @@
     <Compile Include="Componentes\MinimapControl.cs" />
     <Compile Include="Cells\CellObjects\IMinimapVisible.cs" />
     <Compile Include="Items\ITooltipSource.cs" />
+    <Compile Include="Skills\LearningSystem.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

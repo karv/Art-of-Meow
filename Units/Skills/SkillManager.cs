@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
+using Skills;
 
 namespace Units.Skills
 {
@@ -19,7 +20,19 @@ namespace Units.Skills
 		/// Gets the collection of skills
 		/// </summary>
 		/// <value>The skills.</value>
-		public List<ISkill> Skills { get; }
+		List<SkillAbility> skills { get; }
+
+		public IEnumerable<ISkill> Skills { get { return skills.Select (z => z.Skill); } }
+
+		public float AbilityOf (ISkill skill)
+		{
+			return findSkill (skill).Ability;
+		}
+
+		SkillAbility findSkill (ISkill skill)
+		{
+			return skills.First (z => ReferenceEquals (z.Skill, skill));
+		}
 
 		/// <summary>
 		/// Revisa y devuelve si existe un skill que puede ser usado en este momento por la unidad
@@ -33,21 +46,21 @@ namespace Units.Skills
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Units.Skills.SkillManager"/> has any skill.
 		/// </summary>
-		public bool Any { get { return Skills.Any (); } }
+		public bool Any { get { return skills.Any (); } }
 
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="Units.Skills.SkillManager"/> has any visible skill.
 		/// </summary>
 		/// <value><c>true</c> if any visible; otherwise, <c>false</c>.</value>
-		public bool AnyVisible { get { return Skills.Any (z => z.IsVisible (Unidad)); } }
+		public bool AnyVisible { get { return skills.Any (z => z.IsVisible); } }
 
 		/// <summary>
 		/// Initializes the content of the skills
 		/// </summary>
 		protected void LoadContent (ContentManager manager)
 		{
-			foreach (var sk in Skills)
-				sk.LoadContent (manager);
+			foreach (var sk in skills)
+				sk.Skill.LoadContent (manager);
 		}
 
 		void IComponent.LoadContent (ContentManager manager)
@@ -60,8 +73,13 @@ namespace Units.Skills
 		/// </summary>
 		public void Initialize ()
 		{
-			foreach (var sk in Skills)
-				sk.Initialize ();
+			foreach (var sk in skills)
+				sk.Skill.Initialize ();
+		}
+
+		public void AddSkill (ISkill skill)
+		{
+			skills.Add (new SkillAbility (skill, this));
 		}
 
 		/// <summary>
@@ -71,7 +89,7 @@ namespace Units.Skills
 		public SkillManager (IUnidad unid)
 		{
 			Unidad = unid;
-			Skills = new List<ISkill> ();
+			skills = new List<SkillAbility> ();
 		}
 	}
 }
