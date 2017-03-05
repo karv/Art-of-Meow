@@ -97,7 +97,7 @@ namespace Units
 		/// </summary>
 		/// <param name="par">Parámetro de asignación</param>
 		/// <param name="cant">Peso de la asignación</param>
-		public void AddAssignation (IParámetroRecurso par, float cant)
+		public void AddAssignation (IExpable par, float cant)
 		{
 			if (_distribuciónExp.ContainsKey (par))
 				_distribuciónExp [par] += cant;

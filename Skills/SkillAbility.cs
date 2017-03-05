@@ -13,8 +13,6 @@ namespace Skills
 		public readonly SkillManager Manager;
 		public float Ability;
 
-		const string namePrefix = "skill.";
-
 		public bool IsVisible { get { return Skill.IsVisible (Manager.Unidad); } }
 
 		#region IExpable implementation
@@ -26,7 +24,7 @@ namespace Skills
 
 		string IExpable.NombreÚnico
 		{
-			get { return namePrefix + Skill.Name; }
+			get { return SkillManager.GetGlobalUniqueId (Skill); }
 		}
 
 		#endregion

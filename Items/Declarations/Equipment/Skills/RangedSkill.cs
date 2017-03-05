@@ -92,10 +92,10 @@ namespace Items.Declarations.Equipment.Skills
 					switch (efRes)
 					{
 						case EffectResultEnum.Hit:
-							OnHit (efRes, user, tg);
+							OnHit (user, tg);
 							break;
 						case EffectResultEnum.Miss:
-							OnMiss (efRes, user, tg);
+							OnMiss (user, tg);
 							break;
 						default:
 							throw new Exception ();
@@ -111,9 +111,9 @@ namespace Items.Declarations.Equipment.Skills
 			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
 		}
 
-		protected abstract void OnHit (EffectResultEnum result, IUnidad user, IUnidad target);
+		protected abstract void OnHit (IUnidad user, IUnidad target);
 
-		protected abstract void OnMiss (EffectResultEnum result, IUnidad user, IUnidad target);
+		protected abstract void OnMiss (IUnidad user, IUnidad target);
 
 		void updateInfoBox (SelectableGridControl selGrid,
 		                    IUnidad user,

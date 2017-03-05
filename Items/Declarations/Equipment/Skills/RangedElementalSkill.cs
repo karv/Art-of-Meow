@@ -47,14 +47,14 @@ namespace Items.Declarations.Equipment.Skills
 			return ret;
 		}
 
-		protected override void OnHit (EffectResultEnum result, IUnidad user, IUnidad target)
+		protected override void OnHit (IUnidad user, IUnidad target)
 		{
-			throw new NotImplementedException ();
+			user.Exp.AddAssignation (SkillManager.GetGlobalUniqueId (this), 1);
 		}
 
-		protected override void OnMiss (EffectResultEnum result, IUnidad user, IUnidad target)
+		protected override void OnMiss (IUnidad user, IUnidad target)
 		{
-			throw new NotImplementedException ();
+			user.Exp.AddAssignation (SkillManager.GetGlobalUniqueId (this), 1);
 		}
 
 		public RangedElementalSkill (string Name,

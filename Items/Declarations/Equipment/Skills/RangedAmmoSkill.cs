@@ -59,14 +59,14 @@ namespace Items.Declarations.Equipment.Skills
 
 		public float BaseCooldown;
 
-		protected override void OnHit (EffectResultEnum result, IUnidad user, IUnidad target)
+		protected override void OnHit (IUnidad user, IUnidad target)
 		{
 			user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.4f);
 			target.Exp.AddAssignation (ConstantesRecursos.EvasiónRango, "base", 0.2f);
 			target.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor -= 0.1f;
 		}
 
-		protected override void OnMiss (EffectResultEnum result, IUnidad user, IUnidad target)
+		protected override void OnMiss (IUnidad user, IUnidad target)
 		{
 			user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.2f);
 			target.Exp.AddAssignation (ConstantesRecursos.EvasiónRango, "base", 0.4f);

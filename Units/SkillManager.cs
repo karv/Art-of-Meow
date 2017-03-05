@@ -3,8 +3,9 @@ using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using Skills;
+using Units.Skills;
 
-namespace Units.Skills
+namespace Units
 {
 	/// <summary>
 	/// Skill manager.
@@ -95,6 +96,13 @@ namespace Units.Skills
 			Unidad = unid;
 			skills = new List<SkillAbility> ();
 			Learning = new LearningSystem (Unidad);
+		}
+
+		public const string namePrefix = "skill.";
+
+		public static string GetGlobalUniqueId (ISkill skl)
+		{
+			return namePrefix + skl.Name;
 		}
 	}
 }
