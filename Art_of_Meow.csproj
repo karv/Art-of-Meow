@@ -141,10 +141,7 @@
     <Compile Include="Items\Declarations\Equipment\Equipment.cs" />
     <Compile Include="Screens\EquipmentScreen.cs" />
     <Compile Include="Screens\InvokeSkillListScreen.cs" />
-    <Compile Include="Units\Skills\ISkill.cs" />
-    <Compile Include="Units\Skills\SkillManager.cs" />
     <Compile Include="Maps\Map.cs" />
-    <Compile Include="Units\Skills\SelfHealSkill.cs" />
     <Compile Include="Units\Order\CooldownOrder.cs" />
     <Compile Include="Units\Order\ExecuteOrder.cs" />
     <Compile Include="Units\Order\IPrimitiveOrder.cs" />
@@ -240,6 +237,9 @@
     <Compile Include="Cells\CellObjects\IMinimapVisible.cs" />
     <Compile Include="Items\ITooltipSource.cs" />
     <Compile Include="Skills\LearningSystem.cs" />
+    <Compile Include="Units\SkillManager.cs" />
+    <Compile Include="Skills\ISkill.cs" />
+    <Compile Include="Items\Declarations\Equipment\Skills\RangedAmmoSkill.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -268,7 +268,6 @@
     <Folder Include="Helper\" />
     <Folder Include="Units\Equipment\" />
     <Folder Include="Items\Declarations\Equipment\" />
-    <Folder Include="Units\Skills\" />
     <Folder Include="Maps\" />
     <Folder Include="Units\Order\" />
     <Folder Include="Cells\Collision\" />

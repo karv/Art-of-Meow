@@ -51,6 +51,6 @@ namespace Units.Skills
 		/// <summary>
 		/// Gets the requiered skills names to learn this skill via <see cref="LearningSystem"/>
 		/// </summary>
-		string[] RequieredSkills { get; }
+		string[] RequiredSkills { get; }
 	}
 }
