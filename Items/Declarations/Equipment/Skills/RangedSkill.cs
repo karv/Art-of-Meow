@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using AoM;
 using Cells;
-using Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,19 +11,17 @@ using Newtonsoft.Json;
 using Screens;
 using Skills;
 using Units;
-using Units.Recursos;
 using Units.Skills;
 
 namespace Items.Declarations.Equipment.Skills
 {
+
 	/// <summary>
 	/// Skill de ataque de rango de esta clase.
 	/// </summary>
 	public abstract class RangedSkill : ISkill
 	{
 		const string defaultInfoboxText = "Info box";
-
-		public float BaseCooldown;
 
 		float ISkill.Value //TODO
 		{ get { return 100; } }
@@ -142,9 +139,8 @@ namespace Items.Declarations.Equipment.Skills
 		/// Determines whether this skill is castable by the specified user.
 		/// </summary>
 		/// <param name="user">User</param>
-		public bool IsCastable (IUnidad user)
+		public virtual bool IsCastable (IUnidad user)
 		{
-			// TODO: Debe consumir(requerir) ¿ammo?
 			return true;
 		}
 
@@ -152,12 +148,19 @@ namespace Items.Declarations.Equipment.Skills
 		/// Determines whether this instance is visible the specified user.
 		/// </summary>
 		/// <param name="user">User.</param>
-		public bool IsVisible (IUnidad user)
+		public virtual bool IsVisible (IUnidad user)
 		{
 			return true;
 		}
 
+		/// <summary>
+		/// Determines whether this skill can be learned
+		/// </summary>
 		protected bool IsLearnable;
+
+		/// <summary>
+		/// If <see cref="IsLearnable"/>, this contains the required skills before learning this one.
+		/// </summary>
 		protected string [] RequiredSkills;
 
 		bool ISkill.IsLearnable { get { return IsLearnable; } }
@@ -205,12 +208,11 @@ namespace Items.Declarations.Equipment.Skills
 			bat.Draw (Icon, destinationRectangle: rect, layerDepth: Depths.SkillIcon);
 		}
 
-		protected RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown)
+		protected RangedSkill (string Name, string TextureName, string Icon)
 		{
 			this.Name = Name;
 			this.TextureName = TextureName;
 			IconName = Icon;
-			this.BaseCooldown = BaseCooldown;
 		}
 	}
 }

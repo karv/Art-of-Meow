@@ -240,6 +240,10 @@
     <Compile Include="Units\SkillManager.cs" />
     <Compile Include="Skills\ISkill.cs" />
     <Compile Include="Items\Declarations\Equipment\Skills\RangedAmmoSkill.cs" />
+    <Compile Include="Items\Declarations\Equipment\Skills\RangedElementalSkill.cs" />
+    <Compile Include="Units\Recursos\IVisibleRecurso.cs" />
+    <Compile Include="Units\IExpable.cs" />
+    <Compile Include="Skills\SkillAbility.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

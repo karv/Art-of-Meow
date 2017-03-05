@@ -1,28 +1,10 @@
 ﻿using System;
 using Units;
 using Units.Skills;
+using Units.Recursos;
 
 namespace Skills
 {
-	/// <summary>
-	/// Represents a skill and its relation with a user
-	/// </summary>
-	public class SkillAbility
-	{
-		public readonly ISkill Skill;
-		public readonly SkillManager Manager;
-		public float Ability;
-
-		public bool IsVisible { get { return Skill.IsVisible (Manager.Unidad); } }
-
-		public SkillAbility (ISkill skill, SkillManager manager)
-		{
-			Skill = skill;
-			Ability = 1;
-			Manager = manager;
-		}
-	}
-
 	public class LearningSystem
 	{
 		public IUnidad Unidad { get; private set; }

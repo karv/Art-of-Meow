@@ -192,7 +192,7 @@ namespace Units.Recursos
 		/// </summary>
 		public class ValorParám : IParámetroRecurso
 		{
-			void IParámetroRecurso.ReceiveExperience (float exp)
+			void IExpable.ReceiveExperience (float exp)
 			{
 				Valor += exp;
 				Debug.WriteLine (

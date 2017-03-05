@@ -12,7 +12,7 @@ namespace Units
 	/// </summary>
 	public class ExpManager
 	{
-		readonly Dictionary<IParámetroRecurso, float> _distribuciónExp;
+		readonly Dictionary<IExpable, float> _distribuciónExp;
 
 		/// <summary>
 		/// Devuelve la <see cref="Unidad"/> cuya experiencia está manejada por esta clase
@@ -147,7 +147,7 @@ namespace Units
 		public ExpManager (IUnidad unid)
 		{
 			Unidad = unid;
-			_distribuciónExp = new Dictionary<IParámetroRecurso, float> ();
+			_distribuciónExp = new Dictionary<IExpable, float> ();
 		}
 	}
 }
