@@ -13,15 +13,15 @@ namespace Items.Declarations.Equipment.Skills
 		public float DamageMultiplier = 1;
 		public float BaseCooldown;
 
-		public string AttributeUsageName;
-		public float AttributeUsageQuantity;
+		public string RecursoUsageName;
+		public float RecursoUsageQuantity;
 
 		public override bool IsCastable (IUnidad user)
 		{
-			if (AttributeUsageName == null)
+			if (RecursoUsageName == null)
 				return true;
 			
-			return user.Recursos.ValorRecurso (AttributeUsageName) >= AttributeUsageQuantity;
+			return user.Recursos.ValorRecurso (RecursoUsageName) >= RecursoUsageQuantity;
 		}
 
 		protected override bool IsLearnable { get { return true; } }
@@ -62,11 +62,15 @@ namespace Items.Declarations.Equipment.Skills
 
 		protected override void OnHit (IUnidad user, IUnidad target)
 		{
+			var rec = user.Recursos.GetRecurso (RecursoUsageName);
+			rec.Valor -= RecursoUsageQuantity;
 			user.Exp.AddAssignation (SkillManager.GetGlobalUniqueId (this), 1);
 		}
 
 		protected override void OnMiss (IUnidad user, IUnidad target)
 		{
+			var rec = user.Recursos.GetRecurso (RecursoUsageName);
+			rec.Valor -= RecursoUsageQuantity;
 			user.Exp.AddAssignation (SkillManager.GetGlobalUniqueId (this), 1);
 		}
 

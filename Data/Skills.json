@@ -17,8 +17,8 @@
 			"BaseHit": 1,
 			"Attribute": "Physical",
 			"DamageMultiplier": 1.5,
-			"AttributeUsageName": "hp",
-			"AttributeUsageQuantity": "3"
+			"RecursoUsageName": "hp",
+			"RecursoUsageQuantity": "3"
 		}
 	]
 }
