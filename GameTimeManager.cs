@@ -88,11 +88,18 @@ namespace AoM
 				throw new Exception ("passTime < 0");
 			#endif
 			PassTime (passTime);
-			Debug.Assert (Actual.IsReady, "Actual was not ready");
+			assertReady ();
 			foreach (var actuador in UpdateGridObjects.Where (z => z.IsReady))
 				actuador.Execute ();
 			//Actual.Execute ();
 			return passTime;
+		}
+
+		[Conditional ("DEBUG")]
+		void assertReady ()
+		{
+			if (!Actual.IsReady)
+				throw new Exception ();
 		}
 
 		/// <summary>
