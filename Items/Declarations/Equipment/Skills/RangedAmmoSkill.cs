@@ -17,6 +17,9 @@ namespace Items.Declarations.Equipment.Skills
 		/// <param name="target">Target.</param>
 		public override SkillInstance BuildSkillInstance (IUnidad user, IUnidad target)
 		{
+			if (BaseCooldown == 0)
+				throw new Exception ();
+			
 			var quiver = user.Equipment.EquipmentInSlot (EquipSlot.Quiver).OfType<Arrow> ();
 			if (!quiver.Any ())
 				throw new Exception ("Cannot invoke ranged skill without ammo.");
@@ -76,12 +79,11 @@ namespace Items.Declarations.Equipment.Skills
 		}
 
 		[JsonConstructor]
-		protected RangedAmmoSkill (string Name, string TextureName, string Icon, float BaseCooldown, string Attribute)
+		protected RangedAmmoSkill (string Name, string TextureName, string Icon)
 			: base (Name,
 			        TextureName,
 			        Icon)
 		{
 		}
 	}
-	
 }
