@@ -195,6 +195,10 @@ namespace Units.Inteligencia
 		public HumanIntelligence (Unidad yo, TimeSpan repTime)
 		{
 			ControlledUnidad = yo;
+			yo.OnRelocation += delegate
+			{
+				PersistenceDir = MovementDirectionEnum.NoMov;
+			};
 			MinRepetitionTime = repTime;
 			Memory = new MemoryGrid (ControlledUnidad);
 		}

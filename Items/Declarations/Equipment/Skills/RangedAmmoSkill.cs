@@ -59,6 +59,8 @@ namespace Items.Declarations.Equipment.Skills
 
 		public float BaseCooldown;
 
+		protected override bool IsLearnable { get { return false; } }
+
 		protected override void OnHit (IUnidad user, IUnidad target)
 		{
 			user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.4f);

@@ -13,6 +13,19 @@ namespace Items.Declarations.Equipment.Skills
 		public float DamageMultiplier = 1;
 		public float BaseCooldown;
 
+		public string AttributeUsageName;
+		public float AttributeUsageQuantity;
+
+		public override bool IsCastable (IUnidad user)
+		{
+			if (AttributeUsageName == null)
+				return true;
+			
+			return user.Recursos.ValorRecurso (AttributeUsageName) >= AttributeUsageQuantity;
+		}
+
+		protected override bool IsLearnable { get { return true; } }
+
 		public override SkillInstance BuildSkillInstance (IUnidad user, IUnidad target)
 		{
 			if (target == null)

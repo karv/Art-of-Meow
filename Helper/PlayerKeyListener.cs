@@ -7,6 +7,7 @@ using Moggle.Controles;
 using MonoGame.Extended.InputListeners;
 using Screens;
 using Units;
+using Units.Inteligencia;
 
 namespace Helper
 {
@@ -71,11 +72,14 @@ namespace Helper
 			if (GlobalKeys.ZoomIn.Contains (key))
 			{
 				ManagerScreen.GridControl.ZoomIn ();
+				return true;
 			}
 			if (GlobalKeys.ZoomOut.Contains (key))
 			{
 				ManagerScreen.GridControl.ZoomOut ();
+				return true;
 			}
+
 			return false;
 		}
 

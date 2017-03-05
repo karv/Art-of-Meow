@@ -12,6 +12,7 @@ using Screens;
 using Skills;
 using Units;
 using Units.Skills;
+using MonoGame.Extended;
 
 namespace Items.Declarations.Equipment.Skills
 {
@@ -53,6 +54,9 @@ namespace Items.Declarations.Equipment.Skills
 			var dialSer = new Moggle.Screens.Dials.ScreenDialSerial ();
 			var grid = user.Grid;
 			var selScr = new SelectTargetScreen (Program.MyGame, grid);
+			selScr.GridSelector.CellSize = new Size (32, 24);
+			selScr.GridSelector.ControlTopLeft = new Point (20, 20);
+			selScr.GridSelector.ControlSize = new Size (1160, 860);
 			selScr.GridSelector.CameraUnidad = user as Unidad;
 
 			var visEnemies = grid.GetVisibleAliveUnidad (user).Where (z => z.Team != user.Team);
@@ -73,6 +77,8 @@ namespace Items.Declarations.Equipment.Skills
 				BackgroundColor = Color.Black
 			};
 			selScr.AddComponent (infoBox);
+
+			selScr.Initialize ();
 
 			dialSer.AddRequest (selScr);
 			selScr.GridSelector.CursorMoved += 
@@ -156,12 +162,12 @@ namespace Items.Declarations.Equipment.Skills
 		/// <summary>
 		/// Determines whether this skill can be learned
 		/// </summary>
-		protected bool IsLearnable;
+		protected abstract bool IsLearnable { get; }
 
 		/// <summary>
 		/// If <see cref="IsLearnable"/>, this contains the required skills before learning this one.
 		/// </summary>
-		protected string [] RequiredSkills;
+		protected virtual string [] RequiredSkills{ get { return new string[] { }; } }
 
 		bool ISkill.IsLearnable { get { return IsLearnable; } }
 

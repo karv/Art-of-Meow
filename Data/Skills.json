@@ -8,5 +8,17 @@
 			"Icon": "Items//bow_orange",
 			"BaseCooldown" : 0.4
 		},
+		{
+			"$type": "Items.Declarations.Equipment.Skills.RangedElementalSkill, Art_of_Meow",
+			"Name": "Ball",
+			"TextureName": "Items//bow_orange",
+			"Icon": "Items//bow_orange",
+			"BaseCooldown" : 0.6,
+			"BaseHit": 1,
+			"Attribute": "Physical",
+			"DamageMultiplier": 1.5,
+			"AttributeUsageName": "hp",
+			"AttributeUsageQuantity": "3"
+		}
 	]
 }
