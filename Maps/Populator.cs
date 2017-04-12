@@ -34,7 +34,7 @@ namespace Maps
 					for (int i = 0; i < qt; i++)
 					{
 						// TODO: calculate properly the exp of this unit
-						var un = st.Race.MakeEnemy (grid, totalExp);
+						var un = st.Race.MakeEnemy (grid, totalExp / 10);
 						ret.Add (un);
 					}
 				}

@@ -62,7 +62,7 @@ namespace Units
 		public bool Autoflush;
 
 		/// <summary>
-		/// Recibe la experiencia acumulada, según la asignación
+		/// Recibe la experiencia acumulada, según la asignación; y limpia esta última
 		/// </summary>
 		public void Flush ()
 		{

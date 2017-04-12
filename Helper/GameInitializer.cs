@@ -26,8 +26,14 @@ namespace Helper
 				Team = new TeamManager (Color.Red),
 				Location = grid.GetRandomEmptyCell ()
 			};
-
 			player.Inteligencia = new HumanIntelligence (player);
+
+			var uClass = Program.MyGame.ClassRaceManager.Class [0];
+			var uRace = Program.MyGame.ClassRaceManager.Race [0];
+			foreach (var x in UnitRace.mergeAttrDists (uRace, uClass))
+				player.Exp.AddAssignation (x.Key, x.Value);
+			player.Exp.ExperienciaAcumulada = 100;
+			player.Exp.Flush ();
 
 			#region Cheat
 			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("Knife");
