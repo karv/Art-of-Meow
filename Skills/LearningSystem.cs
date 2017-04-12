@@ -1,9 +1,6 @@
 ﻿using System;
 using Units;
 using Skills;
-using Units.Recursos;
-using System.Collections.Generic;
-using AoM;
 
 namespace Skills
 {
@@ -11,8 +8,24 @@ namespace Skills
 	{
 		public IUnidad Unidad { get; private set; }
 
-		// THINK: ¿Qué hacer cuando se cambia y no está terminado? ¿exception?
-		public ISkill CurrentlyLearning { get; set; }
+		ISkill currentlyLearning;
+
+		public ISkill CurrentlyLearning
+		{
+			get
+			{
+				return currentlyLearning;
+			}
+			set
+			{
+				// THINK: ¿Cómo manejar esto sin exception?
+				if (currentlyLearning != null && value != null)
+					throw new Exception ();
+				currentlyLearning = value;
+			}
+		}
+
+		public bool IsLearning { get { return CurrentlyLearning != null; } }
 
 		float accumulatedKnowledge;
 

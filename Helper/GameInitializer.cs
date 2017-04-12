@@ -20,6 +20,7 @@ namespace Helper
 
 		static Unidad buildPlayer (LogicGrid grid)
 		{
+			const int startingExp = 3;
 			var player = new Unidad (grid)
 			{
 				Nombre = "Player",
@@ -32,7 +33,7 @@ namespace Helper
 			var uRace = Program.MyGame.ClassRaceManager.Race [0];
 			foreach (var x in UnitRace.mergeAttrDists (uRace, uClass))
 				player.Exp.AddAssignation (x.Key, x.Value);
-			player.Exp.ExperienciaAcumulada = 100;
+			player.Exp.ExperienciaAcumulada = startingExp;
 			player.Exp.Flush ();
 
 			#region Cheat
@@ -41,7 +42,7 @@ namespace Helper
 			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["Broken"]);
 			player.Equipment.EquipItem (eq);
 
-			//player.Skills.AddSkill (Program.MyGame.SkillList.GetSkill ("Ball"));
+			player.Skills.AddSkill (Program.MyGame.SkillList.GetSkill ("First aid"));
 
 			#endregion
 

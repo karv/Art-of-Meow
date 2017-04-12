@@ -245,6 +245,7 @@
     <Compile Include="Units\IExpable.cs" />
     <Compile Include="Skills\SkillAbility.cs" />
     <Compile Include="Screens\LearnSkillScreen.cs" />
+    <Compile Include="Items\Declarations\Equipment\Skills\FirstAidSkill.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

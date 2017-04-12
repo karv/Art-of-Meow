@@ -432,7 +432,7 @@ namespace Units
 		public void PassTime (float time)
 		{
 			PrimitiveOrders.PassTime (time);
-			Update (time);
+			//Update (time);
 		}
 
 		/// <summary>

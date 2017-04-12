@@ -1,17 +1,13 @@
-﻿using AoM;
+﻿using System;
+using AoM;
 using Microsoft.Xna.Framework;
 using Moggle.Controles;
 using Moggle.Screens;
-using Units;
 using Skills;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using System;
+using Units;
 
 namespace Screens
 {
-
-
 	public class LearnSkillScreen : Screen
 	{
 		public readonly IUnidad Unidad;

@@ -19,6 +19,13 @@
 			"DamageMultiplier": 1.5,
 			"RecursoUsageName": "hp",
 			"RecursoUsageQuantity": "3"
+		},
+		{
+			"$type": "Items.Declarations.Equipment.Skills.FirstAidSkill, Art_of_Meow",
+			"Name": "First aid",
+			"Texture": "heal",
+			"Cooldown" : 1.5,
+			"Power": 4,
 		}
 	]
 }
