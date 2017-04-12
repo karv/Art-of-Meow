@@ -244,6 +244,7 @@
     <Compile Include="Units\Recursos\IVisibleRecurso.cs" />
     <Compile Include="Units\IExpable.cs" />
     <Compile Include="Skills\SkillAbility.cs" />
+    <Compile Include="Screens\LearnSkillScreen.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
