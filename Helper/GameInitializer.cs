@@ -41,7 +41,7 @@ namespace Helper
 			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["Broken"]);
 			player.Equipment.EquipItem (eq);
 
-			player.Skills.AddSkill (Program.MyGame.SkillList.GetSkill ("Ball"));
+			//player.Skills.AddSkill (Program.MyGame.SkillList.GetSkill ("Ball"));
 
 			#endregion
 

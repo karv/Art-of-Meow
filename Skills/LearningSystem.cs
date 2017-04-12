@@ -11,7 +11,8 @@ namespace Skills
 	{
 		public IUnidad Unidad { get; private set; }
 
-		public ISkill CurrentlyLearning { get; private set; }
+		// THINK: ¿Qué hacer cuando se cambia y no está terminado? ¿exception?
+		public ISkill CurrentlyLearning { get; set; }
 
 		float accumulatedKnowledge;
 

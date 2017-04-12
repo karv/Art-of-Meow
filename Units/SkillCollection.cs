@@ -38,9 +38,9 @@ namespace Units
 		/// <summary>
 		/// Gets the collection of open skills for a <see cref="Unidad"/>
 		/// </summary>
-		public IEnumerable<string> GetOpenSkillsFor (IUnidad unid)
+		public IEnumerable<ISkill> GetOpenSkillsFor (IUnidad unid)
 		{
-			return Collection.Where (unid.Skills.IsOpen).Select (z => z.Name);
+			return Collection.Where (unid.Skills.IsOpen);
 		}
 
 		/// <summary>

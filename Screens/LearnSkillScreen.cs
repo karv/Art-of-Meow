@@ -6,6 +6,7 @@ using Units;
 using Skills;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace Screens
 {
@@ -57,8 +58,8 @@ namespace Screens
 				EnterKey = GlobalKeys.Accept [0]
 			};
 
+			Contenedor.Selection.AllowEmpty = true;
 			Contenedor.Selection.AllowMultiple = false;
-			Contenedor.Selection.AllowEmpty = false;
 
 			Contenedor.Activado += select;
 
@@ -71,18 +72,16 @@ namespace Screens
 			var openSkills = ((Juego)Juego).SkillList.GetOpenSkillsFor (Unidad);
 			foreach (var sk in openSkills)
 			{
-				var skl = ((Juego)Juego).SkillList.GetSkill (sk);
-				Contenedor.Add (skl);
+				Contenedor.Add (sk);
 			}
+			if (Contenedor.Count == 0)
+				throw new Exception ();
+
 		}
 
 		void select (object sender, System.EventArgs e)
 		{
-			var sel = Contenedor.Selection.GetSelection ();
-			if (sel.Count == 0)
-				return;
-
-			var selSkill = sel [0];
+			var selSkill = Contenedor.FocusedItem;
 			Unidad.Skills.Learning.CurrentlyLearning = selSkill;
 			Juego.ScreenManager.ActiveThread.TerminateLast ();
 		}
