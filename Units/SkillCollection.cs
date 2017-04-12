@@ -1,7 +1,9 @@
 using System.IO;
 using AoM;
 using Newtonsoft.Json;
-using Units.Skills;
+using Skills;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Units
 {
@@ -32,6 +34,14 @@ namespace Units
 			MetadataPropertyHandling = MetadataPropertyHandling.Default,
 			Formatting = Formatting.Indented
 		};
+
+		/// <summary>
+		/// Gets the collection of open skills for a <see cref="Unidad"/>
+		/// </summary>
+		public IEnumerable<string> GetOpenSkillsFor (IUnidad unid)
+		{
+			return Collection.Where (unid.Skills.IsOpen).Select (z => z.Name);
+		}
 
 		/// <summary>
 		/// </summary>

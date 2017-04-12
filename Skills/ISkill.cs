@@ -1,8 +1,9 @@
 using AoM;
 using Moggle.Controles;
-using Skills;
+using Units;
+using System.Collections.Generic;
 
-namespace Units.Skills
+namespace Skills
 {
 	/// <summary>
 	/// Represents a skill

@@ -1,6 +1,5 @@
 using System;
 using Units;
-using Units.Skills;
 
 namespace Skills
 {

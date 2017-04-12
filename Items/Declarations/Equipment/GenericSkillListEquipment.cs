@@ -2,7 +2,7 @@
 using System.Linq;
 using AoM;
 using Newtonsoft.Json;
-using Units.Skills;
+using Skills;
 
 namespace Items.Declarations.Equipment
 {

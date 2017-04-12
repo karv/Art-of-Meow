@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using Screens;
 using Skills;
 using Units;
-using Units.Skills;
 using MonoGame.Extended;
 
 namespace Items.Declarations.Equipment.Skills

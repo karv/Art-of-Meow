@@ -1,7 +1,6 @@
 ﻿using System;
 using Skills;
 using Units;
-using Units.Skills;
 
 namespace Items.Declarations
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Units.Equipment;
-using Units.Skills;
+using Skills;
 
 namespace Items
 {

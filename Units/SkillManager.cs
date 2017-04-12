@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Moggle.Controles;
 using Skills;
-using Units.Skills;
 
 namespace Units
 {
@@ -26,6 +25,17 @@ namespace Units
 		public readonly LearningSystem Learning;
 
 		public IEnumerable<ISkill> Skills { get { return skills.Select (z => z.Skill); } }
+
+		public bool HasSkill (string skillName)
+		{
+			return skills.Exists (z => z.Skill.Name == skillName);
+		}
+
+		public bool IsOpen (ISkill c)
+		{
+			// Return if this skill is not learned but can be learned
+			return (!HasSkill (c.Name) && c.RequiredSkills.All (HasSkill));
+		}
 
 		public float AbilityOf (ISkill skill)
 		{
