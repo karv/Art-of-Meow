@@ -246,6 +246,8 @@
     <Compile Include="Skills\SkillAbility.cs" />
     <Compile Include="Screens\LearnSkillScreen.cs" />
     <Compile Include="Items\Declarations\Equipment\Skills\FirstAidSkill.cs" />
+    <Compile Include="Skills\AddBuffEffect.cs" />
+    <Compile Include="Items\Declarations\Equipment\Skills\BuffSkill.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

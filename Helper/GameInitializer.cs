@@ -42,7 +42,7 @@ namespace Helper
 			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["Broken"]);
 			player.Equipment.EquipItem (eq);
 
-			player.Skills.AddSkill (Program.MyGame.SkillList.GetSkill ("First aid"));
+			player.Skills.AddSkill (Program.MyGame.SkillList.GetSkill ("Rage"));
 
 			#endregion
 

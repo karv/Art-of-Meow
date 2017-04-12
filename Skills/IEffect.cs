@@ -6,6 +6,7 @@ using Skills;
 
 namespace Skills
 {
+
 	/// <summary>
 	/// Un efecto de un objeto.
 	/// </summary>

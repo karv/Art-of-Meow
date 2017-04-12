@@ -26,6 +26,23 @@
 			"Texture": "heal",
 			"Cooldown" : 1.5,
 			"Power": 4,
+		},
+		{
+			"$type": "Items.Declarations.Equipment.Skills.BuffSkill, Art_of_Meow",
+			"Name": "Rage",
+			"Texture": "heal",
+			"BuffName": "Raging",
+			"Stats":{
+				"vel": 5,
+				"visión": -2,
+				"str": 2,
+			},
+			"Cooldown" : 0.1,
+			"RelHpUpperLimit": 0.4,
+			"Value": 10,
+			"Learnable": true,
+
 		}
+
 	]
 }
