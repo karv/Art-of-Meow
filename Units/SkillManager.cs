@@ -34,7 +34,7 @@ namespace Units
 		public bool IsOpen (ISkill c)
 		{
 			// Return if this skill is not learned but can be learned
-			return (!HasSkill (c.Name) && c.RequiredSkills.All (HasSkill));
+			return (c.IsLearnable && !HasSkill (c.Name) && c.RequiredSkills.All (HasSkill));
 		}
 
 		public float AbilityOf (ISkill skill)
