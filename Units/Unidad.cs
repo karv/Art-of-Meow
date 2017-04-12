@@ -442,7 +442,7 @@ namespace Units
 		{
 			get
 			{
-				return PrimitiveOrders.ExpectedFirstOrderTerminationTime ();
+				return PrimitiveOrders.ExpectedTerminationTime ();
 			}
 		}
 
