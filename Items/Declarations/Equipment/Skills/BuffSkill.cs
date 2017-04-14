@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Moggle.Controles;
 using Newtonsoft.Json;
 using Skills;
 using Units;
@@ -9,14 +10,33 @@ using Units.Recursos;
 
 namespace Items.Declarations.Equipment.Skills
 {
+	/// <summary>
+	/// A skill taht generates a buff
+	/// </summary>
 	public class BuffSkill : ISkill
 	{
+		/// <summary>
+		/// Texture for the skill icon
+		/// </summary>
 		public readonly string TextureString;
+		/// <summary>
+		/// Name of the invocation buff
+		/// </summary>
 		public readonly string BuffName;
+
+		/// <summary>
+		/// Colldown
+		/// </summary>
 		[JsonProperty ("Cooldown")]
 		public float Cooldown;
+		/// <summary>
+		/// Chance
+		/// </summary>
 		[JsonProperty ("Chance")]
 		public float Chance;
+		/// <summary>
+		/// Obny castable when relative HP is below that this, set to -1 to ignore
+		/// </summary>
 		[JsonProperty ("RelHpUpperLimit")]
 		public float RelHpUpperLimit = -1;
 
@@ -24,16 +44,22 @@ namespace Items.Declarations.Equipment.Skills
 
 		#region ISkill implementation
 
+		/// <summary>
+		/// Build a skill instance
+		/// </summary>
 		public void GetInstance (IUnidad user)
 		{
 			LastGeneratedInstance = new SkillInstance (this, user);
 			var buff = new StatsBuff (deltas, BuffName, TextureString);
-			var eff = new AddBuffEffect (buff, user){ Chance = this.Chance };
+			var eff = new AddBuffEffect (buff, user){ Chance = Chance };
 			var cd = new GenerateCooldownEffect (user, user, Cooldown);
 			LastGeneratedInstance.Effects.AddEffect (eff);
 			LastGeneratedInstance.Effects.AddEffect (cd, true);
 		}
 
+		/// <summary>
+		/// Determines whether this skill is castable by the specified user.
+		/// </summary>
 		public bool IsCastable (IUnidad user)
 		{
 			if (RelHpUpperLimit == -1)
@@ -42,21 +68,39 @@ namespace Items.Declarations.Equipment.Skills
 			return hp.RelativeHp < RelHpUpperLimit;
 		}
 
+		/// <summary>
+		/// Determines whether this instance is visible by the specified user.
+		/// </summary>
 		public bool IsVisible (IUnidad user)
 		{
 			return true;
 		}
 
+		/// <summary>
+		/// Devuelve la última instancia generada.
+		/// </summary>
 		[JsonIgnore]
 		public SkillInstance LastGeneratedInstance { get; private set; }
 
+		/// <summary>
+		/// Gets the value of the skill
+		/// </summary>
+		/// <value>The value.</value>
 		[JsonProperty ("Value")]
 		public float Value { get; set; }
 
+		/// <summary>
+		/// Gets a value indicating whether this instance is learnable.
+		/// </summary>
+		/// <value><c>true</c> if this instance is learnable; otherwise, <c>false</c>.</value>
 		[JsonProperty ("Learnable")]
 		public bool IsLearnable { get; set; }
 
-		[JsonProperty ("RequiderSkills")]
+		/// <summary>
+		/// The required skills
+		/// </summary>
+		/// <value>The required skills.</value>
+		[JsonProperty ("RequiredSkills")]
 		public string[] RequiredSkills { get; set; }
 
 		#endregion
@@ -65,7 +109,10 @@ namespace Items.Declarations.Equipment.Skills
 
 		Texture2D texture;
 
-		public void Draw (Microsoft.Xna.Framework.Graphics.SpriteBatch bat, Microsoft.Xna.Framework.Rectangle rect)
+		/// <summary>
+		/// Dibuja el icono sobre un rectángulo específico
+		/// </summary>
+		void IDibujable.Draw (SpriteBatch bat, Rectangle rect)
 		{
 			bat.Draw (texture, rect, Color.White);
 		}
@@ -74,6 +121,10 @@ namespace Items.Declarations.Equipment.Skills
 
 		#region IComponent implementation
 
+		/// <summary>
+		/// Loads the content using a given manager
+		/// </summary>
+		/// <param name="manager">Manager.</param>
 		public void LoadContent (Microsoft.Xna.Framework.Content.ContentManager manager)
 		{
 			texture = manager.Load<Texture2D> (TextureString);
@@ -83,6 +134,9 @@ namespace Items.Declarations.Equipment.Skills
 
 		#region IGameComponent implementation
 
+		/// <summary>
+		/// Initialize this instance.
+		/// </summary>
 		public void Initialize ()
 		{
 		}
@@ -91,15 +145,19 @@ namespace Items.Declarations.Equipment.Skills
 
 		#region IIdentificable implementation
 
+		/// <summary>
+		/// Gets the unique name
+		/// </summary>
+		/// <value>The name.</value>
 		public string Name { get; }
 
 		#endregion
 
 		[JsonConstructor]
-		public BuffSkill (string Name, 
-		                  string Texture,
-		                  string BuffName,
-		                  Dictionary<string, float> Stats)
+		BuffSkill (string Name, 
+		           string Texture,
+		           string BuffName,
+		           Dictionary<string, float> Stats)
 		{
 			this.Name = Name;
 			TextureString = Texture;

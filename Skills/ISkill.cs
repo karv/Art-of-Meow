@@ -1,13 +1,9 @@
 using AoM;
 using Moggle.Controles;
 using Units;
-using Units.Buffs;
-using System.Collections.Generic;
-using Units.Recursos;
 
 namespace Skills
 {
-
 	/// <summary>
 	/// Represents a skill
 	/// </summary>

@@ -8,6 +8,9 @@ using Units.Recursos;
 
 namespace Items.Declarations.Equipment.Skills
 {
+	/// <summary>
+	/// Ranged skill consuming ammo
+	/// </summary>
 	public class RangedAmmoSkill : RangedSkill
 	{
 		/// <summary>
@@ -60,10 +63,22 @@ namespace Items.Declarations.Equipment.Skills
 			return ret;
 		}
 
+		/// <summary>
+		/// The base cooldown.
+		/// </summary>
 		public float BaseCooldown;
 
+		/// <summary>
+		/// Determines whether this skill can be learned
+		/// </summary>
+		/// <value><c>true</c> if this instance is learnable; otherwise, <c>false</c>.</value>
 		protected override bool IsLearnable { get { return false; } }
 
+		/// <summary>
+		/// Invoked when hits
+		/// </summary>
+		/// <param name="user">User.</param>
+		/// <param name="target">Target.</param>
 		protected override void OnHit (IUnidad user, IUnidad target)
 		{
 			user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.4f);
@@ -71,6 +86,11 @@ namespace Items.Declarations.Equipment.Skills
 			target.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor -= 0.1f;
 		}
 
+		/// <summary>
+		/// Invoked when misses
+		/// </summary>
+		/// <param name="user">User.</param>
+		/// <param name="target">Target.</param>
 		protected override void OnMiss (IUnidad user, IUnidad target)
 		{
 			user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.2f);
@@ -78,6 +98,8 @@ namespace Items.Declarations.Equipment.Skills
 			target.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor -= 0.2f;
 		}
 
+		/// <summary>
+		/// </summary>
 		[JsonConstructor]
 		protected RangedAmmoSkill (string Name, string TextureName, string Icon)
 			: base (Name,

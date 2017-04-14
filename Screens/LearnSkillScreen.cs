@@ -8,17 +8,34 @@ using Units;
 
 namespace Screens
 {
+	/// <summary>
+	/// The window that asks for next skill to learn
+	/// </summary>
 	public class LearnSkillScreen : Screen
 	{
+		/// <summary>
+		/// Unidad
+		/// </summary>
 		public readonly IUnidad Unidad;
+		/// <summary>
+		/// The icon container
+		/// </summary>
 		public readonly ContenedorSelección<ISkill> Contenedor;
 
+		/// <summary>
+		/// Realiza la inicialización
+		/// </summary>
 		protected override void DoInitialization ()
 		{
 			base.DoInitialization ();
 			buildList ();
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Screens.LearnSkillScreen"/> class.
+		/// </summary>
+		/// <param name="game">Game.</param>
+		/// <param name="unid">Unid.</param>
 		public LearnSkillScreen (Moggle.Game game, IUnidad unid)
 			: base (game)
 		{
@@ -75,7 +92,7 @@ namespace Screens
 
 		}
 
-		void select (object sender, System.EventArgs e)
+		void select (object sender, EventArgs e)
 		{
 			var selSkill = Contenedor.FocusedItem;
 			Unidad.Skills.Learning.CurrentlyLearning = selSkill;

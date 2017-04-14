@@ -41,8 +41,6 @@
 			"RelHpUpperLimit": 0.4,
 			"Value": 10,
 			"Learnable": true,
-
 		}
-
 	]
 }

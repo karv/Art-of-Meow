@@ -8,10 +8,22 @@ namespace Skills
 	/// </summary>
 	public class SkillAbility : IExpable
 	{
+		/// <summary>
+		/// The skill
+		/// </summary>
 		public readonly ISkill Skill;
+		/// <summary>
+		/// The manager.
+		/// </summary>
 		public readonly SkillManager Manager;
+		/// <summary>
+		/// The ability for <see cref="Skill"/>
+		/// </summary>
 		public float Ability;
 
+		/// <summary>
+		/// Gets a value indicating whether the skill is visible.
+		/// </summary>
 		public bool IsVisible { get { return Skill.IsVisible (Manager.Unidad); } }
 
 		#region IExpable implementation
@@ -28,6 +40,12 @@ namespace Skills
 
 		#endregion
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Skills.SkillAbility"/> class.
+		/// <see cref="Ability"/> is set to 1
+		/// </summary>
+		/// <param name="skill">Skill.</param>
+		/// <param name="manager">Manager.</param>
 		public SkillAbility (ISkill skill, SkillManager manager)
 		{
 			if (manager == null)

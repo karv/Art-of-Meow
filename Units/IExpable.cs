@@ -1,6 +1,9 @@
 
 namespace Units
 {
+	/// <summary>
+	/// This object can gain experience
+	/// </summary>
 	public interface IExpable
 	{
 		/// <summary>

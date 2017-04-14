@@ -7,15 +7,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using Screens;
 using Skills;
 using Units;
-using MonoGame.Extended;
 
 namespace Items.Declarations.Equipment.Skills
 {
-
 	/// <summary>
 	/// Skill de ataque de rango de esta clase.
 	/// </summary>
@@ -116,8 +115,18 @@ namespace Items.Declarations.Equipment.Skills
 			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
 		}
 
+		/// <summary>
+		/// Invoked when this skill hits
+		/// </summary>
+		/// <param name="user">User</param>
+		/// <param name="target">Target</param>
 		protected abstract void OnHit (IUnidad user, IUnidad target);
 
+		/// <summary>
+		/// Invoked when this skill miss
+		/// </summary>
+		/// <param name="user">User</param>
+		/// <param name="target">Target</param>
 		protected abstract void OnMiss (IUnidad user, IUnidad target);
 
 		void updateInfoBox (SelectableGridControl selGrid,
@@ -213,6 +222,8 @@ namespace Items.Declarations.Equipment.Skills
 			bat.Draw (Icon, destinationRectangle: rect, layerDepth: Depths.SkillIcon);
 		}
 
+		/// <summary>
+		/// </summary>
 		protected RangedSkill (string Name, string TextureName, string Icon)
 		{
 			this.Name = Name;

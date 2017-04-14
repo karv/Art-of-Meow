@@ -248,6 +248,8 @@
     <Compile Include="Items\Declarations\Equipment\Skills\FirstAidSkill.cs" />
     <Compile Include="Skills\AddBuffEffect.cs" />
     <Compile Include="Items\Declarations\Equipment\Skills\BuffSkill.cs" />
+    <Compile Include="Items\EquipSlot.cs" />
+    <Compile Include="Items\ISkillEquipment.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

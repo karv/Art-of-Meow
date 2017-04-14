@@ -48,7 +48,6 @@ namespace Items.Declarations
 				return;
 			if (CoolDownBase < 0)
 				throw new Exception ();
-			// TODO: check for user's speed or something
 			effects.AddEffect (new GenerateCooldownEffect (user, user, CoolDownBase), true);
 		}
 

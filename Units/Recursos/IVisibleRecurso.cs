@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using AoM;
 using Moggle.Controles;
-using Units;
 
 namespace Units.Recursos
 {
@@ -15,5 +12,4 @@ namespace Units.Recursos
 		/// </summary>
 		bool Visible { get; }
 	}
-	
 }
