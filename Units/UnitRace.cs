@@ -64,7 +64,10 @@ namespace Units
 
 		static readonly Random _r = new Random ();
 
-		static Dictionary<string,float> mergeAttrDists (UnitRace race, UnitClass cls, float typeWeight = 0.5f)
+		/// <summary>
+		/// Merges the attributes from a class and a race
+		/// </summary>
+		public static Dictionary<string,float> mergeAttrDists (UnitRace race, UnitClass cls, float typeWeight = 0.5f)
 		{
 			if (typeWeight < 0 || typeWeight > 1)
 				throw new ArgumentOutOfRangeException (

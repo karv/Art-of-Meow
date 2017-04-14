@@ -12,7 +12,6 @@ using Units.Buffs;
 using Units.Equipment;
 using Units.Order;
 using Units.Recursos;
-using Units.Skills;
 
 namespace Units
 {

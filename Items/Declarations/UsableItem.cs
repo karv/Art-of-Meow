@@ -1,7 +1,6 @@
 ﻿using System;
 using Skills;
 using Units;
-using Units.Skills;
 
 namespace Items.Declarations
 {
@@ -49,7 +48,6 @@ namespace Items.Declarations
 				return;
 			if (CoolDownBase < 0)
 				throw new Exception ();
-			// TODO: check for user's speed or something
 			effects.AddEffect (new GenerateCooldownEffect (user, user, CoolDownBase), true);
 		}
 
@@ -67,6 +65,10 @@ namespace Items.Declarations
 		{
 			return IsVisible (user);
 		}
+
+		bool ISkill.IsLearnable { get { return false; } }
+
+		string[] ISkill.RequiredSkills { get { return new string[] { }; } }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Items.Declarations.UsableItem"/> class.

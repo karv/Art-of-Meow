@@ -6,7 +6,7 @@ using Units;
 namespace Skills
 {
 	/// <summary>
-	/// Representa el efecto de un <see cref="Units.Skills.ISkill"/> que consisnte en eliminar un item de un <see cref="IUnidad"/>
+	/// Representa el efecto de un <see cref="ISkill"/> que consisnte en eliminar un item de un <see cref="IUnidad"/>
 	/// </summary>
 	public class RemoveItemEffect : Effect, ITargetEffect
 	{

@@ -235,6 +235,13 @@ namespace Screens
 			SpecialKeyListener = new PlayerKeyListener (this);
 
 			LoadAllContent ();
+
+			// If player is not learning, invoke select skill screen
+			if (Player.Skills.Learning.CurrentlyLearning == null)
+			{
+				var pickScreen = new LearnSkillScreen (Juego, Player);
+				pickScreen.Execute ();
+			}
 		}
 
 		#endregion

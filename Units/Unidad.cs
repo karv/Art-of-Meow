@@ -380,7 +380,7 @@ namespace Units
 		/// Gets the skills of this unit
 		/// </summary>
 		/// <value>The skills.</value>
-		public Units.Skills.SkillManager Skills { get; }
+		public SkillManager Skills { get; }
 
 		#endregion
 
@@ -432,7 +432,7 @@ namespace Units
 		public void PassTime (float time)
 		{
 			PrimitiveOrders.PassTime (time);
-			Update (time);
+			//Update (time);
 		}
 
 		/// <summary>
@@ -442,7 +442,7 @@ namespace Units
 		{
 			get
 			{
-				return PrimitiveOrders.ExpectedFirstOrderTerminationTime ();
+				return PrimitiveOrders.ExpectedTerminationTime ();
 			}
 		}
 
@@ -603,7 +603,7 @@ namespace Units
 			Buffs = new BuffManager (this);
 			Exp = new ExpManager (this);
 			Inventory = new Inventory ();
-			Skills = new Units.Skills.SkillManager (this);
+			Skills = new SkillManager (this);
 			inicializarRecursos ();
 			RecursoHP.ReachedZero += Death;
 		}

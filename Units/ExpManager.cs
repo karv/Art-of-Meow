@@ -12,7 +12,7 @@ namespace Units
 	/// </summary>
 	public class ExpManager
 	{
-		readonly Dictionary<IParámetroRecurso, float> _distribuciónExp;
+		readonly Dictionary<IExpable, float> _distribuciónExp;
 
 		/// <summary>
 		/// Devuelve la <see cref="Unidad"/> cuya experiencia está manejada por esta clase
@@ -62,7 +62,7 @@ namespace Units
 		public bool Autoflush;
 
 		/// <summary>
-		/// Recibe la experiencia acumulada, según la asignación
+		/// Recibe la experiencia acumulada, según la asignación; y limpia esta última
 		/// </summary>
 		public void Flush ()
 		{
@@ -83,6 +83,11 @@ namespace Units
 				x.Key.ReceiveExperience (ExperienciaAcumulada * x.Value);
 			_distribuciónExp.Clear ();
 
+			// Skill system
+			Unidad.Skills.Learning.AddKnowledge (ExperienciaAcumulada);
+			Unidad.Skills.Learning.CheckAndApply ();
+
+			// Set to zero
 			ExperienciaTotal += ExperienciaAcumulada;
 			ExperienciaAcumulada = 0;
 		}
@@ -92,7 +97,7 @@ namespace Units
 		/// </summary>
 		/// <param name="par">Parámetro de asignación</param>
 		/// <param name="cant">Peso de la asignación</param>
-		public void AddAssignation (IParámetroRecurso par, float cant)
+		public void AddAssignation (IExpable par, float cant)
 		{
 			if (_distribuciónExp.ContainsKey (par))
 				_distribuciónExp [par] += cant;
@@ -142,7 +147,7 @@ namespace Units
 		public ExpManager (IUnidad unid)
 		{
 			Unidad = unid;
-			_distribuciónExp = new Dictionary<IParámetroRecurso, float> ();
+			_distribuciónExp = new Dictionary<IExpable, float> ();
 		}
 	}
 }

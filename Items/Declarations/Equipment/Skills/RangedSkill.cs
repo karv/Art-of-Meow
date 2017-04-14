@@ -3,24 +3,22 @@ using System.Linq;
 using System.Text;
 using AoM;
 using Cells;
-using Helper;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Moggle.Controles;
+using MonoGame.Extended;
 using Newtonsoft.Json;
 using Screens;
 using Skills;
 using Units;
-using Units.Recursos;
-using Units.Skills;
 
 namespace Items.Declarations.Equipment.Skills
 {
 	/// <summary>
 	/// Skill de ataque de rango de esta clase.
 	/// </summary>
-	public class RangedSkill : ISkill
+	public abstract class RangedSkill : ISkill
 	{
 		const string defaultInfoboxText = "Info box";
 
@@ -34,63 +32,16 @@ namespace Items.Declarations.Equipment.Skills
 		public string Name { get; }
 
 		/// <summary>
-		/// Gets the cooldown time for this skill
-		/// </summary>
-		public readonly float BaseCooldown;
-
-		/// <summary>
-		/// Builds the instance
-		/// </summary>
-		/// <param name="user">User.</param>
-		/// <param name="target">Target.</param>
-		public SkillInstance BuildSkillInstance (IUnidad user, IUnidad target)
-		{
-			var quiver = user.Equipment.EquipmentInSlot (EquipSlot.Quiver).OfType<Arrow> ();
-			if (!quiver.Any ())
-				throw new Exception ("Cannot invoke ranged skill without ammo.");
-			var arrow = quiver.First ();
-
-			if (target == null)
-				throw new ArgumentNullException ("target");
-			if (user == null)
-				throw new ArgumentNullException ("user");
-			
-			var baseHit = arrow.BaseHit;
-			var chance = HitDamageCalculator.GetPctHit (
-				             user,
-				             target,
-				             ConstantesRecursos.CertezaRango,
-				             ConstantesRecursos.EvasiónRango,
-				             baseHit);
-			var dmg = HitDamageCalculator.Damage (
-				          user,
-				          target,
-				          ConstantesRecursos.Fuerza,
-				          ConstantesRecursos.Fuerza, arrow.Attribute);
-			dmg *= arrow.DamageMultiplier;
-
-			var ef = new ChangeRecurso (
-				         user,
-				         target,
-				         ConstantesRecursos.HP,
-				         -dmg, 
-				         chance);
-
-			var ret = new SkillInstance (this, user);
-			ret.Effects.Chance = chance;
-			ret.Effects.AddEffect (ef);
-			ret.Effects.AddEffect (new GenerateCooldownEffect (user, user, BaseCooldown), true);
-			ret.Effects.AddEffect (new RemoveItemEffect (user, user, arrow, 1));
-
-			return ret;
-		}
-
-		/// <summary>
 		/// Devuelve la última instancia generada.
 		/// </summary>
 		/// <value>The last generated instance.</value>
 		[JsonIgnore]
 		public SkillInstance LastGeneratedInstance { get; protected set; }
+
+		/// <summary>
+		/// Builds the instance
+		/// </summary>
+		public abstract SkillInstance BuildSkillInstance (IUnidad user, IUnidad target);
 
 		/// <summary>
 		/// Build a skill instance
@@ -101,6 +52,9 @@ namespace Items.Declarations.Equipment.Skills
 			var dialSer = new Moggle.Screens.Dials.ScreenDialSerial ();
 			var grid = user.Grid;
 			var selScr = new SelectTargetScreen (Program.MyGame, grid);
+			selScr.GridSelector.CellSize = new Size (32, 24);
+			selScr.GridSelector.ControlTopLeft = new Point (20, 20);
+			selScr.GridSelector.ControlSize = new Size (1160, 860);
 			selScr.GridSelector.CameraUnidad = user as Unidad;
 
 			var visEnemies = grid.GetVisibleAliveUnidad (user).Where (z => z.Team != user.Team);
@@ -122,6 +76,8 @@ namespace Items.Declarations.Equipment.Skills
 			};
 			selScr.AddComponent (infoBox);
 
+			selScr.Initialize ();
+
 			dialSer.AddRequest (selScr);
 			selScr.GridSelector.CursorMoved += 
 			 	(s, e) => updateInfoBox (selScr.GridSelector, user, infoBox);
@@ -140,14 +96,10 @@ namespace Items.Declarations.Equipment.Skills
 					switch (efRes)
 					{
 						case EffectResultEnum.Hit:
-							user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.4f);
-							tg.Exp.AddAssignation (ConstantesRecursos.EvasiónRango, "base", 0.2f);
-							tg.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor -= 0.1f;
+							OnHit (user, tg);
 							break;
 						case EffectResultEnum.Miss:
-							user.Exp.AddAssignation (ConstantesRecursos.CertezaRango, "base", 0.2f);
-							tg.Exp.AddAssignation (ConstantesRecursos.EvasiónRango, "base", 0.4f);
-							tg.Recursos.GetRecurso (ConstantesRecursos.Equilibrio).Valor -= 0.2f;
+							OnMiss (user, tg);
 							break;
 						default:
 							throw new Exception ();
@@ -162,6 +114,20 @@ namespace Items.Declarations.Equipment.Skills
 				EventArgs.Empty);
 			dialSer.Executar (Program.MyGame.ScreenManager.ActiveThread);	
 		}
+
+		/// <summary>
+		/// Invoked when this skill hits
+		/// </summary>
+		/// <param name="user">User</param>
+		/// <param name="target">Target</param>
+		protected abstract void OnHit (IUnidad user, IUnidad target);
+
+		/// <summary>
+		/// Invoked when this skill miss
+		/// </summary>
+		/// <param name="user">User</param>
+		/// <param name="target">Target</param>
+		protected abstract void OnMiss (IUnidad user, IUnidad target);
 
 		void updateInfoBox (SelectableGridControl selGrid,
 		                    IUnidad user,
@@ -181,16 +147,14 @@ namespace Items.Declarations.Equipment.Skills
 				infoStrBuilding.AppendLine (" * " + eff.DetailedInfo ());
 
 			infoBox.Texto = infoStrBuilding.ToString ();
-
 		}
 
 		/// <summary>
 		/// Determines whether this skill is castable by the specified user.
 		/// </summary>
 		/// <param name="user">User</param>
-		public bool IsCastable (IUnidad user)
+		public virtual bool IsCastable (IUnidad user)
 		{
-			// TODO: Debe consumir(requerir) ¿ammo?
 			return true;
 		}
 
@@ -198,10 +162,24 @@ namespace Items.Declarations.Equipment.Skills
 		/// Determines whether this instance is visible the specified user.
 		/// </summary>
 		/// <param name="user">User.</param>
-		public bool IsVisible (IUnidad user)
+		public virtual bool IsVisible (IUnidad user)
 		{
 			return true;
 		}
+
+		/// <summary>
+		/// Determines whether this skill can be learned
+		/// </summary>
+		protected abstract bool IsLearnable { get; }
+
+		/// <summary>
+		/// If <see cref="IsLearnable"/>, this contains the required skills before learning this one.
+		/// </summary>
+		protected virtual string [] RequiredSkills{ get { return new string[] { }; } }
+
+		bool ISkill.IsLearnable { get { return IsLearnable; } }
+
+		string[] ISkill.RequiredSkills { get { return RequiredSkills; } }
 
 		/// <summary>
 		/// Occurs when the eexecution finishes completly
@@ -244,13 +222,13 @@ namespace Items.Declarations.Equipment.Skills
 			bat.Draw (Icon, destinationRectangle: rect, layerDepth: Depths.SkillIcon);
 		}
 
-		[JsonConstructor]
-		RangedSkill (string Name, string TextureName, string Icon, float BaseCooldown, string Attribute)
+		/// <summary>
+		/// </summary>
+		protected RangedSkill (string Name, string TextureName, string Icon)
 		{
 			this.Name = Name;
 			this.TextureName = TextureName;
 			IconName = Icon;
-			this.BaseCooldown = BaseCooldown;
 		}
 	}
 }

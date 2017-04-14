@@ -5,16 +5,6 @@ using Units;
 
 namespace Units.Recursos
 {
-	/// <summary>
-	/// Un recurso que puede ser mostrado en <see cref="Componentes.RecursoView"/>
-	/// </summary>
-	public interface IVisibleRecurso : IRecurso, IDibujable
-	{
-		/// <summary>
-		/// El recurso es visible
-		/// </summary>
-		bool Visible { get; }
-	}
 
 	/// <summary>
 	/// Un 'stat' de una unidad.
@@ -63,7 +53,7 @@ namespace Units.Recursos
 	/// <summary>
 	/// Representa un parámetro de un <see cref="IRecurso"/>
 	/// </summary>
-	public interface IParámetroRecurso : IInternalUpdate
+	public interface IParámetroRecurso : IInternalUpdate, IExpable
 	{
 		/// <summary>
 		/// Gets the <see cref="Recurso"/> that has this parameter
@@ -71,20 +61,9 @@ namespace Units.Recursos
 		IRecurso Recurso { get; }
 
 		/// <summary>
-		/// Nombre (debe ser único en el manejador de recursos) del recurso
-		/// </summary>
-		string NombreÚnico { get; }
-
-		/// <summary>
 		/// Valor actual del recurso.
 		/// </summary>
 		float Valor { get; set; }
-
-		/// <summary>
-		/// Recibe experiencia.
-		/// </summary>
-		/// <param name="exp">Cantidad de experiencia recibida</param>
-		void ReceiveExperience (float exp);
 	}
 
 	/// <summary>

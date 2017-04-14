@@ -77,7 +77,6 @@ namespace AoM
 			LoadDBContent ();
 
 			base.Initialize ();
-
 		}
 
 		void LoadDBContent ()

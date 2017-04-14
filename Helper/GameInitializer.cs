@@ -20,20 +20,30 @@ namespace Helper
 
 		static Unidad buildPlayer (LogicGrid grid)
 		{
+			const int startingExp = 3;
 			var player = new Unidad (grid)
 			{
 				Nombre = "Player",
 				Team = new TeamManager (Color.Red),
 				Location = grid.GetRandomEmptyCell ()
 			};
-
 			player.Inteligencia = new HumanIntelligence (player);
+
+			var uClass = Program.MyGame.ClassRaceManager.Class [0];
+			var uRace = Program.MyGame.ClassRaceManager.Race [0];
+			foreach (var x in UnitRace.mergeAttrDists (uRace, uClass))
+				player.Exp.AddAssignation (x.Key, x.Value);
+			player.Exp.ExperienciaAcumulada = startingExp;
+			player.Exp.Flush ();
 
 			#region Cheat
 			var eq = Program.MyGame.Items.CreateItem<MeleeWeapon> ("Knife");
 			player.Inventory.Add (eq);
 			eq.Modifiers.Modifiers.Add (Program.MyGame.ItemMods ["Broken"]);
 			player.Equipment.EquipItem (eq);
+
+			player.Skills.AddSkill (Program.MyGame.SkillList.GetSkill ("Rage"));
+
 			#endregion
 
 			player.Initialize ();

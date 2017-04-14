@@ -1,4 +1,5 @@
 ﻿using AoM;
+using System;
 
 namespace Units.Buffs
 {
@@ -29,12 +30,12 @@ namespace Units.Buffs
 		BuffManager Manager { get; set; }
 
 		/// <summary>
-		/// Se invoca cuando está por desanclarse
+		/// Se invoca justo antes de desanclarse
 		/// </summary>
 		void Terminating ();
 
 		/// <summary>
-		/// De invoca justo después de anclarse.
+		/// Se invoca justo después de anclarse.
 		/// </summary>
 		void Initialize ();
 	}

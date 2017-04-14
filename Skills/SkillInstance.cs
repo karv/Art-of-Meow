@@ -1,5 +1,3 @@
-using Skills;
-using Units.Skills;
 
 namespace Skills
 {
